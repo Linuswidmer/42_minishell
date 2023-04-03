@@ -1,91 +1,63 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   min_parser.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/01 17:46:27 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/01 18:53:16 by jstrotbe         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "parser.h"
 
-#include "jstr.h"
 
-void *last_node(void *node)
+
+
+int	ft_token_is_JOBNODE(t_lexertype key)
 {
-	while (node->next)
-		node = node->next;
-	return (node);
-} 
-
-
-void	init_ROUTENODE(t_ROUTENODE **ast)
-{
-	t_ROUTENODE *end;
-		
-	if (!*ast)
-	{
-		*ast = (t_ROUTENODE *)malloc(sizeof(t_ROUTENODE));		 	
-		if (!*ast)
-			min_free_ast(**ast);
-		end = *ast;		
-	}
+	if (min_is_IO(key) || min_is_WORD(key))
+		return (1);
 	else
+		return (0);	 
+}
+
+int	ft_token_is_PIPENODE(t_lexertype key)
+{
+	if (key == PIPE)
+		return (1);
+	else 
+		return(0);		
+}
+
+int	ft_token_is_ROUTENODE(t_lexertype key)
+{
+	if (min_is_PARA(key) || min_is_ROUTE(key))
+		return (1);
+	else
+		return (0);
+}
+
+ft_bring_AST_to_beginning(void **ast)
+{
+	int a;
+
+	a = 1;
+	while (a)
 	{
-		end = last_node(*ast); 
-		end->next = (t_ROUTENODE *)malloc(sizeof(t_ROUTENODE));
-		if (!end->next)
-            min_free_ast(**ast);
-		end = end->next;
+		if (*ast.key == JOBNODE && !*ast->up)
+			a = 0;
+		else if (*ast->up)
+			*ast = *ast->up;
+		else if (!*ast->last && !*ast->up)
+			a = 0;		
+		else if (*ast->last)
+			*ast = *ast->last;
 	}
-	ft_bzero(end, sizeof(t_ROUTENODE));
-	end->under = (t_JOBNODE *)malloc(sizeof(t_JOBNODE));
-	if (!end->under)
-            min_free_ast(**ast);
-	ft_bzero(end->under, sizeof(t_JOBNODE)); 
 }
 
-
-void	parser(t_lexer *data, t_ROUTENODE **ast)
+/* PARSER MAIN*/
+void	*min_parser(t_lexer *token)
 {
-	
-	init_ROUTENODE(ast);	
-	
-	while (data)
+	void *ast;
+	while (token)
 	{
-		if (data->key == DQUOTE || data->key == QUOTE)	
-			data = data->next;
-		else
-			
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-int	main(void)
-{
-
-
-
-
-
-		
+		if (ft_token_is_JOBNODE(token->key)
+			token =	min_JOBENODE(token, &ast);	
+		else if (ft_token_is_PIPENODE(token->key)
+			token = min_PIPENODE(token, &ast);
+		else if (ft_token_is_ROUTENODE(token->key)			
+			token = min_ROUTENODE(token, &ast);	
+	}
+	ft_bring_AST_to_begining(&ast);
+	return (ast);
 }
-
-
-
-

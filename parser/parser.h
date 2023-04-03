@@ -1,53 +1,14 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   jstr.h                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/01 17:29:48 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/01 18:53:14 by jstrotbe         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#ifndef PARSER_H
+# define PARSER_H
 
+# include "lexer.h"
 
+/* AST struct */
 typedef struct s_PIPENODE t_PIPENODE;
 typedef struct s_JOBNODE t_JOBNODE;
 typedef struct s_CMDNODE t_CMDNODE;
 typedef struct s_IONODE t_IONODE;
-typedef struct s_ROUTENODE t_ROUTENODE;
-
-
-typedef enum 
-{
-	DQUOTE,
-	QUOTE,
-	WORD,
-	ASTERIX,
-	PARAOPEN,
-	PARACLOSE,
-	HEREDOC,
-	APPEND,
-	IN,
-	OUT,
-	AND,
-	OR,
-	SEMI,
-	PIPE,
-	ESCAPE,
-} t_lexertype ;	
-
-typedef struct s_lexer 
-{
-	t_lexertype key;
-	char *value;
-	struct s_lexer *next;
-	struct s_lexer *last;
-} t_lexer;
-
-
-
-
+typeded struct s_ROUTENODE t_ROUTENODE;
 
 typedef enum e_type
 {
@@ -58,19 +19,23 @@ typedef enum e_type
 	IONODE,
 } e_type
 
-typedef struct s_ROUTENODE
+struct s_ROUTENODE
 {
 	e_type key;
 	char *rvalue;
-	void *under;
+	void *up;
+	void *down;
 	t_ROUTENODE *next;
-} t_ROUTENODE
+	t_ROUTENODE *last;
+}
 
 
 struct s_PIPENODE
 {
 	e_type key;
-	t_PIPENODE *next_pipe;
+	t_PIPENODE *next;
+	t_PIPENODE *last;
+	void *up;
 	void *left_job;
 	void *right_job;
 };
@@ -78,6 +43,7 @@ struct s_PIPENODE
 struct s_JOBNODE
 {
 	e_type key;
+	void *up;
 	t_CMDNODE *cmd;
 	t_IONODE *in;
 	t_IONODE *out;
@@ -97,21 +63,27 @@ struct s_IONODE
 	t_IONODE *next_ionode;
 }
 
+/* FUNCTIONS */
+
+void    *min_parser(t_lexer *token);
+
+/* ROUTE */
+t_lexer *min_ROUTENODE(t_lexer *token, void **ast);
+int	min_is_PARA(t_lexertype key);
+int     min_is_ROUTE(t_lexertype key);
 
 
-/*
-typedef struct AST AST; // Forward reference
 
-struct AST {
-  enum {
-    AST_NUMBER,
-    AST_ADD,
-    AST_MUL,
-  } tag;
-  union {
-    struct AST_NUMBER { int number; } AST_NUMBER;
-    struct AST_ADD { AST *left; AST *right; } AST_ADD;
-    struct AST_MUL { AST *left; AST *right; } AST_MUL;
-  } data;
-};*/
+/* PIPE */
+t_lexer *min_PIPENODE(t_lexer *token, void **ast);
 
+/* JOBNODE */
+t_lexer	*min_JOBENODE(t_lexer *token, void **ast);
+
+/* IO */
+int     min_is_IO(t_lexertype key);
+
+/* WORD */
+int     min_is_WORD(t_lexertype kWORD
+	
+#endif
