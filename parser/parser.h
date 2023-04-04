@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:02:20 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/03 18:08:34 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/04 16:04:49 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,115 +14,104 @@
 # define PARSER_H
 
 # include "lexer.h"
-
-# define _T NODE.job->up
+# include <stdlib.h>
+# include "libft.h"
 
 /* AST struct */
-typedef struct s_AST		t_AST;
-typedef struct s_PIPENODE	t_PIPENODE;
-typedef struct s_JOBNODE 	t_JOBNODE;
-typedef struct s_CMDNODE 	t_CMDNODE;
-typedef struct s_IONODE		t_IONODE;
-typedef struct s_ROUTENODE 	t_ROUTENODE;
+typedef struct s_ast		t_ast;
+typedef struct s_pipenode	t_pipenode;
+typedef struct s_jobnode 	t_jobnode;
+typedef struct s_cmdnode 	t_cmdnode;
+typedef struct s_ionode		t_ionode;
+typedef struct s_routenode 	t_routenode;
 
 typedef enum e_type
 {
-	ROUTENODE,
-	PIPENODE,
-	JOBNODE,
-	CMDNODE,
-	IONODE,
+	routenode,
+	pipenode,
+	jobnode,
+	cmdnode,
+	ionode,
 } e_type;
 
-/*
-struct s_AST
-{
-	e_type key;
-	union
-	{
-		t_PIPENODE pipe;
-		t_JOBNODE job;
-		t_ROUTENODE route;
-	}NODE;
-};*/
 
-struct s_ROUTENODE
+struct s_routenode
 {
 	e_type key;
 	char *rvalue;
-	t_AST *up;
-	t_AST *down;
-	t_AST *next;
-	t_AST *last;
+	t_ast *up;
+	t_ast *down;
+	t_ast *next;
+	t_ast *prev;
 };
 
 
-struct s_PIPENODE
+struct s_pipenode
 {
 	e_type key;
-	t_AST *next;
-	t_AST *last;
-	t_AST *up;
-	t_AST *left_job;
-	t_AST *right_job;
+	t_ast *next;
+	t_ast *prev;
+	t_ast *up;
+	t_ast *left_job;
+	t_ast *right_job;
 };
 
-struct s_JOBNODE
+struct s_jobnode
 {
 	e_type key;
-	t_AST *up;
-	t_CMDNODE *cmd;
-	t_IONODE *in;
-	t_IONODE *out;
+	t_ast *up;
+	t_cmdnode *cmd;
+	t_ionode *in;
+	t_ionode *out;
 };
 
-struct s_CMDNODE
+struct s_cmdnode
 {
 	e_type key;
 	char **args;
 };
 
-struct s_IONODE
+struct s_ionode
 {
 	e_type key;
 	char *value;
-	char **files;
-	t_IONODE *next_ionode;
+	char *file;
+	t_ionode *next_ionode;
 };
 
-struct s_AST
+struct s_ast
 {
     e_type key;
     union
     {
-        t_PIPENODE *pipe;
-        t_JOBNODE *job;
-        t_ROUTENODE *route;
-    }NODE;
+        t_pipenode *pipe;
+        t_jobnode *job;
+        t_routenode *route;
+    }node;
 };
 
 
 /* FUNCTIONS */
 
-void    *min_parser(t_lexer *token);
+t_ast	*min_parser(t_lexer *token); /* x */
 
 /* ROUTE */
-t_lexer *min_ROUTENODE(t_lexer *token,t_AST **ast);
-int	min_is_PARA(t_lexertype key);
-int     min_is_ROUTE(t_lexertype key);
+t_lexer *min_routenode(t_lexer *token,t_ast **ast);
+int		min_is_para(t_lexertype key);
+int     min_is_route(t_lexertype key);
 
 
 
 /* PIPE */
-t_lexer *min_PIPENODE(t_lexer *token, t_AST **ast);
+t_lexer *min_pipenode(t_lexer *token, t_ast **ast);
 
 /* JOBNODE */
-t_lexer	*min_JOBENODE(t_lexer *token, t_AST **ast);
+t_lexer	*min_jobnode(t_lexer *token, t_ast **ast);
 
 /* IO */
-int     min_is_IO(t_lexertype key);
+int     min_token_is_io(t_lexertype key); /*x*/
 
 /* WORD */
-int     min_is_WORD(t_lexertype key);
+int     min_token_is_word(t_lexertype key);/*x*/
 	
 #endif
