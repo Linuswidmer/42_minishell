@@ -6,7 +6,7 @@
 #    By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/01 16:53:37 by lwidmer           #+#    #+#              #
-#    Updated: 2023/04/04 13:26:34 by lwidmer          ###   ########.fr        #
+#    Updated: 2023/04/04 15:03:43 by lwidmer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,10 @@ ${NAME}: ${OBJS}
 	cc -c -o $@ $< -I lexer.h
 
 test: ${NAME}
-	./lexer "< infile || infile2 echo -n		 'e >>c  ec bla' >> outfile    "
+	./lexer "< infile || infile2 'echo' -n		 'e >>c  ec bla' >> outfile    "
+
+quotes:
+	./lexer ”'''<< hello'''”
 
 readline:
 	cc readline.c -lreadline
