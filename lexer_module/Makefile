@@ -24,13 +24,25 @@ ${NAME}: ${OBJS}
 	cc -o ${NAME} $^
 
 .c.o: ${SRCS}
-	cc -c -o $@ $< -I lexer.h
+	cc -c -o $@ $< 
 
 test: ${NAME}
 	./lexer "< infile || infile2 'echo' -n		 'e >>c  ec bla' >> outfile    "
 
-quotes:
-	./lexer ”'''<< hello'''”
+quotes: ${NAME}
+	./lexer "echo ''' < hello''' "
+
+no_spaces: ${NAME}
+	./lexer "echo <infile'helloworld'>outfile"
+
+empty_quotes:
+	./lexer "echo ''hello"
+
+simple_quotes: ${NAME}
+	./lexer "echo 'hello world'>"
+
+simple_test: ${NAME}
+	./lexer "< infile hello (woooooww) > outfile"
 
 readline:
 	cc readline.c -lreadline

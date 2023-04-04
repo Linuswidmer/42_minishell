@@ -52,7 +52,7 @@ int skip_space_tab(char *input, int pos)
 	return (pos);
 }
 
-int find_next_token_position(char *input, int pos, t_lexertype current_lexertype)
+int find_next_token_position(char *input, int pos, t_lexertype current_lexertype, t_lexertype openquote)
 {
 	t_lexertype next_token;
 
@@ -60,7 +60,7 @@ int find_next_token_position(char *input, int pos, t_lexertype current_lexertype
 	while (input[pos] != '\0')
 	{
 		next_token = check_token(input[pos], input[pos + 1]);
-    if (current_lexertype == QUOTE)
+		if (openquote == QUOTE && current_lexertype != QUOTE)
 		{
 			if (next_token == QUOTE)
 				return (pos);
@@ -156,10 +156,12 @@ t_lexer *lexer(char *input)
 	t_lexer *tmp2;
 	t_lexer *first;
 	t_lexertype current_token;
+	t_lexertype openquote;
 
 	first = init_lexer_struct();
 	tmp = first;
 
+	openquote = 0;
 	start = 0;
 	next_token_pos = 0;
 	len_input = ft_strlen(input);
@@ -168,22 +170,10 @@ t_lexer *lexer(char *input)
 	{
 		current_token = check_token(input[next_token_pos], input[next_token_pos + 1]);
 		next_token_pos = find_next_token_position(input, next_token_pos, 
-			current_token);
-		//openquote = lexer_quote_status(openquote, current_token, &next_token_pos);
-		if (current_token == QUOTE && start == next_token_pos - 1)
-    {
-        printf("enters here\n");
-        continue;
-    }
-    else if (current_token == QUOTE)
-      tmp = lexer_parser(tmp, WORD, input, start + 1, next_token_pos - 1);
-    else
-      tmp = lexer_parser(tmp, current_token, input, start, next_token_pos - 1);
-		if (current_token == QUOTE)
-    {
-      next_token_pos = next_token_pos + 1;
-    }
-    next_token_pos = skip_space_tab(input, next_token_pos);
+			current_token, openquote);
+		openquote = lexer_quote_status(openquote, current_token, &next_token_pos);
+		tmp = lexer_parser(tmp, current_token, input, start, next_token_pos - 1);
+		next_token_pos = skip_space_tab(input, next_token_pos);
 		start = next_token_pos;
 	}
 	return (first);
