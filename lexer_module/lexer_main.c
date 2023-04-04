@@ -24,6 +24,27 @@ t_lexer *init_lexer_struct()
 	return(lexer);
 }
 
+char *lexertype_names[] = 
+{
+	"EMPTY",
+    "DQUOTE",
+    "QUOTE",
+    "WORD",
+    "ASTERISK",
+    "PAROPEN",
+    "PARCLOSE",
+    "HEREDOC",
+    "APPEND",
+    "IN",
+    "OUT",
+	"DOLLAR",
+    "AND",
+    "OR",
+    "SEMI",
+    "PIPE",
+    "ESCAPE"
+};
+
 int skip_space_tab(char *input, int pos)
 {
 	while (input[pos] == ' ' || input[pos] == 9)

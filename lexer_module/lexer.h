@@ -17,27 +17,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-char *lexertype_names[] = 
-{
-	"EMPTY",
-    "DQUOTE",
-    "QUOTE",
-    "WORD",
-    "ASTERISK",
-    "PAROPEN",
-    "PARCLOSE",
-    "HEREDOC",
-    "APPEND",
-    "IN",
-    "OUT",
-	"DOLLAR",
-    "AND",
-    "OR",
-    "SEMI",
-    "PIPE",
-    "ESCAPE"
-};
-
 
 typedef enum 
 {
