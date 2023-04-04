@@ -1,45 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/01 16:55:26 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/03 14:52:01 by lwidmer          ###   ########.fr       */
+/*   Created: 2023/04/03 12:08:13 by lwidmer           #+#    #+#             */
+/*   Updated: 2023/04/03 12:08:28 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#include <stdio.h>
+#include <stdlib.h>
+#include <readline/readline.h>
 
-typedef enum 
-{
-	EMPTY,
-	DQUOTE,
-	QUOTE,
-	WORD,
-	ASTERISK,
-	PAROPEN,
-	PARCLOSE,
-	HEREDOC,
-	APPEND,
-	IN,
-	OUT,
-	DOLLAR,
-	AND,
-	OR,
-	SEMI,
-	PIPE,
-	ESCAPE,
-} t_lexertype ;	
+int main() {
+    char *input;
 
-typedef struct s_lexer 
-{
-	t_lexertype key;
-	char *value;
-	struct s_lexer *next;
-	struct s_lexer *prev;
-} t_lexer;
+    // Read a line of input using readline
+    input = readline("Enter a line of input: ");
 
-#endif
+    // Print the input
+    printf("You entered: %s\n", input);
+
+    // Free the memory used by readline
+    free(input);
+
+    return 0;
+}
