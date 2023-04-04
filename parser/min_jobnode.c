@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:31:01 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/04 16:04:22 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/04 20:45:58 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,9 @@ static t_ast *ft_init_jobnode(t_ast *up)
 static t_lexer *ft_set_word(t_lexer *token, t_ast *ast)
 {
 	if (token->last && min_token_is_io(token->last->key))
-		 	
-
+		
+	else			 	
+		
 
 
 
