@@ -45,7 +45,7 @@ static t_ast *ft_init_jobnode(t_ast *up)
 static t_lexer *ft_set_word(t_lexer *token, t_ast *ast)
 {
 	if (token->last && min_token_is_io(token->last->key))
-		
+		min_set_file_io(token, ast);		
 	else			 	
 		
 

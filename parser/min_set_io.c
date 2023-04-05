@@ -22,11 +22,11 @@ static t_ionode *ft_init_io(t_lexer *token, t_ast *ast)
 		min_free_ast(ast);
 	ft_bzero(node, sizeof(t_ionode));
 	node->value = ft_strdup((const char *)token->value);
-	free(token->value);	
+	//free(token->value);	
 	return (node);
 }
 
-static t_ionode *ft_last_node(t_ionode *node)
+static t_ionode *ft_last_ionode(t_ionode *node)
 {
 	while (node->next)
 		node = node->next;
@@ -38,7 +38,7 @@ static t_ionode *ft_last_node(t_ionode *node)
 t_lexer *min_set_io(t_lexer *token, t_ast *ast)
 {
     t_jobnode *job;
-	t_jobnode *end;
+	t_ionode *end;
 
     job = ast->node.job
     if (min_token_is_io_in(token->key))
