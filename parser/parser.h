@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:02:20 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/04 20:46:01 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/05 14:58:20 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,12 @@ struct s_jobnode
 
 struct s_cmdnode
 {
-	e_type key;
 	char **args;
+	t_cmdnode *next;	
 };
 
 struct s_ionode
 {
-	e_type key;
 	char *value;
 	char *file;
 	t_ionode *next_ionode;

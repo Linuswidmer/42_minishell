@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:31:01 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/04 20:45:58 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/05 14:58:04 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,8 @@ static t_lexer *ft_set_word(t_lexer *token, t_ast *ast)
 	if (token->last && min_token_is_io(token->last->key))
 		min_set_file_io(token, ast);		
 	else			 	
-		
-
-
-
-
+			min_set_cmd(token, ast);			
+	return (token->next);
 }
 
 
