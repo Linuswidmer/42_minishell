@@ -1,30 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   min_set_file_io.c                                  :+:      :+:    :+:   */
+/*   min_routenode.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/04 15:59:53 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/05 18:15:06 by jstrotbe         ###   ########.fr       */
+/*   Created: 2023/04/05 19:43:03 by jstrotbe          #+#    #+#             */
+/*   Updated: 2023/04/05 20:32:32 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/* route parse error */
+
+
+
 #include "parser.h"
+t_ast	*ft_close_para(t_ast *ast)
+{
+		if (
 
 
 
-int	min_set_file_io(t_lexer *token, t_ast *ast)
-{	
-	t_ionode *end
-	if (min_token_is_io_in(token->key)
-		end = min_last_ionode(ast->node.job->in);
+
+
+t_lexer	*min_routenode(t_lexer *token, t_ast **ast)
+{
+	if (min_token_is_para == 2)
+		*ast = ft_close_para(*ast);		
+	else if (min_token_is_para == 1)
+
 	else
-		end = min_last_ionode(ast->node.job->out);
-	end->file = token->value;
-	if (!end->file)
-		return (0);
-	else
-		return (1);
-	//free(token->value);
-}
+			
+	return (token->next);
+}		

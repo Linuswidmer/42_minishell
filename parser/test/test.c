@@ -1,11 +1,41 @@
-#include <stdio.h>
-#include "test.h"
+typedef struct s_cmdnode    t_cmdnode;
+typedef struct s_ionode     t_ionode;
 
-t_ast *init add( int a)
+
+
+struct s_cmdnode
 {
-	t_ast new;
+    char    *arg;
+    char **args;
+    t_cmdnode *next;
+};
 
-	new
+struct s_ionode
+{
+    char *value;
+    char *file;
+    t_ionode *next;
+};
+
+typedef union myunion
+{ 
+    t_cmdnode a;
+ 	t_ionode b;
+
+} t_init;
+
+
+
+
+
+
+
+t_init *min_last_ionode(t_init *node)
+{
+        while (node->next)
+                node = node->next;
+    return (node);
+}
 
 
 

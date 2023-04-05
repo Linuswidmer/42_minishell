@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   min_set_file_io.c                                  :+:      :+:    :+:   */
+/*   min_token_is_para.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/04 15:59:53 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/05 18:15:06 by jstrotbe         ###   ########.fr       */
+/*   Created: 2023/04/05 19:55:27 by jstrotbe          #+#    #+#             */
+/*   Updated: 2023/04/05 20:31:57 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-
-
-int	min_set_file_io(t_lexer *token, t_ast *ast)
-{	
-	t_ionode *end
-	if (min_token_is_io_in(token->key)
-		end = min_last_ionode(ast->node.job->in);
-	else
-		end = min_last_ionode(ast->node.job->out);
-	end->file = token->value;
-	if (!end->file)
-		return (0);
-	else
+int	min_token_is_para(t_lexertype key)
+{
+	if (key == paropen)
 		return (1);
-	//free(token->value);
+	else if (key == parclose)
+		return (2);
+	else
+		return (0);
 }

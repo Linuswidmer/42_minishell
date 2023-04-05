@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:02:20 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/05 14:58:20 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/05 20:31:46 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ struct s_routenode
 
 struct s_pipenode
 {
-	e_type key;
 	t_ast *next;
 	t_ast *prev;
 	t_ast *up;
@@ -58,15 +57,16 @@ struct s_pipenode
 
 struct s_jobnode
 {
-	e_type key;
-	t_ast *up;
-	char	**args;
-	t_ionode *in;
-	t_ionode *out;
+	e_type 		key;
+	t_ast 		*up;
+	t_cmdnode	*cmd;
+	t_ionode 	*in;
+	t_ionode 	*out;
 };
 
 struct s_cmdnode
 {
+	char	*arg;
 	char **args;
 	t_cmdnode *next;	
 };
@@ -75,7 +75,7 @@ struct s_ionode
 {
 	char *value;
 	char *file;
-	t_ionode *next_ionode;
+	t_ionode *next;
 };
 
 struct s_ast

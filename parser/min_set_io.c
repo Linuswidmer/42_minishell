@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 14:54:47 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/04 16:01:56 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/05 18:15:09 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,14 @@ static t_ionode *ft_init_io(t_lexer *token, t_ast *ast)
 	t_ionode *node;
 	node = (t_ionode *)malloc(sizeof(t_ionode));
 	if (!node)
+	{
 		min_free_ast(ast);
+		return (node);
+	}
 	ft_bzero(node, sizeof(t_ionode));
-	node->value = ft_strdup((const char *)token->value);
-	//free(token->value);	
+	node->value = token->value;
 	return (node);
 }
-
-static t_ionode *ft_last_ionode(t_ionode *node)
-{
-	while (node->next)
-		node = node->next;
-    return (node);
-}
-
 
 
 t_lexer *min_set_io(t_lexer *token, t_ast *ast)
@@ -47,7 +41,7 @@ t_lexer *min_set_io(t_lexer *token, t_ast *ast)
             job->in = ft_init_io(token, ast);
         else
 		{
-			end = ft_last_node(job->in); 	
+			end = min_last_ionode(job->in); 	
 			end = ft_init_io(token, ast);
     	}
 	}
@@ -57,7 +51,7 @@ t_lexer *min_set_io(t_lexer *token, t_ast *ast)
             job->out = ft_init_io(token, ast);
         else
         {
-            end = ft_last_node(job->out);
+            end = min_last_ionode(job->out);
             end = ft_init_io(token, ast);
         }
     }
