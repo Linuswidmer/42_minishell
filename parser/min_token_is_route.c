@@ -16,6 +16,10 @@ int min_token_is_route(t_lexertype key)
 {
 	if (key == and || key == or || key == semi)
 		return (1);
+	else if (key == or)
+		return (2);
+	else if (key == semi)
+		retun (3);
 	else
 		return (0);
 }

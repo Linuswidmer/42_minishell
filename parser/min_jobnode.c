@@ -50,7 +50,9 @@ static t_lexer *ft_set_word(t_lexer *token, t_ast *ast)
 			min_set_cmd(token, ast);			
 	return (token->next);
 }
-
+/*
+	to do link from up to down 
+*/
 
 t_lexer	*min_jobnode(t_lexer *token, t_ast **ast)
 {

@@ -21,61 +21,32 @@ static int	ft_token_is_jobnode(t_lexertype key)
 
 static int	ft_token_is_pipenode(t_lexertype key)
 {
-	if (key == PIPE)
+	if (key == pipe)
 		return (1);
 	else 
 		return(0);		
 }
-
+ 
 static int	ft_token_is_routenode(t_lexertype key)
 {
-	if (min_token_is_para(key) || min_token_is_route(key))
-		return (1);
-	else
-		return (0);
+	return (min_token_is_route(key));		
 }
 
-static void ft_bring_ast_to_beginning(t_ast **ast)
+static int	ft_token_is_subnode(t_lexertype key)
 {
-	int a;
-
-	a = 1;
-	while (a)
-	{
-		if ((*ast)->key == jobnode)
-		{
-			if (!(*ast)->node.job->up)
-				a = 0;
-			else
-				*ast = (*ast)->node.job->up;			
-		}
-		else if ((*ast)->key == pipenode)
-		{
-			if (!(*ast)->node.pipe->last && !(*ast)->node.pipe->up)
-            	a = 0;      
-			else if (!(*ast)->node.pipe->up) 
-				*ast = (*ast)->node.pipe->last;
-			else 
-				*ast =  (*ast)->node.pipe->up;
-
-		}
-		else if ((*ast)->key == routenode)
-		{
-			if (!(*ast)->node.route->last && !(*ast)->node.route->up)
-                a = 0;
-            else if (!(*ast)->node.route->up)
-                *ast = (*ast)->node.route->last;
-            else
-                *ast =  (*ast)->node.route->up;
- 		}
-	}
+	return (min_token_is_para(key));	
 }
 
-/* PARSER MAIN*/
+/* 
+PARSER MAIN	--> check each tocken from lexer
+		--> create the right node
+	return a full ast from the first node if something goes wrong at the nodes it will return NULL
+*/
 t_ast	*min_parser(t_lexer *token)
 {
 	t_ast *ast;
-
+	
+	ast = NULL;
 	while (*token)
 	{
 		if (ft_token_is_jobnode(token->key))
@@ -83,9 +54,13 @@ t_ast	*min_parser(t_lexer *token)
 		else if (ft_token_is_pipenode(token->key))
 			token = min_pipenode(token, &ast);
 		else if (ft_token_is_routenode(token->key))			
-			token = min_routenode(token, &ast);	
+			token = min_routenode(token, &ast);
+		else if (ft_token_is_subnode(token->key))
+			token = min_subnode(token, &ast);
+		if (!ast)
+			break;	
 	}
-	ft_bring_ast_to_beginning(&ast);
+	min_bring_ast_to_beginning(&ast);
 	return (ast);
 }
 

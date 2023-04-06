@@ -24,20 +24,27 @@ typedef struct s_jobnode 	t_jobnode;
 typedef struct s_cmdnode 	t_cmdnode;
 typedef struct s_ionode		t_ionode;
 typedef struct s_routenode 	t_routenode;
+typedef struct s_subnode	t_subnode;
+
+
 
 typedef enum e_type
 {
 	routenode,
 	pipenode,
 	jobnode,
-	cmdnode,
-	ionode,
+	subnode,
 } e_type;
 
+struct s_subnode
+{
+	e_type	key
+	t_ast *up;
+        t_ast *down;
+}
 
 struct s_routenode
 {
-	e_type key;
 	char *rvalue;
 	t_ast *up;
 	t_ast *down;
@@ -57,7 +64,6 @@ struct s_pipenode
 
 struct s_jobnode
 {
-	e_type 		key;
 	t_ast 		*up;
 	t_cmdnode	*cmd;
 	t_ionode 	*in;
@@ -86,6 +92,7 @@ struct s_ast
         t_pipenode *pipe;
         t_jobnode *job;
         t_routenode *route;
+	t_subnode *sub;
     }node;
 };
 
