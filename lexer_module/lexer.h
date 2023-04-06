@@ -15,6 +15,7 @@
 
 #include <stdio.h>
 #include <unistd.h>
+#include <readline/readline.h>
 #include <stdlib.h>
 
 
@@ -51,10 +52,17 @@ size_t  ft_strlen(const char *str);
 size_t  ft_strlcpy(char *dest, const char *src, size_t size);
 char    *ft_strdup(const char *s);
 int	ft_isalnum(int c);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 t_lexertype check_token(char c, char next);
 
 int check_token_list(t_lexer *token);
 
 
+int parse_dollar(char *input, int pos, t_lexer *tmp, int start);
+int parse_quote(char *input, int pos, t_lexer *tmp, int start, t_lexertype token);
+int parse_double_tokens(char *input, int pos, t_lexertype current_token, t_lexer *tmp);
+int parse_single_tokens(t_lexer *tmp, t_lexertype current_token, int pos);
+int parse_word(char *input, int pos, t_lexer *tmp, int start);
+int parse_token_to_list(t_lexertype current_token, char *input, int pos, t_lexer *tmp, int start);
 #endif

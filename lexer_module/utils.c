@@ -61,3 +61,63 @@ char	*ft_strdup(const char *s)
 	ft_strlcpy(ptr, s, ft_strlen(s) + 1);
 	return (ptr);
 }
+
+void	ft_bzero(void *s, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	if (s)
+	{
+		while (i < n)
+		{
+			((char *)s)[i] = '\0';
+			i++;
+		}
+	}
+}
+
+void	*ft_calloc(size_t nmeb, size_t size)
+{
+	void	*ptr;
+
+	if (size != 0 && nmeb > 2147483647 / size)
+		return (0);
+	if (nmeb != 0 && size > 2147483647 / nmeb)
+		return (0);
+	ptr = malloc(nmeb * size);
+	if (ptr)
+	{
+		ft_bzero(ptr, nmeb * size);
+		return (ptr);
+	}
+	return (ptr);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*ptr;
+
+	if (start >= ft_strlen(s))
+	{
+		ptr = ft_calloc(1, 1);
+		if (!ptr)
+			return (NULL);
+		return (ptr);
+	}
+	if (len + start > ft_strlen(s))
+	{
+		ptr = ft_calloc(ft_strlen(s) + 1 - start, 1);
+		if (!ptr)
+			return (NULL);
+		ft_strlcpy(ptr, s + start, ft_strlen(s) + 1 - start);
+	}
+	else
+	{
+		ptr = ft_calloc(len + 1, 1);
+		if (!ptr)
+			return (NULL);
+		ft_strlcpy(ptr, s + start, len + 1);
+	}
+	return (ptr);
+}

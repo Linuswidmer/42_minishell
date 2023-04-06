@@ -1,5 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
+/* ************************************************************************** */ /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   lexer_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
@@ -52,143 +51,6 @@ int skip_space_tab(char *input, int pos)
 	return (pos);
 }
 
-int find_next_token_position(char *input, int pos, t_lexertype current_lexertype)
-{
-	t_lexertype next_token;
-
-	pos++;
-	while (input[pos] != '\0')
-	{
-		next_token = check_token(input[pos], input[pos + 1]);
-    if (current_lexertype == QUOTE)
-		{
-			if (next_token == QUOTE)
-				return (pos);
-			else
-				pos++;
-		}
-		else if(current_lexertype == DOLLAR)
-		{
-			if (next_token == WORD && ft_isalnum(input[pos]))
-				pos++;
-			else
-				return (pos);
-		}
-		else 
-		{
-			if (input[pos] == ' ')
-				return (pos);
-			else if (next_token != current_lexertype)
-			{
-				if (current_lexertype == OR || current_lexertype == AND ||
-					current_lexertype == HEREDOC || current_lexertype == APPEND)
-				{
-					return (pos + 1);
-				}
-				else
-					return (pos);
-			}
-			else
-				pos++;
-		}
-	}
-	return (pos);
-}
-
-/*
-writes key and string to the lexer linked list and directly returns a new entry for the list.
-*/
-t_lexer *lexer_parser(t_lexer *tmp, t_lexertype current_lexertype, char *input, int start, int end)
-{
-	int i;
-	int j;
-	t_lexer *tmp2;
-	
-	i = start;
-	j = 0;
-	tmp->key = current_lexertype;
-	if (tmp->key == DOLLAR)
-		start++;
-	tmp->value = malloc(sizeof(char) * end - start + 1);
-	//printf("start is %i, end is %i", start, end);
-	//printf(" LEXERTYPE IS %s\n", lexertype_names[current_lexertype]);
-	while (start <= end)
-	{
-		tmp->value[j] = input[start];
-		j++; 
-		start++;
-	}
-	tmp->value[j] = '\0';
-	tmp2 = init_lexer_struct();
-	tmp->next = tmp2;
-	tmp2->prev = tmp;
-	return (tmp2);
-}
-
-t_lexertype lexer_quote_status(t_lexertype openquote, t_lexertype current_token, int *pos)
-{
-		if (openquote == EMPTY)
-		{
-			if (current_token == QUOTE)
-      {
-        printf("opened quotes\n");
-				openquote = QUOTE;
-      }
-      else if(current_token == DQUOTE)
-				openquote = DQUOTE;
-		}
-		else if (openquote == QUOTE && current_token == QUOTE)
-    {
-      printf("closed quotes\n");
-			openquote = 0;
-    }
-    else if (openquote == DQUOTE && current_token == DQUOTE)
-			openquote = 0;
-	return (openquote);	
-}
-
-t_lexer *lexer(char *input)
-{
-	int start;
-	int next_token_pos;
-	int len_input;
-	t_lexer *tmp;
-	t_lexer *tmp2;
-	t_lexer *first;
-	t_lexertype current_token;
-
-	first = init_lexer_struct();
-	tmp = first;
-
-	start = 0;
-	next_token_pos = 0;
-	len_input = ft_strlen(input);
-	
-	while (next_token_pos < len_input)
-	{
-		current_token = check_token(input[next_token_pos], input[next_token_pos + 1]);
-		next_token_pos = find_next_token_position(input, next_token_pos, 
-			current_token);
-		//openquote = lexer_quote_status(openquote, current_token, &next_token_pos);
-		if (current_token == QUOTE && start == next_token_pos - 1)
-    {
-        printf("enters here\n");
-        continue;
-    }
-    else if (current_token == QUOTE)
-      tmp = lexer_parser(tmp, WORD, input, start + 1, next_token_pos - 1);
-    else
-      tmp = lexer_parser(tmp, current_token, input, start, next_token_pos - 1);
-		if (current_token == QUOTE)
-    {
-      next_token_pos = next_token_pos + 1;
-    }
-    next_token_pos = skip_space_tab(input, next_token_pos);
-		start = next_token_pos;
-	}
-	return (first);
-}
-
 void expand_dollar_tokens(t_lexer *first)
 {
 	char *varname;
@@ -206,35 +68,38 @@ void expand_dollar_tokens(t_lexer *first)
 	}
 }
 
-t_lexer *remove_quotes_from_token_list(t_lexer *first)
+t_lexer *lexer(char *input)
 {
-	t_lexer *tmp;
-	t_lexer *prev;
-	t_lexer	*next;
+  int start;
+  int pos;
+  int len_input;
+  t_lexertype current_token;
+  t_lexer *tmp;
+  t_lexer *tmp2;
+  t_lexer *beginning_token_list;
 
-	while (first->key == QUOTE || first->key == DQUOTE)
-	{
-		tmp = first->next;
-		free(first);
-		tmp->prev = NULL;
-		first = tmp;
-	}
-	tmp = first;
-	while (tmp)
-	{
-		if (tmp->key == QUOTE || tmp->key == DQUOTE)
-		{
-			prev = tmp->prev;
-			next = tmp->next;
-			prev->next = next;
-			next->prev = prev;
-			free(tmp);
-			tmp = prev;
-		}
-		tmp = tmp->next;
-	}
-	return (first);
+	beginning_token_list = init_lexer_struct();
+	tmp = beginning_token_list;
+	start = 0;
+	pos = 0;
+	len_input = ft_strlen(input);
+  while (pos < len_input)
+  {
+    current_token = check_token(input[pos], input[pos + 1]);
+    pos = parse_token_to_list(current_token, input, pos, tmp, start);
+    pos = skip_space_tab(input, pos);
+    start = pos;
+    if (tmp->key != EMPTY && pos < len_input)
+    {
+      tmp2 = init_lexer_struct();
+      tmp->next = tmp2;
+      tmp2->prev = tmp;
+      tmp = tmp2;
+    }
+  }
+  return(beginning_token_list);
 }
+
 
 void print_token_list(t_lexer *first)
 {
@@ -249,31 +114,41 @@ void print_token_list(t_lexer *first)
 	}
 }
 
+void free_token_list(t_lexer *token_list)
+{
+  t_lexer *tmp;
+
+  while (token_list)
+  {
+    tmp = token_list->next;
+    if (token_list->value)
+      free (token_list->value);
+    free(token_list);
+    token_list = tmp;
+  }
+}
+
 int main(int argc, char **argv)
 {
 	t_lexer *first;
 	char my_string[100]; 
-	my_string[0] = '$';
-	my_string[1] = 'e';
-	my_string[2] = 'l';
-	my_string[3] = '!';
-	my_string[4] = 'o';
-	my_string[5] = ' ';
-	my_string[6] = '$';
-	my_string[7] = '\0';	
+  char *readline_input;
+  t_lexer *token_list;
 
-	//printf("%s\n", argv[1]);
-	//first = lexer_parser(argv[1]);
-	first = lexer(argv[1]);
-	print_token_list(first);
-	
-	printf("After removing quotes\n");
-	first = remove_quotes_from_token_list(first);
-	print_token_list(first);
-	printf("\n");
-	first = lexer(my_string);
-	expand_dollar_tokens(first);
-	first = remove_quotes_from_token_list(first);
-	print_token_list(first);
-	check_token_list(first);
+  while (1)
+  {
+	  readline_input = readline("minishell> ");
+    token_list = lexer(readline_input);
+    print_token_list(token_list);
+    free(readline_input);
+  }
+ //  first = lexer(argv[1]);
+	// print_token_list(first);
+  // free_token_list(first);
+  if (argc == 1)
+  {
+	  first = lexer(my_string);
+	  print_token_list(first);
+  }
+  // check_token_list(first);
 }
