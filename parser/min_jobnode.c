@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:31:01 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/07 14:38:56 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/07 18:06:18 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_lexer	*min_jobnode(t_lexer *token, t_ast **ast)
 	if (*ast)
 	{
 		if ((*ast)->key == pipenode)
-			*ast = (*ast)->node.pipe->right_job;				
+			*ast = (*ast)->node.pipe->right;				
 		else if ((*ast)->key == routenode)
 			*ast = (*ast)->node.route->down;
 		else if ((*ast)->key == subnode)

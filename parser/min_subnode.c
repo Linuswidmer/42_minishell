@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:26:53 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/07 15:36:53 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/07 18:06:58 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static t_ast  *ft_open_para(t_ast **ast, t_lexer *token)
 	t_ast *temp;
 	t_ast **old;
 
-	if ((*ast)->key == jobnode || ((*ast)->key == subnode && token->prev->key == l_parclose))
+	if ((*ast)->key == jobnode || ((*ast)->key == subnode && token->prev->key == l_paraclose))
 	{
 		min_parser_error(ast, token);
 		return (NULL);

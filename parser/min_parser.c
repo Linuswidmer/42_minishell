@@ -6,10 +6,44 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:59:26 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/07 17:51:04 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/07 18:26:59 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "parser.h"
+
+char *lexertype2_names[] =
+{
+    "EMPTY",
+    "DQUOTE",
+    "QUOTE",
+    "WORD",
+    "ASTERISK",
+    "PAROPEN",
+    "PARCLOSE",
+    "HEREDOC",
+    "APPEND",
+    "IN",
+    "OUT",
+    "DOLLAR",
+    "AND",
+    "OR",
+    "SEMI",
+    "PIPE",
+    "ESCAPE"
+};
+
+char *nodetype_names[] =
+{
+    "ROUTENODE",
+    "PIPENODE",
+    "JOBNODE",
+    "SUBNODE"
+};
+
+
+
+
+
 
 static int	ft_token_is_jobnode(t_lexertype key)
 {
@@ -50,7 +84,7 @@ t_ast	*min_parser(t_lexer *token)
 	while (token)
 	{	
 		if (_DEBUG1)
-			printf("LEXERTYPE IS: %s    ", lexertype_names[token->key]);
+			printf("PARSER LEXERTYPE IS: %s    ", lexertype2_names[token->key]);
 		if (ft_token_is_jobnode(token->key))
 			token =	min_jobnode(token, &ast);	
 		else if (ft_token_is_pipenode(token->key))
@@ -59,20 +93,24 @@ t_ast	*min_parser(t_lexer *token)
 			token = min_routenode(token, &ast);
 		else if (ft_token_is_subnode(token->key))
 			token = min_subnode(token, &ast);
-		if (_DEBUG1)
+		if (_DEBUG1 && ast)
 		{
-			printf("NODETYPE is: %s		", nodetype_names[ast->key])
+			printf("NODETYPE is: %s		", nodetype_names[ast->key]);
 			if (ast->key == jobnode)
 			{	
 				min_print_io(ast->node.job->in);	
 				min_print_cmd(ast->node.job->cmd);
 				min_print_io(ast->node.job->out);
  			}
+			printf("\n");
 		}
 		if (!ast)
-			break;	
+		{
+			printf("ERROR\n");
+			break;
+		}	
 	}
-	min_bring_ast_to_beginning(&ast);
+//	min_bring_ast_to_beginning(&ast);
 	if (_DEBUG)
 		min_print_ast();
 	return (ast);
