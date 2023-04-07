@@ -1,18 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/01 15:20:37 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/07 13:08:49 by lwidmer          ###   ########.fr       */
+/*   Created: 2023/04/07 12:33:39 by lwidmer           #+#    #+#             */
+/*   Updated: 2023/04/07 12:49:18 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-#include <readline/history.h>
+void handle_sigint(int sig) 
+{
+	printf("\n");
+	exit (0);
+}
 
-# endif
+void handle_sighup(int sig) {
+	printf("Received SIGHUP signal\n");
+	exit (0);
+}
+
+int main() 
+{
+	signal(SIGINT, handle_sigint);
+	signal(SIGHUP, handle_sighup);
+	while (1)
+	{
+
+	}
+
+	return 0;
+}

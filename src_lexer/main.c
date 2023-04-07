@@ -1,18 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/01 15:20:37 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/07 13:08:49 by lwidmer          ###   ########.fr       */
+/*   Created: 2023/04/07 12:03:49 by lwidmer           #+#    #+#             */
+/*   Updated: 2023/04/07 12:13:05 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "lexer.h"
 
-#include <readline/history.h>
+int main(int argc, char **argv)
+{
+	t_lexer *first;
+	char *readline_input;
+	t_lexer *token_list;
 
-# endif
+  while (1)
+  {
+	  readline_input = readline("minishell> ");
+    token_list = lexer(readline_input);
+    print_token_list(token_list);
+    free(readline_input);
+  }
+}

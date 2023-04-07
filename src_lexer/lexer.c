@@ -44,19 +44,3 @@ t_lexer *lexer(char *input)
 	}
 	return(beginning_token_list);
 }
-
-int main(int argc, char **argv)
-{
-	t_lexer *first;
-	char my_string[100]; 
-  char *readline_input;
-  t_lexer *token_list;
-
-  while (1)
-  {
-	  readline_input = readline("minishell> ");
-    token_list = lexer(readline_input);
-    print_token_list(token_list);
-    free(readline_input);
-  }
-}

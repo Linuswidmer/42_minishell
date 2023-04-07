@@ -56,6 +56,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 t_lexertype check_token(char c, char next);
 
+t_lexer *lexer(char *input);
+
 // int check_token_list(t_lexer *token);
 
 int parse_dollar(char *input, int pos, t_lexer *tmp, int start);
