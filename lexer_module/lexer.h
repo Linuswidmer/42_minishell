@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 16:55:26 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/04 15:48:58 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/07 14:26:43 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,22 @@
 
 typedef enum 
 {
-	empty,
-	dquote,
-	quote,
-	word,
-	asterisk,
-	paropen,
-	parclose,
-	heredoc,
-	append,
-	in,
-	out,
-	and,
-	or,
-	semi,
-	pipe,
-	escape,
+	l_empty,
+	l_dquote,
+	l_quote,
+	l_word,
+	l_asterisk,
+	l_paropen,
+	l_parclose,
+	l_heredoc,
+	l_append,
+	l_in,
+	l_out,
+	l_and,
+	l_or,
+	l_semi,
+	l_pipe,
+	l_escape,
 } t_lexertype ;	
 
 typedef struct s_lexer 

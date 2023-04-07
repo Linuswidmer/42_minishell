@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 16:24:24 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/05 18:08:41 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/07 15:19:46 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "parser.h"
@@ -15,32 +15,36 @@
 
 
 
-static t_cmdnode *ft_init_cmdnode(t_lexer *token, t_ast *ast)	 
+static t_cmdnode *ft_init_cmdnode(t_lexer *token)	 
 {
-	t_cmdnode *node;
+	t_cmdnode *cmd;
 
-	node = (t_cmdnode *)malloc(sizeof(t_cmdnode));
-	if (!node)
-		return (node);
-	ft_bzero(node, sizeof(t_cmdnode));	
-	node->arg = token->value;
-	return (node);
+	cmd = (t_cmdnode *)malloc(sizeof(t_cmdnode));
+	if (!cmd)
+		return (NULL);
+	ft_bzero(cmd, sizeof(t_cmdnode));	
+	cmd->arg = token->value;
+	return (cmd);
 }
 
 
-/* job-cmd && end can be NULL*/
-
-void	min_set_cmd(t_lexer *token, t_ast *ast)
+void	min_set_cmd(t_lexer *token, t_ast **ast)
 {
-	    t_jobnode *job;
+	t_jobnode *job;
 	t_cmdnode *end;
 
-	job = ast->node.job;
+	job = (*ast)->node.job;
 	if (!job->cmd)
-		job->cmd = ft_init_cmdnode(token, ast);
+	{
+		job->cmd = ft_init_cmdnode(token);
+		if (!job->cmd)
+			min_parser_malloc_fail(ast);
+	}
 	else
 	{
 		end = min_last_cmdnode(job->cmd);
-		end = ft_init_cmdnode(token, ast);
+		end->next = ft_init_cmdnode(token);
+		if (!end->next)
+			min_parser_malloc_fail(ast);
 	}
 }	

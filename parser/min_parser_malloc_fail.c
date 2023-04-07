@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   min_token_is_word.c                                :+:      :+:    :+:   */
+/*   min_parser_malloc_fail.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/04 12:32:27 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/07 13:17:08 by jstrotbe         ###   ########.fr       */
+/*   Created: 2023/04/07 13:02:31 by jstrotbe          #+#    #+#             */
+/*   Updated: 2023/04/07 13:04:47 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "parser.h"
 
-
-int	min_token_is_word(t_lexertype key)
+void	min_parser_malloc_fail(t_ast **ast)
 {
-	if (key == l_word || key == l_asterisk)
-		return(1);
-	else
-		return (0);
+	(void)ast;
 }

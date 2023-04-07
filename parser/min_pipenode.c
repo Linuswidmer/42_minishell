@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 18:23:46 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/05 20:32:03 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/07 14:56:58 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "parser.h"
@@ -26,9 +26,9 @@ static t_ast *ft_init_pipenode(t_ast *left, char first)
 	if (first)
 	{
 		pipe->node.pipe->left = left;
-		if (pipe->node.pipe->left->key == sub)
-			pipe->node.pipe->left->node.sup->up = pipe;	
-		else
+		if (pipe->node.pipe->left->key == subnode)
+			pipe->node.pipe->left->node.sub->up = pipe;	
+		else 
 			pipe->node.pipe->left->node.job->up = pipe;
 	}
 	return (pipe);
@@ -54,7 +54,7 @@ t_lexer *min_pipenode(t_lexer *token, t_ast **ast)
 	t_ast	*oldpipe;
 	
 	if (!(*ast) || (*ast)->key == routenode)
-		min_Parse_error(token, ast);
+		min_parser_error(ast, token);
 	else
 	{
 		left = ast;
@@ -62,19 +62,19 @@ t_lexer *min_pipenode(t_lexer *token, t_ast **ast)
             		*ast = (*ast)->node.job->up;
         	else if ((*ast)->key == subnode)
             		*ast = (*ast)->node.sub->up;
-		if (!(*ast) || (*ast)->key == subnode))
+		if (!(*ast) || (*ast)->key == subnode)
         	{       
-			*ast = ft_init_pipenode(left, 1);
+			*ast = ft_init_pipenode(*left, 1);
 			if (!(*ast))
-				min_parse_malloc_fail(left);
+				min_parser_malloc_fail(left);
 		}
 		else
 		{      
 			oldpipe = *ast; 
                        	*ast = (*ast)->node.pipe->next;
-                        *ast = t_init_pipenode(left, 0);
+                        *ast = ft_init_pipenode(*left, 0);
 			if (!(*ast))
-				min_parse_malloc_fail(left);
+				min_parser_malloc_fail(left);
 			else
                         	(*ast)->node.pipe->prev = oldpipe;
 		}

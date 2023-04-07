@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:02:20 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/05 21:13:33 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/07 15:22:42 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ typedef enum e_type
 
 struct s_subnode
 {
-	e_type	key
+	e_type	key;
 	t_ast *up;
         t_ast *down;
-}
+};
 
 struct s_routenode
 {
@@ -58,8 +58,8 @@ struct s_pipenode
 	t_ast *next;
 	t_ast *prev;
 	t_ast *up;
-	t_ast *left_job;
-	t_ast *right_job;
+	t_ast *left;
+	t_ast *right;
 };
 
 struct s_jobnode
@@ -73,7 +73,6 @@ struct s_jobnode
 struct s_cmdnode
 {
 	char	*arg;
-	char **args;
 	t_cmdnode *next;	
 };
 
@@ -89,10 +88,10 @@ struct s_ast
     e_type key;
     union
     {
-        t_pipenode *pipe;
-        t_jobnode *job;
-        t_routenode *route;
-	t_subnode *sub;
+        t_pipenode	*pipe;
+        t_jobnode	*job;
+		t_routenode	*route;
+		t_subnode	*sub;
     }node;
 };
 
@@ -100,12 +99,17 @@ struct s_ast
 /* FUNCTIONS */
 
 t_ast	*min_parser(t_lexer *token); /* x */
+void	min_parser_error(t_ast **ast, t_lexer *token);
+void    min_parser_malloc_fail(t_ast **ast);
+
 
 /* ROUTE */
 t_lexer *min_routenode(t_lexer *token,t_ast **ast);
-int		min_is_para(t_lexertype key);
 int     min_is_route(t_lexertype key);
 
+/* SUB */
+int		min_token_is_para(t_lexertype key);
+t_lexer *min_subnode(t_lexer *token, t_ast **ast);
 
 
 /* PIPE */
@@ -115,7 +119,18 @@ t_lexer *min_pipenode(t_lexer *token, t_ast **ast);
 t_lexer	*min_jobnode(t_lexer *token, t_ast **ast);
 
 /* IO */
-int     min_token_is_io(t_lexertype key); /*x*/
+t_lexer		*min_set_io(t_lexer *token, t_ast **ast);
+int			min_token_is_io(t_lexertype key); /*x*/
+int			min_token_is_io_in(t_lexertype key);
+t_ionode	*min_last_ionode(t_ionode *node);
+void		min_set_file_io(t_lexer *token, t_ast *ast);
+
+
+/* cmd */
+void    min_set_cmd(t_lexer *token, t_ast **ast);
+t_cmdnode	*min_last_cmdnode(t_cmdnode *node);
+
+
 
 /* WORD */
 int     min_token_is_word(t_lexertype key);/*x*/

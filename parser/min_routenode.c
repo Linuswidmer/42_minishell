@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:43:03 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/05 21:13:31 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/07 15:16:32 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "parser.h"
@@ -31,8 +31,8 @@ static t_ast	*ft_init_routenode(void)
         if (!route)
                 return (NULL);
         ft_bzero(route, sizeof(t_ast));
-        job->key = routenode;
-        job->node.route = (t_routenode *)malloc(sizeof(t_routenode));
+        route->key = routenode;
+        route->node.route = (t_routenode *)malloc(sizeof(t_routenode));
         if (!route->node.route)
                 return (NULL);
         ft_bzero(route->node.route, sizeof(t_routenode));
@@ -47,14 +47,14 @@ static t_ast *ft_set_routenode(t_ast **ast, t_ast *down, t_lexer *token)
 	*ast = ft_init_routenode();
 	if (!(*ast))
 	{
-		min_parse_malloc_fail(temp);
-		return (ast);
+		min_parser_malloc_fail(temp);
+		return (*ast);
 	}
 	if (!token)
 	{
 		(*ast)->node.route->up = *temp;
 		if (*temp)
-			(*temp)->node.sub->down = *ast
+			(*temp)->node.sub->down = *ast;
 		(*ast)->node.route->down = down;
 	}
 	else
@@ -79,7 +79,7 @@ t_lexer	*min_routenode(t_lexer *token, t_ast **ast)
 	t_ast	*prev;
 	
 	if ((*ast)->key == pipenode || (*ast)->key == routenode)
-		min_parse_error(ast);
+		min_parser_error(ast, token);
 	else
 	{
 		*ast = ft_move_and_store_prev(*ast, &prev);
@@ -90,9 +90,9 @@ t_lexer	*min_routenode(t_lexer *token, t_ast **ast)
 			*ast = ft_move_and_store_prev(*ast, &prev);
 		}
 		if (!(*ast) || (*ast)->key == subnode)
-		*ast = ft_set_routenode( *ast, prev, NULL);
+			*ast = ft_set_routenode( ast, prev, NULL);
 		if ((*ast))
-			*ast = ft_set_routenode(*ast, NULL, token);
+			*ast = ft_set_routenode(ast, NULL, token);
 	}
 	return (token->next);
 }		
