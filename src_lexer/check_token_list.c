@@ -6,12 +6,13 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 13:25:03 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/04 13:25:18 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/07 09:23:53 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
+/*
 int check_if_all_quotes_closed(t_lexer *token)
 {
 	t_lexertype openquote;
@@ -47,3 +48,4 @@ int check_token_list(t_lexer *token)
 		printf("All quotes closed\n");
 	return (err_status);
 }
+*/
