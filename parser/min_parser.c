@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:59:26 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/07 18:26:59 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/07 19:49:03 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "parser.h"
@@ -110,7 +110,7 @@ t_ast	*min_parser(t_lexer *token)
 			break;
 		}	
 	}
-//	min_bring_ast_to_beginning(&ast);
+	min_bring_ast_to_beginning(&ast);
 	if (_DEBUG)
 		min_print_ast();
 	return (ast);
