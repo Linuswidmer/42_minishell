@@ -1,28 +1,5 @@
 #include "parser.h"
 
-/*
-if (!ast)
-			return (NULL);
-		if (ast->key == jobnode)
-			ast = ast->node.job->up;
-		else if (ast->key == pipe && ast->node.pipe->prev)
-			ast = ast->node.pipe->prev;
-		else if (ast->key == pipe && !ast->node.pipe->prev)
-			ast = ast->node.pipe->up;
-		/* check if && route*/
-		else if (ast->key == route && ast->node.route->prev
-			ast = ast->node.route->prev;
-		else if (ast->key == route && ast->node.route->rvalue is && || ;)
-			 ast = 	ast->node.route->up;
-		else if (ast->key == route && ast->node.route->rvalue is () && !first)
-			return (ast);
-		else if (ast->key == route && ast->node.route->rvalue is () && first)
-			ast =  ast->node.route->up;
-		ft_close_para(ast, 0);
-}*
-
-
-
 static t_ast	*ft_navigate_to_next_sub(t_ast *ast, char first)
 {
 	if (ast)		

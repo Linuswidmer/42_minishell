@@ -12,58 +12,72 @@
 #include "parser.h"
 static t_ast *ft_init_pipenode(t_ast *left, char first)
 {
-    t_ast   *pipe;
-    pipe = (t_ast *)malloc(sizeof(t_ast));
-    if (!pipe)
-        min_free_ast(left);
-    ft_bzero(pipe, sizeof(t_ast));
-    pipe->key = pipenode;
-    pipe->node.pipe = (t_pipenode *)malloc(sizeof(t_pipenode));
-    if (!pipe->node.pipe)
-        min_free_ast(left);
-    ft_bzero(pipe->node.pipe, sizeof(t_pipenode));
+	t_ast   *pipe;
+
+	pipe = (t_ast *)malloc(sizeof(t_ast));
+	if (!pipe)
+		return (NULL);
+	ft_bzero(pipe, sizeof(t_ast));
+	pipe->key = pipenode;
+	pipe->node.pipe = (t_pipenode *)malloc(sizeof(t_pipenode));
+	if (!pipe->node.pipe)
+		return (NULL);
+	ft_bzero(pipe->node.pipe, sizeof(t_pipenode));
 	if (first)
 	{
-    	pipe->node.pipe->left = left;
-		if (pipe->node.pipe->left->key == route)
-			pipe->node.pipe->left.route->up = pipe;	
+		pipe->node.pipe->left = left;
+		if (pipe->node.pipe->left->key == sub)
+			pipe->node.pipe->left->node.sup->up = pipe;	
 		else
-			pipe->node.pipe->left.job->up = pipe;
+			pipe->node.pipe->left->node.job->up = pipe;
 	}
-    return (pipe);
+	return (pipe);
 }
 
 
+/*
+min_pipenode	--> 1. check if parse_error
+               	--> 2. move upwards to last postition to create new pipeenode
+                --> 3. if first pipenode create pipenode and linked in ast and prev in left tree
+                --> 4. add new routenode in pipenode list
+                return next token and clean total ast if any malloc failed or parse error.
 
+
+
+*/
 
 
 
 t_lexer *min_pipenode(t_lexer *token, t_ast **ast)
 {
-    t_ast	*temp;
+	t_ast	**left;
 	t_ast	*oldpipe;
-
-    temp = *ast;
-    if (*ast)
-    {
-        if ((*ast)->key == job)
-            *ast = (*ast)->node.job->up;
-        if ((*ast)->key == route)
-            *ast = (*ast)->node.route->up;
-    }
-	if (*ast)
-	{	
-		if ((*ast)->key == pipe)
-		{
-			oldpipe = *ast;	
-			*ast = (*ast)->node.pipe->next;
-			*ast = t_init_pipenode(temp, 0);
-			(*ast)->node.pipe->prev = oldpipe;
-		}					
-		else if ((*ast)->key == route)
-			*ast = ft_init_pipenode(temp, 1);
-	}
+	
+	if (!(*ast) || (*ast)->key == routenode)
+		min_Parse_error(token, ast);
 	else
-		*ast = ft_init_pipenode(temp, 1);	
-	return (token->next);
+	{
+		left = ast;
+		if ((*ast)->key == jobnode)
+            		*ast = (*ast)->node.job->up;
+        	else if ((*ast)->key == subnode)
+            		*ast = (*ast)->node.sub->up;
+		if (!(*ast) || (*ast)->key == subnode))
+        	{       
+			*ast = ft_init_pipenode(left, 1);
+			if (!(*ast))
+				min_parse_malloc_fail(left);
+		}
+		else
+		{      
+			oldpipe = *ast; 
+                       	*ast = (*ast)->node.pipe->next;
+                        *ast = t_init_pipenode(left, 0);
+			if (!(*ast))
+				min_parse_malloc_fail(left);
+			else
+                        	(*ast)->node.pipe->prev = oldpipe;
+		}
+	}
+        return (token->next);
 }		

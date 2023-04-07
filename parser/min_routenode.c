@@ -43,28 +43,25 @@ static t_ast *ft_set_routenode(t_ast **ast, t_ast *down, t_lexer *token)
 {
 	t_ast **temp;
 	
+	temp = ast;
+	*ast = ft_init_routenode();
+	if (!(*ast))
+	{
+		min_parse_malloc_fail(temp);
+		return (ast);
+	}
 	if (!token)
 	{
-		temp = ast;
-		*ast = ft_init_routenode();
-		if (*ast)
-		{
-			(*ast)->node.route->up = *temp;
-			if (*temp)
-				(*temp)->node.sub->down = *ast
-			(*ast)->node.route->down = down;
-		}
+		(*ast)->node.route->up = *temp;
+		if (*temp)
+			(*temp)->node.sub->down = *ast
+		(*ast)->node.route->down = down;
 	}
 	else
 	{
-		temp = ast; 
-		*ast = ft_init_routenode();
-		if (*ast)
-		{
-			(*ast)->node.route->prev = *temp;
-			(*temp)->node.route->next = *ast;
-			(*temp)->node.route->rvalue = token->value;	
-		}
+		(*ast)->node.route->prev = *temp;
+		(*temp)->node.route->next = *ast;
+		(*temp)->node.route->rvalue = token->value;	
 	}
 	return (*ast);
 }
@@ -82,7 +79,7 @@ t_lexer	*min_routenode(t_lexer *token, t_ast **ast)
 	t_ast	*prev;
 	
 	if ((*ast)->key == pipenode || (*ast)->key == routenode)
-		min_Parse_error();
+		min_parse_error(ast);
 	else
 	{
 		*ast = ft_move_and_store_prev(*ast, &prev);
