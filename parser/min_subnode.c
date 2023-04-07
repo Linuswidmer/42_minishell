@@ -1,14 +1,65 @@
 #include "parser.h"
 
+/*
+if (!ast)
+			return (NULL);
+		if (ast->key == jobnode)
+			ast = ast->node.job->up;
+		else if (ast->key == pipe && ast->node.pipe->prev)
+			ast = ast->node.pipe->prev;
+		else if (ast->key == pipe && !ast->node.pipe->prev)
+			ast = ast->node.pipe->up;
+		/* check if && route*/
+		else if (ast->key == route && ast->node.route->prev
+			ast = ast->node.route->prev;
+		else if (ast->key == route && ast->node.route->rvalue is && || ;)
+			 ast = 	ast->node.route->up;
+		else if (ast->key == route && ast->node.route->rvalue is () && !first)
+			return (ast);
+		else if (ast->key == route && ast->node.route->rvalue is () && first)
+			ast =  ast->node.route->up;
+		ft_close_para(ast, 0);
+}*
+
+
+
+static t_ast	*ft_navigate_to_next_sub(t_ast *ast, char first)
+{
+	if (ast)		
+	{
+		if (ast->key == jobnode)
+                	ast = ast->node.job->up;
+        	else if (ast->key == subnode && first)
+                	ast = ast->node.sub->up;
+		else if (ast->key == pipe && ast->node.pipe->prev)
+                        ast = ast->node.pipe->prev;
+        	else if (ast->key == pipe && !ast->node.pipe->prev)
+                        ast = ast->node.pipe->up;
+		else if (ast->key == subnode  && !first)
+                        return (ast);
+		return (ft_navigate_to_next_sub(ast, 0));
+       	}	
+	return (ast);
+}
 
 
 
 
+static t_ast	*ft_close_para(t_ast **ast)
+{
+	t_ast **temp;
 
-   if ((*ast)->key == pipenode || (*ast)->key == routenode)
-                min_Parse_error(ast);
-
-
+	if (!*ast || (*ast)->key == pipenode || (*ast)->key == routenode)
+                min_parse_error(ast);
+	else
+	{
+		temp = ast;
+		*ast = ft_navigate_to_next_sub(*ast, 1);
+		if (!*ast)
+			min_parse_error(temp);
+	}
+	return (ast)
+}
 
 
 static t_ast	*ft_init_subnode(t_ast *up)
@@ -23,9 +74,9 @@ static t_ast	*ft_init_subnode(t_ast *up)
         sub->node.sub = (t_subnode *)malloc(sizeof(t_subnode));
         if (!sub->node.sub)
                 return (NUll);
-        ft_bzero(job->node.job, sizeof(t_jobnode));
-        job->node.job->up = up;
-        return (job);
+        ft_bzero(sub->node.sub, sizeof(t_subnode));
+        sub->node.sub->up = up;
+        return (sub);
 
 
 
@@ -37,6 +88,11 @@ static t_ast  *ft_open_para(t_ast **ast)
 	temp = *ast;
 	old = ast;	
 	*ast = ft_init_subnode(temp);
+	if (!*ast)
+	{
+		min_parse_malloc_fail(old);	
+		return (*ast)
+	}	
 	if (temp->key == subnode)
 		(*old)->node.sub->down = *ast; 
 	if (temp->key == pipenode)
@@ -55,9 +111,7 @@ min_subnode
 */
 t_lexer *min_subnode(t_lexer *token, t_ast **ast)
 {
-	if ((*ast)->key == pipenode || (*ast)->key == routenode)
-                min_Parse_error(ast);
-	else if (min_token_is_para() == 1)
+	if (min_token_is_para() == 1)
 		*ast = ft_open_para(ast);
 	else
 		*ast = ft_close_para(ast);
