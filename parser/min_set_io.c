@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 14:54:47 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/07 15:26:20 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/07 17:51:08 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static t_ionode *ft_init_io(t_lexer *token)
 	if (!io)
 		return (NULL);
 	ft_bzero(io, sizeof(t_ionode));
-	io->value = token->value;
+	io->value = token->key;
 	return (io);
 }
 

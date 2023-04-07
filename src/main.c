@@ -6,12 +6,13 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:19:36 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/07 13:08:12 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/07 17:50:59 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "lexer.h"
+#include "parser.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <termios.h>
@@ -47,6 +48,7 @@ int main()
 		add_history(readline_input);
 		token_list = lexer(readline_input);
 		print_token_list(token_list);
+		min_parser(token_list);
 		free(readline_input);
 	}
 	return 0;

@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:02:20 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/07 16:17:11 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/07 17:50:54 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,15 @@
 # include "lexer.h"
 # include <stdlib.h>
 # include "libft.h"
+
+# ifndef _DEBUG1	
+#  define _DEBUG1 1	
+# endif
+
+# ifndef _DEBUG    
+#  define _DEBUG 0 
+# endif
+
 
 /* AST struct */
 typedef struct s_ast		t_ast;
@@ -78,7 +87,7 @@ struct s_cmdnode
 
 struct s_ionode
 {
-	char *value;
+	t_lexertype value;
 	char *file;
 	t_ionode *next;
 };
@@ -101,11 +110,11 @@ struct s_ast
 t_ast	*min_parser(t_lexer *token); /* x */
 void	min_parser_error(t_ast **ast, t_lexer *token);
 void    min_parser_malloc_fail(t_ast **ast);
-
+void	min_bring_ast_to_beginning(t_ast **ast);
 
 /* ROUTE */
 t_lexer *min_routenode(t_lexer *token,t_ast **ast);
-int     min_is_route(t_lexertype key);
+int     min_token_is_route(t_lexertype key);
 
 /* SUB */
 int		min_token_is_para(t_lexertype key);
@@ -135,4 +144,11 @@ t_cmdnode	*min_last_cmdnode(t_cmdnode *node);
 /* WORD */
 int     min_token_is_word(t_lexertype key);/*x*/
 	
+/* DEBUG */ 
+void min_print_io(t_ionode *io);
+void min_print_cmd (t_cmdnode *cmd);
+void min_print_ast(void);
+
+
+
 #endif
