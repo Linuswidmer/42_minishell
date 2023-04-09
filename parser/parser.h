@@ -63,7 +63,7 @@ struct s_routenode
 
 
 struct s_pipenode
-{
+n{
 	t_ast *next;
 	t_ast *prev;
 	t_ast *up;

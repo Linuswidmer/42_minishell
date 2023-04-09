@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "parser.h"
 
-char *lexertypes_names[] =
+char *lexertype1_names[] =
 {
     "EMPTY",
     "DQUOTE",
@@ -31,6 +31,39 @@ char *lexertypes_names[] =
     "PIPE",
     "ESCAPE"
 };
+char *lexertype2_names[] =
+{
+    "EMPTY",
+    "DQUOTE",
+    "QUOTE",
+    "WORD",
+    "*",
+    "( ",
+    " )",
+    "<< ",
+    ">> ",
+    "< ",
+    "> ",
+    "$",
+    " && ",
+    " || ",
+    ";",
+    " | ",
+    "ESCAPE"
+};
+
+
+
+
+char *nodetype_names[] =
+{
+    "ROUTENODE",
+    "PIPENODE",
+    "JOBNODE",
+    "SUBNODE"
+};
+
+
 
 
 
@@ -39,8 +72,7 @@ void min_print_io(t_ionode *io)
 {
 	while (io)
 	{
-		printf("%s		", lexertypes_names[io->value]);
-		printf("%s		", io->file);		
+		printf(" %s | %s %s |", lexertype1_names[io->value], lexertype2_names[io->value],  io->file);		
 		io = io->next;
 	}
 }
@@ -51,10 +83,20 @@ void min_print_cmd (t_cmdnode *cmd)
 {
 	 while (cmd)
     {
-        printf("%s      ", cmd->arg);
+        printf("%s ", cmd->arg);
         cmd = cmd->next;
     }
 }
+
+
+
+void	min_print_jobnode(t_jobnode *job)
+{
+	min_print_io(job->in);
+	min_print_cmd(job->cmd);
+	min_print_io(job->out);
+}	
+		
 
 void min_print_ast(void)
 {
@@ -64,11 +106,15 @@ void min_print_ast(void)
 	while (1)
 	{
 		if ((*ast)->key == jobnode)
-        {
-            if ((*ast)->node.job->up)
-                *ast = (*ast)->node.job->up;
-            else
-                break;
+      		{
+			min_print_jobnode((*ast)->node.job);
+            		if ((*ast)->node.job->up)
+			{
+                		*ast = (*ast)->node.job->up;
+				
+			}	
+            		else
+                		break;
         }
         if ((*ast)->key == subnode)
         {

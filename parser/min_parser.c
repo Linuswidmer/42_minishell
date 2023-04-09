@@ -114,4 +114,4 @@ t_ast	*min_parser(t_lexer *token)
 	if (_DEBUG)
 		min_print_ast();
 	return (ast);
-}
+lexertype1_names[io->value],}
