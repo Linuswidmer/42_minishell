@@ -58,6 +58,9 @@ clean:
 	$(REMOVE) $(OBJS)
 	$(REMOVE) $(NAME)
 
+libclean: 
+	make fclean -C ./libft
+
 
 
 

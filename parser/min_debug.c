@@ -140,7 +140,7 @@ void min_print_ast(t_ast *ast)
 	while (1)
 	{
 		
-	//	printf("NODETYPE is: %s     \n", nodetype_names[ast->key]);
+//	printf("NODETYPE is: %s     \n", nodetype_names[ast->key]);
 		if (ast->key == jobnode)
       	{
 			min_print_jobnode(ast->node.job);
@@ -152,13 +152,13 @@ void min_print_ast(t_ast *ast)
 		}
         if (ast->key == subnode)
         {	
-			min_print_subnode(vt);
-            if (ast->node.sub->up && vt)
+		min_print_subnode(vt);
+	if (ast->node.sub->up && vt)
                 ast = ast->node.sub->up;
-            else if (!vt)
-        		ast = ast->node.sub->down;       	
-			else
-				break;		
+	else if (!vt)
+        	ast = ast->node.sub->down;       	
+	else
+		break;		
         }
         if (ast->key == pipenode)
         {
@@ -169,15 +169,17 @@ void min_print_ast(t_ast *ast)
 				vt = 0;
 			}
 			else if (!vt)
-                ast = ast->node.pipe->down;
-            else 
+			{
+                	ast = ast->node.pipe->down;
+			}	
+            		else 
 			{
 				while (ast->node.pipe->prev)
-            		ast = ast->node.pipe->prev;
+            				ast = ast->node.pipe->prev;
 				if (ast->node.pipe->up)
 					ast = ast->node.pipe->up;
 				else
-                	break;
+                			break;
 			}
         }
         if (ast->key == routenode)

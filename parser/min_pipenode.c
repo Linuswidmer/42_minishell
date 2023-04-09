@@ -53,7 +53,7 @@ t_lexer *min_pipenode(t_lexer *token, t_ast **ast)
             		*ast = (*ast)->node.job->up;
 		else if ((*ast)->key == subnode)
             		*ast = (*ast)->node.sub->up;
-		if (!*ast || (*ast)->key == subnode)
+		if (!*ast || (*ast)->key == subnode || (*ast)->key == routenode)
        	{     
 			new = ft_init_pipenode();
 			if (!new)
@@ -69,6 +69,7 @@ t_lexer *min_pipenode(t_lexer *token, t_ast **ast)
   				new->node.pipe->up = temp->node.sub->up;
                 temp->node.sub->up = new;
 			}
+				
 			*ast =new;
 		}
 		temp = *ast;
