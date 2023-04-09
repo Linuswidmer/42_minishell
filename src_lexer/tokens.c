@@ -6,25 +6,11 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 13:13:58 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/07 09:38:44 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/09 20:06:47 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-
-t_lexertype check_double_tokens(char c, char next)
-{
-	if (c == '<' && next == '<')
-		return (l_heredoc);
-	else if (c == '>' && next == '>')
-		return (l_append);
-	else if (c == '&' && next == '&')
-		return (l_and);
-	else if (c == '|' && next == '|')
-		return (l_or);
-	else
-		return (l_empty);
-}
 
 t_lexertype check_single_tokens(char c)
 {
@@ -42,8 +28,6 @@ t_lexertype check_single_tokens(char c)
 		return (l_in);
 	else if (c == '>')
 		return (l_out);
-	else if (c == '$')
-		return (l_dollar);
 	else if (c == ';')
 		return (l_semi);
 	else if (c == '|')
@@ -52,6 +36,22 @@ t_lexertype check_single_tokens(char c)
 		return (l_escape);
 	else	
 		return (l_word);
+}
+
+t_lexertype check_double_tokens(char c, char next)
+{
+	if (c == '<' && next == '<')
+		return (l_heredoc);
+	else if (c == '>' && next == '>')
+		return (l_append);
+	else if (c == '&' && next == '&')
+		return (l_and);
+	else if (c == '|' && next == '|')
+		return (l_or);
+	else if (c == '$' && check_single_tokens(next) == l_word && next != '\0') 
+		return (l_dollar);
+	else
+		return (l_empty);
 }
 
 t_lexertype check_token(char c, char next)
