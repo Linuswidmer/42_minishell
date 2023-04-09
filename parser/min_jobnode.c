@@ -6,13 +6,13 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:31:01 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/07 18:06:18 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/09 20:29:45 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-static t_ast *ft_init_jobnode(t_ast *up)
+static t_ast *ft_init_jobnode()
 {
 	t_ast	*job;
 	job = (t_ast *)malloc(sizeof(t_ast));
@@ -24,7 +24,6 @@ static t_ast *ft_init_jobnode(t_ast *up)
 	if (!job->node.job)
 		return (NULL);	
 	ft_bzero(job->node.job, sizeof(t_jobnode));
-	job->node.job->up = up;
 	return (job);
 }
 
@@ -47,21 +46,23 @@ min_jobnode
 
 t_lexer	*min_jobnode(t_lexer *token, t_ast **ast)
 {
-	t_ast **temp;
+	t_ast *new;
 
-	temp = ast;
+	new = ft_init_jobnode();
+	if (!new)
+		min_parser_malloc_fail(ast);
+	else		
+		new->node.job->up = *ast;	
 	if (*ast)
 	{
 		if ((*ast)->key == pipenode)
-			*ast = (*ast)->node.pipe->right;				
+			(*ast)->node.pipe->down = new;				
 		else if ((*ast)->key == routenode)
-			*ast = (*ast)->node.route->down;
+			(*ast)->node.route->down = new;
 		else if ((*ast)->key == subnode)
-			*ast = (*ast)->node.sub->down;
+			(*ast)->node.sub->down = new;
 	}
-	*ast = ft_init_jobnode(*temp);
-	if (!(*ast))
-		min_parser_malloc_fail(temp);
+	*ast = new;
 	while (token && *ast)
 	{
 		if (min_token_is_io(token->key))

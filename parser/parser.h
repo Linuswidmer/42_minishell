@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:02:20 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/09 16:36:54 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/09 22:09:59 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # endif
 
 # ifndef _DEBUG    
-#  define _DEBUG 0 
+#  define _DEBUG 1 
 # endif
 
 
@@ -53,7 +53,7 @@ struct s_subnode
 
 struct s_routenode
 {
-	char *rvalue;
+	t_lexertype rvalue;
 	t_ast *up;
 	t_ast *down;
 	t_ast *next;
@@ -148,7 +148,8 @@ int     min_token_is_word(t_lexertype key);/*x*/
 /* DEBUG */ 
 void min_print_io(t_ionode *io);
 void min_print_cmd (t_cmdnode *cmd);
-void min_print_ast(void);
+void min_print_ast(t_ast *ast);
+void    min_print_jobnode(t_jobnode *job);
 
 
 

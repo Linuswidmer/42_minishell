@@ -6,23 +6,23 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:43:03 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/07 15:16:32 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/09 22:09:53 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "parser.h"
-
+/*
 static t_ast *ft_move_and_store_prev(t_ast *ast, t_ast **prev)
 {
 	*prev = ast;
-	 if (ast->key == jobnode)
-                ast = ast->node.job->up;
-        else if (ast->key == subnode)    
-                ast = ast->node.sub->up;
-        else if (ast->key == pipenode)
+	if (ast->key == jobnode)
+        ast = ast->node.job->up;
+	else if (ast->key == subnode)    
+		ast = ast->node.sub->up;
+	else if (ast->key == pipenode)
 		ast = ast->node.pipe->up;
 	return (ast);
 }
-
+*/
 static t_ast	*ft_init_routenode(void) 
 {
 	t_ast *route;
@@ -38,7 +38,7 @@ static t_ast	*ft_init_routenode(void)
         ft_bzero(route->node.route, sizeof(t_routenode));
         return (route);
 }
-
+/*
 static t_ast *ft_set_routenode(t_ast **ast, t_ast *down, t_lexer *token)
 {
 	t_ast **temp;
@@ -65,6 +65,34 @@ static t_ast *ft_set_routenode(t_ast **ast, t_ast *down, t_lexer *token)
 	}
 	return (*ast);
 }
+*/
+t_ast	*ft_find_brange(t_ast *ast, t_ast **temp)
+{
+	if (ast->key == jobnode)
+	{
+		if (ast->node.job->up && ast->node.job->up->key != subnode) 
+			ast = ast->node.job->up;
+		else
+			*temp = ast->node.job->up;
+	}		
+	else if (ast->key == subnode)
+	{
+		if (ast->node.sub->up && ast->node.sub->up->key != subnode)
+            ast = ast->node.sub->up;
+		else
+			*temp = ast->node.sub->up;
+	}
+	if (ast->key == pipenode)
+	{
+		while ( ast->node.pipe->prev)
+			ast =  ast->node.pipe->prev;
+		if (ast->node.pipe->up && ast->node.pipe->up->key != subnode)
+            ast = ast->node.pipe->up;
+		else
+			*temp = ast->node.pipe->up;
+	}	
+	return (ast);
+}
 
 /*    
 min_routenode	--> 1. check if parse_error
@@ -76,23 +104,45 @@ min_routenode	--> 1. check if parse_error
 t_lexer	*min_routenode(t_lexer *token, t_ast **ast)
 {
 
-	t_ast	*prev;
+	t_ast	*new;
+	t_ast   *temp;
 	
-	if ((*ast)->key == pipenode || (*ast)->key == routenode)
+	if (!(*ast) || (*ast)->key == pipenode || (*ast)->key == routenode)
 		min_parser_error(ast, token);
 	else
-	{
-		*ast = ft_move_and_store_prev(*ast, &prev);
-		if ( *ast && (*ast)->key == pipenode)
+	{	
+		new = ft_init_routenode();
+		if (!new)
+			 min_parser_malloc_fail(ast);
+		else
 		{
-			while ((*ast)->node.pipe->prev)
-				*ast = (*ast)->node.pipe->prev;
-			*ast = ft_move_and_store_prev(*ast, &prev);
+			*ast = ft_find_brange(*ast, &temp);  				
+			if ( !temp || temp->key == subnode)
+			{
+				new->node.route->up = temp;
+				if (temp)
+					temp->node.sub->down = new;
+				new->node.route->down = *ast;
+				if ((*ast)->key == jobnode)
+					(*ast)->node.job->up = new; 			
+				if ((*ast)->key == pipenode)
+					(*ast)->node.pipe->up = new;
+				if ((*ast)->key == subnode)
+					(*ast)->node.sub->up = new;
+				*ast = new;
+			}	
+			temp = *ast;
+			new = ft_init_routenode();
+        	if (!new)
+                min_parser_malloc_fail(ast);
+			else
+			{
+        		(*ast)->node.route->next = new;
+				(*ast)->node.route->rvalue = token->key;
+        		new->node.route->prev = temp;
+        		*ast = new;
+			}
 		}
-		if (!(*ast) || (*ast)->key == subnode)
-			*ast = ft_set_routenode( ast, prev, NULL);
-		if ((*ast))
-			*ast = ft_set_routenode(ast, NULL, token);
-	}
+	}	
 	return (token->next);
 }		

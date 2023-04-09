@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:26:53 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/07 18:06:58 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/09 19:49:33 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ static t_ast	*ft_navigate_to_next_sub(t_ast *ast, char first)
 	{
 		if (ast->key == jobnode)
                 	ast = ast->node.job->up;
-        	else if (ast->key == subnode && first)
+        else if (ast->key == subnode && first)
                 	ast = ast->node.sub->up;
 		else if (ast->key == pipenode && ast->node.pipe->prev)
                         ast = ast->node.pipe->prev;
-        	else if (ast->key == pipenode && !ast->node.pipe->prev)
+        else if (ast->key == pipenode && !ast->node.pipe->prev)
                         ast = ast->node.pipe->up;
 		else if (ast->key == subnode  && !first)
                         return (ast);
@@ -73,22 +73,24 @@ static t_ast  *ft_open_para(t_ast **ast, t_lexer *token)
 {
 	t_ast *temp;
 	t_ast **old;
-
-	if ((*ast)->key == jobnode || ((*ast)->key == subnode && token->prev->key == l_paraclose))
+	if (*ast)
 	{
-		min_parser_error(ast, token);
-		return (NULL);
+		if ((*ast)->key == jobnode || ((*ast)->key == subnode && token->prev->key == l_paraclose))
+		{
+			min_parser_error(ast, token);
+			return (NULL);
+		}
 	}
 	temp = *ast;
 	old = ast;	
 	*ast = ft_init_subnode(temp);
 	if (!*ast)
 		min_parser_malloc_fail(old);	
-	else if (temp->key == subnode)
+	else if (temp && temp->key == subnode)
 		(*old)->node.sub->down = *ast; 
-	else if (temp->key == pipenode)
-		(*old)->node.pipe->right = *ast;
-	else if (temp->key == routenode)
+	else if (temp && temp->key == pipenode)
+		(*old)->node.pipe->down = *ast;
+	else if (temp && temp->key == routenode)
 		(*old)->node.route->down = *ast;
 	return (*ast);
 }

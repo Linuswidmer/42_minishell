@@ -6,14 +6,15 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 19:20:03 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/07 19:49:13 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/09 19:50:24 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "parser.h"
 
 void	min_bring_ast_to_beginning(t_ast **ast)
 {
-	
+	if (!*ast)	
+		return;		
 	while (1)
 	{
 		if ((*ast)->key == jobnode)
@@ -23,14 +24,14 @@ void	min_bring_ast_to_beginning(t_ast **ast)
 			else
 				break;
 		}
-		if ((*ast)->key == subnode)
+		else if((*ast)->key == subnode)
 		{
 			if ((*ast)->node.sub->up)
                 *ast = (*ast)->node.sub->up;
             else
                 break;
         }
-		if ((*ast)->key == pipenode)
+		else if ((*ast)->key == pipenode)
 		{
 			if ((*ast)->node.pipe->prev)
 				*ast = (*ast)->node.pipe->prev;
@@ -39,7 +40,7 @@ void	min_bring_ast_to_beginning(t_ast **ast)
 			else
                 break;
         }
-		if ((*ast)->key == routenode)
+		else if ((*ast)->key == routenode)
         {
             if ((*ast)->node.route->prev)
                 *ast = (*ast)->node.route->prev;
