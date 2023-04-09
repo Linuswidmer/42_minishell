@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:02:20 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/07 19:49:09 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/09 16:36:54 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,8 @@ typedef enum e_type
 
 struct s_subnode
 {
-	e_type	key;
 	t_ast *up;
-        t_ast *down;
+    t_ast *down;
 };
 
 struct s_routenode
@@ -63,12 +62,12 @@ struct s_routenode
 
 
 struct s_pipenode
-n{
+{
 	t_ast *next;
 	t_ast *prev;
 	t_ast *up;
-	t_ast *left;
-	t_ast *right;
+	t_ast *down;	
+	
 };
 
 struct s_jobnode
