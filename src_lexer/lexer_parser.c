@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   lexer_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:24:19 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/07 09:37:33 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/09 19:54:50 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int parse_quote(char *input, int pos, t_lexer *tmp, int start, t_lexertype token
 {
 	t_lexertype next_token;
   int i;
-  int end;
+  int len;
 
   start++;
   i = 0;
@@ -48,11 +48,11 @@ int parse_quote(char *input, int pos, t_lexer *tmp, int start, t_lexertype token
 		else
 			pos++;
   }
-  end = pos - 1;
-  if (end - start >= 0)
+  len = pos - start;
+  if (len - 1 >= 0)
   {
     tmp->key = l_word;
-    tmp->value = ft_substr(input, start, end);
+    tmp->value = ft_substr(input, start, len);
   }
   return (pos + 1);
 }
