@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:24:19 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/10 10:39:46 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/10 11:54:09 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int parse_dollar(char *input, int pos, t_lexer *tmp, int start)
 	t_lexertype next_token;
 
 	tmp->key = l_dollar;
-	start++;
 	i = 0;
 	while (input[pos] != '\0')
 	{
@@ -41,31 +40,35 @@ int parse_quote(char *input, int pos, t_lexer *tmp, int start, t_lexertype token
 	t_lexertype next_token;
 	int i;
 	int len;
+	int dollar_flag;
 
 	start++;
 	i = 0;
+	dollar_flag = 0;
 	while (input[pos] != '\0')
 	{
 		next_token = check_token(input[pos], input[pos + 1]);
 		if (next_token == token)
 			break;
-		else if (token == l_dquote && next_token == l_dollar)
-			break ;
 		else
 			pos++;
+		if (token == l_dquote && next_token == l_dollar)
+			dollar_flag = 1;
 	}
 	len = pos - start;
 	if (len - 1 >= 0)
 	{
-		tmp->key = l_word;
+		if (dollar_flag == 1)
+			tmp->key = l_dollar;
+		else
+			tmp->key = l_word;
 		tmp->value = ft_substr(input, start, len);
 		if (!tmp->value)
 			return (-1);
 	}
-	if (next_token == l_dollar)
-		return (pos);
-	else
-		return (pos + 1);
+	if (input[pos] == '\0')
+		return (-2);
+	return (pos + 1);
 }
 
 int parse_double_tokens(char *input, int pos, t_lexertype token, t_lexer *tmp)
