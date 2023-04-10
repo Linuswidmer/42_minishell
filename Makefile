@@ -6,7 +6,7 @@
 #    By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/07 09:41:35 by lwidmer           #+#    #+#              #
-#    Updated: 2023/04/09 22:09:48 by jstrotbe         ###   ########.fr        #
+#    Updated: 2023/04/10 15:52:31 by jstrotbe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ REMOVE = rm -f
 
 FILENAMES_LEXER = lexer tokens check_token_list lexer_parser expander lexer_utils 
 
-FILENAMES_PARSER = min_parser_error min_set_file_io min_token_is_para min_jobnode	min_parser_malloc_fail min_set_io min_token_is_route min_last_cmdnode min_pipenode min_subnode min_token_is_word min_last_ionode min_routenode min_token_is_io min_parser min_set_cmd min_token_is_io_in min_debug 
+FILENAMES_PARSER = min_parser_error min_set_file_io min_token_is_para min_jobnode	min_parser_malloc_fail min_set_io min_token_is_route min_last_cmdnode min_pipenode min_subnode min_token_is_word min_last_ionode min_routenode min_token_is_io min_parser min_set_cmd min_token_is_io_in min_debug  min_free_ast
 
 FILENAMES_MS = main
 

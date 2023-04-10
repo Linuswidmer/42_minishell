@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:19:36 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/07 17:50:59 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/10 15:52:43 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,24 @@ void clear_terminal()
   printf("\033[H");
 }
 
+void ft_free_token_list(t_lexer **list)
+{
+	t_lexer **temp;
+	
+	while (*list)
+	{
+		temp = list;
+		*list = (*list)->next;
+		if ((*temp)->value)
+		{
+			free((*temp)->value);
+			(*temp)->value = NULL;
+		}	
+		free (*temp);
+		*temp = NULL;
+	}
+}
+
 int main() 
 {
 	clear_terminal();
@@ -49,6 +67,7 @@ int main()
 		token_list = lexer(readline_input);
 		print_token_list(token_list);
 		min_parser(token_list);
+		//ft_free_token_list(&token_list);		
 		free(readline_input);
 	}
 	return 0;
