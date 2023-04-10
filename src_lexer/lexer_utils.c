@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 10:04:52 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/07 10:05:00 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/10 10:22:50 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ char *lexertype_names[] =
     "OR",
     "SEMI",
     "PIPE",
-    "ESCAPE"
+    "ESCAPE",
+	"AMP"
 };
 
 int skip_space_tab(char *input, int pos)
@@ -45,6 +46,8 @@ t_lexer *init_lexer_struct()
 	t_lexer *lexer;
 
 	lexer = malloc(sizeof(t_lexer));
+	if (!lexer)
+		return (NULL);
 	lexer->key = l_empty;
 	lexer->value = NULL;
 	lexer->next = NULL;

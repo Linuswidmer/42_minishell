@@ -6,13 +6,13 @@
 #    By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/01 16:53:37 by lwidmer           #+#    #+#              #
-#    Updated: 2023/04/07 12:03:39 by lwidmer          ###   ########.fr        #
+#    Updated: 2023/04/10 10:07:21 by lwidmer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = lexer
 
-FILENAMES = main lexer utils tokens check_token_list lexer_parser expander lexer_utils
+FILENAMES = main lexer utils tokens check_token_list lexer_parser expander lexer_utils free_lexer
 
 SRCS_DIR = ./
 OBJS_DIR = ./

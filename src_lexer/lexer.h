@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 16:55:26 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/07 09:33:37 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/10 10:19:40 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef enum
 	l_semi,
 	l_pipe,
 	l_escape,
+	l_amp,
 } t_lexertype ;	
 
 typedef struct s_lexer 

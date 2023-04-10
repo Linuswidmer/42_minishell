@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 13:13:58 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/09 20:06:47 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/10 10:22:33 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ t_lexertype check_single_tokens(char c)
 		return (l_pipe);
 	else if (c == 92)
 		return (l_escape);
+	else if (c == '&')
+		return (l_amp);
 	else	
 		return (l_word);
 }
