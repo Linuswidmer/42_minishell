@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/01 15:20:37 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/07 17:57:11 by lwidmer          ###   ########.fr       */
+/*   Created: 2022/12/15 10:59:31 by lwidmer           #+#    #+#             */
+/*   Updated: 2022/12/15 11:00:06 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-#include <readline/history.h>
+void	ft_putendl_fd(char *s, int fd)
+{
+	int	i;
 
-# endif
+	i = 0;
+	while (s[i] != '\0')
+	{
+		ft_putchar_fd(s[i], fd);
+		i++;
+	}
+	ft_putchar_fd('\n', fd);
+}

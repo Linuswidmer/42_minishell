@@ -1,18 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   min_token_is_io_in.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/01 15:20:37 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/07 17:57:11 by lwidmer          ###   ########.fr       */
+/*   Created: 2023/04/04 16:00:43 by jstrotbe          #+#    #+#             */
+/*   Updated: 2023/04/07 18:09:35 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "parser.h"	
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
 
-#include <readline/history.h>
+int  min_token_is_io_in(t_lexertype key)
+{
+    if (key == l_in || key == l_heredoc)
+        return (1);
+    else
+        return (0);
+}
 
-# endif

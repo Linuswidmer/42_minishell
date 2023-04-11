@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/01 15:20:37 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/07 17:57:11 by lwidmer          ###   ########.fr       */
+/*   Created: 2022/12/15 09:28:01 by lwidmer           #+#    #+#             */
+/*   Updated: 2022/12/15 09:28:38 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-
-#include <readline/history.h>
-
-# endif
+int	ft_isprint(int c)
+{
+	if (c >= 32 && c < 127)
+		return (16384);
+	else
+		return (0);
+}

@@ -1,18 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/01 15:20:37 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/07 17:57:11 by lwidmer          ###   ########.fr       */
+/*   Created: 2022/12/15 10:07:50 by lwidmer           #+#    #+#             */
+/*   Updated: 2022/12/15 10:08:37 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-#include <readline/history.h>
+void	*ft_calloc(size_t nmeb, size_t size)
+{
+	void	*ptr;
 
-# endif
+	if (size != 0 && nmeb > 2147483647 / size)
+		return (0);
+	if (nmeb != 0 && size > 2147483647 / nmeb)
+		return (0);
+	ptr = malloc(nmeb * size);
+	if (ptr)
+	{
+		ft_bzero(ptr, nmeb * size);
+		return (ptr);
+	}
+	return (ptr);
+}

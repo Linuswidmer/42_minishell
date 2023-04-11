@@ -1,32 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander.c                                         :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/07 09:43:16 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/07 18:02:31 by lwidmer          ###   ########.fr       */
-/*   Created: 2023/04/01 16:55:26 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/07 16:17:14 by jstrotbe         ###   ########.fr       */
+/*   Created: 2022/12/15 09:45:34 by lwidmer           #+#    #+#             */
+/*   Updated: 2022/12/15 09:54:48 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "libft.h"
 
-void expand_dollar_tokens(t_lexer *first)
+size_t	ft_strlcat(char *dest, const char *src, size_t size)
 {
-	char *varname;
+	size_t	i;
+	size_t	j;
+	size_t	result;
 
-	while (first)
+	i = 0;
+	j = 0;
+	if (size > ft_strlen(dest))
+		result = ft_strlen(src) + ft_strlen(dest);
+	else
+		return (ft_strlen(src) + size);
+	while (dest[i] != '\0')
+		i++;
+	if (size != 0)
 	{
-		if (first->key == l_dollar)
+		while (src[j] != '\0' && i < size - 1)
 		{
-			first->key = l_word;
-			varname = first->value;
-			first->value = ft_strdup("content");
-			free(varname);
+			dest[i] = src[j];
+			i++;
+			j++;
 		}
-		first = first->next;
+		dest[i] = '\0';
 	}
+	return (result);
 }

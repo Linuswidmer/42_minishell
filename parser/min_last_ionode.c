@@ -1,18 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   min_last_ionode.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/01 15:20:37 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/07 17:57:11 by lwidmer          ###   ########.fr       */
+/*   Created: 2023/04/05 17:29:06 by jstrotbe          #+#    #+#             */
+/*   Updated: 2023/04/07 12:57:24 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
 
-#include <readline/history.h>
+#include "parser.h"
 
-# endif
+
+t_ionode *min_last_ionode(t_ionode *node)
+{
+        while (node->next)
+                node = node->next;
+    return (node);
+}

@@ -5,87 +5,111 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/01 17:46:27 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/01 18:53:16 by jstrotbe         ###   ########.fr       */
+/*   Created: 2023/04/03 15:59:26 by jstrotbe          #+#    #+#             */
+/*   Updated: 2023/04/09 19:50:18 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "parser.h"
 
-#include "jstr.h"
-
-void *last_node(void *node)
+char *lexertype3_names[] =
 {
-	while (node->next)
-		node = node->next;
-	return (node);
-} 
+    "EMPTY",
+    "DQUOTE",
+    "QUOTE",
+    "WORD",
+    "ASTERISK",
+    "PAROPEN",
+    "PARCLOSE",
+    "HEREDOC",
+    "APPEND",
+    "IN",
+    "OUT",
+    "DOLLAR",
+    "AND",
+    "OR",
+    "SEMI",
+    "PIPE",
+    "ESCAPE"
+};
 
-
-void	init_ROUTENODE(t_ROUTENODE **ast)
+char *nodetype_names3[] =
 {
-	t_ROUTENODE *end;
-		
-	if (!*ast)
-	{
-		*ast = (t_ROUTENODE *)malloc(sizeof(t_ROUTENODE));		 	
-		if (!*ast)
-			min_free_ast(**ast);
-		end = *ast;		
-	}
+    "ROUTENODE",
+    "PIPENODE",
+    "JOBNODE",
+    "SUBNODE"
+};
+
+
+
+
+
+
+static int	ft_token_is_jobnode(t_lexertype key)
+{
+	if (min_token_is_io(key) || min_token_is_word(key))
+		return (1);
 	else
-	{
-		end = last_node(*ast); 
-		end->next = (t_ROUTENODE *)malloc(sizeof(t_ROUTENODE));
-		if (!end->next)
-            min_free_ast(**ast);
-		end = end->next;
+		return (0);	 
+}
+
+static int	ft_token_is_pipenode(t_lexertype key)
+{
+	if (key == l_pipe)
+		return (1);
+	else 
+		return(0);		
+}
+ 
+static int	ft_token_is_routenode(t_lexertype key)
+{
+	return (min_token_is_route(key));		
+}
+
+static int	ft_token_is_subnode(t_lexertype key)
+{
+	return (min_token_is_para(key));	
+}
+
+/* 
+PARSER MAIN	--> check each token from lexer
+		--> create the right node
+	return a full ast from the first node if something goes wrong at the nodes it will return NULL
+*/
+t_ast	*min_parser(t_lexer *token)
+{
+	t_ast *ast;
+	
+	ast = NULL;
+	while (token)
+	{	
+		if (_DEBUG1)
+			printf("PARSER LEXERTYPE IS: %s    ", lexertype3_names[token->key]);
+		if (ft_token_is_jobnode(token->key))
+			token =	min_jobnode(token, &ast);	
+		else if (ft_token_is_pipenode(token->key))
+			token = min_pipenode(token, &ast);
+		else if (ft_token_is_routenode(token->key))			
+			token = min_routenode(token, &ast);
+		else if (ft_token_is_subnode(token->key))
+			token = min_subnode(token, &ast);
+		if (_DEBUG1 && ast)
+		{
+			printf("NODETYPE is: %s		", nodetype_names3[ast->key]);
+			if (ast->key == jobnode)
+			{	
+				min_print_jobnode(ast->node.job);
+ 			}
+			printf("\n");
+		}
+		if (!ast)
+		{
+			printf("ERROR\n");
+			break;
+		}	
 	}
-	ft_bzero(end, sizeof(t_ROUTENODE));
-	end->under = (t_JOBNODE *)malloc(sizeof(t_JOBNODE));
-	if (!end->under)
-            min_free_ast(**ast);
-	ft_bzero(end->under, sizeof(t_JOBNODE)); 
+	min_bring_ast_to_beginning(&ast);
+	if (_DEBUG)
+		min_print_ast(ast);
+	return (ast);
 }
-
-
-void	parser(t_lexer *data, t_ROUTENODE **ast)
-{
-	
-	init_ROUTENODE(ast);	
-	
-	while (data)
-	{
-		if (data->key == DQUOTE || data->key == QUOTE)	
-			data = data->next;
-		else
-			
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-int	main(void)
-{
-
-
-
-
-
-		
-}
-
-
-
-

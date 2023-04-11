@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   min_token_is_route.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/01 15:20:37 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/07 17:57:11 by lwidmer          ###   ########.fr       */
+/*   Created: 2023/04/05 19:59:01 by jstrotbe          #+#    #+#             */
+/*   Updated: 2023/04/07 15:41:54 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "parser.h"
 
-#include <readline/history.h>
-
-# endif
+int min_token_is_route(t_lexertype key)
+{
+	if (key == l_and)
+		return (1);
+	else if (key == l_or)
+		return (2);
+	else if (key == l_semi)
+		return (3);
+	else
+		return (0);
+}

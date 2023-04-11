@@ -1,18 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_putnbr_base.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/01 15:20:37 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/07 17:57:11 by lwidmer          ###   ########.fr       */
+/*   Created: 2022/12/22 09:41:17 by lwidmer           #+#    #+#             */
+/*   Updated: 2022/12/22 09:41:56 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-#include <readline/history.h>
+void	ft_putnbr_base(long int nbr, char *base)
+{
+	int		len;
+	char	print;
 
-# endif
+	len = ft_strlen(base);
+	if (nbr < 0)
+	{
+		write(1, "-", 1);
+		nbr = nbr * -1;
+	}
+	if (nbr < len)
+	{
+		print = base[nbr % len];
+		write(1, &print, 1);
+	}
+	else
+	{
+		ft_putnbr_base(nbr / len, base);
+		print = base[nbr % len];
+		write(1, &print, 1);
+	}
+}

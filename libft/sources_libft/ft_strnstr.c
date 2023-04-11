@@ -1,32 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander.c                                         :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/07 09:43:16 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/07 18:02:31 by lwidmer          ###   ########.fr       */
-/*   Created: 2023/04/01 16:55:26 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/07 16:17:14 by jstrotbe         ###   ########.fr       */
+/*   Created: 2022/12/15 10:03:43 by lwidmer           #+#    #+#             */
+/*   Updated: 2022/12/15 12:25:24 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "libft.h"
 
-void expand_dollar_tokens(t_lexer *first)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	char *varname;
+	size_t	i;
+	size_t	j;
 
-	while (first)
+	i = 0;
+	j = 0;
+	if (len < ft_strlen(little))
+		return (NULL);
+	if (little[i] == '\0')
+		return ((char *)big);
+	while (big[i] != '\0' && i < len)
 	{
-		if (first->key == l_dollar)
+		while (big[i] == little[j] && i < len)
 		{
-			first->key = l_word;
-			varname = first->value;
-			first->value = ft_strdup("content");
-			free(varname);
+			i++;
+			j++;
+			if (little[j] == '\0')
+				return ((char *)big + i - j);
 		}
-		first = first->next;
+		i = i - j + 1;
+		j = 0;
 	}
+	return (NULL);
 }

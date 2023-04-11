@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   min_parser_error.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/01 15:20:37 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/07 17:57:11 by lwidmer          ###   ########.fr       */
+/*   Created: 2023/04/05 18:29:10 by jstrotbe          #+#    #+#             */
+/*   Updated: 2023/04/07 13:01:50 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "parser.h"
 
-#include <readline/history.h>
 
-# endif
+
+
+
+void min_parser_error(t_ast **ast, t_lexer *token)
+{
+	(void)ast;
+	(void)token;
+}

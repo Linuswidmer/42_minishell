@@ -1,18 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_intlen_base.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/01 15:20:37 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/07 17:57:11 by lwidmer          ###   ########.fr       */
+/*   Created: 2022/12/22 09:42:26 by lwidmer           #+#    #+#             */
+/*   Updated: 2022/12/22 09:43:01 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-#include <readline/history.h>
+unsigned int	ft_intlen_base(long int n, unsigned int baselen)
+{
+	unsigned int	i;
 
-# endif
+	i = 0;
+	if (n < 0)
+	{
+		i++;
+		n = n * -1;
+	}
+	while (n > (baselen - 1))
+	{
+		i++;
+		n = n / baselen;
+	}
+	return (i + 1);
+}
