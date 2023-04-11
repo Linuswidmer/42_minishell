@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 14:35:06 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/09 19:18:33 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/11 17:19:28 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,12 @@ int main()
         close(fd[WRITE_END]); // close write end of the pipe
 
         // execute "yes" command
-        char *args[] = {"yes", NULL};
-        execve("/bin/yes", args, NULL);
+        char *args[] = {"ls","-l -a" NULL};
+        execve("/bin/ls" args, NULL);
         perror("execve");
         exit(EXIT_FAILURE);
     }
-
+i
     // Fork a second child process to execute the "head" command
     pid2 = fork();
     if (pid2 == -1) {

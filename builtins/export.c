@@ -6,96 +6,146 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:18:08 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/11 10:54:03 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/11 15:35:21 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
+#include "libft.h"
 
-char	**ft_split(char const *s, char c);
-
-typedef struct s_env_variable {
+typedef struct s_dict {
 	char *key;
 	char *value;
-	struct s_env_variable *next_var;
-}	t_env_variable;
+	struct s_dict *next_entry;
+}	t_dict;
 
 
-size_t	ft_strlen(const char *str)
+void write_to_env_variable(t_dict *var, char *key, char *value)
 {
-	size_t	i;
-
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
+	var->key = ft_strdup(key);
+	var->value = ft_strdup(value);
 }
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+t_dict *init_env_variable()
 {
-	size_t	index;
+	t_dict *var;
 
-	index = 0;
-	if (size == 0)
-		return (ft_strlen(src));
-	else
+	var = malloc(sizeof(t_dict));
+	if (!var)
+		return (NULL);
+	var->key = NULL;
+	var->value = NULL;
+	var->next_entry = NULL;
+	return (var);
+}
+
+void create_dict_on_startup(t_dict *var1, char **env)
+{
+	t_dict *var2;
+	char **split_str;
+	int	i;
+
+	i = 1;
+	split_str = ft_split(env[0], '=');
+	write_to_env_variable(var1, split_str[0], split_str[1]);
+	while (env[i])
 	{
-		while (index < (size - 1) && src[index] != '\0')
-		{
-			dest[index] = src[index];
-			index++;
-		}
-		dest[index] = '\0';
-		return (ft_strlen(src));
+		var2 = init_env_variable();
+		var1->next_entry = var2;
+		var1 = var2; 
+		split_str = ft_split(env[i], '=');
+		write_to_env_variable(var1, split_str[0], split_str[1]);
+		free(split_str[2]);
+		i++;
 	}
 }
 
-char	*ft_strdup(const char *s)
+t_dict *search_key_in_dict(t_dict *var, char *arg)
 {
-	char	*ptr;
-
-	ptr = malloc(ft_strlen(s) + 1);
-	if (!ptr)
-		return (NULL);
-	ft_strlcpy(ptr, s, ft_strlen(s) + 1);
-	return (ptr);
+	while (var)
+	{
+		if(ft_strncmp(var->key, arg, ft_strlen(arg)) == 0 && ft_strlen(arg) == ft_strlen(var->key))
+			return (var);
+		else
+			var = var->next_entry;
+	}
+	return (NULL);
 }
 
-t_env_variable *create_env_variable(char *key, char *value)
+t_dict *get_dict_last(t_dict *dict)
 {
-	t_env_variable *var;
+	while (dict->next_entry)
+		dict = dict->next_entry;
+	return (dict);
+}
 
-	var = malloc(sizeof(t_env_variable));
-	if (!var)
-		return (NULL);
-	var->key = ft_strdup(key);
-	var->value = ft_strdup(value);
-	var->next_var = NULL;
-	return (var);
+int export_check_if_valid(char *arg)
+{
+	int i;
+
+	i = 0;
+	while (arg[i] != '=' && arg[i] != '\0')
+	{
+		if (ft_isalpha(arg[i]) != 0 && (arg[i] != '_' && ft_strlen(arg) > 1))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int export(t_dict *dict, char *arg)
+{
+	t_dict *var;
+	t_dict *last;
+	char **split_str;
+	char *new_key;
+	char *new_value;
+
+	if (arg == NULL)
+	{
+		while (dict)
+		{
+			printf("%s=%s\n", dict->key, dict->value);
+			dict = dict->next_entry;
+		}	
+	}
+	else
+	{
+		if (export_check_if_valid(arg) == 1)
+		{
+			printf("export: not an identifier %s\n", arg);
+			return (1);
+		}	
+		split_str = ft_split(arg, '=');
+		new_key = split_str[0];
+		new_value = split_str[1];
+		free(split_str[2]);
+		var = search_key_in_dict(dict, new_key);
+		if (var != NULL)
+			write_to_env_variable(var, var->key, new_value);
+		else
+		{
+			var = init_env_variable();
+			last = get_dict_last(dict);	
+			write_to_env_variable(var, new_key, new_value);
+			last->next_entry = var;
+		}
+	}
+	return (0);
 }
 
 int main(int argc, char **argv, char **env)
 {
-	int i;
-	t_env_variable *var;
-	t_env_variable *var1;
-	t_env_variable *var2;
+	t_dict *dict;
 
-	var1 = create_env_variable("num", "1000");
-	var2 = create_env_variable("num2", "2000");
-	var1->next_var = var2;
-	i = 0;
+	dict = init_env_variable();
+	create_dict_on_startup(dict, env);
 
-	while (env[i])
-	{
-	printf("%s\n", env[i]);	
-	i ++;
-	}
-	var = var1;
-	//while (var)
-	//{
-	//	printf("Key is %s	Value is %s	\n", var->key, var->value);
-	//	var = var->next_var;
-	//}
+	export(dict, "_");
+	export(dict, "_l");
+	export(dict, "12345");
+	export(dict, "new_var");
+	export(dict, "new_var=100");
+	//export(dict, NULL);
 }
