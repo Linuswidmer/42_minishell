@@ -1,9 +1,0 @@
-includes
-libft
-Makefile
-out1
-parser
-signals
-src
-src_lexer
-tests
