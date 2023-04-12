@@ -6,60 +6,52 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:36:54 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/11 17:42:16 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/12 13:18:43 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "expander.h"
 
-/**/
-static char *ft_checkpath(t_pipex *pi)
+
+static ft_in()
+
+static ft_out()
+
+static ft_get_cmd()
+
+static ft_get_path()
+
+static ft_free_job()
+
+
+int		min_job(t_jobnode *astjob, t_dict *dict, int fdin)
 {
-	int	i;
-
-	i = 0;
-	pi->path = ft_strjoin(pi->paths[i], pi->cmd[0]);
-	if (!pi->path)
-		px_end(ER_PMA, 1, 1, pi);
-	while (pi->paths[i])
-	{	
-		if (!access(pi->path, F_OK))
-			return (1);
-		if (pi->paths[++i])
-		{
-			free(pi->path);
-			pi->path = NULL;
-			pi->path = ft_strjoin(pi->paths[i], pi->cmd[0]);
-			if (!pi->path)
-				px_end(ER_PJOI, 1, 1, pi);
-		}
-	}
-	return (0);
-}
-
-pi->cmd = ft_split(pi->argv[2 + i + pi->hd], ' ');
-		if (!pi->cmd)
-			px_end(ER_ES, 1, 1, pi);
-		ft_checkpath(pi);
-		if (execve(pi->path, pi->cmd, pi->envp) == -1)
-		{
-			ft_clpi(pi, i);
-			px_end(ER_EE, 1, 1, pi);
-
-
-
-
-int		min_job(t_jobnode **job, t_dict *dict, int fdin)
-{
+	t_expandjob	*job;
 	char *path;
 	char **cmd;
-
-
-	ft_in(job->in, fdin);
-	ft_out(job->out);
-	min_expander(job, dict);
 	
-	path = 
-	cmd = ft_get_
-		
+
+	job = min_expander(astjob, dict);
+	if (!job)
+		return (1);
+	if(ft_in(job->in, fdin))
+		return (1);
+	if(ft_out(job->out))
+		return (1);
+	cmd = ft_get_cmd(job->cmd);
+	if (!cmd)
+		return (1);
+	if (min_buildin(cmd[0]))
+	{
+		path = ft_get_path (cmd[0], dict);
+		if (!path)
+			return (1);
+		global = 0;
+		global = execve(path, cmd, pi->envp);
+	}
+	ft_free_job(job, path ,cmd);
+	return (0);	
+}
+	
 		
 	
 
