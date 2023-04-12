@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 16:54:21 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/10 12:07:30 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/12 09:26:56 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	create_token_list(char *input, t_lexer *tmp)
 	t_lexer *tmp2;
 
 	start = 0;
-	pos = skip_space_tab(input, 0);
+	pos = 0;
+	//pos = skip_space_tab(input, 0);
 	len_input = ft_strlen(input);
 	while (pos < len_input)
 	{
@@ -29,7 +30,7 @@ int	create_token_list(char *input, t_lexer *tmp)
 		pos = parse_token_to_list(current_token, input, pos, tmp, start);
 		if (pos < 0)
 			return (pos);
-		pos = skip_space_tab(input, pos);
+		//pos = skip_space_tab(input, pos);
 		start = pos;
 		if (tmp->key != l_empty && pos < len_input)
 		{
@@ -59,6 +60,7 @@ t_lexer *lexer(char *input)
 		printf("Quotes left open\n");
 	return (beginning_token_list);
 }
+
 /*
 t_lexer *lexer(char *input)
 {

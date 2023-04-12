@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:24:19 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/10 11:54:09 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/12 10:16:30 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,12 @@ int parse_dollar(char *input, int pos, t_lexer *tmp, int start)
 	while (input[pos] != '\0')
 	{
 		next_token = check_token(input[pos], input[pos + 1]);
-		if (next_token == l_word && ft_isalnum(input[pos]))
+		if (next_token == l_dollar)
+		{
+			pos++;
+			break;
+		}
+		if (next_token == l_word)
 			pos++;
 		else
 			break ;
@@ -91,7 +96,7 @@ int parse_word(char *input, int pos, t_lexer *tmp, int start)
 	while (input[pos] != '\0')
 	{
 		next_token = check_token(input[pos], input[pos + 1]);
-		if (next_token != l_word || input[pos] == ' ')
+		if (next_token != l_word)
 			break;
 		else
 			pos++;

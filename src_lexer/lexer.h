@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 16:55:26 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/11 11:01:39 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/12 09:38:30 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/04/09 22:09:45 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -39,6 +39,7 @@ typedef enum
 	l_semi,
 	l_pipe,
 	l_escape,
+	l_space,
 	l_amp,
 } t_lexertype ;	
 
@@ -74,6 +75,7 @@ void expand_dollar_tokens(t_lexer *first);
 void free_token_list(t_lexer *token_list);
 
 int skip_space_tab(char *input, int pos);
+int ft_isspace(char c);
 t_lexer *init_lexer_struct();
 void print_token_list(t_lexer *first);
 #endif

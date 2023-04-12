@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 10:04:52 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/11 11:02:16 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/12 09:37:08 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/04/07 17:50:52 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -32,8 +32,18 @@ char *lexertype_names[] =
     "SEMI",
     "PIPE",
     "ESCAPE",
+	"SPACE",
 	"AMP"
 };
+
+int ft_isspace(char c)
+{
+	if (c == ' ' || c == '\f' || c == '\n' || c == '\r' || c == '\t'
+		|| c == '\v')
+		return (1);
+	else
+		return (0);
+}
 
 int skip_space_tab(char *input, int pos)
 {
