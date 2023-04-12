@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:18:08 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/12 10:32:50 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/12 17:00:29 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 void write_to_env_variable(t_dict *var, char *key, char *value)
 {
 	var->key = ft_strdup(key);
+	if (var->value)
+		free(var->value);
 	var->value = ft_strdup(value);
 }
 
@@ -32,27 +34,6 @@ t_dict *init_env_variable()
 	var->value = NULL;
 	var->next_entry = NULL;
 	return (var);
-}
-
-void create_dict_on_startup(t_dict *var1, char **env)
-{
-	t_dict *var2;
-	char **split_str;
-	int	i;
-
-	i = 1;
-	split_str = ft_split(env[0], '=');
-	write_to_env_variable(var1, split_str[0], split_str[1]);
-	while (env[i])
-	{
-		var2 = init_env_variable();
-		var1->next_entry = var2;
-		var1 = var2; 
-		split_str = ft_split(env[i], '=');
-		write_to_env_variable(var1, split_str[0], split_str[1]);
-		free(split_str[2]);
-		i++;
-	}
 }
 
 t_dict *search_key_in_dict(t_dict *var, char *arg)
@@ -74,18 +55,24 @@ t_dict *get_dict_last(t_dict *dict)
 	return (dict);
 }
 
-int export_check_if_valid(char *arg)
+int export_check_if_key_is_valid(char *arg)
 {
 	int i;
 
 	i = 0;
 	while (arg[i] != '=' && arg[i] != '\0')
 	{
-		if (ft_isalpha(arg[i]) != 0 && (arg[i] != '_' && ft_strlen(arg) > 1))
-			return (0);
-		i++;
+		if (ft_isalnum(arg[i]) == 0) 
+		{
+			if (arg[i] == '_' && ft_strlen(arg) > 1)
+				i++ ;
+			else
+				return (1);
+		}
+		else
+			i++;
 	}
-	return (1);
+	return (0);
 }
 
 int export(t_dict *dict, char *arg)
@@ -97,16 +84,10 @@ int export(t_dict *dict, char *arg)
 	char *new_value;
 
 	if (arg == NULL)
-	{
-		while (dict)
-		{
-			printf("%s=%s\n", dict->key, dict->value);
-			dict = dict->next_entry;
-		}	
-	}
+		print_dict(dict);
 	else
 	{
-		if (export_check_if_valid(arg) == 1)
+		if (export_check_if_key_is_valid(arg) == 1)
 		{
 			printf("export: not an identifier %s\n", arg);
 			return (1);

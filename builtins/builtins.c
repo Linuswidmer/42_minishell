@@ -6,36 +6,12 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:25:45 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/12 13:07:21 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/12 17:06:35 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 #include "libft.h"
-
-
-int unset(t_dict *dict, char *arg)
-{
-	t_dict *var;
-	t_dict *var_prev;
-	t_dict *var_next;
-
-	var_prev = dict;
-	var = search_key_in_dict(dict, arg);
-	if (var != NULL)
-		printf("key found\n");
-	else
-		return (0);
-	while (var_prev->next_entry != var)
-		var_prev = var_prev->next_entry;
-	var_next = var->next_entry;
-
-	free(var->value);
-	free(var->key);
-	free(var);
-	var_prev->next_entry = var_next;
-	return (0);
-}
 
 /*
 min_builtins *create_builtins()
@@ -54,7 +30,7 @@ min_builtins *create_builtins()
 }
 */
 
-int main(int argc, char **argv, char **env)
+int main(int argc, char **argv, char **envp)
 {
 	t_dict *dict;
 	Commands	commands;
@@ -64,11 +40,17 @@ int main(int argc, char **argv, char **env)
 	commands.cd = &cd; 
 
     dict = init_env_variable();
-    create_dict_on_startup(dict, env);
-    export(dict, "new_var=100");
-    export(dict, NULL);
-	unset(dict, "SHELL");
-    export(dict, NULL);
+    create_dict_on_startup(dict, envp);
+    
+	cd("../../", dict);
+	//export(dict, "newvar22_323=100");
+    //export(dict, "newvar22_3=");
+    //export(dict, "new");
+	//printf("enters here\n");
+    //export(dict, NULL);
+	//env(dict);
+	//unset(&dict, "SYSTEMD_EXEC_PID");
+    //export(dict, NULL);
 	
 
 	//builtins = create_builtins();

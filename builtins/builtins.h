@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:28:00 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/12 12:58:39 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/12 16:36:14 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,20 @@ typedef struct {
     builtin_ptr func;
 } min_builtins;
 
+void create_dict_on_startup(t_dict *var1, char **env);
+void    print_dict(t_dict *dict);
+
+int env(t_dict *dict);
+
 int cd(char *arg);
 
+int unset(t_dict **dict, char *arg);
+
 int export(t_dict *dict, char *arg);
-void create_dict_on_startup(t_dict *var1, char **env);
 t_dict *search_key_in_dict(t_dict *var, char *arg);
 t_dict *init_env_variable();
+void write_to_env_variable(t_dict *var, char *key, char *value);
+
 
 int export_wrapper(void** args);
 int cd_wrapper(void** args);

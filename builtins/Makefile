@@ -1,4 +1,4 @@
-FILENAMES = builtins builtins_wrappers export cd
+FILENAMES = dict builtins builtins_wrappers export cd unset env
 SRCS = $(addsuffix .c, $(FILENAMES))
 OBJS = $(addsuffix .o, $(FILENAMES))
 
