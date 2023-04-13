@@ -16,10 +16,17 @@
 # include <stdlib.h>
 # include "libft.h"
 
+# define DOLLAR "$"
+# define DICT ""	
+
+
+
+
 typedef struct s_expandjob    t_expandjob;
 typedef struct s_cmdnode    t_cmdnode;
 typedef struct s_ionode     t_ionode;
-
+typedef struct s_expander     t_expander;
+typedef struct s_dollar     t_dollar;
 
 struct s_expandjob
 {
@@ -41,6 +48,24 @@ struct s_ionode
     char *file;
     t_ionode *next;
 };
+
+struct s_expander
+{
+    t_lexertype value;
+    char    *word;
+    t_expander *next;
+};
+
+struct s_dollar
+{
+	t_lexertype value;
+	char	*word;
+	t_dollar *next;
+	t_ast	*ast;
+};
+
+
+
 
 
 #endif
