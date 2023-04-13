@@ -40,7 +40,7 @@ void    print_dict(t_dict *dict);
 
 int env(t_dict *dict);
 
-int cd(char *arg);
+int cd(char *arg, t_dict *dict);
 
 int unset(t_dict **dict, char *arg);
 

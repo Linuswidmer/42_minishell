@@ -33,17 +33,32 @@ min_builtins *create_builtins()
 int main(int argc, char **argv, char **envp)
 {
 	t_dict *dict;
-	Commands	commands;
+	t_dict *dict_pwd;
+	t_dict *dict_oldpwd;
+  Commands	commands;
 	min_builtins *builtins;
 
 	commands.export = &export;
-	commands.cd = &cd; 
-
-    dict = init_env_variable();
-    create_dict_on_startup(dict, envp);
+	// commands.cd = &cd; 
+  dict = init_env_variable();
+  create_dict_on_startup(dict, envp);
     
-	cd("../../", dict);
-	//export(dict, "newvar22_323=100");
+  dict_pwd = search_key_in_dict(dict, "PWD");
+  dict_oldpwd = search_key_in_dict(dict, "OLDPWD");
+  printf("PWD is %s\n", dict_pwd->value);
+  printf("OLDPWD is %s\n", dict_oldpwd->value);
+
+	// unset(&dict, "OLDPWD");
+	cd("~", dict);
+  
+  dict_pwd = search_key_in_dict(dict, "PWD");
+  dict_oldpwd = search_key_in_dict(dict, "OLDPWD");
+  if (dict_pwd)
+    printf("PWD is %s\n", dict_pwd->value);
+  if (dict_oldpwd)
+  printf("OLDPWD is %s\n", dict_oldpwd->value);
+	
+  //export(dict, "newvar22_323=100");
     //export(dict, "newvar22_3=");
     //export(dict, "new");
 	//printf("enters here\n");
