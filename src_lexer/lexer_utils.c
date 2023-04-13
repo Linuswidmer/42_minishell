@@ -13,9 +13,9 @@
 
 #include "lexer.h"
 
-char *lexertype_names[] = 
+static char *lexertype_names[] = 
 {
-	"EMPTY",
+    "EMPTY",
     "DQUOTE",
     "QUOTE",
     "WORD",
@@ -75,7 +75,7 @@ void print_token_list(t_lexer *first)
 	while (tmp)
 	{
 		printf("LEXERTYPE IS: %s	", lexertype_names[tmp->key]);
-		printf("STRING IS *%s*\n", tmp->value);
+		printf("STRING IS ~%s~\n", tmp->value);
 		tmp = tmp->next;
 	}
 }

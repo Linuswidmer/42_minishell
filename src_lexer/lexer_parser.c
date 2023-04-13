@@ -107,6 +107,24 @@ int parse_word(char *input, int pos, t_lexer *tmp, int start)
 	return (pos);
 }
 
+int parse_asterisk(char *input, int pos, t_lexer *tmp, int start)
+{
+  t_lexertype next_token;
+
+  tmp->key = l_asterisk;
+  while (input[pos] != '\0')
+  {
+    next_token = check_token(input[pos], input[pos + 1]);
+    if (next_token != l_word)
+      break;
+    else
+      pos++;
+  }
+  tmp->value = ft_substr(input, start, pos - start);
+  if (!tmp->value)
+    return (-1);
+  return (pos);
+}
 
 int parse_token_to_list(t_lexertype current_token, char *input, int pos, t_lexer *tmp, int start)
 {
@@ -120,6 +138,8 @@ int parse_token_to_list(t_lexertype current_token, char *input, int pos, t_lexer
 		return (parse_double_tokens(input, pos, current_token, tmp));
 	else if (current_token == l_word)
 		return (parse_word(input, pos, tmp, start));
-	else
+	else if (current_token == l_asterisk)
+    return (parse_asterisk(input, pos, tmp, start));
+  else
 	  return (parse_single_tokens(tmp, current_token, pos));
 }
