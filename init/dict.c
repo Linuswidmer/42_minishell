@@ -13,7 +13,26 @@
 #include "init.h"
 #include "libft.h"
 
-void write_to_env_variable(t_dict *var, char *key, char *value)
+t_dict *search_key_in_dict(t_dict *var, char *arg)
+{
+	while (var)
+	{
+		if(ft_strncmp(var->key, arg, ft_strlen(arg)) == 0 && ft_strlen(arg) == ft_strlen(var->key))
+			return (var);
+		else
+			var = var->next_entry;
+	}
+	return (NULL);
+}
+
+t_dict *get_dict_last(t_dict *dict)
+{
+	while (dict->next_entry)
+		dict = dict->next_entry;
+	return (dict);
+}
+
+void write_to_dict(t_dict *var, char *key, char *value)
 {
 	var->key = ft_strdup(key);
 	if (var->value)
@@ -34,32 +53,28 @@ t_dict *init_env_variable()
 	return (var);
 }
 
-void    print_dict(t_dict *dict)
+t_dict *create_dict_on_startup(char **env)
 {
-    while (dict)
-    {   
-        printf("%s=%s\n", dict->key, dict->value);
-        dict = dict->next_entry;
-    }   
-}
-
-void create_dict_on_startup(t_dict *var1, char **env)
-{
+    t_dict *dict;
+    t_dict *var1;
     t_dict *var2;
     char **split_str;
     int i;
 
     i = 1;
+    dict = init_env_variable();
+    var1 = dict;
     split_str = ft_split(env[0], '=');
-    write_to_env_variable(var1, split_str[0], split_str[1]);
+    write_to_dict(var1, split_str[0], split_str[1]);
     while (env[i])
     {
         var2 = init_env_variable();
         var1->next_entry = var2;
         var1 = var2; 
         split_str = ft_split(env[i], '=');
-        write_to_env_variable(var1, split_str[0], split_str[1]);
+        write_to_dict(var1, split_str[0], split_str[1]);
         free(split_str[2]);
         i++;
     }
+  return (dict);
 }

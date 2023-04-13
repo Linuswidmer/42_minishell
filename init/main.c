@@ -21,15 +21,14 @@ void clear_terminal(void)
   printf("\033[H");
 }
 
-int init(t_min **min, char **env)
+int init_minishell(t_min **min, char **env)
 {
   clear_terminal();
   *min = malloc(sizeof(t_min));
   ft_bzero(*min, sizeof(t_min));
   min_status = init_signals();
   // wie machen wir das hier, fragen wir jedes mal status ab?
-  (*min)->dict = init_env_variable();
-  create_dict_on_startup((*min)->dict, env);
+  (*min)->dict = create_dict_on_startup(env);
 
   // create builtins here
 }
@@ -38,6 +37,8 @@ int readline_loop()
 {
   char *readline_input;
 
+  min_status = 0; // global variable does not work yet
+  // printf("min_status %i\n", min_status);
   while (min_status == 0)
   {
 	  readline_input = readline("minishell> ");
@@ -62,9 +63,10 @@ int main(int argc, char **argv, char **env)
 	char *readline_input;
   t_min *min;
 
-  min_status = init(&min, env);
-	// print_dict(min->dict);
-  readline_loop();
+  min_status = init_minishell(&min, env);
+	// print_dict_export(min->dict);
+  min_export(min->dict, NULL);
+  // readline_loop();
 	return (min_status);
 }
 

@@ -1,4 +1,4 @@
-FILENAMES = main signals dict
+FILENAMES = main signals dict ./builtins/export
 SRCS = $(addsuffix .c, $(FILENAMES))
 OBJS = $(addsuffix .o, $(FILENAMES))
 
