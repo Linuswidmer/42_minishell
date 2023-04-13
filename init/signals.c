@@ -1,38 +1,20 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/07 12:33:39 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/07 14:33:03 by lwidmer          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "init.h"
 
 void handle_sigint(int sig) 
 {
-	printf("\n");
+  printf("\n");
+  rl_on_new_line();
+  rl_replace_line("", 0); // second parameter not yet understood
+  rl_redisplay();
 }
 
-void handle_sigquit(int sig) {
-    printf("Received SIGQUIT signal\n");
-	exit(1);
-}
-
-void handle_sighup(int sig) {
-	printf("Received SIGHUP signal\n");
-	exit (0);
-}
-
-int main() 
+void handle_sigquit(int sig) 
 {
-	//signal(SIGINT, handle_sigint);
-	
+  // not sure how i stop CTRL + \  from making their weird thing
+}
+
+int init_signals(void)
+{
 	struct sigaction sa_sigint;
 	struct sigaction sa_sigquit;
 
@@ -41,8 +23,8 @@ int main()
 	sa_sigint.sa_flags = 0;
 
 	sa_sigquit.sa_handler = handle_sigquit;
-    sigemptyset(&sa_sigquit.sa_mask);
-    sa_sigquit.sa_flags = 0;
+  sigemptyset(&sa_sigquit.sa_mask);
+  sa_sigquit.sa_flags = 0;
 
 	if (sigaction(SIGINT, &sa_sigint, NULL) == -1)
 	{
@@ -50,13 +32,8 @@ int main()
 		return (1);
 	}
 	if (sigaction(SIGQUIT, &sa_sigquit, NULL) == -1) {
-        perror("sigaction");
-        return 1;
-    }
-	while (1)
-	{
-
-	}
-
-	return 0;
+    perror("sigaction");
+    return (1);
+  }
+  return (0);
 }

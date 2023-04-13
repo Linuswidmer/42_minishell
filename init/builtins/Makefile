@@ -1,10 +1,10 @@
-FILENAMES = main signals dict
+FILENAMES = dict builtins builtins_wrappers export cd unset env pwd exit
 SRCS = $(addsuffix .c, $(FILENAMES))
 OBJS = $(addsuffix .o, $(FILENAMES))
 
 
-init: ${OBJS}
-	cc  $^ -L. ../libft/libft.a -lreadline
+test: ${OBJS}
+	cc  $^ -L. ../libft/libft.a
 
 .c.o: ${SRCS}
 	cc -c -o $@ $< -I../libft/includes

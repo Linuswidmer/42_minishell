@@ -10,15 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <signal.h>
-#include <unistd.h>
-#include <termios.h>
-#include <sys/ioctl.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
 #include "init.h"
+#include "libft.h"
+
+int min_status = 0;
 
 void clear_terminal(void) 
 {
@@ -26,88 +21,50 @@ void clear_terminal(void)
   printf("\033[H");
 }
 
-void handle_sigint(int sig) 
+int init(t_min **min, char **env)
 {
-  char c;
-
-  c = 10;
-	// printf("\n");
-  write(0, &c, 1);
-}
-
-void handle_sigquit(int sig) {
-    printf("Received SIGQUIT signal\n");
-	// exit(1);
-}
-
-int init_signals()
-{
-	struct sigaction sa_sigint;
-	struct sigaction sa_sigquit;
-
-	sa_sigint.sa_handler = handle_sigint;
-	sigemptyset(&sa_sigint.sa_mask);
-	sa_sigint.sa_flags = 0;
-
-	sa_sigquit.sa_handler = handle_sigquit;
-  sigemptyset(&sa_sigquit.sa_mask);
-  sa_sigquit.sa_flags = 0;
-
-	if (sigaction(SIGINT, &sa_sigint, NULL) == -1)
-	{
-		perror("sigaction");
-		return (1);
-	}
-	if (sigaction(SIGQUIT, &sa_sigquit, NULL) == -1) {
-    perror("sigaction");
-    return (1);
-  }
-
-  return (0);
-}
-
-int init(void)
-{
-  int status;
-
   clear_terminal();
-  status = init_signals();
+  *min = malloc(sizeof(t_min));
+  ft_bzero(*min, sizeof(t_min));
+  min_status = init_signals();
+  // wie machen wir das hier, fragen wir jedes mal status ab?
+  (*min)->dict = init_env_variable();
+  create_dict_on_startup((*min)->dict, env);
+
+  // create builtins here
 }
 
 int readline_loop()
 {
   char *readline_input;
 
-	readline_input = readline("minishell> ");
-  if (readline_input != NULL)
+  while (min_status == 0)
   {
+	  readline_input = readline("minishell> ");
+    if (readline_input == NULL)
+    {
+      free(readline_input);
+      break ;
+    }
+    // lexer
+    // parser
+    // expander
+    // executer
     add_history(readline_input);
     free(readline_input);
-    readline_loop();
   }
-
   return (0);
 }
 
-int main() 
+int main(int argc, char **argv, char **env) 
 {
-  int status;
+	t_dict *dict;
 	char *readline_input;
+  t_min *min;
 
-  status = init();
-	readline_loop();
-  // while (1)
-	// {
-	// 	readline_input = readline("minishell> ");
-	// 	if (readline_input == NULL)
-	// 	{
-	// 		free(readline_input);
-	// 		break;
-	// 	}
- //    printf("%s\n", readline_input);
-	// 	add_history(readline_input);
-	// 	free(readline_input);
-	// }
-	return 0;
+  min_status = init(&min, env);
+	// print_dict(min->dict);
+  readline_loop();
+	return (min_status);
 }
 
