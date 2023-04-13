@@ -42,7 +42,11 @@ int env(t_dict *dict);
 
 int cd(char *arg, t_dict *dict);
 
+int pwd(void);
+
 int unset(t_dict **dict, char *arg);
+
+int min_exit(char *arg);
 
 int export(t_dict *dict, char *arg);
 t_dict *search_key_in_dict(t_dict *var, char *arg);

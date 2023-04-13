@@ -42,21 +42,22 @@ int main(int argc, char **argv, char **envp)
 	// commands.cd = &cd; 
   dict = init_env_variable();
   create_dict_on_startup(dict, envp);
-    
-  dict_pwd = search_key_in_dict(dict, "PWD");
-  dict_oldpwd = search_key_in_dict(dict, "OLDPWD");
-  printf("PWD is %s\n", dict_pwd->value);
-  printf("OLDPWD is %s\n", dict_oldpwd->value);
+
+  return (min_exit("123"));
+  // dict_pwd = search_key_in_dict(dict, "PWD");
+  // dict_oldpwd = search_key_in_dict(dict, "OLDPWD");
+  // printf("PWD is %s\n", dict_pwd->value);
+  // printf("OLDPWD is %s\n", dict_oldpwd->value);
 
 	// unset(&dict, "OLDPWD");
-	cd("~", dict);
+	// cd("~", dict);
   
-  dict_pwd = search_key_in_dict(dict, "PWD");
-  dict_oldpwd = search_key_in_dict(dict, "OLDPWD");
-  if (dict_pwd)
-    printf("PWD is %s\n", dict_pwd->value);
-  if (dict_oldpwd)
-  printf("OLDPWD is %s\n", dict_oldpwd->value);
+  // dict_pwd = search_key_in_dict(dict, "PWD");
+  // dict_oldpwd = search_key_in_dict(dict, "OLDPWD");
+  // if (dict_pwd)
+  //   printf("PWD is %s\n", dict_pwd->value);
+  // if (dict_oldpwd)
+  // printf("OLDPWD is %s\n", dict_oldpwd->value);
 	
   //export(dict, "newvar22_323=100");
     //export(dict, "newvar22_3=");
