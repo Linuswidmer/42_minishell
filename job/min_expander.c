@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 09:34:53 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/12 16:38:22 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/14 13:01:47 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ char *ft_set_filename(t_lexer **token, t_dict *dict)
 {
 	char **values;
 
-	values = min_dollar_asteriks_eval(token, dict);
+	values = min_word_eval(token, dict);
+
 	if (!values)
 		return (NULL);
 	if (ft_to_many_values(values))

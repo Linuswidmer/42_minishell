@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 09:27:39 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/12 16:21:10 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/14 15:58:47 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef EXPANDER_H
@@ -17,7 +17,7 @@
 # include "libft.h"
 
 # define DOLLAR "$"
-# define DICT ""	
+# define EMPT ""	
 
 
 
@@ -51,7 +51,7 @@ struct s_ionode
 
 struct s_expander
 {
-    t_lexertype value;
+    t_lexertype key;
     char    *word;
     t_expander *next;
 };
