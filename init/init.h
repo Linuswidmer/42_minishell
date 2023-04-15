@@ -13,15 +13,30 @@
 extern int min_status;
 
 typedef struct s_dict {
-    char *key;
-    char *value;
-    struct s_dict *next_entry;
+	char *key;
+	char *value;
+	struct s_dict *next_entry;
 }   t_dict;
 
-typedef struct s_min
-{
+typedef struct {
+    int (*min_export)(t_dict*, char*);
+    //int (*cd)(char*);
+} Commands;
+
+typedef int (*builtin_ptr)(void**);
+
+typedef struct {
+    const char* name;
+    builtin_ptr func;
+} t_builtins;
+
+typedef struct s_min {
 		// dict
 		t_dict *dict;
+		// builtins
+		t_builtins *builtins;
+		// Commands
+		Commands commands;
 		// lexer
 		// t_lexer *token;
 		// parser AST
@@ -40,6 +55,6 @@ t_dict *get_dict_last(t_dict *dict);
 
 /* export.c */
 void    print_dict_export(t_dict *dict);
-int min_export(t_dict *dict, char *arg);
+int		min_export(t_dict *dict, char *arg);
 
 #endif
