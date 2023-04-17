@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 09:27:39 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/17 11:05:55 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/17 14:17:52 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef EXPANDER_H
@@ -22,7 +22,7 @@
 
 # define DOLLAR "$"
 # define EMPT ""	
-# define SPACE	" "
+# define E_SPACE	" "
 # define ERR_SUB "$() not implemented.\n"  
 # define CURRDIR "./"
 
@@ -42,7 +42,6 @@ struct s_expandjob
 
 struct s_cmdnode
 {
-    t_lexertype value;
     char    *arg;
     t_cmdnode *next;
 };
@@ -66,7 +65,7 @@ struct s_dollar
 	t_lexertype value;
 	char	*word;
 	t_dollar *next;
-	t_ast	*ast;
+//	t_ast	*ast;
 };
 
 

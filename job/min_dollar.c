@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 14:00:43 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/17 09:32:30 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/17 11:17:00 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "expander.h"
@@ -19,7 +19,7 @@ char    *ft_dollar_in_dict(char *dollar, char *old,  t_dict *dict)
 
 	if (*dollar == QUESTION)
 		return (ft_strjoin(old, min_exit_status()));
-	if (*dollar == SPACE)
+	if (*dollar == E_SPACE)
 	{
 		temp = ft_strjoin(old, DOLLAR);
 		dollar = ft_strjoin(temp, dollar);

@@ -6,22 +6,28 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:50:43 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/17 11:05:45 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/17 11:21:52 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "expander.h"
-int	ft_word_in_filename(char *filename, char *word, t_expander *word)
+
+void ft_free_values(char ***values)
+{
+	(void)values;
+}
+
+int	ft_word_in_filename(char *filename, char *word, t_expander *curr)
 {
 	if (!*filename)
 		return (0);
 	while(*filename && *word)
 	{ 		
 		if (*filename++ != *word++)
-			return (0)
+			return (0);
 	}
 	if (!*filename && !*word)
 			return (1);
-	if (!*word && word->next)
+	if (!*word && curr->next)
 			return (1);
 	else			
 			return (0);
@@ -32,7 +38,7 @@ t_expander	*ft_move_filename_to_word(char **filename, t_expander *word)
 	t_expander *next;
 
 	next = word->next;
-	while (**filename && **filename != (new->word)[0])
+	while (**filename && **filename != (next->word)[0])
 		(*filename)++;
 	return (next);
 }
@@ -48,7 +54,7 @@ int	ft_fit_to_asterisk(char *filename, t_expander *word)
 		{
 			if (!first++)
 			{
-				if (*filename == ".")
+				if (*filename == '.')
 					return (0);
 			}
 			if (!word->next)
@@ -59,7 +65,7 @@ int	ft_fit_to_asterisk(char *filename, t_expander *word)
 		if(word->key == l_word )
 		{ 
 			first++;
-			if (!ft_word_in_filename)
+			if (!ft_word_in_filename(filename, word->word, word))
 				return (0);	
 			else
 				word = word->next;
@@ -84,7 +90,7 @@ int	ft_count_values(t_expander *word)
 		d = readdir(dh);
 	}	
 	free (dh);
-	return (counter)
+	return (counter);
 }
 
 

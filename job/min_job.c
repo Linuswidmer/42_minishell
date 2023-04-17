@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:36:54 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/14 13:01:50 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/17 14:25:08 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "expander.h"
@@ -30,7 +30,7 @@ int		min_job(t_jobnode *astjob, t_dict *dict, int fdin)
 	char **cmd;
 	
 
-	job = min_expander(astjob, dict);
+	job = min_expander(astjob->start, dict, astjob->last);
 	if (!job)
 		return (1);
 	if(ft_in(job->in, fdin))

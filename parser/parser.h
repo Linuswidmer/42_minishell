@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:02:20 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/12 16:21:13 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/17 14:11:43 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,24 +73,8 @@ struct s_pipenode
 struct s_jobnode
 {
 	t_ast 		*up;
-	t_lexer		*token;
-	t_cmdnode	*cmd;
-	t_ionode 	*in;
-	t_ionode 	*out;
-};
-
-struct s_cmdnode
-{
-	t_lexertype value;
-	char	*arg;
-	t_cmdnode *next;	
-};
-
-struct s_ionode
-{
-	t_lexertype value;
-	char *file;
-	t_ionode *next;
+	t_lexer		*start;
+	t_lexer		*last;
 };
 
 struct s_ast

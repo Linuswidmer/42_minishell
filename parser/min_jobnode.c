@@ -6,13 +6,13 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:31:01 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/12 16:21:16 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/17 14:24:52 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-static t_ast *ft_init_jobnode()
+static t_ast *ft_init_jobnode(t_lexer *token)
 {
 	t_ast	*job;
 	job = (t_ast *)malloc(sizeof(t_ast));
@@ -24,53 +24,59 @@ static t_ast *ft_init_jobnode()
 	if (!job->node.job)
 		return (NULL);	
 	ft_bzero(job->node.job, sizeof(t_jobnode));
+	job->node.job->start = token; 
 	return (job);
 }
 
-static t_lexer *ft_set_word(t_lexer *token, t_ast **ast)
+static int ft_token_is_jobnode(t_lexertype key)
 {
-	if (token->prev && min_token_is_io(token->prev->key))
-		min_set_file_io(token, *ast);		
-	else			 	
-			min_set_cmd(token, ast);			
-	return (token->next);
+	if (min_token_is_io(key) || min_token_is_word(key)
+			|| key == l_space)
+		return (1);
+	else
+		return (0);	
 }
+
+static void	ft_link_jobnode_into_ast(t_ast **ast, t_ast *new)
+{
+	if ((*ast)->key == pipenode)
+		(*ast)->node.pipe->down = new;				
+	else if ((*ast)->key == routenode)
+		(*ast)->node.route->down = new;
+	else if ((*ast)->key == subnode)
+		(*ast)->node.sub->down = new;
+}
+
+
 /*
 min_jobnode 
-        --> 1. if para_open -> new subnode get createtd;
-        --> 2. if para_closed   -> ceck parse error 
-                    -> move up to next subshell
+        --> 1. create jobnode
+        --> 2. store beginning and last token 
          return next token and clean total ast if any malloc failed or parse error.
 */
 
-
+/* !!! to do check if  everythink is valid !!!! */
 t_lexer	*min_jobnode(t_lexer *token, t_ast **ast)
 {
 	t_ast *new;
 
-	new = ft_init_jobnode();
-	if (!new)
-		min_parser_malloc_fail(ast);
-	else		
+	new = ft_init_jobnode(token);
+	if (new)
+	{		
 		new->node.job->up = *ast;	
-	if (*ast)
-	{
-		if ((*ast)->key == pipenode)
-			(*ast)->node.pipe->down = new;				
-		else if ((*ast)->key == routenode)
-			(*ast)->node.route->down = new;
-		else if ((*ast)->key == subnode)
-			(*ast)->node.sub->down = new;
+		if (*ast)
+			ft_link_jobnode_into_ast(ast, new);
+		*ast = new;
+		while (token)
+		{
+			if (ft_token_is_jobnode(token->key))
+				token = token->next;
+			else
+				break;
+		}
+		new->node.job->last = token;
 	}
-	*ast = new;
-	while (token && *ast)
-	{
-		if (min_token_is_io(token->key))
-			token = min_set_io(token, ast);
-		else if (min_token_is_word(token->key))
-			token = ft_set_word(token, ast);
-		else
-			break;
-	}
+	else
+		min_parser_malloc_fail(ast);
 	return (token);
 }
