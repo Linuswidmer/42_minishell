@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:38:59 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/14 14:05:20 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/17 11:05:50 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	ft_asterisk(t_lexer **token, t_expander **word)
 	else
 	{	
 		end = min_last_expander(*word);
-		end->next = min_init_expander(l_asterisk); 	
+		if (end->key != l_asterisk)
+			end->next = min_init_expander(l_asterisk); 	
 		if (!end->next)
 			min_free_expander(word);
 	}
@@ -32,11 +33,11 @@ char **ft_get_values(t_expander *word)
 {
 	char **values;
 	char *temp;
-		
+	if (!word)
+		return (NULL);
 	values = (char **)malloc(sizeof(values) * 2);
 	if (!values)
 		return (NULL)
-    min_free_expander(&word);
 	temp = ft_strdup((const char *)word->word);
 	if (temp)
 		values[0] = temp;

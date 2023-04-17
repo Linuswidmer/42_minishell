@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 09:27:39 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/14 15:58:47 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/17 11:05:55 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef EXPANDER_H
@@ -15,11 +15,16 @@
 # include "lexer.h"
 # include <stdlib.h>
 # include "libft.h"
+# include <dirent.h>
+# include <stdio.h>
+# include <sys/types.h>
+
 
 # define DOLLAR "$"
 # define EMPT ""	
-
-
+# define SPACE	" "
+# define ERR_SUB "$() not implemented.\n"  
+# define CURRDIR "./"
 
 
 typedef struct s_expandjob    t_expandjob;

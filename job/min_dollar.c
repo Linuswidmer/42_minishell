@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 14:00:43 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/14 15:58:27 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/17 09:32:30 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "expander.h"
@@ -18,24 +18,26 @@ char    *ft_dollar_in_dict(char *dollar, char *old,  t_dict *dict)
 	char *temp; 
 
 	if (*dollar == QUESTION)
-		return (ft_strjoin(old, min_exit_status());
+		return (ft_strjoin(old, min_exit_status()));
 	if (*dollar == SPACE)
 	{
 		temp = ft_strjoin(old, DOLLAR);
 		dollar = ft_strjoin(temp, dollar);
 		free(temp);
 		return (dollar);
-	}	
-    	while (dict)
+	}
+	if (*dollar == QUOTE)
+		ft_putstr_fd(ERR_SUB, 2);	
+    while (dict)
     	{
         	if (ft_strncmp(dict->key, dollar, ft_strlen(dollar))
             		dict = dict->next;
         	else
            		 break;
     	}
-    	if (!dict)
+    if (!dict)
     	   return (old);
-    	else
+    else
         	return (ft_strjoin(old, dict->value);
 }
 
@@ -52,7 +54,7 @@ char	*ft_dollar(t_lexer **token, char *temp, t_dict *dict)
 	else if ((*token)->key == l_asterisk)
 		new = ft_strjoin(temp, DOLLAR);
 	else if ((*token)->key == l_dollar);
-		new = ft_strjoin(temp, min_procesdid);
+		new = ft_strjoin(temp, min_processid);
 	else
 		new = ft_dollar_in_dict((*token)->word, temp, dict); 	
 	*token = (*token)->next;
