@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:36:54 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/17 14:25:08 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/18 14:08:39 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "expander.h"
@@ -23,16 +23,26 @@ static ft_get_path()
 static ft_free_job()
 
 
-int		min_job(t_jobnode *astjob, t_dict *dict, int fdin)
+
+/*     */
+
+
+int		min_job(t_jobnode *astjob, t_dict *dict, bool pipe)
 {
 	t_expandjob	*job;
 	char *path;
-	char **cmd;
-	
+	char **cmd;	
 
 	job = min_expander(astjob->start, dict, astjob->last);
 	if (!job)
 		return (1);
+	if (min_cmd_is_buildin(job))
+		min_cmd_is_common(job, pipe)
+	ft_free_job(job);	 	
+	return (0);	
+}		
+		
+
 	if(ft_in(job->in, fdin))
 		return (1);
 	if(ft_out(job->out))
