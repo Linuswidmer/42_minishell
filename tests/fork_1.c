@@ -2,23 +2,29 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 
 
 
 
-int fork_funk(int i, int end)
+int fork_funk(ast, int end)
 {
 	pid_t   pid;
     int     n;
 	int 	a;
 	
+	if (ast->key == pipe)
+
+
+	$( )	
+
 	if (i < end) 	
 	{
     	pid = 1;
     	n = 0;
 
-    	while (n++ < 3 && pid)
+    	while (n++ < 4 && pid)
     	{
 			
         	pid = fork ();
@@ -33,7 +39,7 @@ int fork_funk(int i, int end)
 				}
             	printf ("child %i from  parent%i \n", n, i);
 				if (n == 1)
-					fork_funk(i + 1, end);
+					fork_funk(ast->next, end);
         	}
     	}
 		if (pid)
@@ -42,8 +48,8 @@ int fork_funk(int i, int end)
 				waitpid(-1, NULL, 0);
 			printf("parent %i finsihed\n", i);	
 		}
-		else
-			printf("child %i | parrent %i finsihed\n", n - 1, i);	
+	/*	else
+			printf("child %i | parrent %i finsihed\n", n - 1, i);	*/
 		return (0);
 	
 	}
@@ -57,11 +63,14 @@ int main (void)
 
 	int i;
 	int end;
+	char *test;
 	
+
+	test = (char*)malloc(sizeof(char) * 5);	
 	i = 1;
 	end = 3;
 	fork_funk(i, end);
-	
+	free(test);
 	
 	return (0);
 }	
