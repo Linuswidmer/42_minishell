@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:36:54 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/21 14:11:22 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/21 14:40:08 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "expander.h"
@@ -15,8 +15,9 @@ static int ft_is_buildin(char *cmd, t_build **buildin)
 {
 	while (*buildin && cmd)
 	{
-		if (!ft_strncmp((*buildin)++, cmd, ft_strlen(cmd))
+		if (!ft_strncmp(*buildin, cmd, ft_strlen(cmd))
 			return (1);
+		(*buildin)++;
 	}
 	return (0);
 }	
