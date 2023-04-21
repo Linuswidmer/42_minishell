@@ -1,28 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/20 12:44:38 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/21 17:29:49 by lwidmer          ###   ########.fr       */
+/*   Created: 2023/04/20 12:57:33 by lwidmer           #+#    #+#             */
+/*   Updated: 2023/04/20 13:46:45 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../init.h"
+#include "builtins.h"
+#include "libft.h"
 
-int min_pwd(char **args)
+int min_exit (char **arg)
 {
-	char *pwd;
+	int status;
 
-	(void)args;
-	pwd = getcwd(NULL, 0);
-	if (pwd)
-	{
-		printf("%s\n", pwd);
-		return (0);
-	}
+	if (!arg[0])
+		status = 256;
+	else if (arg[2])
+		status = 2;
 	else
-    	return (1);
+	{
+		while (arg[1][i] != '\0')
+		{
+			if (ft_isdigit(arg[1][i]) != 0)
+			{
+				status = 2;
+				break;
+			}
+			i++;
+		}
+		status = ft_atoi(arg);
+		status = status % 256;
+		if (status == 0)
+			status = 256;
+  	}
+  return (status);
 }

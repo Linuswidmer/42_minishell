@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:19:36 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/20 17:25:10 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/21 17:43:40 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,33 +21,27 @@ void clear_terminal(void)
   printf("\033[H");
 }
 
-int export_wrapper(void** args)
+int export_wrapper(t_builtins *builtin, char **args)
 {
-    Commands *commands = (Commands*)args[0];
-    t_dict *dict = (t_dict*)args[1];
-    char **arg = (char **)&(args[2]);
-
-    return (commands->min_export(dict, arg));
+    return (builtin->commands.min_export(builtin->dict, args));
 }
 
-int cd_wrapper(void** args) {
-    Commands* commands = (Commands*)args[0];
-    t_dict* dict = (t_dict*)args[1];
-    char **arg = (char **)&(args[2]);
-
-    return (commands->min_cd(dict, arg));
-}
-
-int pwd_wrapper(void **args)
+int cd_wrapper(t_builtins *builtin, char **args)
 {
-	Commands *commands;
-	char **arg;
-
-	commands = (Commands*)args[0];
-	arg = (char **)&(args[1]);
-	return (commands->min_pwd(arg));
+	return (builtin->commands.min_cd(builtin->dict, args));
 }
 
+int pwd_wrapper(t_builtins *builtin, char **args)
+{
+	return (builtin->commands.min_pwd(args));
+}
+
+int env_wrapper(t_builtins *builtin, char **args)
+{
+	return (builtin->commands.min_env(builtin->dict, args));
+}
+
+/*
 int env_wrapper(void **args)
 {
 	Commands *commands;
@@ -59,29 +53,46 @@ int env_wrapper(void **args)
 	arg = (char **)&(args[2]);
 	return(commands->min_env(dict, arg));
 }
+*/
 
-t_builtins *create_builtins()
+
+t_builtins *create_builtins(t_dict *dict, Commands *commands)
 {
     t_builtins *builtins;
     int num_builtins;
 
-    num_builtins = 4;
+    num_builtins = 40;
 
     builtins = malloc(sizeof(builtins) *num_builtins);
     builtins[0].name = ft_strdup("export");
     builtins[0].func = &export_wrapper;
+	builtins[0].dict = dict;
+	builtins[0].commands = *commands;
 	builtins[1].name = ft_strdup("cd");
     builtins[1].func = &cd_wrapper;
+	builtins[1].dict = dict;
+	builtins[1].commands = *commands;
+	builtins[2].name = ft_strdup("pwd");
+    builtins[2].func = &pwd_wrapper;
+	builtins[2].dict = dict;
+	builtins[2].commands = *commands;
+	builtins[3].name = ft_strdup("env");
+    builtins[3].func = &env_wrapper;
+	builtins[3].dict = dict;
+	builtins[3].commands = *commands;
+
+	/*
 	builtins[2].name = ft_strdup("pwd");
     builtins[2].func = &pwd_wrapper;
 	builtins[3].name = ft_strdup("env");
     builtins[3].func = &env_wrapper;
-    return (builtins);
+    */
+	return (builtins);
 }
 
 int init_minishell(t_min **min, char **env)
 {
-	clear_terminal();
+	//clear_terminal();
 	*min = malloc(sizeof(t_min));
 	ft_bzero(*min, sizeof(t_min));
 	min_status = init_signals();
@@ -89,11 +100,15 @@ int init_minishell(t_min **min, char **env)
 	(*min)->dict = create_dict_on_startup(env);
 
 	// create builtins here
-	(*min)->builtins = create_builtins();
 	(*min)->commands.min_export = &min_export;
 	(*min)->commands.min_cd = &min_cd;
 	(*min)->commands.min_pwd = &min_pwd;
 	(*min)->commands.min_env = &min_env;
+	(*min)->commands.min_echo = &min_echo;
+	(*min)->commands.min_exit = &min_exit;
+	(*min)->commands.min_unset = &min_unset;
+	(*min)->commands.min_env = &min_env;
+	(*min)->builtins = create_builtins((*min)->dict, &(*min)->commands);
 	return (0);
 }
 
@@ -157,28 +172,36 @@ int main(int argc, char **argv, char **env)
 	char *readline_input;
 	t_min *min;
 	Commands  commands;
-	void **args_export;
-	void **args_cd;
-	void **args_pwd;
-	void **args_env;
+	char **args_export;
+	//void **args_export;
+	char **args_cd;
+	char **args_pwd;
+	char **args_env;
 
-	//commands.min_export = &min_export;
 	min_status = init_minishell(&min, env);
-	//min_export(min->dict, NULL);
-    //void* args_export[] = {&commands, min->dict, NULL};
-    //void* args_cd[] = {&commands, "./test"};
-	
-	//args_export = void_args_creator("cds", &(min->commands), min->dict, NULL);
-	//min->builtins[0].func(args_export);
-	
-	//args_cd = void_args_creator("cds", &(min->commands), min->dict, "..");
-	//min->builtins[1].func(args_cd);
-	
-	//args_pwd = void_args_creator("s", &(min->commands), NULL);
-	//min->builtins[2].func(args_pwd);
-	
-	args_env = void_args_creator("cds", &(min->commands), NULL);
-	min->builtins[3].func(args_env);
+
+	/*	
+	args_export = malloc(sizeof(char *) *1);
+	args_export[0] = NULL;
+	min->builtins[0].func(&(min->builtins[0]), args_export);
+	*/
+
+	/*
+	args_cd = malloc(sizeof(char *) *2);
+	args_cd[0] = ft_strdup("-");
+	args_cd[1] = NULL;	
+	min->builtins[1].func(&(min->builtins[1]), args_cd);
+	*/
+
+	/*
+	args_pwd = malloc(sizeof(char *) * 1);
+	args_pwd[0] = NULL;
+	min->builtins[2].func(&(min->builtins[2]), args_pwd);
+	*/
+
+	args_env = malloc(sizeof(char *) * 1);
+	args_env[0] = NULL;
+	min->builtins[3].func(&(min->builtins[3]), args_env);
 
 // readline_loop();
 	return (min_status);

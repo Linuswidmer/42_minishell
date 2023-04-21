@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:55:25 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/20 16:50:42 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/21 17:23:18 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int min_cd(t_dict *dict, char **arg)
 	t_dict *dict_home;
 	t_dict *dict_pwd;
 	t_dict *dict_oldpwd;
-
+	
 	if (arg[2])
 		printf("cd: too many arguments");
 

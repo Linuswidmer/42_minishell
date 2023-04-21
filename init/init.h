@@ -23,14 +23,18 @@ typedef struct {
     int (*min_cd)(t_dict *, char**);
 	int (*min_pwd)(char **);
 	int (*min_env)(t_dict *dict, char **args);
+	int (*min_echo)(char **);
 } Commands;
 
-typedef int (*builtin_ptr)(void**);
+typedef struct s_builtins t_builtins;
+typedef int (*builtin_ptr)(t_builtins *, char**);
 
-typedef struct {
+struct s_builtins {
     const char* name;
     builtin_ptr func;
-} t_builtins;
+	t_dict *dict;
+	Commands commands;
+};
 
 typedef struct s_min {
 		// dict
@@ -62,14 +66,16 @@ int		min_export(t_dict *dict, char **arg);
 /* cd.c */
 int min_cd(t_dict *dict, char **arg);
 
-
 /* pwd */
 int min_pwd(char **args);
 
 /* env.c */
 int min_env(t_dict *dict, char **args);
 
+/* echo.c */
+int min_echo (char **arg);
 
-
+/* exit.c */
+int min_exit (char **arg);
 
 #endif
