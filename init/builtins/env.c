@@ -1,41 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/20 12:57:33 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/20 13:46:45 by lwidmer          ###   ########.fr       */
+/*   Created: 2023/04/12 16:29:59 by lwidmer           #+#    #+#             */
+/*   Updated: 2023/04/20 17:25:44 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
-#include "libft.h"
+#include "../init.h"
 
-int min_exit (char **arg)
+void    print_dict_env(t_dict *dict)
 {
-	int status;
+    while (dict)
+    {
+        printf("%s=%s\n", dict->key, dict->value);
+        dict = dict->next_entry;
+    }
+}
 
-	if (!arg[0])
-		status = 256;
-	else if (arg[2])
-		status = 2;
-	else
-	{
-		while (arg[1][i] != '\0')
-		{
-			if (ft_isdigit(arg[1][i]) != 0)
-			{
-				status = 2;
-				break;
-			}
-			i++;
-		}
-		status = ft_atoi(arg);
-		status = status % 256;
-		if (status == 0)
-			status = 256;
-  	}
-  return (status);
+int min_env(t_dict *dict, char **args)
+{
+	if (args[0])
+		printf("env: too many arguments\n");
+	else 
+		print_dict_env(dict);
+	return (0);
 }

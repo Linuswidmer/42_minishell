@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:18:08 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/12 17:00:29 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/20 16:58:07 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,36 +44,42 @@ int export_check_if_key_is_valid(char *arg)
 	return (0);
 }
 
-int min_export(t_dict *dict, char *arg)
+int min_export(t_dict *dict, char **arg)
 {
 	t_dict *var;
 	t_dict *last;
 	char **split_str;
 	char *new_key;
 	char *new_value;
+	int i;
 
+	i = 0;
 	if (arg == NULL)
 		print_dict_export(dict);
 	else
 	{
-		if (export_check_if_key_is_valid(arg) == 1)
+		while (arg[i])
 		{
-			printf("export: not an identifier %s\n", arg);
-			return (1);
-		}	
-		split_str = ft_split(arg, '=');
-		new_key = split_str[0];
-		new_value = split_str[1];
-		free(split_str[2]);
-		var = search_key_in_dict(dict, new_key);
-		if (var != NULL)
-			write_to_dict(var, var->key, new_value);
-		else
-		{
-			var = init_env_variable();
-			last = get_dict_last(dict);	
-			write_to_dict(var, new_key, new_value);
-			last->next_entry = var;
+			if (export_check_if_key_is_valid(arg[i]) == 1)
+				printf("export: not an identifier %s\n", arg[i]);
+			else
+			{
+				split_str = ft_split(arg[i], '=');
+				new_key = split_str[0];
+				new_value = split_str[1];
+				free(split_str[2]);
+				var = search_key_in_dict(dict, new_key);
+				if (var != NULL)
+					write_to_dict(var, var->key, new_value);
+				else
+				{
+					var = init_env_variable();
+					last = get_dict_last(dict);	
+					write_to_dict(var, new_key, new_value);
+					last->next_entry = var;
+				}
+			}
+			i++;
 		}
 	}
 	return (0);

@@ -19,8 +19,10 @@ typedef struct s_dict {
 }   t_dict;
 
 typedef struct {
-    int (*min_export)(t_dict*, char*);
-    //int (*cd)(char*);
+    int (*min_export)(t_dict*, char**);
+    int (*min_cd)(t_dict *, char**);
+	int (*min_pwd)(char **);
+	int (*min_env)(t_dict *dict, char **args);
 } Commands;
 
 typedef int (*builtin_ptr)(void**);
@@ -55,6 +57,19 @@ t_dict *get_dict_last(t_dict *dict);
 
 /* export.c */
 void    print_dict_export(t_dict *dict);
-int		min_export(t_dict *dict, char *arg);
+int		min_export(t_dict *dict, char **arg);
+
+/* cd.c */
+int min_cd(t_dict *dict, char **arg);
+
+
+/* pwd */
+int min_pwd(char **args);
+
+/* env.c */
+int min_env(t_dict *dict, char **args);
+
+
+
 
 #endif
