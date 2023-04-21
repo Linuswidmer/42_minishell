@@ -6,62 +6,69 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:36:54 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/18 14:08:39 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/21 14:11:22 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "expander.h"
 
-
-static ft_in()
-
-static ft_out()
-
-static ft_get_cmd()
-
-static ft_get_path()
-
-static ft_free_job()
-
-
-
-/*     */
-
-
-int		min_job(t_jobnode *astjob, t_dict *dict, bool pipe)
+static int ft_is_buildin(char *cmd, t_build **buildin)
 {
-	t_expandjob	*job;
-	char *path;
-	char **cmd;	
-
-	job = min_expander(astjob->start, dict, astjob->last);
-	if (!job)
-		return (1);
-	if (min_cmd_is_buildin(job))
-		min_cmd_is_common(job, pipe)
-	ft_free_job(job);	 	
-	return (0);	
-}		
-		
-
-	if(ft_in(job->in, fdin))
-		return (1);
-	if(ft_out(job->out))
-		return (1);
-	cmd = ft_get_cmd(job->cmd);
-	if (!cmd)
-		return (1);
-	if (min_buildin(cmd[0]))
+	while (*buildin && cmd)
 	{
-		path = ft_get_path (cmd[0], dict);
-		if (!path)
+		if (!ft_strncmp((*buildin)++, cmd, ft_strlen(cmd))
 			return (1);
-		global = 0;
-		global = execve(path, cmd, pi->envp);
 	}
-	ft_free_job(job, path ,cmd);
-	return (0);	
-}
-	
-		
-	
+	return (0);
+}	
+/*   */
 
+
+
+static int ft_cmd_is_buildin(t_jobnode *job, t_dict *dict, t_build **buildin)
+{
+	t_lexer *token;
+	char	in;
+	char	**cmd;
+	
+	in = 0;
+	token = job->start;
+	while (token && token != job->end)
+	{
+		if (min_token_is_word(token->key) && !in)
+			break;
+		else if (min_token_is_word(token->key) && in)
+		{
+			while(token && min_token_is_word(token->key))
+				token = token->next;
+			in = 0;
+		}
+		else if (min_token_is_io(token->key))
+		{
+			token = token->next;
+			in = 1;
+		}
+	}
+	cmd = min_word_eval(&token, dict);
+	return ( ft_is_buildin(cmd[0], buildin); 
+	
+	
+}
+
+/*      */
+
+static int		ft_job(t_jobnode *astjob, t_dict *dict, t_build **buildin)
+{
+	int error;
+
+	if (ft_cmd_is_buildin(job))
+		error = min_buildin_cmd(job);
+	else
+		error = min_common_cmd(job);
+	return (error);	
+}		
+
+/*    */
+int 	min_job(t_ast *ast, t_dict *dict, t_build **build  )
+{
+	return (ft_job(ast->node.job, dict, build ));
+}

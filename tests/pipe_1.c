@@ -5,6 +5,9 @@
 #include <stdlib.h>
 
 
+
+
+
 int ft_pipe(char *path, char **arg, char **envp, char last, int outfd)
 {
 	int	pipefd[2];
@@ -46,17 +49,65 @@ int ft_pipe(char *path, char **arg, char **envp, char last, int outfd)
 	}
 	return (0);	
 }
-
+/*
 int ft_pipe_node() 
 {
   int error;
     int n;
 
-    int out_fd = dup(STDOUT_FILENO);
-    char *cmd1 = "/usr/bin/l";
+	int out_fd = dup(STDOUT_FILENO);
+    char *cmd1 = "/usr/bin/yes";
     char *arg1[] = {"", NULL};
-    char *cmd2 = "/usr/bin/grep";
-    char *arg2[] = {"grep", "cl", NULL};
+    char *cmd2 = "/usr/bin/head";
+    char *arg2[] = {"head",  NULL};
+    char *cmd3 = "/usr/bin/cat";
+    char *arg3[] = {"cat", NULL};
+    error = 0;
+    n = 0;
+
+
+    while (n++ < 3 && !error)
+    {
+        if (n == 1)
+            error = ft_pipe(cmd1, arg1, envp, 0, out_fd);
+        if (n == 2)
+             error = ft_pipe(cmd2, arg2, envp, 0, out_fd);
+        if (n == 3)
+             error = ft_pipe(cmd3, arg3, envp, 1, out_fd);
+    }
+    if (!error)
+        {
+            while ( n--)
+                waitpid(-1, NULL, 0);
+            printf("parent  finsihed\n");
+            close(out_fd);    
+        }
+    else
+    {                                 
+        dup2(out_fd, STDOUT_FILENO) 
+        printf("child  finsihed\n");
+        close(out_fd);
+    }
+	return (error);
+}
+
+*/
+
+
+
+
+int main (int argc, char **argv, char** envp)
+{
+  int error;
+    int n;
+	(void)argc;
+	(void)argv;
+	
+    int out_fd = dup(STDOUT_FILENO);
+    char *cmd1 = "/usr/bin/yes";
+    char *arg1[] = {"", NULL};
+    char *cmd2 = "/usr/bin/head";
+    char *arg2[] = {"head",  NULL};
     char *cmd3 = "/usr/bin/cat";
     char *arg3[] = {"cat", NULL};
     error = 0;
@@ -78,26 +129,18 @@ int ft_pipe_node()
                 waitpid(-1, NULL, 0);
             printf("parent  finsihed\n");
             close(out_fd);
-            return (0);    
         }
     else
-    {                                 
-        dup2(out_fd, STDOUT_FILENO) 
+    {
+        dup2(out_fd, STDOUT_FILENO);
         printf("child  finsihed\n");
         close(out_fd);
-        return (1);
     }
+    return (error);
 }
 
-
-
-
-
-
-int main (int argc, char **argv, char** envp)
-{
  
 
-}
+
 
 
