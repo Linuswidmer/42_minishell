@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:24:19 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/12 10:16:30 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/21 10:44:36 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int parse_quote(char *input, int pos, t_lexer *tmp, int start, t_lexertype token
 			return (-1);
 	}
 	if (input[pos] == '\0')
-		return (-2);
+		return (- token);
 	return (pos + 1);
 }
 

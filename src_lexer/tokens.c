@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 13:13:58 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/12 09:57:16 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/21 09:53:52 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,15 @@ t_lexertype check_double_tokens(char c, char next)
 		return (l_and);
 	else if (c == '|' && next == '|')
 		return (l_or);
-	else if (c == '$' && next != '\0' 
-		&& (check_single_tokens(next) == l_word || check_single_tokens(next) == l_dollar)) 
+	else if (c ==  '$')
 		return (l_dollar);
 	else
 		return (l_empty);
+	/*
+	else if (c == '$' && next != '\0' 
+		&& (check_single_tokens(next) == l_word || check_single_tokens(next) == l_dollar)) 
+		return (l_dollar);
+	*/
 }
 
 t_lexertype check_token(char c, char next)

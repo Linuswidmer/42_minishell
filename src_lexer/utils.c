@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:53:03 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/04 12:55:22 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/21 12:47:12 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,4 +120,49 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		ft_strlcpy(ptr, s + start, len + 1);
 	}
 	return (ptr);
+}
+
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{	
+	size_t	i;
+
+	i = 0;
+	while (i < n && s1[i] != '\0' && s2[i] != '\0')
+	{
+		if (s1[i] == s2[i])
+			i++;
+		else
+			return ((unsigned char) s1[i] - (unsigned char) s2[i]);
+	}
+	if (i == n)
+		return (0);
+	return ((unsigned char) s1[i] - (unsigned char) s2[i]);
+}
+
+size_t	ft_strlcat(char *dest, const char *src, size_t size)
+{
+	size_t	i;
+	size_t	j;
+	size_t	result;
+
+	i = 0;
+	j = 0;
+	if (size > ft_strlen(dest))
+		result = ft_strlen(src) + ft_strlen(dest);
+	else
+		return (ft_strlen(src) + size);
+	while (dest[i] != '\0')
+		i++;
+	if (size != 0)
+	{
+		while (src[j] != '\0' && i < size - 1)
+		{
+			dest[i] = src[j];
+			i++;
+			j++;
+		}
+		dest[i] = '\0';
+	}
+	return (result);
 }

@@ -6,16 +6,16 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 10:04:52 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/12 09:37:08 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/21 13:59:57 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/04/07 17:50:52 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-static char *lexertype_names[] = 
+char *lexertype_names[] = 
 {
-    "EMPTY",
+	"EMPTY",
     "DQUOTE",
     "QUOTE",
     "WORD",
@@ -75,7 +75,7 @@ void print_token_list(t_lexer *first)
 	while (tmp)
 	{
 		printf("LEXERTYPE IS: %s	", lexertype_names[tmp->key]);
-		printf("STRING IS ~%s~\n", tmp->value);
+		printf("STRING IS *%s*\n", tmp->value);
 		tmp = tmp->next;
 	}
 }
