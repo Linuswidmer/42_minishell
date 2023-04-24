@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:36:54 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/21 15:43:38 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/24 12:40:07 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,10 @@ static int ft_cmd_is_buildin(t_jobnode *job, t_dict *dict, t_build **build)
 
 static int		ft_job(t_jobnode *job, t_dict *dict, t_build **build)
 {
-	int error;
-
 	if (ft_cmd_is_buildin(job, dict ,build))
-		error = min_buildin_cmd(job, dict, build);
+		return (min_buildin_cmd(job, dict, build));
 	else
-		error = min_common_cmd(job,dict);
-	return (error);	
+		return (min_common_cmd(job ,dict));
 }		
 
 /*    */

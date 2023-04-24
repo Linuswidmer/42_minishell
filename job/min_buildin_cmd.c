@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 13:01:51 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/21 15:43:40 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/24 12:40:10 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,23 @@ int	min_buildin(t_jobnode *job, t_dict *dict, t_build **build)
 {
     t_expandjob *job;
     char **cmd;
-    int error;
+    int exit;
 
+	cmd = NULL;
 	exit = 0;
     job = min_expander(astjob->start, dict, astjob->last);
     if (!job)
         return (1001);
-    exit = min_ex_io(job->io);
+    exit = min_ex_io(job->io, 1);
 	if (!exit)
 	{
-    	cmd = min_get_cmd(job->cmd);
+    	cmd = min_ex_get_cmd(job->cmd);
     	if (!cmd)
         	exit = 1001;
 	}
 	if (!exit)
 		exit = ft_run_buildin(cmd, build);		
-    min_free_job(&job, NULL , &cmd);
+   	min_free_job(&job, NULL , &cmd);
     return (exit);
 }
 
