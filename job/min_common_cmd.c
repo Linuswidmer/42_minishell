@@ -6,58 +6,73 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 12:05:30 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/24 12:47:26 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/24 14:58:25 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "???"
-static void	ft_init_path(t_pipex *pi, char *envp[])
+
+static char	**ft_get_envp(t_dict *dict)
+{
+	(void)dict;
+		
+	return (NULL);
+}	
+
+
+static char **ft_get_paths( t_dict *dict)
 {
 	int		i;
 	char	*temp;
+	char 	**paths
 
 	i = 0;
-	while (*envp)
+	paths = ft_split(search_key_in_dict(dict, "PATH")->value,':');	
+	if (!paths)
+		return (NULL);
+	while (paths[i])
 	{
-		if (!ft_strncmp(*envp, "PATH=", 5))
-			pi->paths = ft_split(((*envp) + 5), ':');
-		envp++;
-	}
-	if (!pi->paths)
-		px_end(ER_SPL, 1, 1, pi);
-	while (pi->paths[i])
-	{
-		temp = ft_strjoin(pi->paths[i], "/");
+		temp = ft_strjoin(paths[i], "/");
 		if (!temp)
-			px_end(ER_JOI, 1, 1, pi);
-		gnl_free(&pi->paths[i]);
+		{
+			min_dfree(&paths);
+			break;
+		}
+		gnl_free(paths[i]);
 		pi->paths[i++] = temp;
 	}
+	return (paths);
 }
 
 
-static int	ft_checkpath(t_pipex *pi)
+static char	*ft_checkpath(char *cmd, t_dict *dict)
 {
-	int	i;
+	int		i;
+	char	**paths;
+	char	*path
 
+/* check if cmd is already path*/
+	
 	i = 0;
-	pi->path = ft_strjoin(pi->paths[i], pi->cmd[0]);
-	if (!pi->path)
-		px_end(ER_PMA, 1, 1, pi);
-	while (pi->paths[i])
-	{	
-		if (!access(pi->path, F_OK))
-			return (1);
-		if (pi->paths[++i])
-		{
-			free(pi->path);
-			pi->path = NULL;
-			pi->path = ft_strjoin(pi->paths[i], pi->cmd[0]);
-			if (!pi->path)
-				px_end(ER_PJOI, 1, 1, pi);
-		}
+	paths = ft_get_paths(dict);
+	if (!path)
+		return (NULL);
+	path = ft_strjoin(paths[i], cmd);
+	if (path)
+		while (paths[i])
+		{	
+			if (!access(path, F_OK))
+				return (path);
+			if (paths[++i])
+			{
+				free(path);
+				path = NULL;
+				path = ft_strjoin(paths[i], cmd);
+				if (!path)
+					break;
+			}	t_dict *dict
 	}
-	return (0);
+	return (path);
 }
 
 /*   */
@@ -83,9 +98,9 @@ int	min_common_cmd(t_jobnode *job, t_dict *dict)
  			cmd = min_ex_get_cmd(job->cmd);
     		if (cmd)
 			{
-				path= ft_checkpath(pi)
+				path = ft_checkpath(cmd[0], dict)
 				if (path)			
-					execve(pi->path, pi->cmd, pi->envp)
+					execve(path, cmd, ft_get_envp(dict))
 			}
 		}
 		min_free_job(&job, &path, &cmd);
