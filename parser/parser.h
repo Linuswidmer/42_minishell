@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:02:20 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/21 14:11:44 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/25 12:33:25 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ struct s_pipenode
 	
 };
 
-struct s_jobnode
+s_jobnode
 {
 	t_ast 		*up;
 	t_lexer		*start;
