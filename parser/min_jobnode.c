@@ -70,7 +70,16 @@ t_lexer	*min_jobnode(t_lexer *token, t_ast **ast)
 		while (token)
 		{
 			if (ft_token_is_jobnode(token->key))
+			{
+				if (min_token_is_io(token->key) == 2)
+				{	
+					if (min_heredoc(token, heredoc))
+					{
+						min_heredoc_fail(ast)
+						break;
+					}	
 				token = token->next;
+			}
 			else
 				break;
 		}
