@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   min_token_is_io.c                                  :+:      :+:    :+:   */
+/*   min_exit_handler.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/04 12:26:46 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/21 14:11:41 by jstrotbe         ###   ########.fr       */
+/*   Created: 2023/04/25 11:27:38 by jstrotbe          #+#    #+#             */
+/*   Updated: 2023/04/25 12:33:18 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "parser.h"
+#include "??"
 
-
-int	min_token_is_io(t_lexertype key)
+int 	min_exit_handler(int exit)
 {
-	if (key == l_in)
-		return (1);
-	if (key == l_heredoc)
-        return (2);
-	if (key == l_out)
-		return (3);
-	if (key == l_append)
-		return (4);
-	else
-		return (0);
+	if (exit == 1000 || !exit)
+		return (256);
+	if (exit > 1000)
+		return (exit/1000);
 }

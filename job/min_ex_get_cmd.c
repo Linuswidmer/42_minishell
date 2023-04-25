@@ -1,29 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   min_set_file_io.c                                  :+:      :+:    :+:   */
+/*   min_ex_get_cmd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/04 15:59:53 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/12 16:21:24 by jstrotbe         ###   ########.fr       */
+/*   Created: 2023/04/24 11:53:18 by jstrotbe          #+#    #+#             */
+/*   Updated: 2023/04/24 12:04:08 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "????"
 
 
-
-void	min_set_file_io(t_lexer *token, t_ast *ast)
-{	
-	t_ionode *end;
-	if (min_token_is_io_in(token->prev->key))
+static int	ft_len_cmd(t_cmdnode *cmd)
+{
+	int len;
+	
+	len = 0;
+	while (cmd)
 	{
-		end = min_last_ionode(ast->node.job->in);
+		len++;
+		cmd = cmd->next;
 	}
-	else
+	return (len);
+}
+
+
+char	**min_ex_get_cmd(t_cmdnode *cmd)
+{
+	
+	char **values;
+	int i;
+		
+
+	i = 0;
+	values = (char **)malloc(sizeof(char **) * ( ft_len_cmd(cmd)  + 1 ));
+	if (values)
 	{
-		end = min_last_ionode(ast->node.job->out);
-	}	
-	end->file = token->value;
+		while (cmd)
+		{
+			values[i++] = cmd->arg;
+			cmd = cmd->next;
+		}
+		values[i] = NULL; 
+	}
+	return (values);
 }

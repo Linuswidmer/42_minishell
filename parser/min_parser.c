@@ -6,44 +6,10 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:59:26 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/09 19:50:18 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/10 15:52:29 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "parser.h"
-
-char *lexertype3_names[] =
-{
-    "EMPTY",
-    "DQUOTE",
-    "QUOTE",
-    "WORD",
-    "ASTERISK",
-    "PAROPEN",
-    "PARCLOSE",
-    "HEREDOC",
-    "APPEND",
-    "IN",
-    "OUT",
-    "DOLLAR",
-    "AND",
-    "OR",
-    "SEMI",
-    "PIPE",
-    "ESCAPE"
-};
-
-char *nodetype_names3[] =
-{
-    "ROUTENODE",
-    "PIPENODE",
-    "JOBNODE",
-    "SUBNODE"
-};
-
-
-
-
-
 
 static int	ft_token_is_jobnode(t_lexertype key)
 {
@@ -83,8 +49,6 @@ t_ast	*min_parser(t_lexer *token)
 	ast = NULL;
 	while (token)
 	{	
-		if (_DEBUG1)
-			printf("PARSER LEXERTYPE IS: %s    ", lexertype3_names[token->key]);
 		if (ft_token_is_jobnode(token->key))
 			token =	min_jobnode(token, &ast);	
 		else if (ft_token_is_pipenode(token->key))
@@ -93,15 +57,6 @@ t_ast	*min_parser(t_lexer *token)
 			token = min_routenode(token, &ast);
 		else if (ft_token_is_subnode(token->key))
 			token = min_subnode(token, &ast);
-		if (_DEBUG1 && ast)
-		{
-			printf("NODETYPE is: %s		", nodetype_names3[ast->key]);
-			if (ast->key == jobnode)
-			{	
-				min_print_jobnode(ast->node.job);
- 			}
-			printf("\n");
-		}
 		if (!ast)
 		{
 			printf("ERROR\n");
@@ -111,5 +66,6 @@ t_ast	*min_parser(t_lexer *token)
 	min_bring_ast_to_beginning(&ast);
 	if (_DEBUG)
 		min_print_ast(ast);
+	//min_free_ast(&ast);
 	return (ast);
 }

@@ -6,13 +6,10 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 17:12:46 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/09 22:10:03 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/10 15:52:40 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "parser.h"
-
-
-
 
 char *lexertype1_names[] =
 {
@@ -55,9 +52,6 @@ char *lexertype2_names[] =
     "ESCAPE"
 };
 
-
-
-
 char *nodetype_names[] =
 {
     "ROUTENODE",
@@ -65,11 +59,6 @@ char *nodetype_names[] =
     "JOBNODE",
     "SUBNODE"
 };
-
-
-
-
-
 
 void min_print_io(t_ionode *io)
 {
@@ -79,8 +68,6 @@ void min_print_io(t_ionode *io)
 		io = io->next;
 	}
 }
-
-
 
 void min_print_cmd (t_cmdnode *cmd)
 {
@@ -92,7 +79,6 @@ void min_print_cmd (t_cmdnode *cmd)
 			printf(" "); 
     }
 }
-
 
 void	min_print_jobnode(t_jobnode *job)
 {
@@ -211,7 +197,8 @@ void    min_bring_ast_to_beginning(t_ast **ast)
     if (!*ast)
         return;
     while (1)
-    {	printf("BEGIN: NODETYPE is: %s     \n", nodetype_names[(*ast)->key]);
+    {	
+	 printf("BEGIN: NODETYPE is: %s     \n", nodetype_names[(*ast)->key]);
         if ((*ast)->key == jobnode)
         {
             if ((*ast)->node.job->up)

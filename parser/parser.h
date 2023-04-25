@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:02:20 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/09 22:09:59 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/25 12:33:25 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,25 +70,11 @@ struct s_pipenode
 	
 };
 
-struct s_jobnode
+s_jobnode
 {
 	t_ast 		*up;
-	t_cmdnode	*cmd;
-	t_ionode 	*in;
-	t_ionode 	*out;
-};
-
-struct s_cmdnode
-{
-	char	*arg;
-	t_cmdnode *next;	
-};
-
-struct s_ionode
-{
-	t_lexertype value;
-	char *file;
-	t_ionode *next;
+	t_lexer		*start;
+	t_lexer		*last;
 };
 
 struct s_ast
@@ -110,6 +96,7 @@ t_ast	*min_parser(t_lexer *token); /* x */
 void	min_parser_error(t_ast **ast, t_lexer *token);
 void    min_parser_malloc_fail(t_ast **ast);
 void	min_bring_ast_to_beginning(t_ast **ast);
+void    min_free_ast(t_ast **ast);
 
 
 

@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   min_token_is_io.c                                  :+:      :+:    :+:   */
+/*   min_free_expander.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/04 12:26:46 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/21 14:11:41 by jstrotbe         ###   ########.fr       */
+/*   Created: 2023/04/14 12:54:51 by jstrotbe          #+#    #+#             */
+/*   Updated: 2023/04/14 13:01:18 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "parser.h"
 
+#include "expander.h"
 
-int	min_token_is_io(t_lexertype key)
+void	min_free_expander(t_expander **node)
 {
-	if (key == l_in)
-		return (1);
-	if (key == l_heredoc)
-        return (2);
-	if (key == l_out)
-		return (3);
-	if (key == l_append)
-		return (4);
-	else
-		return (0);
-}
+	t_expander *temp;
+	
+	while (*node)
+	{
+		temp = *node;
+		*node = (*node)->next;
+		gnl_free(&temp->word);
+		free(temp);
+		temp = NULL;
+	}
+}		

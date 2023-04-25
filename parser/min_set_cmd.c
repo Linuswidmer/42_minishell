@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 16:24:24 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/07 15:19:46 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/17 14:20:11 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "parser.h"
@@ -23,6 +23,7 @@ static t_cmdnode *ft_init_cmdnode(t_lexer *token)
 	if (!cmd)
 		return (NULL);
 	ft_bzero(cmd, sizeof(t_cmdnode));	
+	cmd->value = token->key;
 	cmd->arg = token->value;
 	return (cmd);
 }
