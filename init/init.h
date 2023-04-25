@@ -24,6 +24,8 @@ typedef struct {
 	int (*min_pwd)(char **);
 	int (*min_env)(t_dict *dict, char **args);
 	int (*min_echo)(char **);
+	int (*min_exit)(char **);
+	int (*min_unset)(t_dict **, char **);
 } Commands;
 
 typedef struct s_builtins t_builtins;
@@ -77,5 +79,23 @@ int min_echo (char **arg);
 
 /* exit.c */
 int min_exit (char **arg);
+
+/* unset.c */
+int min_unset(t_dict **dict, char **arg);
+
+
+/* buitins.c */
+void create_builtin_commands(t_min *min);
+t_builtins *create_builtins(t_dict *dict, Commands *commands);
+
+/* builtins_wrapper.c */
+int export_wrapper(t_builtins *builtin, char **args);
+int cd_wrapper(t_builtins *builtin, char **args);
+int pwd_wrapper(t_builtins *builtin, char **args);
+int env_wrapper(t_builtins *builtin, char **args);
+int exit_wrapper(t_builtins *builtin, char **args);
+int echo_wrapper(t_builtins *builtin, char **args);
+int unset_wrapper(t_builtins *builtin, char **args);
+
 
 #endif

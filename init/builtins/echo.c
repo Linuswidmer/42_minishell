@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:21:00 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/20 12:27:54 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/25 10:11:21 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ int min_echo (char **arg)
 	int n_flag;
 
 	i = 0;
-	n_flag = echo_check_arg(arg[0])
+	n_flag = echo_check_arg(arg[0]);
 	if (n_flag)
 	{
 		i++;
 		while (arg[i])
 		{
-			printf("%s", arg[i])
+			printf("%s\n", arg[i]);
 			i++;
 		}
 	}
@@ -53,8 +53,9 @@ int min_echo (char **arg)
 	{
 		while (arg[i])
 		{
-			printf("%s\n", arg[i])
+			printf("%s", arg[i]);
 			i++;
 		}
 	}
+	return (0);
 }

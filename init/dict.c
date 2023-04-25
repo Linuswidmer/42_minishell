@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:25:40 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/12 16:28:59 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/25 11:40:08 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,21 @@ t_dict *create_dict_on_startup(char **env)
     var1 = dict;
     split_str = ft_split(env[0], '=');
     write_to_dict(var1, split_str[0], split_str[1]);
-    while (env[i])
+    free(split_str[0]);
+    free(split_str[1]);
+    free(split_str[2]);
+    free (split_str);
+	while (env[i])
     {
         var2 = init_env_variable();
         var1->next_entry = var2;
         var1 = var2; 
         split_str = ft_split(env[i], '=');
         write_to_dict(var1, split_str[0], split_str[1]);
-        free(split_str[2]);
+        free(split_str[0]);
+        free(split_str[1]);
+		free(split_str[2]);
+		free(split_str);
         i++;
     }
   return (dict);

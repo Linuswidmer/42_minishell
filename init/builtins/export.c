@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:18:08 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/21 17:05:38 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/25 11:01:46 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int min_export(t_dict *dict, char **arg)
 	int i;
 
 	i = 0;
+	if (!dict)
+		return (0);
 	if (arg[0] == NULL)
 		print_dict_export(dict);
 	else
