@@ -88,7 +88,7 @@ int *child_processes()
 
 int main (int argc, char **argv, char** envp)
 {
-  int error;
+	int error;
     int n;
 	int status;
 	int *pid;
