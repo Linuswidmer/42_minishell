@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 17:12:46 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/26 11:46:51 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/26 15:00:38 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -29,7 +29,10 @@ char *lexertype1_names[] =
     "OR",
     "SEMI",
     "PIPE",
-    "ESCAPE"
+    "ESCAPE",
+	"SPACE",
+	"AMP"
+	
 };
 char *lexertype2_names[] =
 {
@@ -49,8 +52,10 @@ char *lexertype2_names[] =
     " || ",
     ";",
     " | ",
-    "ESCAPE"
-};
+    "ESCAPE",
+	" ",
+	"&"
+};	
 
 char *nodetype_names[] =
 {
@@ -88,7 +93,10 @@ void	min_print_jobnode(t_jobnode *job)
 	temp = job->start;
 	while (temp  != job->last)
 	{
-		 printf("%s[%s] ", lexertype2_names[temp->key],  temp->value);
+		if (temp->key == l_space)
+			printf("%s", lexertype2_names[temp->key]);
+		else
+		 	printf("%s[%s] ", lexertype2_names[temp->key],  temp->value);
 		temp = temp->next;
 	}
 	//printf("\n");
@@ -203,7 +211,7 @@ void    min_bring_ast_to_beginning(t_ast **ast)
         return;
     while (1)
     {	
-	 printf("BEGIN: NODETYPE is: %s     \n", nodetype_names[(*ast)->key]);
+//	 printf("BEGIN: NODETYPE is: %s     \n", nodetype_names[(*ast)->key]);
         if ((*ast)->key == jobnode)
         {
             if ((*ast)->node.job->up)

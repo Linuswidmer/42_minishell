@@ -11,31 +11,34 @@
 /* ************************************************************************** */
 
 //#include ???
-static int ft_which_buildin(char *cmd, t_build **build)
+static int ft_which_buildin(char *cmd, t_build *build)
 {
 	int i;
 	
 	i = 0;
-    while (*build && cmd)
+    while (build && cmd)
     {
-        if (ft_strncmp(*build->cmd, cmd, ft_strlen(cmd))
+        if (ft_strncmp((*build).name, cmd, ft_strlen(cmd))
         	break;    
-		n++;
-        (*build)++;
+	i++;
+        build++;
 		
     }
-    return (n);
+    return (i);
 }
 
 
-static int	ft_run_buildin(char **cmd, t_build **build)
+static int	ft_run_buildin(char **cmd, t_build *build)
 {
-		return (*build[ft_wich_buildin(*cmd[0], build)](cmd));
+		int i;
+		
+		i = ft_wich_buildin(*cmd[0], build);
+		return (build[i].func(&build[i], cmd));
 }
 
 
 /*  */
-int	min_buildin(t_jobnode *job, t_dict *dict, t_build **build)
+int	min_buildin_cmd(t_jobnode *job, t_dict *dict, t_build *build)
 {
     t_expandjob *job;
     char **cmd;

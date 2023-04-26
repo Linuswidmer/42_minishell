@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:31:01 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/26 11:38:19 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/26 14:34:59 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ min_jobnode
 t_lexer	*min_jobnode(t_lexer *token, t_ast **ast)
 {
 	t_ast *new;
-	char heredoc[3] = "./";
+	char heredoc[5] = "temp";
 		
 	new = ft_init_jobnode(token);
 	if (new)

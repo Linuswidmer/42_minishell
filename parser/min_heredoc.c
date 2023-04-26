@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 12:43:28 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/26 12:44:02 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/26 15:13:49 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,15 @@ static char *ft_find_filename(char *heredoc)
 
 	char *path;
 	char *temp;
-	char *num;
-	int n;
 
-	path = ft_strdup(heredoc); 	
-	n = 1;	
-	while (access(path, F_OK) || path)
+	path = ft_strdup(heredoc);
+	//printf("%s\n", path);	
+	//printf("%i\n", access(path, F_OK));			
+	while (!access(path, F_OK))
 	{
 		temp = path;
-		num = ft_itoa(n++);
-		path = ft_strjoin(path, num);
+		path = ft_strjoin(path, "1");
+		//printf("%s\n", path);
 		//min_free(temp);
 		//min_free(num);
 	}
@@ -49,9 +48,9 @@ static char *ft_get_limiter(t_lexer *token)
 		while (limiter && token && min_token_is_word(token->key))
 		{
 			temp = limiter;
-			if (token->key == 2)
+			if (min_token_is_word(token->key) == 2)
 				limiter = ft_strjoin(limiter, DOLLAR);
-			if (token->key == 3)
+			else if(min_token_is_word(token->key) == 3)
 				limiter =ft_strjoin(limiter, ASTERISK);
 			else 
 				limiter = ft_strjoin(limiter, token->value);
@@ -65,15 +64,16 @@ static char *ft_get_limiter(t_lexer *token)
 }	
 	
 /* set path to next next wrd and delete the others*/
-static void	ft_set_file(t_lexer **token,char *path)
+static t_lexer	*ft_set_file(t_lexer *token,char *path)
 {
+
 	t_lexer *file;
 	char	*old;
 
-	file = (*token)->next;
-	old = (*token)->value;
-	(*token)->key = l_word;
-	(*token)->value = path;
+	file = token->next;
+	old = token->value;
+	token->key = l_word;
+	token->value = path;
 	//min_free(&old);
 	
 	while (file && file->key == l_space)
@@ -84,17 +84,17 @@ static void	ft_set_file(t_lexer **token,char *path)
 		//else
 			//min_free_lexer_node(&file);
 	}
-	while (file && min_token_is_word(file->next->key))
+	while (file && min_token_is_word(file->key))
 	{
-		 if (file->next)
             file = file->next;
             //min_free_lexer_node(&file->prev);
         //else
             //min_free_lexer_node(&file);
 	}
-	(*token)->next = file;
+	token->next = file;
 	if (file)
-		file->prev = *token;
+		file->prev = token;
+	return (token);
 }
 
 int	min_heredoc(t_lexer **token, char *heredoc)
@@ -104,19 +104,24 @@ int	min_heredoc(t_lexer **token, char *heredoc)
 	char	*line;
 	char	*limiter;
 	
+//	printf("start heredoc\n");	
 
 	path = ft_find_filename(heredoc);
+	//printf("%s\n", path);
 	if (!path)
 		return (1);
 	fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	limiter = ft_get_limiter((*token)->next);
+	//printf("%s\n", limiter);
 	if (fd != -1 && limiter)
 	{
 		while(1)
 		{
+			write(1, "heredoc :", 10);
 			line = get_next_line(0);
 			if (!line)
 			{
+				printf("EOF\n");
 				//min_print_error(ENDOFFILE);
 				break;
 			}	
@@ -128,7 +133,7 @@ int	min_heredoc(t_lexer **token, char *heredoc)
 			write(fd, line, ft_strlen(line));
 			//min_free(&line);
 		}
-		ft_set_file(token, path);
+		*token = ft_set_file((*token)->next, path);
 		//min_free(&path);
 		if (close(fd))
 			return (1);

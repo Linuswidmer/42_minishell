@@ -16,20 +16,20 @@
 
 
 /*  */
-static int ft_is_buildin(char *cmd, t_build **build)
+static int ft_is_buildin(char *cmd, t_build *build)
 {
-	while (*build && cmd)
+	while (build && cmd)
 	{
-		if (!ft_strncmp(*build, cmd, ft_strlen(cmd))
+		if (!ft_strncmp((*build).name, cmd, ft_strlen(cmd))
 			return (1);
-		(*build)++;
+		build++;
 	}
 	return (0);
 }	
 
 
 /*   */
-static int ft_cmd_is_buildin(t_jobnode *job, t_dict *dict, t_build **build)
+static int ft_cmd_is_buildin(t_jobnode *job, t_dict *dict, t_build *build)
 {
 	t_lexer *token;
 	char	in;
@@ -54,14 +54,13 @@ static int ft_cmd_is_buildin(t_jobnode *job, t_dict *dict, t_build **build)
 		}
 	}
 	cmd = min_word_eval(&token, dict);
-	return ( ft_is_buildin(cmd[0], build); 
-	
+	return (ft_is_buildin(cmd[0], build); 
 	
 }
 
 /*      */
 
-static int		ft_job(t_jobnode *job, t_dict *dict, t_build **build)
+static int		ft_job(t_jobnode *job, t_dict *dict, t_build *build)
 {
 	if (ft_cmd_is_buildin(job, dict ,build))
 		return (min_buildin_cmd(job, dict, build));
