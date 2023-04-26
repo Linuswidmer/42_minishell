@@ -33,7 +33,6 @@ int parse_token_to_list(t_lexertype current_token, char *input, int pos, t_lexer
 
 void expand_dollar_tokens(t_lexer *first);
 
-void free_token_list(t_lexer *token_list);
 
 int skip_space_tab(char *input, int pos);
 int ft_isspace(char c);

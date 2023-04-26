@@ -95,7 +95,7 @@ int readline_loop(t_min *min)
 		// expander /  executer
 		add_history(readline_input);
 		free(readline_input);
-		ft_free_token_list(&(min->token));
+		//free_token_list(&(min->token));
 	}
 	free_dict(min->dict);
 	free_builtins(min->builtins);

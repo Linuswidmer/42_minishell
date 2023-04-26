@@ -30,18 +30,23 @@ void ft_free_token_list(t_lexer **list)
 	}
 }
 
-/*
-void free_token_list(t_lexer *token_list)
+
+void free_token_list(t_lexer **token_list)
 {
   t_lexer *tmp;
 
-  while (token_list)
+  while (*token_list)
   {
-    tmp = token_list->next;
-    if (token_list->value)
-      free (token_list->value);
-    free(token_list);
-    token_list = tmp;
+    tmp = (*token_list)->next;
+    if (*token_list)
+    {
+    	if ((*token_list)->value)
+		free((*token_list)->value);
+	free(*token_list);
+    }
+    *token_list = tmp;
   }
+  //free(token_list);
+ 
 }
-*/
+

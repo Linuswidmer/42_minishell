@@ -7,6 +7,14 @@ typedef struct s_builtins t_builtins;
 typedef int (*builtin_ptr)(t_builtins *, char**);
 typedef struct s_commands t_commands;
 typedef struct s_lexer t_lexer;
+typedef struct s_ast		t_ast;
+typedef struct s_pipenode	t_pipenode;
+typedef struct s_jobnode 	t_jobnode;
+typedef struct s_cmdnode 	t_cmdnode;
+typedef struct s_ionode		t_ionode;
+typedef struct s_routenode 	t_routenode;
+typedef struct s_subnode	t_subnode;
+
 
 typedef enum 
 {
@@ -32,7 +40,7 @@ typedef enum
 } t_lexertype ;	
 
 
-/* buildins*/
+/* builtins*/
 struct s_commands{
     int (*min_export)(t_dict*, char**);
     int (*min_cd)(t_dict *, char**);
@@ -66,6 +74,61 @@ struct s_lexer {
 	t_lexer *prev;
 };
 
+/* AST struct */
+
+typedef enum e_type
+{
+	routenode,
+	pipenode,
+	jobnode,
+	subnode,
+} e_type;
+
+struct s_subnode
+{
+	t_ast *up;
+    t_ast *down;
+};
+
+struct s_routenode
+{
+	t_lexertype rvalue;
+	t_ast *up;
+	t_ast *down;
+	t_ast *next;
+	t_ast *prev;
+};
+
+
+struct s_pipenode
+{
+	t_ast *next;
+	t_ast *prev;
+	t_ast *up;
+	t_ast *down;	
+	
+};
+
+struct s_jobnode
+{
+	t_ast 		*up;
+	t_lexer		*start;
+	t_lexer		*last;
+};
+
+struct s_ast
+{
+    e_type key;
+    union
+    {
+        t_pipenode	*pipe;
+        t_jobnode	*job;
+		t_routenode	*route;
+		t_subnode	*sub;
+    }node;
+};
+
+
 /* main */
 struct s_min{
 		// dict
@@ -77,7 +140,7 @@ struct s_min{
 		// lexer
 		t_lexer *token;
 		// parser AST
-		//t_ast *ast;
+		t_ast *ast;
 };
 
 #endif

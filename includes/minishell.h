@@ -15,11 +15,20 @@
 
 extern int min_status;
 
-#include "libft.h"
-#include "structs.h"
-#include "lexer.h"
+# ifndef _DEBUG1	
+#  define _DEBUG1 1	
+# endif
+
+# ifndef _DEBUG    
+#  define _DEBUG 1 
+# endif
+
 #include "typedef.h"
+#include "structs.h"
+#include "libft.h"
+#include "lexer.h"
 #include "init.h"
+#include "parser.h"
 #include "builtins.h"
 #include "free.h"
 
