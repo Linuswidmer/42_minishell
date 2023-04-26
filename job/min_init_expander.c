@@ -24,6 +24,7 @@ t_expander *min_init_expander(t_lexertype key)
 	new->key = key;
 	new->word = ft_strdup(EMPT);
 	if (!new->word)
+		/* free !!! new */
 		return (NULL);
 	return (new);
 } 

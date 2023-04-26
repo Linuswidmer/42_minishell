@@ -83,5 +83,8 @@ t_dict *create_dict_on_startup(char **env)
 		free(split_str);
         i++;
     }
+    /*
+    create EXIT_STATUS on startup
+    */
   return (dict);
 }

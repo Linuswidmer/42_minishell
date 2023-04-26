@@ -26,7 +26,7 @@ char    *ft_dollar_in_dict(char *dollar, char *old,  t_dict *dict)
 		free(temp);
 		return (dollar);
 	}
-	if (*dollar == QUOTE)
+	if (*dollar == SUB)
 		ft_putstr_fd(ERR_SUB, 2);	
     while (dict)
     	{
