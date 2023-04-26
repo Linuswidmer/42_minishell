@@ -25,10 +25,10 @@ t_lexertype check_token(char c, char next);
 t_lexer *lexer(char **input);
 
 int parse_dollar(char *input, int pos, t_lexer *tmp);
-int parse_quote(char *input, int pos, t_lexer *tmp, int start, t_lexertype token);
+int parse_quote(char *input, int pos, t_lexer *tmp, t_lexertype token);
 int parse_double_tokens(char *input, int pos, t_lexertype current_token, t_lexer *tmp);
 int parse_single_tokens(t_lexer *tmp, t_lexertype current_token, int pos);
-int parse_word(char *input, int pos, t_lexer *tmp, int start);
+int parse_word(char *input, int pos, t_lexer *tmp);
 int parse_token_to_list(t_lexertype current_token, char *input, int pos, t_lexer *tmp, int start);
 
 void expand_dollar_tokens(t_lexer *first);

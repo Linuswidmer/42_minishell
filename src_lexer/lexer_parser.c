@@ -75,14 +75,20 @@ int parse_dollar(char *input, int pos, t_lexer *tmp)
 	return (pos);
 }
 
-int parse_quote(char *input, int pos, t_lexer *tmp, int start, t_lexertype token)
+/*
+empty quotes are not working yet!!! again :((
+*/
+
+int parse_quote(char *input, int pos, t_lexer *tmp, t_lexertype token)
 {
 	t_lexertype next_token;
+	t_lexertype key;
 	int i;
 	int len;
+	int start;
 	int dollar_flag;
 
-	start++;
+	start = pos;
 	i = 0;
 	dollar_flag = 0;
 	while (input[pos] != '\0')
@@ -96,19 +102,11 @@ int parse_quote(char *input, int pos, t_lexer *tmp, int start, t_lexertype token
 			dollar_flag = 1;
 	}
 	len = pos - start;
-	
-	/*
-	if (len - 1 >= 0)
-	{
-		if (dollar_flag == 1)
-			tmp->key = l_dollar;
-		else
-			tmp->key = l_word;
-		tmp->value = ft_substr(input, start, len);
-		if (!tmp->value)
-			return (-1);
-	}
-	*/
+	if (dollar_flag == 1)
+		key = l_dollar;
+	else
+		key = l_word;
+	write_key_and_value_to_token(tmp, key, input + start, len);
 	if (input[pos] == '\0')
 		return (- token);
 	return (pos + 1);
@@ -126,11 +124,13 @@ int parse_single_tokens(t_lexer *tmp, t_lexertype token, int pos)
   return (pos);
 }
 
-int parse_word(char *input, int pos, t_lexer *tmp, int start)
+int parse_word(char *input, int pos, t_lexer *tmp)
 {
 	t_lexertype next_token;
+	int start;
+	int len;
 
-	tmp->key = l_word;
+	start = pos - 1;
 	while (input[pos] != '\0')
 	{
 		next_token = check_token(input[pos], input[pos + 1]);
@@ -139,47 +139,23 @@ int parse_word(char *input, int pos, t_lexer *tmp, int start)
 		else
 			pos++;
 	}
-	tmp->value = ft_substr(input, start, pos - start);
-	if (!tmp->value)
-		return (-1);
+	len = pos - start;
+	write_key_and_value_to_token(tmp, l_word, input + start, len);
 	return (pos);
 }
-
-/*
-int parse_asterisk(char *input, int pos, t_lexer *tmp, int start)
-{
-  t_lexertype next_token;
-
-  tmp->key = l_asterisk;
-  while (input[pos] != '\0')
-  {
-    next_token = check_token(input[pos], input[pos + 1]);
-    if (next_token != l_word)
-      break;
-    else
-      pos++;
-  }
-  tmp->value = ft_substr(input, start, pos - start);
-  if (!tmp->value)
-    return (-1);
-  return (pos);
-}
-*/
-	//else if (current_token == l_asterisk)
-    // return (parse_asterisk(input, pos, tmp, start));
 
 int parse_token_to_list(t_lexertype current_token, char *input, int pos, t_lexer *tmp, int start)
 {
 	pos++;
 	if (current_token == l_quote || current_token == l_dquote)
-		return (parse_quote(input, pos, tmp, start, current_token));
+		return (parse_quote(input, pos, tmp, current_token));
 	else if(current_token == l_dollar)
 		return (parse_dollar(input, pos, tmp));
 	else if (current_token == l_or || current_token == l_and 
         || current_token == l_heredoc || current_token == l_append)
 		return (parse_double_tokens(input, pos, current_token, tmp));
 	else if (current_token == l_word)
-		return (parse_word(input, pos, tmp, start));
+		return (parse_word(input, pos, tmp));
   else
 	  return (parse_single_tokens(tmp, current_token, pos));
 }
