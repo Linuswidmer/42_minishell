@@ -12,6 +12,21 @@
 
 #include "minishell.h"
 
+/*
+t_lexertype check_single_tokens(char c)
+{
+	t_lexertype tokens[] = { l_quote, l_dquote, l_asterisk, l_paraopen, l_paraclose, l_in, l_out,
+	l_semi, l_pipe, l_escape, l_amp, l_space};
+    	int num_tokens = sizeof(tokens) / sizeof(tokens[0]);
+    	
+    	for (int i = 0; i < num_tokens; i++) {
+        if ((char)tokens[i] == c) {
+            return tokens[i];
+        }
+    }
+}
+*/
+
 t_lexertype check_single_tokens(char c)
 {
 	if (c == 39)

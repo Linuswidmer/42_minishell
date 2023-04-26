@@ -6,19 +6,30 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:24:19 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/21 10:44:36 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/26 15:53:54 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int parse_dollar(char *input, int pos, t_lexer *tmp, int start)
+
+int write_key_and_value_to_token(t_lexer *token, t_lexertype key, char *input, int len)
+{
+	if (len > 0)
+	{
+		token->key = key;
+		token->value = ft_substr(input, 0, len);
+		if (!token->value)
+			return (-1);
+	}
+	return (0);
+}
+
+static int dollar_find_next_token_pos(char *input, int pos)
 {
 	int i;
-	int len;
 	t_lexertype next_token;
-
-	tmp->key = l_dollar;
+	
 	i = 0;
 	while (input[pos] != '\0')
 	{
@@ -33,10 +44,34 @@ int parse_dollar(char *input, int pos, t_lexer *tmp, int start)
 		else
 			break ;
 	}
+	return (pos);
+}
+
+/*
+int parse_token(char *input, int pos, t_lexer *tmp, t_lexertype token_type, int (*find_next_token_pos)(char *, int))
+{
+    int len;
+    int start;
+    start = pos - 1;
+    pos = find_next_token_pos(input, pos);
+    len = pos - start;
+    write_key_and_value_to_token(tmp, token_type, input + start, len);
+    return pos;
+}
+*/
+
+
+int parse_dollar(char *input, int pos, t_lexer *tmp)
+{
+	//int i;
+	int len;
+	int start;
+	t_lexertype next_token;
+
+	start = pos - 1;
+	pos = dollar_find_next_token_pos(input, pos);
 	len = pos - start;
-	tmp->value = ft_substr(input, start, len);
-	if (!tmp->value)
-		return (-1);
+	write_key_and_value_to_token(tmp, l_dollar, input + start, len);
 	return (pos);
 }
 
@@ -61,6 +96,8 @@ int parse_quote(char *input, int pos, t_lexer *tmp, int start, t_lexertype token
 			dollar_flag = 1;
 	}
 	len = pos - start;
+	
+	/*
 	if (len - 1 >= 0)
 	{
 		if (dollar_flag == 1)
@@ -71,6 +108,7 @@ int parse_quote(char *input, int pos, t_lexer *tmp, int start, t_lexertype token
 		if (!tmp->value)
 			return (-1);
 	}
+	*/
 	if (input[pos] == '\0')
 		return (- token);
 	return (pos + 1);
@@ -107,6 +145,7 @@ int parse_word(char *input, int pos, t_lexer *tmp, int start)
 	return (pos);
 }
 
+/*
 int parse_asterisk(char *input, int pos, t_lexer *tmp, int start)
 {
   t_lexertype next_token;
@@ -125,6 +164,9 @@ int parse_asterisk(char *input, int pos, t_lexer *tmp, int start)
     return (-1);
   return (pos);
 }
+*/
+	//else if (current_token == l_asterisk)
+    // return (parse_asterisk(input, pos, tmp, start));
 
 int parse_token_to_list(t_lexertype current_token, char *input, int pos, t_lexer *tmp, int start)
 {
@@ -132,14 +174,12 @@ int parse_token_to_list(t_lexertype current_token, char *input, int pos, t_lexer
 	if (current_token == l_quote || current_token == l_dquote)
 		return (parse_quote(input, pos, tmp, start, current_token));
 	else if(current_token == l_dollar)
-		return (parse_dollar(input, pos, tmp, start));
+		return (parse_dollar(input, pos, tmp));
 	else if (current_token == l_or || current_token == l_and 
         || current_token == l_heredoc || current_token == l_append)
 		return (parse_double_tokens(input, pos, current_token, tmp));
 	else if (current_token == l_word)
 		return (parse_word(input, pos, tmp, start));
-	else if (current_token == l_asterisk)
-    return (parse_asterisk(input, pos, tmp, start));
   else
 	  return (parse_single_tokens(tmp, current_token, pos));
 }
