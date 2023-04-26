@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:31:01 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/17 14:24:52 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/26 11:38:19 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,16 @@ t_lexer	*min_jobnode(t_lexer *token, t_ast **ast)
 		while (token)
 		{
 			if (ft_token_is_jobnode(token->key))
+			{
+				if (min_token_is_io(token->key) == 2)
+				{	
+					if (min_heredoc(&token, heredoc))
+					{
+						min_heredoc_fail(ast)
+						break;
+					}	
 				token = token->next;
+			}
 			else
 				break;
 		}

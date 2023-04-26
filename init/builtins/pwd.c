@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   min_job_in.c                                       :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/18 07:43:39 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/18 14:08:43 by jstrotbe         ###   ########.fr       */
+/*   Created: 2023/04/20 12:44:38 by lwidmer           #+#    #+#             */
+/*   Updated: 2023/04/21 17:29:49 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "job.h"
 
+#include "../init.h"
 
-
-
-
-
-
-int min_job_io(t_expandjob *job)
+int min_pwd(char **args)
 {
-		
+	char *pwd;
 
-
-
-    return (0);
+	(void)args;
+	pwd = getcwd(NULL, 0);
+	if (pwd)
+	{
+		printf("%s\n", pwd);
+		return (0);
+	}
+	else
+    	return (1);
 }
-

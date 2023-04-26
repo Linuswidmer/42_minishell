@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 11:02:12 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/01/30 13:07:58 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/25 11:27:24 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ size_t			ft_strlen(const char *str);
 int				ft_atoi(const char *nptr);
 void			*ft_calloc(size_t nmeb, size_t size);
 char			*ft_strmapi(const char *s, char (*f)(unsigned int, char));
-char			*ft_strdup(const char *s);
+char			*ft_strdup(char *s);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strtrim(char const *s, char const *set);
