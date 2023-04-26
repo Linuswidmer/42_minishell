@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "minishell.h"
 
 t_lexer *add_to_token_list(t_lexer *list_end, t_lexertype key, char *str, int start, int pos)
 {
@@ -129,57 +129,11 @@ int heredoc_get_limiter(t_lexer *token_list, t_lexer **limiter)
 		return (1);
 }
 
-int evaluate_heredoc(t_lexer *token_list)
-{
-	int fd;
-	int n;
-	t_lexer *limiter;
-	char *str;
-	char *tmpname;
-	t_lexer *tmp;
-	int heredoc_count;
-
-	heredoc_count = 0;
-	while (token_list)
-	{
-		if (token_list->key == l_heredoc)
-		{
-			tmpname = malloc(sizeof(char) * 6);
-			tmpname[0] = '.';
-			tmpname[1] = 't';
-			tmpname[2] = 'm';
-			tmpname[3] = 'p';
-			tmpname[4] =  heredoc_count + 48;
-			tmpname[5] = '\0';
-			fd = open(tmpname, O_CREAT | O_WRONLY | O_TRUNC);
-			heredoc_get_limiter(token_list->next, &limiter);
-			while (1)
-			{
-				str = get_next_line(0);
-				printf("str ist %s\n", str);
-				printf("limiter is %s\n", limiter->value);
-				printf("%i\n",ft_strncmp(str, limiter->value, ft_strlen(str)));
-				if (ft_strncmp(str, limiter->value, ft_strlen(str) - 1) == 0)
-					break ;
-				write(fd, str, ft_strlen(str));
-				free (str);
-			}
-			token_list->key = l_in;
-			free(limiter->value);
-			limiter->value = tmpname;
-			heredoc_count ++;
-		}
-		token_list = token_list->next;
-	}
-	return (0);
-}
-
 t_lexer *lexer(char *input)
 {
 	int		token_exit_status;
 	char	*new_input;
 	t_lexer *beginning_token_list;
-
 
 	beginning_token_list = init_lexer_struct();
 	if (!beginning_token_list)
@@ -194,6 +148,5 @@ t_lexer *lexer(char *input)
 		token_exit_status = create_token_list(input, beginning_token_list);
 	}
 	print_token_list(beginning_token_list);
-	evaluate_heredoc(beginning_token_list);
 	return (beginning_token_list);
 }

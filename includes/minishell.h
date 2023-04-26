@@ -15,9 +15,13 @@
 
 extern int min_status;
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
-# endif
+#include "libft.h"
+#include "structs.h"
+#include "lexer.h"
+#include "typedef.h"
+#include "init.h"
+#include "builtins.h"
+#include "free.h"
 
 #include <stdio.h>
 #include <signal.h>
@@ -26,17 +30,7 @@ extern int min_status;
 #include <sys/ioctl.h>
 #include <stdlib.h>
 #include <readline/readline.h>
-#include <readline/history.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <readline/readline.h>
-#include <stdlib.h>
 #include <fcntl.h>
-
-#include "typedef.h"
-#include "structs.h"
-#
-
-
+#include <readline/history.h>
 
 # endif

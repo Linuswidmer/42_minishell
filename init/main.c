@@ -15,28 +15,6 @@
 
 int min_status = 0;
 
-void clear_terminal(void) 
-{
-  printf("\033[2J");
-  printf("\033[H");
-}
-
-
-int init_minishell(t_min **min, char **env)
-{
-	//clear_terminal();
-	*min = malloc(sizeof(t_min));
-	ft_bzero(*min, sizeof(t_min));
-	min_status = init_signals();
-	// wie machen wir das hier, fragen wir jedes mal status ab?
-	(*min)->dict = create_dict_on_startup(env);
-
-	// create builtins here
-	create_builtin_commands(*min);	
-	(*min)->builtins = create_builtins((*min)->dict, &(*min)->commands);
-	return (0);
-}
-
 int test_builtins(t_min *min)
 {
 	int status;
@@ -94,43 +72,6 @@ int test_builtins(t_min *min)
     min->builtins[0].func(&(min->builtins[0]), args_export);
 
 	return (status);
-}
-
-int free_dict(t_dict *dict)
-{
-	t_dict *tmp;
-
-	while (dict)
-	{
-		if (dict->key)
-			free(dict->key);
-		if (dict->value)
-			free(dict->value);
-	tmp = dict->next_entry;
-	free(dict);
-	dict = tmp;
-	}
-	return (0);
-}
-
-int free_builtins(t_builtins *builtins)
-{
-	int i;
-
-	i = 0;
-	while (i < 7)
-	{
-		free(builtins[i].name);
-		i++;
-	}
-	free (builtins);
-	return (0);
-}
-
-int free_min(t_min *min)
-{
-	free(min);
-	return (0);
 }
 
 int readline_loop(t_min *min)

@@ -10,8 +10,27 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "minishell.h"
 
+void ft_free_token_list(t_lexer **list)
+{
+	t_lexer **temp;
+	
+	while (*list)
+	{
+		temp = list;
+		*list = (*list)->next;
+		if ((*temp)->value)
+		{
+			free((*temp)->value);
+			(*temp)->value = NULL;
+		}	
+		free (*temp);
+		*temp = NULL;
+	}
+}
+
+/*
 void free_token_list(t_lexer *token_list)
 {
   t_lexer *tmp;
@@ -25,3 +44,4 @@ void free_token_list(t_lexer *token_list)
     token_list = tmp;
   }
 }
+*/

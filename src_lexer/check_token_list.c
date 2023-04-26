@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-
+#include "minishell.h"
 /*
 int check_if_all_quotes_closed(t_lexer *token)
 {

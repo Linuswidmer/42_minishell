@@ -13,7 +13,7 @@
 #include "init.h"
 #include "libft.h"
 
-t_builtins *create_builtins(t_dict *dict, Commands *commands)
+t_builtins *create_builtins(t_dict *dict, t_commands *commands)
 {
     t_builtins *builtins;
     int num_builtins;

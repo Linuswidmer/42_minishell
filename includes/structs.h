@@ -56,7 +56,7 @@ struct s_dict {
 	char *key;
 	char *value;
 	t_dict *next_entry;
-}
+};
 
 /*lexer*/
 struct s_lexer {
@@ -67,7 +67,7 @@ struct s_lexer {
 };
 
 /* main */
-struct {
+struct s_min{
 		// dict
 		t_dict *dict;
 		// builtins
@@ -77,7 +77,7 @@ struct {
 		// lexer
 		t_lexer *token;
 		// parser AST
-		t_ast *ast;
-} t_min;
+		//t_ast *ast;
+};
 
 #endif

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "minishell.h"
 
 int parse_dollar(char *input, int pos, t_lexer *tmp, int start)
 {

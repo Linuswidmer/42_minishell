@@ -1,0 +1,44 @@
+int evaluate_heredoc(t_lexer *token_list)
+{
+	int fd;
+	int n;
+	t_lexer *limiter;
+	char *str;
+	char *tmpname;
+	t_lexer *tmp;
+	int heredoc_count;
+
+	heredoc_count = 0;
+	while (token_list)
+	{
+		if (token_list->key == l_heredoc)
+		{
+			tmpname = malloc(sizeof(char) * 6);
+			tmpname[0] = '.';
+			tmpname[1] = 't';
+			tmpname[2] = 'm';
+			tmpname[3] = 'p';
+			tmpname[4] =  heredoc_count + 48;
+			tmpname[5] = '\0';
+			fd = open(tmpname, O_CREAT | O_WRONLY | O_TRUNC);
+			heredoc_get_limiter(token_list->next, &limiter);
+			while (1)
+			{
+				str = get_next_line(0);
+				printf("str ist %s\n", str);
+				printf("limiter is %s\n", limiter->value);
+				printf("%i\n",ft_strncmp(str, limiter->value, ft_strlen(str)));
+				if (ft_strncmp(str, limiter->value, ft_strlen(str) - 1) == 0)
+					break ;
+				write(fd, str, ft_strlen(str));
+				free (str);
+			}
+			token_list->key = l_in;
+			free(limiter->value);
+			limiter->value = tmpname;
+			heredoc_count ++;
+		}
+		token_list = token_list->next;
+	}
+	return (0);
+}
