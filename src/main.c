@@ -90,12 +90,12 @@ int readline_loop(t_min *min)
 			free(readline_input);
 			break ;
 		}
-		min->token = lexer(readline_input);
+		min->token = lexer(&readline_input);
 		min->ast = min_parser(min->token);
 		// expander /  executer
 		add_history(readline_input);
 		free(readline_input);
-		//free_token_list(&(min->token));
+		free_token_list(&(min->token));
 	}
 	free_dict(min->dict);
 	free_builtins(min->builtins);
