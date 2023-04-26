@@ -9,7 +9,7 @@
 /*   Updated: 2023/04/07 18:09:35 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "parser.h"	
+#include "minishell.h"	
 
 
 int  min_token_is_io_in(t_lexertype key)

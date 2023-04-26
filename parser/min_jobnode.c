@@ -6,11 +6,11 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:31:01 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/17 14:24:52 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/26 11:38:19 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "minishell.h"
 
 static t_ast *ft_init_jobnode(t_lexer *token)
 {
@@ -59,7 +59,8 @@ min_jobnode
 t_lexer	*min_jobnode(t_lexer *token, t_ast **ast)
 {
 	t_ast *new;
-
+	char heredoc[3] = "./";
+		
 	new = ft_init_jobnode(token);
 	if (new)
 	{		
@@ -70,13 +71,28 @@ t_lexer	*min_jobnode(t_lexer *token, t_ast **ast)
 		while (token)
 		{
 			if (ft_token_is_jobnode(token->key))
+			{
+				if (min_token_is_io(token->key) == 2)
+				{	
+					if (min_heredoc(&token, heredoc))
+					{
+						min_heredoc_fail(ast);
+						break;
+					}
+				}		
 				token = token->next;
+					
+			}
 			else
+			{
 				break;
-		}
-		new->node.job->last = token;
+			}		
+	}
+	new->node.job->last = token;
 	}
 	else
+	{
 		min_parser_malloc_fail(ast);
+	}	
 	return (token);
 }

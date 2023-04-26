@@ -9,7 +9,7 @@
 /*   Updated: 2023/04/10 15:52:29 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "parser.h"
+#include "minishell.h"
 
 static int	ft_token_is_jobnode(t_lexertype key)
 {

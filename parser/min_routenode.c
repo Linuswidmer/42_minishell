@@ -9,7 +9,7 @@
 /*   Updated: 2023/04/09 22:09:53 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "parser.h"
+#include "minishell.h"
 /*
 static t_ast *ft_move_and_store_prev(t_ast *ast, t_ast **prev)
 {

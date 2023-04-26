@@ -9,7 +9,7 @@
 /*   Updated: 2023/04/09 19:50:24 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "parser.h"
+#include "minishell.h"
 
 void	min_bring_ast_to_beginning(t_ast **ast)
 {

@@ -9,7 +9,7 @@
 /*   Updated: 2023/04/09 21:53:52 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "parser.h"
+#include "minishell.h"
 static t_ast *ft_init_pipenode(void)
 {
 	t_ast   *pipe;

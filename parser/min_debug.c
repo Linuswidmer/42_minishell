@@ -6,10 +6,10 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 17:12:46 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/10 15:52:40 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/26 11:46:51 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "parser.h"
+#include "minishell.h"
 
 char *lexertype1_names[] =
 {
@@ -59,7 +59,7 @@ char *nodetype_names[] =
     "JOBNODE",
     "SUBNODE"
 };
-
+/*
 void min_print_io(t_ionode *io)
 {
 	while (io)
@@ -79,13 +79,18 @@ void min_print_cmd (t_cmdnode *cmd)
 			printf(" "); 
     }
 }
-
+*/
 void	min_print_jobnode(t_jobnode *job)
 {
 	//printf("JOBNODE: ");
-	min_print_io(job->in);
-	min_print_cmd(job->cmd);
-	min_print_io(job->out);
+	t_lexer *temp;
+
+	temp = job->start;
+	while (temp  != job->last)
+	{
+		 printf("%s[%s] ", lexertype2_names[temp->key],  temp->value);
+		temp = temp->next;
+	}
 	//printf("\n");
 }	
 

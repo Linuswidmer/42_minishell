@@ -10,11 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-
-
-
-
+#include "minishell.h"
 
 void	min_parser_malloc_fail(t_ast **ast)
 {

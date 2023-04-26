@@ -10,10 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-
-
-
+#include "minishell.h"
 
 
 void min_parser_error(t_ast **ast, t_lexer *token)

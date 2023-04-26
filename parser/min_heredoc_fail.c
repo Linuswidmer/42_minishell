@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   min_job_in.c                                       :+:      :+:    :+:   */
+/*   min_heredoc_fail.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/18 07:43:39 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/18 14:08:43 by jstrotbe         ###   ########.fr       */
+/*   Created: 2023/04/26 13:08:06 by lwidmer           #+#    #+#             */
+/*   Updated: 2023/04/26 13:09:00 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "job.h"
 
+#include "minishell.h"
 
-
-
-
-
-
-int min_job_io(t_expandjob *job)
+void	min_heredoc_fail(t_ast **ast)
 {
-		
-
-
-
-    return (0);
+	(void)ast;
 }
-

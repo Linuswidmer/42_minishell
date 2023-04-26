@@ -9,7 +9,7 @@
 /*   Updated: 2023/04/21 14:11:41 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "parser.h"
+#include "minishell.h"
 
 
 int	min_token_is_io(t_lexertype key)

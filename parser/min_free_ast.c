@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "minishell.h"
 
-
+/*
 ft_free_io(t_ionode **io)
 {
 	t_ionode **temp;
@@ -54,9 +54,11 @@ t_ast	*min_free_jobnode(t_ast **ast)
 	*ast = NULL;
 	return (up);
 }
-
+*/
 void	min_free_ast(t_ast **ast)
 {
+	(void)ast;
+/*	
 	char vt;
 	
 	vt = 0;
@@ -66,5 +68,5 @@ void	min_free_ast(t_ast **ast)
 		{
 			*ast = min_free_jobnode (ast);
 		}
-	}
+	}*/
 }		 	

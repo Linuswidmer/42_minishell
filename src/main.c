@@ -91,7 +91,7 @@ int readline_loop(t_min *min)
 			break ;
 		}
 		min->token = lexer(readline_input);
-		// parser
+		min->ast = min_parser(min->token);
 		// expander /  executer
 		add_history(readline_input);
 		free(readline_input);

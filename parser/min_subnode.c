@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "minishell.h"
 
 static t_ast	*ft_navigate_to_next_sub(t_ast *ast, char first)
 {
