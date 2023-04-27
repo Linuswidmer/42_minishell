@@ -6,11 +6,12 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:18:16 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/25 12:33:02 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/26 15:47:04 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "??"
+#include "minishell.h"
+
 int ft_pipe_fork(t_ast *ast, t_dict *dict, t_build **build)
 {
     pit_t   pipe_pid;
@@ -26,8 +27,6 @@ int ft_pipe_fork(t_ast *ast, t_dict *dict, t_build **build)
 	min_set_exit_status(
     return (0);
 }
-
-
 
 
 int	min_excuter(t_ast *ast, t_dict *dict, t_build **build)

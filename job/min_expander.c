@@ -5,34 +5,38 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/12 09:34:53 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/21 14:11:31 by jstrotbe         ###   ########.fr       */
+/*   Created: 2023/04/27 11:41:03 by jstrotbe          #+#    #+#             */
+/*   Updated: 2023/04/27 12:55:46 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_expandjob *min_expander(t_lexer *token, t_dict *dict, t_lexer *end)
+int	min_expander(t_lexer *token, t_dict *dict, t_lexer *end, ***cmd)
 {
-	t_expandjob *job;
+	t_cmdnode *cmdnode;
+	int exit;
 	
-	/* init job*/
-		
-	job = (t_expandjob *)malloc(sizeof(t_expandjob));
-	if (!job)
-		return (NULL);
-	ft_bzero(job, sizeof(t_expandjob));
-	
-	/* token to job */
-	while (token != end && job)
+	cmdnode = (t_expandjob *)malloc(sizeof(t_expandjob));
+    if (!cmdnode)
+        return (1);
+	exit = 0;
+    ft_bzero(job, sizeof(t_cmdnode));
+	while (token != end && !exit)
 	{
 		if (min_token_is_io(token->key))
-			token = min_set_io(token, &job, dict);
-		else if (token->key == l_space)
-			token = token->next; 		 
+            exit = min_set_io(&token, dict);
+ 		else if (token->key == l_space)
+			token = token->next;
 		else
-			token =  min_set_cmd(token, &job, dict);
+			exit = min_set_cmd(&token, &cmdnode, dict);
 	}
-	return (job);
+	if (exit)
+	{
+		*cmd = min_ex_get_cmd(cmdnode);
+		if (!*cmd)
+			exit = 1;
+		min_free_cmdnode(&cmdnode);	
+	}	
+	return (exit)
 }
-

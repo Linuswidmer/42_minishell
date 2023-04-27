@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   min_set_file_io.c                                  :+:      :+:    :+:   */
+/*   min_set_io2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/17 11:39:47 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/26 12:08:49 by jstrotbe         ###   ########.fr       */
+/*   Created: 2023/04/27 11:55:49 by jstrotbe          #+#    #+#             */
+/*   Updated: 2023/04/27 12:56:38 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
-
-
-
-
 char *ft_set_filename(t_lexer **token, t_dict *dict)
 {
     char **values;
+	char *filename;
 
     values = min_word_eval(token, dict);
 
@@ -30,28 +25,39 @@ char *ft_set_filename(t_lexer **token, t_dict *dict)
         //min_print_error(values)
         return (NULL);
     }
-    return (values[0]);
+	filename = ft_strdup(values[0]);
+	//min_d_free(&values);
+    return (filename);
 }
 
 
-
-t_lexer *min_set_file_io(t_ionode **end, t_lexer *token, t_dict *dict)
+char  *ft_set_file_io(t_lexer **token, t_dict *dict)
 {
-    char    *value;
-
-    while (token && space && *end)
+    while (*token)
     {
-        if (min_token_is_word(token->key))
-        {
-            value =  ft_set_filename(&token, dict);
-		break;	
-        }
-       	else if (token->key == l_space)
+        if (min_token_is_word((*token)->key))
+            return(ft_set_filename(&token, dict));
+        else if ((*token)->key == l_space)
             token = token->next;
-	
     }
-    if (!value)
-        min_free_ionode(end);
-    return (token)
+	return (NULL);
 }
 
+
+
+
+
+int min_set_io(t_lexer **token, t_dict *dict)
+{
+	t_lexertype key;
+	char * filename;
+
+	key = (*token)->key;
+	*token = (*token)->next; 
+	filename = ft_set_file_io(token, dict);
+	if (!filename)
+		return (1);
+	return (min_ex_io(key, &filename));
+}
+ 
+ 
