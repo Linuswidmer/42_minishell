@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 12:43:28 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/26 15:13:49 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/27 14:10:17 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,15 +104,17 @@ int	min_heredoc(t_lexer **token, char *heredoc)
 	char	*line;
 	char	*limiter;
 	
-//	printf("start heredoc\n");	
+	printf("start heredoc\n");	
 
 	path = ft_find_filename(heredoc);
-	//printf("%s\n", path);
+	printf("%s\n", path);
 	if (!path)
 		return (1);
-	fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	limiter = ft_get_limiter((*token)->next);
-	//printf("%s\n", limiter);
+	 printf("%s\n", limiter);
+	if (limiter)
+		fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	printf("%s\n", limiter);
 	if (fd != -1 && limiter)
 	{
 		while(1)

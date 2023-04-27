@@ -6,11 +6,13 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 13:01:51 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/25 12:33:28 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/27 12:50:30 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include ???
+#include "minishell.h"
+
+
 static int ft_which_buildin(char *cmd, t_build *build)
 {
 	int i;
@@ -38,27 +40,18 @@ static int	ft_run_buildin(char **cmd, t_build *build)
 
 
 /*  */
-int	min_buildin_cmd(t_jobnode *job, t_dict *dict, t_build *build)
+int	min_buildin_cmd(t_jobnode *astjob, t_dict *dict, t_build *build)
 {
-    t_expandjob *job;
     char **cmd;
     int exit;
 
 	cmd = NULL;
-	exit = 0;
-    job = min_expander(astjob->start, dict, astjob->last);
-    if (!job)
-        return (1001);
-    exit = min_ex_io(job->io, 1);
-	if (!exit)
-	{
-    	cmd = min_ex_get_cmd(job->cmd);
-    	if (!cmd)
-        	exit = 1001;
-	}
-	if (!exit)
+	exit = min_io_and_cmd(astjob, dict, &cmd);
+	if (exit)
+		exit = 1001;
+	else
 		exit = ft_run_buildin(cmd, build);		
-   	min_free_job(&job, NULL , &cmd);
+   	min_dfree(&cmd);
     return (exit);
 }
 

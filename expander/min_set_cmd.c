@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "expander.h"
+#include "minishell.h"
 
 static t_cmdnode *ft_init_cmd(char *arg)
 {

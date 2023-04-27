@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "???"
+#include "minishell.h"
 
 static char	**ft_get_envp(t_dict *dict)
 {
@@ -27,7 +27,7 @@ static char **ft_get_paths( t_dict *dict)
 	char 	**paths
 
 	i = 0;
-	paths = ft_split(search_key_in_dict(dict, "PATH")->value,':');	
+	paths = ft_split((search_key_in_dict(dict, "PATH"))->value,':');	
 	if (!paths)
 		return (NULL);
 	while (paths[i])
@@ -76,12 +76,12 @@ static char	*ft_checkpath(char *cmd, t_dict *dict)
 }
 
 /*   */
-int	min_common_cmd(t_jobnode *job, t_dict *dict)
+int	min_common_cmd(t_jobnode *astjob, t_dict *dict)
 {
 	t_expandjob *job;
-    char **cmd;
+    	char **cmd;
 	char *path;
-    int exit;
+    	int exit;
 	pid_t	id;
 
 	id = fork();
@@ -107,7 +107,7 @@ int	min_common_cmd(t_jobnode *job, t_dict *dict)
 		return (1);
 		}
 	}
-	waitpid(-1, NULL, 0);
+	waitpid(id, NULL, 0);
 	return (0);
 }
 	
