@@ -13,14 +13,14 @@
 #include "minishell.h"
 
 
-static int ft_which_buildin(char *cmd, t_build *build)
+static int ft_which_buildin(char *cmd, t_builtins *build)
 {
 	int i;
 	
 	i = 0;
     while (build && cmd)
     {
-        if (ft_strncmp((*build).name, cmd, ft_strlen(cmd))
+        if (ft_strncmp((*build).name, cmd, ft_strlen(cmd)))
         	break;    
 	i++;
         build++;
@@ -30,17 +30,17 @@ static int ft_which_buildin(char *cmd, t_build *build)
 }
 
 
-static int	ft_run_buildin(char **cmd, t_build *build)
+static int	ft_run_buildin(char **cmd, t_builtins *build)
 {
 		int i;
 		
-		i = ft_wich_buildin(*cmd[0], build);
+		i = ft_which_buildin(cmd[0], build);
 		return (build[i].func(&build[i], cmd));
 }
 
 
 /*  */
-int	min_buildin_cmd(t_jobnode *astjob, t_dict *dict, t_build *build)
+int	min_buildin_cmd(t_jobnode *astjob, t_dict *dict, t_builtins *build)
 {
     char **cmd;
     int exit;
@@ -51,7 +51,7 @@ int	min_buildin_cmd(t_jobnode *astjob, t_dict *dict, t_build *build)
 		exit = 1001;
 	else
 		exit = ft_run_buildin(cmd, build);		
-   	min_dfree(&cmd);
+   	//min_dfree(&cmd);
     return (exit);
 }
 

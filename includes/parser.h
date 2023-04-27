@@ -13,10 +13,6 @@
 #ifndef PARSER_H
 # define PARSER_H
 
-# define EMPTY ""
-# define DOLLAR "$"
-# define ASTERISK "*"	
-
 
 /* FUNCTIONS */
 t_ast	*min_parser(t_lexer *token); /* x */
@@ -41,13 +37,8 @@ t_lexer *min_pipenode(t_lexer *token, t_ast **ast);
 t_lexer	*min_jobnode(t_lexer *token, t_ast **ast);
 
 /* IO */
-t_lexer		*min_set_io(t_lexer *token, t_ast **ast);
 int			min_token_is_io(t_lexertype key); /*x*/
 int			min_token_is_io_in(t_lexertype key);
-void		min_set_file_io(t_lexer *token, t_ast *ast);
-
-/* cmd */
-void    min_set_cmd(t_lexer *token, t_ast **ast);
 
 /* WORD */
 int     min_token_is_word(t_lexertype key);/*x*/

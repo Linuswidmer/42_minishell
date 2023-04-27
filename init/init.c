@@ -25,7 +25,7 @@ int init_minishell(t_min **min, char **env)
 	
 	*min = malloc(sizeof(t_min));
 	ft_bzero(*min, sizeof(t_min));
-	min_status = init_signals();
+	init_signals();
 	// wie machen wir das hier, fragen wir jedes mal status ab?
 	(*min)->dict = create_dict_on_startup(env);
 

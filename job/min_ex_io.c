@@ -27,7 +27,7 @@ static char *ft_filepath(char *value, char *expath)
         path = getcwd(NULL, 0);
         if (!path) 
             return (NULL);
-        temp = ft_strjoin(paths, "/");
+        temp = ft_strjoin(path, "/");
         if (!temp)
         {
             //min_free(path);
@@ -49,13 +49,13 @@ static int  ft_open_io_out(t_lexertype key, char **filename)
     char *file;
 
     file = ft_filepath(*filename, NULL);
-	min_free(filename);
+	//min_free(filename);
     if (file)
     {
         if (min_token_is_io(key) == 3)
-            fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+            fd1 = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
         if (min_token_is_io(key) == 4)
-            fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+            fd1 = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
         if (fd1 != -1)
         {
             fd2 = dup2(fd1, STDOUT_FILENO);
@@ -82,11 +82,11 @@ static int  ft_open_io_in(t_lexertype key, char **filename)
     int fd2;
     char *file;
 
-    if (min_token_is_io(io->key)== 2)
-        file = ft_filepath(*filename, HEREDOC);
+    if (min_token_is_io(key)== 2)
+        file = ft_filepath(*filename, HEREDOC_PATH);
     else
         file = ft_filepath(*filename, NULL);
-	min_free(filename);
+	//min_free(filename);
     if (file)
     {
         fd1 = open(file, O_RDONLY);
@@ -95,7 +95,7 @@ static int  ft_open_io_in(t_lexertype key, char **filename)
             {
                 fd2 = dup2(fd1, STDIN_FILENO);
                 fd2 = close(fd1);
-                if (min_token_is_io(io->key) == 2)
+                if (min_token_is_io(key) == 2)
                 fd2 = unlink(file);
             //min_free(&file);
                 if (fd2 != -1)
@@ -112,8 +112,8 @@ int min_ex_io(t_lexertype key, char *filename)
 {
 	if (min_token_is_io(key) > 2)
 	{
-        return(ft_open_io_out(key, filename));
+        return(ft_open_io_out(key, &filename));
     }
     else
-        return (ft_open_io_in(key, filename));
+        return (ft_open_io_in(key, &filename));
 }

@@ -14,7 +14,7 @@
 
 
 
-static int ft_io_and_cmd(t_jobnode *astjob, t_dict *dict, char ***cmd)
+int min_io_and_cmd(t_jobnode *astjob, t_dict *dict, char ***cmd)
 {
 
     return (min_expander(astjob->start, dict, astjob->last, cmd));

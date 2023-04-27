@@ -79,10 +79,13 @@ int test_builtins(t_min *min)
 int readline_loop(t_min *min)
 {
 	char *readline_input;
+	int exit;	
 
 	min_status = 0; 
+	
+	exit = 0;
 	//printf("min_status %i\n", min_status);
-	while (min_status == 0)
+	while (exit == 0)
 	{
 		readline_input = readline("minishell> ");
     	if (readline_input == NULL)
@@ -92,6 +95,7 @@ int readline_loop(t_min *min)
 		}
 		min->token = lexer(&readline_input);
 		min->ast = min_parser(min->token);
+		exit = min_executer(min->ast, min->dict, min->builtins);
 		// expander /  executer
 		add_history(readline_input);
 		free(readline_input);

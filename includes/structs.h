@@ -14,6 +14,11 @@ typedef struct s_cmdnode 	t_cmdnode;
 typedef struct s_ionode		t_ionode;
 typedef struct s_routenode 	t_routenode;
 typedef struct s_subnode	t_subnode;
+typedef struct s_expandjob    t_expandjob;
+typedef struct s_cmdnode    t_cmdnode;
+typedef struct s_ionode     t_ionode;
+typedef struct s_expander     t_expander;
+typedef struct s_dollar     t_dollar;
 
 
 typedef enum 
@@ -126,6 +131,34 @@ struct s_ast
 		t_routenode	*route;
 		t_subnode	*sub;
     }node;
+};
+
+struct s_expandjob
+{
+    t_cmdnode   *cmd;
+    t_ionode    *in;
+    t_ionode    *out;
+};
+
+struct s_cmdnode
+{
+    char    *arg;
+    t_cmdnode *next;
+};
+
+struct s_expander
+{
+    t_lexertype key;
+    char    *word;
+    t_expander *next;
+};
+
+struct s_dollar
+{
+	t_lexertype value;
+	char	*word;
+	t_dollar *next;
+//	t_ast	*ast;
 };
 
 

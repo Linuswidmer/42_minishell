@@ -13,17 +13,24 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-extern int min_status;
+extern int g_status;
 
-# ifndef _DEBUG1	
-#  define _DEBUG1 1	
-# endif
+#include <stdio.h>
+#include <signal.h>
+#include <unistd.h>
+#include <termios.h>
+#include <sys/ioctl.h>
+#include <sys/types.h>
+#include <stdlib.h>
+#include <readline/readline.h>
+#include <fcntl.h>
+#include <readline/history.h>
+#include <dirent.h>
+#include <sys/wait.h>
 
-# ifndef _DEBUG    
-#  define _DEBUG 1 
-# endif
 
 #include "typedef.h"
+#include "define.h"
 #include "structs.h"
 #include "libft.h"
 #include "lexer.h"
@@ -31,15 +38,8 @@ extern int min_status;
 #include "parser.h"
 #include "builtins.h"
 #include "free.h"
-
-#include <stdio.h>
-#include <signal.h>
-#include <unistd.h>
-#include <termios.h>
-#include <sys/ioctl.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <fcntl.h>
-#include <readline/history.h>
+#include "expander.h"
+#include "job.h"
+#include "executer.h"
 
 # endif

@@ -18,7 +18,7 @@ t_builtins *create_builtins(t_dict *dict, t_commands *commands)
     t_builtins *builtins;
     int num_builtins;
 
-    num_builtins = 28;
+    num_builtins = 32;
 
     builtins = malloc(sizeof(t_builtins) *num_builtins);
     builtins[0].name = ft_strdup("export");

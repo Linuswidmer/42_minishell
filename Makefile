@@ -25,6 +25,12 @@ FILENAMES_INIT = signals init dict free_dict_builtins_min builtins builtins_wrap
 
 FILENAMES_BUILTINS = cd echo env exit export pwd unset
 
+FILENAMES_JOB = min_buildin_cmd min_ex_get_cmd min_expander min_set_cmd min_common_cmd min_ex_io min_io_and_cmd min_set_io
+
+FILENAMES_EXPANDER = min_asterisk min_free_expander min_last_expander min_word_eval min_dollar min_init_expander min_word
+
+FILENAMES_EXECUTER = min_executer min_exit_handler min_job
+
 LEXER_SRCS_DIR = ./src_lexer/
 LEXER_OBJS_DIR = ./src_lexer/
 
@@ -40,6 +46,14 @@ INIT_OBJS_DIR = ./init/
 BUILTINS_SRCS_DIR = ./init/builtins/
 BUILTINS_OBJS_DIR = ./init/builtins/
 
+JOB_SRCS_DIR = ./job/
+JOB_OBJS_DIR = ./job/
+
+EXPANDER_SRCS_DIR = ./expander/
+EXPANDER_OBJS_DIR = ./expander/
+
+EXECUTER_SRCS_DIR = ./executer/
+EXECUTER_OBJS_DIR = ./executer/
 
 SRCS_LEXER = $(addprefix $(LEXER_SRCS_DIR), $(addsuffix .c, $(FILENAMES_LEXER)))
 OBJS_LEXER = $(addprefix $(LEXER_OBJS_DIR), $(addsuffix .o, $(FILENAMES_LEXER)))
@@ -56,8 +70,17 @@ OBJS_INIT = $(addprefix $(INIT_OBJS_DIR), $(addsuffix .o, $(FILENAMES_INIT)))
 SRCS_BUILTINS = $(addprefix $(BUILTINS_SRCS_DIR), $(addsuffix .c, $(FILENAMES_BUILTINS)))
 OBJS_BUILTINS = $(addprefix $(BUILTINS_OBJS_DIR), $(addsuffix .o, $(FILENAMES_BUILTINS)))
 
-SRCS = $(SRCS_LEXER) ${SRCS_MS} ${SRCS_INIT} ${SRCS_BUILTINS} ${SRCS_PARSER}
-OBJS = $(OBJS_LEXER) ${OBJS_MS} ${OBJS_INIT} ${OBJS_BUILTINS} ${OBJS_PARSER}
+SRCS_JOB = $(addprefix $(JOB_SRCS_DIR), $(addsuffix .c, $(FILENAMES_JOB)))
+OBJS_JOB = $(addprefix $(JOB_OBJS_DIR), $(addsuffix .o, $(FILENAMES_JOB)))
+
+SRCS_EXPANDER = $(addprefix $(EXPANDER_SRCS_DIR), $(addsuffix .c, $(FILENAMES_EXPANDER)))
+OBJS_EXPANDER = $(addprefix $(EXPANDER_OBJS_DIR), $(addsuffix .o, $(FILENAMES_EXPANDER)))
+
+SRCS_EXECUTER = $(addprefix $(EXECUTER_SRCS_DIR), $(addsuffix .c, $(FILENAMES_EXECUTER)))
+OBJS_EXECUTER = $(addprefix $(EXECUTER_OBJS_DIR), $(addsuffix .o, $(FILENAMES_EXECUTER)))
+
+SRCS = $(SRCS_LEXER) ${SRCS_MS} ${SRCS_INIT} ${SRCS_BUILTINS} ${SRCS_PARSER} ${SRCS_JOB} ${SRCS_EXPANDER} ${SRCS_EXECUTER}
+OBJS = $(OBJS_LEXER) ${OBJS_MS} ${OBJS_INIT} ${OBJS_BUILTINS} ${OBJS_PARSER} ${OBJS_JOB} ${OBJS_EXPANDER} ${OBJS_EXECUTER}
 INCLUDES_DIR = -I./includes/
 
 ${NAME}: ${OBJS}
