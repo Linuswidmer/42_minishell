@@ -9,7 +9,7 @@
 /*   Updated: 2023/04/26 12:08:51 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "expander.h"
+#include "minishell.h"
 
 
 
@@ -25,7 +25,7 @@ static t_ionode *ft_init_io(t_lexer *token)
 }
 
 
-ft_set_io_out(t_lexer *token, t_expandjob **job, t_dict *dict)
+ft_set_io(t_lexer *token, t_expandjob **job, t_dict *dict)
 {
     t_ionode    *end;
 
@@ -40,7 +40,7 @@ ft_set_io_out(t_lexer *token, t_expandjob **job, t_dict *dict)
             end->next= ft_init_io(token);
             end = end->next;
         }
-    token = min_set_file_io(end);
+    token = min_set_file_io(&end, token->next, dict);
     if(!end)
         min_expander_malloc_fail(job);
     return (token);
@@ -49,5 +49,5 @@ ft_set_io_out(t_lexer *token, t_expandjob **job, t_dict *dict)
 
 t_lexer *min_set_io(t_lexer *token, t_expandjob **job, t_dict *dict)
 {
-    return (ft_set_io(token, &job, dict));
+    return (ft_set_io(token, job, dict));
 }

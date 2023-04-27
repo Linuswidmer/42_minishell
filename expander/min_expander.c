@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "expander.h"
+#include "minishell.h"
 
 t_expandjob *min_expander(t_lexer *token, t_dict *dict, t_lexer *end)
 {
@@ -24,7 +24,7 @@ t_expandjob *min_expander(t_lexer *token, t_dict *dict, t_lexer *end)
 	ft_bzero(job, sizeof(t_expandjob));
 	
 	/* token to job */
-	while (token && token != end && job)
+	while (token != end && job)
 	{
 		if (min_token_is_io(token->key))
 			token = min_set_io(token, &job, dict);

@@ -68,6 +68,16 @@ struct s_dollar
 //	t_ast	*ast;
 };
 
+/* functions */
+
+
+
+t_lexer *min_set_file_io(t_ionode **end, t_lexer *token, t_dict *dict);
+t_lexer *min_set_io(t_lexer *token, t_expandjob **job, t_dict *dict);
+
+
+t_expandjob *min_expander(t_lexer *token, t_dict *dict, t_lexer *end);
+
 
 
 

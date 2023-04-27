@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include ???
+#include "minishell.h"
+
 static int ft_which_buildin(char *cmd, t_build *build)
 {
 	int i;
@@ -38,7 +39,7 @@ static int	ft_run_buildin(char **cmd, t_build *build)
 
 
 /*  */
-int	min_buildin_cmd(t_jobnode *job, t_dict *dict, t_build *build)
+int	min_buildin_cmd(t_jobnode *astjob, t_dict *dict, t_build *build)
 {
     t_expandjob *job;
     char **cmd;

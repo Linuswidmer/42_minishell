@@ -11,8 +11,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/* ?????? */ 
-#include "expander.h"
+
+#include "minishell.h"
 
 
 /*  */
@@ -69,7 +69,7 @@ static int		ft_job(t_jobnode *job, t_dict *dict, t_build *build)
 }		
 
 /*    */
-int 	min_job(t_ast *ast, t_dict *dict, t_build **build  )
+int 	min_job(t_ast *ast, t_dict *dict, t_build *build  )
 {
 	return (ft_job(ast->node.job, dict, build));
 }

@@ -20,23 +20,23 @@
 
 
 
+char    **min_ex_get_cmd(t_cmdnode *cmd;
+
+int     min_ex_io(t_ionode *io, char buildin);
 
 
 
+/* common */
+int     min_common_cmd(t_jobnode *astjob, t_dict *dict);
+
+
+/* buildin */
+int     min_buildin_cmd(t_jobnode *astjob, t_dict *dict, t_build *build);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+/* job */
+int     min_job(t_ast *ast, t_dict *dict, t_build *build  );
 
 #endif
 

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "expander.h"
+#include "minishell.h"
 
 
 
@@ -27,7 +27,7 @@ char *ft_set_filename(t_lexer **token, t_dict *dict)
         return (NULL);
     if (ft_to_many_values(values))
     {
-        ft_error_values(values)
+        //min_print_error(values)
         return (NULL);
     }
     return (values[0]);
@@ -37,25 +37,21 @@ char *ft_set_filename(t_lexer **token, t_dict *dict)
 
 t_lexer *min_set_file_io(t_ionode **end, t_lexer *token, t_dict *dict)
 {
-    bool    space;
     char    *value;
-
-
-    space = true;
-
 
     while (token && space && *end)
     {
-        if (min_token_is_word(token->key) && space)
+        if (min_token_is_word(token->key))
         {
-            space = false;
             value =  ft_set_filename(&token, dict);
+		break;	
         }
-       	else if (
+       	else if (token->key == l_space)
             token = token->next;
+	
     }
     if (!value)
-        ft_free_end(end);
+        min_free_ionode(end);
     return (token)
 }
 
