@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:31:01 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/26 14:34:59 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/27 14:01:17 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,9 @@ t_lexer	*min_jobnode(t_lexer *token, t_ast **ast)
 {
 	t_ast *new;
 	char heredoc[5] = "temp";
+	char	io;
 		
+	io = 0;
 	new = ft_init_jobnode(token);
 	if (new)
 	{		
@@ -72,19 +74,38 @@ t_lexer	*min_jobnode(t_lexer *token, t_ast **ast)
 		{
 			if (ft_token_is_jobnode(token->key))
 			{
-				if (min_token_is_io(token->key) == 2)
+				if (min_token_is_io(token->key) == 2 && !io)
 				{	
 					if (min_heredoc(&token, heredoc))
 					{
 						min_heredoc_fail(ast);
+						printf("error io file\n");
 						break;
 					}
-				}		
+				}
+				else if (min_token_is_io(token->key))
+				{
+					if(	!io)
+						io = 1;	
+					else
+					{
+						printf("error io file\n");
+						*ast = NULL;
+						break;						
+					}
+				}
+				else if (min_token_is_word(token->key) && io)
+						io = 0;		
 				token = token->next;
 					
 			}
 			else
 			{
+				if (io)
+				{
+					printf("error io file\n");
+					*ast = NULL;
+				}
 				break;
 			}		
 	}
