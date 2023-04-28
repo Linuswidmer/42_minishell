@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:59:26 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/26 14:13:59 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/28 18:53:16 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -49,9 +49,9 @@ t_ast	*min_parser(t_lexer *token)
 	ast = NULL;
 	while (token)
 	{	
-		if (token->key == l_space)
+		while (token->key == l_space)
 			token = token->next;
-		else if (ft_token_is_jobnode(token->key))
+		if (ft_token_is_jobnode(token->key))
 			token =	min_jobnode(token, &ast);	
 		else if (ft_token_is_pipenode(token->key))
 			token = min_pipenode(token, &ast);
