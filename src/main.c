@@ -6,11 +6,13 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:19:36 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/28 15:48:46 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/28 20:48:25 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int g_status = 1;
 
 int ft_readline_loop(t_min *min)
 {
@@ -35,17 +37,24 @@ int ft_readline_loop(t_min *min)
 			if (min->ast) 
 				exit = min_executer(min->ast, min->dict, min->builtins);
 			else
-				exit = 1;
+				exit = 0;
 		}
 		else
-				exit = 1;
+				exit = 0;
 		
 		add_history(readline_input);
 		free(readline_input);
 		//min_free_ast(&min->ast)
 		free_token_list(&(min->token));
 		dup2(min->in, STDIN_FILENO);
-		dup2(min->out, STDOUT_FILENO);	
+		dup2(min->out, STDOUT_FILENO);
+		printf("exit status is %i\n", exit);
+		if (!exit || exit >= 3000)
+		{	
+			g_status = exit - 3000;
+			printf("gstatus is %i\n", g_status);
+			exit = 0;
+		}
 	}
 	close(min->in);
 	close(min->out);

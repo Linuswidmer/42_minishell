@@ -29,7 +29,7 @@ FILENAMES_JOB = min_buildin_cmd min_ex_get_cmd min_expander min_set_cmd min_comm
 
 FILENAMES_EXPANDER = min_asterisk min_free_expander min_last_expander min_word_eval min_dollar min_init_expander min_word
 
-FILENAMES_EXECUTER = min_executer min_exit_handler min_job
+FILENAMES_EXECUTER = min_executer min_exit_handler min_job min_sub min_route
 
 FILENAMES_PIPE = min_pipe
 

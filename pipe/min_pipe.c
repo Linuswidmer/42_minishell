@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:14:00 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/28 16:37:50 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/28 20:55:21 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,14 @@ int min_pipe(t_pipenode *pipenode, t_dict *dict, t_builtins *build)
 
 				//write(2, "xxx\n", 6);
                 return_pid = waitpid(-1, &status, 0);
+				if (return_pid == pid[lenpipe -1])
+				{
+					if (WEXITSTATUS(status) < 3000)
+						exit = WEXITSTATUS(status) + 3000;
+					else
+						exit = WEXITSTATUS(status);	
+					ft_putnbr_fd(exit, 2);
+				}
 				//write(2, "xxx\n", 6);
                 //if ( pid[n] == pid[lenpipe - 1])
 				//	g_status =  WEXITSTATUS(status);	

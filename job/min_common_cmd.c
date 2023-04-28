@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 12:05:30 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/27 14:38:07 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/28 20:46:34 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int min_common_cmd(t_jobnode *astjob, t_dict *dict)
     char	*path;
     int		exit;
     pid_t   id;
+	int status;
 
     id = fork();
     if (!id)
@@ -93,11 +94,13 @@ int min_common_cmd(t_jobnode *astjob, t_dict *dict)
 			//min_dfree(&cmd);			
 			//min_free(&path);
 	}
-	return (1);		
+		return (1);		
 	}
 	if (id)						
-		waitpid(id, NULL, 0);
-    return (0);
+		waitpid(id, &status, 0);
+	exit = WEXITSTATUS(status) + 3000;
+	ft_putnbr_fd(exit, 2);
+    return (exit);
 }	
 
 	
