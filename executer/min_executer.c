@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   min_exuter.c                                       :+:      :+:    :+:   */
+/*   min_executer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:18:16 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/26 15:47:04 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/28 11:46:41 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ int	min_executer(t_ast *ast, t_dict *dict, t_builtins *build)
 	if (ast->key == subnode)
       return (min_sub(ast, dict, build));*/
 	if (ast->key == jobnode)
+	{		printf("hallo\n");
       		return (min_job(ast, dict, build));
+	}
       	else
       		return (1001);
 }

@@ -55,6 +55,8 @@ static int ft_cmd_is_buildin(t_jobnode *job, t_dict *dict, t_builtins *build)
 			token = token->next;
 			in = 1;
 		}
+		else
+			token = token->next;
 	}
 	cmd = min_word_eval(&token, dict);	
 	return (ft_is_buildin(cmd[0], build)); 
@@ -66,7 +68,10 @@ static int ft_cmd_is_buildin(t_jobnode *job, t_dict *dict, t_builtins *build)
 static int		ft_job(t_jobnode *job, t_dict *dict, t_builtins *build)
 {
 	if (ft_cmd_is_buildin(job, dict ,build))
+	{
+		printf("hallo1\n");
 		return (min_buildin_cmd(job, dict, build));
+	}
 	else
 		return (min_common_cmd(job ,dict));
 }		

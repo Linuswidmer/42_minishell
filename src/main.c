@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:19:36 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/26 10:23:43 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/28 11:44:18 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int readline_loop(t_min *min)
 		}
 		min->token = lexer(&readline_input);
 		min->ast = min_parser(min->token);
+		printf("hallo\n");
 		exit = min_executer(min->ast, min->dict, min->builtins);
 		// expander /  executer
 		add_history(readline_input);

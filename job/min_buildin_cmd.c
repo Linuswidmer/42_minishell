@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 13:01:51 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/27 12:50:30 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/28 09:36:21 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,11 @@ static int ft_which_buildin(char *cmd, t_builtins *build)
 	int i;
 	
 	i = 0;
-    while (build && cmd)
+    while (cmd && i < 7)
     {
-        if (ft_strncmp((*build).name, cmd, ft_strlen(cmd)))
-        	break;    
-	i++;
-        build++;
+        if (!ft_strncmp(build[i].name, cmd, ft_strlen(cmd)))
+        	break; 
+		i++;
 		
     }
     return (i);

@@ -6,21 +6,22 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:55:25 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/21 17:23:18 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/28 10:07:12 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../init.h"
-#include "libft.h"
+#include "minishell.h"
 
 static int update_directories_in_dict(char *pwd, t_dict *dict_pwd, t_dict *dict_oldpwd)
 {
   if (dict_oldpwd && dict_pwd)
   {
-    free(dict_oldpwd->value);
+	printf("pwd %s\n", dict_pwd->value);
+	printf("oldpwd %s\n", dict_oldpwd->value);
+    //free(dict_oldpwd->value);
     dict_oldpwd->value = dict_pwd->value;
   }
-  if (dict_pwd)
+  else if (dict_pwd)
     write_to_dict(dict_pwd, "PWD", pwd);
 
   return (0);
