@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:20:37 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/07 17:57:11 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/28 14:15:06 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ extern int g_status;
 #include "free.h"
 #include "expander.h"
 #include "job.h"
+#include "pipe.h"	
 #include "executer.h"
 
 # endif

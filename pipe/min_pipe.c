@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:14:00 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/25 12:33:09 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/28 16:37:50 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,30 @@ static int ft_count_pipeline(t_pipenode *pipe)
 	while (pipe)
 	{
 		c++;
-		pipe = pipe->next;
+		if ( pipe->next)
+			pipe = pipe->next->node.pipe;
+		else
+			pipe = NULL;
 	}
 	return (c);
 }	
 
 
-static int ft_out_reroute(		)
+int search_pid(pid_t *pid_arr, pid_t return_pid, int arr_len)
+{
+	int i;
 
+	i = 0;
+	while (i < arr_len)
+	{
+		if (pid_arr[i] == return_pid)
+			return (i);
+		i++;
+	}
+	return (i);
+}
 
-int min_pipe(t_pipenode *pipe, t_dict *dict, t_build **build)
+int min_pipe(t_pipenode *pipenode, t_dict *dict, t_builtins *build)
 {
 	int 	lenpipe;
 	int 	outfd;
@@ -45,48 +59,71 @@ int min_pipe(t_pipenode *pipe, t_dict *dict, t_build **build)
 	n = 0;
 	outfd = dup(STDOUT_FILENO);
 	if (outfd == -1)
-		return (-1);
-	lenpipe = ft_count_pipeline(pipe);
+	{
+		return (1);
+
+	}
+	lenpipe = ft_count_pipeline(pipenode);
 	pid = (pid_t *)malloc(sizeof(pid_t) * lenpipe);
-	
-	while (pipe && !exit)
+	while (pipenode && !exit)
 	{
 		/* bevor fork*/
 		/* create and route to pipe */
-		if (pipe->next)
+		if (pipenode->next)
 		{
-					
-
+			if (pipe(pipefd) == -1)
+            	return (1);
+        	if (dup2(pipefd[1], STDOUT_FILENO) == -1)
+            	return (1);
+        	if (close(pipefd[1]) == -1)
+            	return (1);
 		}
 		/* last pipe route to STDOUT_FILENO */	
 		else
 		{
-				
-
+			if (dup2(outfd, STDOUT_FILENO) == -1)
+                return (1);
+			close(outfd);
 		}		
 		pid[n] = fork ();	
 		if (!pid[n++])
 		{
-			exit = min_exit_handler(min_excuter(pipe->down, dict, build));
+			exit = min_exit_handler(min_executer(pipenode->down, dict, build));
 			close(pipefd[0]);
-			close(pipefd[1]);
 		}	
-		if (pipe->next)
+		if (!exit && pipenode->next)
 		{
-
-
+			if (dup2(pipefd[0], STDIN_FILENO) == -1)
+            	return (1);
+        	if (close(pipefd[0]) == -1)
+            	return (1);
 		}
-		pipe = pipe->next;
+		if (pipenode->next)
+			pipenode = pipenode->next->node.pipe;
+		else
+			pipenode = NULL;
 	}
 	if (!exit)
     {
        n = 0;
       	while ( n < lenpipe)
             {
-                waitpid(pid[n]  , &status, 0);
-                if ( pid[n] == pid[lenpipe - 1])
-                    return( WEXITSTATUS(status));
-                n++;
+				pid_t return_pid;
+				int pid_pos;
+
+				//write(2, "xxx\n", 6);
+                return_pid = waitpid(-1, &status, 0);
+				//write(2, "xxx\n", 6);
+                //if ( pid[n] == pid[lenpipe - 1])
+				//	g_status =  WEXITSTATUS(status);	
+                  //  return( WEXITSTATUS(status));
+				pid_pos = search_pid(pid, return_pid, lenpipe);
+				if (pid_pos - 1 >= 0)
+				{
+					write(2, "kill\n", 6);
+					kill(pid[pid_pos - 1], SIGPIPE);
+				}
+				n++;
             }
      }
 	return (exit);	

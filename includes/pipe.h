@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executer.h                                         :+:      :+:    :+:   */
+/*   pipe.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/28 14:08:17 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/28 14:08:20 by lwidmer          ###   ########.fr       */
+/*   Created: 2023/04/28 14:07:22 by lwidmer           #+#    #+#             */
+/*   Updated: 2023/04/28 14:16:49 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTER_H
-# define EXECUTER_H
+#ifndef PIPE_H
+# define PIPE_H
 
-int     min_job(t_ast *ast, t_dict *dict, t_builtins *build  );
-int	min_executer(t_ast *ast, t_dict *dict, t_builtins *build);
-int 	min_exit_handler(int exit);
+
+int min_pipe(t_pipenode *pipe, t_dict *dict, t_builtins *build);
 
 #endif
+
