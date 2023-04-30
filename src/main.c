@@ -48,13 +48,19 @@ int ft_readline_loop(t_min *min)
 		free_token_list(&(min->token));
 		dup2(min->in, STDIN_FILENO);
 		dup2(min->out, STDOUT_FILENO);
-		printf("exit status is %i\n", exit);
-		if (!exit || exit >= 3000)
+		//printf("exit status is %i\n", exit);
+		if (exit >= 3000)
 		{	
 			g_status = exit - 3000;
 			printf("gstatus is %i\n", g_status);
 			exit = 0;
 		}
+		else if (exit >= 1000 && exit < 2000)
+		{
+			g_status = exit - 1000;
+			printf("\nstatus is %i\n", g_status);
+                        exit = 0;
+		}	
 	}
 	close(min->in);
 	close(min->out);
@@ -76,6 +82,9 @@ int main(int argc, char **argv, char **env)
 
 	if (!exit)
 		exit = ft_readline_loop(min);
+	if (exit == 256)
+		exit = 0;
+	printf("\nexit: %i \n", exit); 
 	return (exit);
 }
 

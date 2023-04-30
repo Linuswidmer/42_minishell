@@ -36,7 +36,7 @@ t_lexer *dollar_postprocessing(t_lexer *tmp)
 				continue ;
 			else
 			{
-				while (isalnum(dollar_value[pos]) != 0)
+				while (ft_isalnum(dollar_value[pos]) != 0)
 					pos++;
 			}
 			if (pos > start)

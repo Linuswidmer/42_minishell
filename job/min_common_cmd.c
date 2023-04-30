@@ -98,7 +98,7 @@ int min_common_cmd(t_jobnode *astjob, t_dict *dict)
 	}
 	if (id)						
 		waitpid(id, &status, 0);
-	exit = WEXITSTATUS(status) + 3000;
+	exit = WEXITSTATUS(status) + 1000;
 	ft_putnbr_fd(exit, 2);
     return (exit);
 }	

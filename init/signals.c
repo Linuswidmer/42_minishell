@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "init.h"
+#include "minishell.h"
 
 void handle_sigint(int sig) 
 {
   printf("\n");
   rl_on_new_line();
-  rl_replace_line("", 0); // second parameter not yet understood
+//  rl_replace_line("", 0); // second parameter not yet understood
   rl_redisplay();
 }
 

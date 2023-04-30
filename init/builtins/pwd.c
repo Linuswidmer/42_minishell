@@ -21,8 +21,8 @@ int min_pwd(char **args)
 	if (pwd)
 	{
 		printf("%s\n", pwd);
-		return (0);
+		return (1000);
 	}
 	else
-    	return (1);
+    	return (1001);
 }
