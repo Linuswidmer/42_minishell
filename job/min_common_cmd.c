@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 12:05:30 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/02 13:12:55 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/02 15:24:06 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ int min_common_cmd(t_jobnode *astjob, t_dict *dict)
 	int status;
 	struct sigaction sa_sigpipe;
 
-    //id = fork();
-    /*if (!id)
-	{*/
+    id = fork();
+    if (!id)
+	{
     	cmd = NULL;
     	exit = min_io_and_cmd(astjob, dict, &cmd);
     	if (!exit)
@@ -104,10 +104,10 @@ int min_common_cmd(t_jobnode *astjob, t_dict *dict)
 			//min_free(&path);
 	}
 		return (1);		
-	/*}
+	}
 	if (id)
 	{
-	
+	/*
 		write(2, "\n pid:", 6);
 		ft_putnbr_fd(id, 2);
 	write(2, "\n", 2);
@@ -121,11 +121,11 @@ int min_common_cmd(t_jobnode *astjob, t_dict *dict)
         	perror("sigaction");
         	return (1);
     	}*/
-	/*	waitpid(id, &status, 0);
+		waitpid(id, &status, 0);
 	}
 	exit = WEXITSTATUS(status) + 1000;
-	ft_putnbr_fd(exit, 2);*/
-    //return (exit);
+	ft_putnbr_fd(exit, 2);
+    return (exit);
 }	
 
 	
