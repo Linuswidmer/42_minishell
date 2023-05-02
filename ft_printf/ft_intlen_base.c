@@ -6,11 +6,11 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 09:42:26 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/02 17:51:28 by lwidmer          ###   ########.fr       */
+/*   Updated: 2022/12/22 09:43:01 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
 unsigned int	ft_intlen_base(long int n, unsigned int baselen)
 {

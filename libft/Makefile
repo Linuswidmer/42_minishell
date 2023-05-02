@@ -6,7 +6,7 @@
 #    By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/16 09:51:03 by lwidmer           #+#    #+#              #
-#    Updated: 2022/12/16 10:44:22 by lwidmer          ###   ########.fr        #
+#    Updated: 2023/05/02 17:54:45 by lwidmer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ FILENAMES = ft_isalpha \
 			get_next_line \
 			search_new_line \
 			ft_intlen_base \
-			ft_putnbr_base \
+			ft_putnbr_base_fd \
 			ft_printf \
 			ft_print_address_hex
 

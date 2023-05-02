@@ -1,31 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_intlen_base.c                                   :+:      :+:    :+:   */
+/*   ft_putnbr_base_fd.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/22 09:42:26 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/02 17:51:28 by lwidmer          ###   ########.fr       */
+/*   Created: 2022/12/22 09:41:17 by lwidmer           #+#    #+#             */
+/*   Updated: 2023/05/02 17:57:31 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-unsigned int	ft_intlen_base(long int n, unsigned int baselen)
+void	ft_putnbr_base_fd(long int nbr, char *base, int fd)
 {
-	unsigned int	i;
+	int		len;
+	char	print;
 
-	i = 0;
-	if (n < 0)
+	len = ft_strlen(base);
+	if (nbr < 0)
 	{
-		i++;
-		n = n * -1;
+		write(fd, "-", 1);
+		nbr = nbr * -1;
 	}
-	while (n > (baselen - 1))
+	if (nbr < len)
 	{
-		i++;
-		n = n / baselen;
+		print = base[nbr % len];
+		write(fd, &print, 1);
 	}
-	return (i + 1);
+	else
+	{
+		ft_putnbr_base_fd(nbr / len, base, fd);
+		print = base[nbr % len];
+		write(fd, &print, 1);
+	}
 }
