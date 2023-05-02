@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:55:25 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/28 19:57:57 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/02 10:22:09 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int min_cd(t_dict *dict, char **arg)
 	if (arg[2])
 	{
 		printf("cd: too many arguments");
-		return (1002);
+		return (2);
 	}	
 
 	dict_pwd = search_key_in_dict(dict, "PWD");
@@ -97,12 +97,12 @@ int min_cd(t_dict *dict, char **arg)
 		if (status == -1)
 		{
 			printf("%s: No such file or directory\n", arg[1]);
-			return (1002);
+			return (256);
 		}
 	}
 	pwd = getcwd(NULL, 0);
 	printf("%s\n", pwd);
 	update_directories_in_dict(pwd, dict_pwd, dict_oldpwd);
 	free(pwd);
-	return (1000);
+	return (256);
 }

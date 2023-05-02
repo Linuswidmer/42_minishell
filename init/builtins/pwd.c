@@ -6,11 +6,11 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:44:38 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/21 17:29:49 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/02 10:15:16 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../init.h"
+#include "minishell.h"
 
 int min_pwd(char **args)
 {
@@ -21,8 +21,8 @@ int min_pwd(char **args)
 	if (pwd)
 	{
 		printf("%s\n", pwd);
-		return (0);
+		return (1000);
 	}
 	else
-    	return (1);
+    	return (1002);
 }
