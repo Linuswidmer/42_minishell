@@ -6,17 +6,48 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 12:05:30 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/28 20:46:34 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/02 09:08:13 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	**ft_get_envp(t_dict *dict)
+int calc_dict_len(t_dict *dict)
 {
-	(void)dict;
-		
-	return (NULL);
+	int i;
+
+	i = 0;
+	while (dict)
+	{
+		i++;
+		dict = dict->next_entry;
+	}
+	return(i);
+}
+
+char	*const* ft_get_envp(t_dict *dict)
+{
+	int i;
+	int dict_len;
+	char **envp;
+	int entry_len;
+
+	i = 0;
+	dict_len = calc_dict_len(dict);
+	envp = malloc(sizeof(char *) * dict_len + 1);
+	while (i < dict_len)
+	{
+		entry_len = ft_strlen(dict->key) + ft_strlen(dict->value) + 2;
+		envp[i] = malloc(sizeof(const char) * entry_len);
+		ft_bzero(envp[i], entry_len);
+		ft_strlcat(envp[i], dict->key, entry_len);
+		ft_strlcat(envp[i], "=", entry_len);
+		ft_strlcat(envp[i], dict->value, entry_len);
+		dict = dict->next_entry;
+		i++;
+	}
+	envp[i] = NULL;
+	return (envp);
 }	
 
 
@@ -102,11 +133,6 @@ int min_common_cmd(t_jobnode *astjob, t_dict *dict)
 	ft_putnbr_fd(exit, 2);
     return (exit);
 }	
-
-	
-
-
-
 
 
 

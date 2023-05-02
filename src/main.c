@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:19:36 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/28 20:48:25 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/02 09:09:25 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int main(int argc, char **argv, char **env)
 	(void)argv;
 	exit = init_signals();
 	exit = init_minishell(&min, env);
-
 	if (!exit)
 		exit = ft_readline_loop(min);
 	return (exit);
