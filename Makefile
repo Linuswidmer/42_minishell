@@ -6,9 +6,18 @@
 #    By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/07 09:41:35 by lwidmer           #+#    #+#              #
-#    Updated: 2023/04/28 14:27:08 by lwidmer          ###   ########.fr        #
+#    Updated: 2023/05/02 09:30:26 by lwidmer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+
+define MAKE_SRCS
+	SRCS_$(1) = $(addprefix $(2), $(addsuffix .c, $(FILENAMES_$(1))))
+endef
+
+define MAKE_OBJS
+	OBJS_$(1) = $(addprefix $(2), $(addsuffix .o, $(FILENAMES_$(1))))
+endef
 
 NAME = minishell
 
@@ -61,8 +70,10 @@ PIPE_SRCS_DIR = ./pipe/
 PIPE_OBJS_DIR = ./pipe/
 
 
-SRCS_LEXER = $(addprefix $(LEXER_SRCS_DIR), $(addsuffix .c, $(FILENAMES_LEXER)))
+#SRCS_LEXER = $(addprefix $(LEXER_SRCS_DIR), $(addsuffix .c, $(FILENAMES_LEXER)))
+$(MAKE_SRCS, LEXER, ./src_lexer/)
 OBJS_LEXER = $(addprefix $(LEXER_OBJS_DIR), $(addsuffix .o, $(FILENAMES_LEXER)))
+#$(MAKE_OBJS, LEXER, ./src_lexer/)
 
 SRCS_PARSER = $(addprefix $(PARSER_SRCS_DIR), $(addsuffix .c, $(FILENAMES_PARSER)))
 OBJS_PARSER = $(addprefix $(PARSER_OBJS_DIR), $(addsuffix .o, $(FILENAMES_PARSER)))
