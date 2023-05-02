@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:18:16 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/28 20:17:27 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/02 12:19:00 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ int ft_pipe_fork(t_ast *ast, t_dict *dict, t_builtins *build)
     if (!pipe_pid) 
 		return (min_exit_handler(min_pipe(ast->node.pipe, dict, build)));
     waitpid(-1, &status, 0);
- if (WEXITSTATUS(status) == 256 )
-                                                exit = 1000;
+	 if (WEXITSTATUS(status) == 256 )
+        exit = 1000;
     else
-                                                exit = WEXITSTATUS(status) + 1000;	
+        exit = WEXITSTATUS(status) + 1000;	
     
 	write(2, "pk\n", 4);
                                         ft_putnbr_fd(exit, 2);

@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:19:36 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/28 20:48:25 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/02 10:55:35 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ int ft_readline_loop(t_min *min)
 		dup2(min->in, STDIN_FILENO);
 		dup2(min->out, STDOUT_FILENO);
 		//printf("exit status is %i\n", exit);
-		if (exit >= 3000)
+		/*if (exit >= 3000)
 		{	
 			g_status = exit - 3000;
 			printf("gstatus is %i\n", g_status);
 			exit = 0;
 		}
-		else if (exit >= 1000 && exit < 2000)
+		else */ if (exit >= 1000 && exit < 2000)
 		{
 			g_status = exit - 1000;
 			printf("\nstatus is %i\n", g_status);
