@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:14:00 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/03 10:09:38 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/03 11:10:12 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,28 +119,18 @@ int min_pipe(t_pipenode *pipenode, t_dict *dict, t_builtins *build)
 				pid_t return_pid;
 				int pid_pos;
 
-				//write(2, "xxx\n", 5);
-                return_pid = waitpid(-1, &status, 0);
+                return_pid = waitpid(pid[lenpipe -1 - n], &status, 0);
 				if (return_pid == pid[lenpipe - 1] )
 				{
-					write(2, "\nxx\n", 5); 
-					ft_putnbr_fd(return_pid, 2);
-					write(2,"\n", 2); 			
-					ft_putnbr_fd(pid[lenpipe - 1], 2);
-					write(2,"\n", 2);  
 					if (WEXITSTATUS(status) == 256 )
 						exit = 1000;
 					else		
 						exit = WEXITSTATUS(status) + 1000;
-					write(2, "xx\n", 4);
-					ft_putnbr_fd(exit, 2);
-					write(2,"\n", 2);  
-		
 				}
+				
 				pid_pos = search_pid(pid, return_pid, lenpipe);
 				if (pid_pos - 1 >= 0)
 				{
-					write (2, "killing ", 8);
 					kill(pid[pid_pos - 1], SIGPIPE);
 				}
 				n++;

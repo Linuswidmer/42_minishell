@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:18:16 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/03 09:53:25 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/03 10:58:28 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,20 @@ int	min_executer(t_ast *ast, t_dict *dict, t_builtins *build, char fork)
 {
 	if (ast->key == routenode)
 	{
-		ft_printf_fd("route %i\n",2, 3);
 		return (min_route(ast, dict, build));	
 	}
 	if (ast->key == pipenode)
 	{
-		ft_printf_fd("pipe\n",2);
-	
 	  return (min_pipe(ast->node.pipe, dict, build));
 	}	
 	if (ast->key == subnode)
 	{
-		ft_printf_fd("sub\n",2);
     		  return (min_sub(ast, dict, build));
 	}
 	if (ast->key == jobnode)
 	{
-		ft_printf_fd("job\n",2);
       		return (min_job(ast, dict, build, fork));
 	}
+	return (1);
 
 }

@@ -6,7 +6,9 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:19:36 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/03 09:51:17 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/03 10:16:18 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/03 09:45:15 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/02 18:00:09 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +50,8 @@ int ft_readline_loop(t_min *min)
 		free_token_list(&(min->token));
 		dup2(min->in, STDIN_FILENO);
 		dup2(min->out, STDOUT_FILENO);
-		//printf("exit status is %i\n", exit);
-		/*if (exit >= 3000)
-		{	
+		/*if (exit >= 3000)	
+		{
 			g_status = exit - 3000;
 			printf("gstatus is %i\n", g_status);
 			exit = 0;
@@ -79,7 +80,6 @@ int main(int argc, char **argv, char **env)
 	(void)argv;
 	exit = init_signals();
 	exit = init_minishell(&min, env);
-
 	if (!exit)
 		exit = ft_readline_loop(min);
 	if (exit == 256)

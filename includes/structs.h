@@ -42,6 +42,7 @@ typedef enum
 	l_escape,
 	l_space,
 	l_amp,
+	l_til,
 } t_lexertype ;	
 
 

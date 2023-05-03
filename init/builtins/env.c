@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:29:59 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/21 16:33:08 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/02 10:06:38 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,12 @@ void    print_dict_env(t_dict *dict)
 
 int min_env(t_dict *dict, char **args)
 {
-	printf("%s", args[0]);
 	if (args[0])
+	{
 		printf("env: too many arguments\n");
-	else 
+		return (1002);
+	}
+	else
 		print_dict_env(dict);
-	return (0);
+	return (1000);
 }
