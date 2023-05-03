@@ -6,31 +6,29 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 09:36:32 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/01/30 13:04:29 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/02 17:59:24 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	print_address(unsigned long long address)
+static void	print_address(unsigned long long address, int fd)
 {
 	char	print;
 	char	*base;
 
-	base = malloc(17);
-	ft_strlcpy(base, "0123456789abcdef", 17);
+	base = ft_strdup("0123456789abcdef");
 	if (address < 16)
 	{
 		print = base[address % 16];
-		write(1, &print, 1);
+		write(fd, &print, 1);
 	}
 	else
 	{
-		print_address(address / 16);
+		print_address(address / 16, fd);
 		print = base[address % 16];
-		write(1, &print, 1);
+		write(fd, &print, 1);
 	}
-	free(base);
 }
 
 static unsigned int	length_address(unsigned long long address)
@@ -46,12 +44,12 @@ static unsigned int	length_address(unsigned long long address)
 	return (len);
 }
 
-unsigned int	ft_print_address_hex(unsigned long long address)
+unsigned int	ft_print_address_hex(unsigned long long address, int fd)
 {
 	if (address)
 	{
-		ft_putstr_fd("0x", 1);
-		print_address(address);
+		ft_putstr_fd("0x", fd);
+		print_address(address, fd);
 	}
 	return (length_address(address));
 }

@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 18:23:46 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/09 21:53:52 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/03 09:08:02 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -58,6 +58,13 @@ t_lexer *min_pipenode(t_lexer *token, t_ast **ast)
 			new = ft_init_pipenode();
 			if (!new)
 				min_parser_malloc_fail(ast);
+			else
+			{
+				if ((*ast)->key == subnode )
+					(*ast)->node.sub->down = new;
+				if ((*ast)->key == routenode)
+					 (*ast)->node.route->down = new;
+			}	
 			new->node.pipe->down = temp;	
 			if (temp->key == jobnode)
 			{

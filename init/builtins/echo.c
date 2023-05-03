@@ -50,5 +50,5 @@ int min_echo (char **arg)
 	}
 	if (!n_flag)
 		printf("\n");
-	return (0);
+	return (1000);
 }

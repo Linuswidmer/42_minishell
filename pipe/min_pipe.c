@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:14:00 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/28 20:55:21 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/02 15:30:10 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int min_pipe(t_pipenode *pipenode, t_dict *dict, t_builtins *build)
 
 	}
 	lenpipe = ft_count_pipeline(pipenode);
+	
 	pid = (pid_t *)malloc(sizeof(pid_t) * lenpipe);
 	while (pipenode && !exit)
 	{
@@ -73,30 +74,40 @@ int min_pipe(t_pipenode *pipenode, t_dict *dict, t_builtins *build)
 		{
 			if (pipe(pipefd) == -1)
             	return (1);
-        	if (dup2(pipefd[1], STDOUT_FILENO) == -1)
-            	return (1);
-        	if (close(pipefd[1]) == -1)
-            	return (1);
+        	//if (dup2(pipefd[1], STDOUT_FILENO) == -1)
+            //	return (1);
+        	//if (close(pipefd[1]) == -1)
+            //	return (1);
 		}
 		/* last pipe route to STDOUT_FILENO */	
 		else
 		{
-			if (dup2(outfd, STDOUT_FILENO) == -1)
-                return (1);
+				if (dup2(outfd, STDOUT_FILENO) == -1)
+                	return (1);
 			close(outfd);
 		}		
 		pid[n] = fork ();	
 		if (!pid[n++])
 		{
+			if (pipenode->next)
+			{
+        		if (dup2(pipefd[1], STDOUT_FILENO) == -1)
+            		return (1);
+			}
 			exit = min_exit_handler(min_executer(pipenode->down, dict, build));
+			write(2, "\nbb\n", 5);
+                                        ft_putnbr_fd(exit, 2);
+                                        write(2,"\n", 2);
 			close(pipefd[0]);
 		}	
 		if (!exit && pipenode->next)
 		{
+        	if (close(pipefd[1]) == -1)
+            	return (1);
 			if (dup2(pipefd[0], STDIN_FILENO) == -1)
-            	return (1);
-        	if (close(pipefd[0]) == -1)
-            	return (1);
+            			return (1);
+        		if (close(pipefd[0]) == -1)
+            			return (1);
 		}
 		if (pipenode->next)
 			pipenode = pipenode->next->node.pipe;
@@ -111,28 +122,37 @@ int min_pipe(t_pipenode *pipenode, t_dict *dict, t_builtins *build)
 				pid_t return_pid;
 				int pid_pos;
 
-				//write(2, "xxx\n", 6);
+				//write(2, "xxx\n", 5);
                 return_pid = waitpid(-1, &status, 0);
-				if (return_pid == pid[lenpipe -1])
+				if (return_pid == pid[lenpipe - 1] )
 				{
-					if (WEXITSTATUS(status) < 3000)
-						exit = WEXITSTATUS(status) + 3000;
-					else
-						exit = WEXITSTATUS(status);	
+					write(2, "\nxx\n", 5); 
+					ft_putnbr_fd(return_pid, 2);
+					write(2,"\n", 2); 			
+					ft_putnbr_fd(pid[lenpipe - 1], 2);
+					write(2,"\n", 2);  
+					if (WEXITSTATUS(status) == 256 )
+						exit = 1000;
+					else		
+						exit = WEXITSTATUS(status) + 1000;
+					write(2, "xx\n", 4);
 					ft_putnbr_fd(exit, 2);
+					write(2,"\n", 2);  
+		
 				}
-				//write(2, "xxx\n", 6);
-                //if ( pid[n] == pid[lenpipe - 1])
-				//	g_status =  WEXITSTATUS(status);	
-                  //  return( WEXITSTATUS(status));
 				pid_pos = search_pid(pid, return_pid, lenpipe);
 				if (pid_pos - 1 >= 0)
 				{
-					write(2, "kill\n", 6);
+					write (2, "killing ", 8);
+					ft_putnbr_fd(pid[pid_pos - 1], 2);
+					write(2, "\n", 2);
 					kill(pid[pid_pos - 1], SIGPIPE);
 				}
+				//waitpid(pid[n], NULL, 0);
 				n++;
+				
             }
+		//waitpid(pid[0], NULL, 0);
      }
 	return (exit);	
 }

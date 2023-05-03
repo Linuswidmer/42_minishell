@@ -1,37 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_base.c                                   :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/22 09:41:17 by lwidmer           #+#    #+#             */
-/*   Updated: 2022/12/22 09:41:56 by lwidmer          ###   ########.fr       */
+/*   Created: 2023/04/20 12:44:38 by lwidmer           #+#    #+#             */
+/*   Updated: 2023/05/02 10:15:16 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_putnbr_base(long int nbr, char *base)
+int min_pwd(char **args)
 {
-	int		len;
-	char	print;
+	char *pwd;
 
-	len = ft_strlen(base);
-	if (nbr < 0)
+	(void)args;
+	pwd = getcwd(NULL, 0);
+	if (pwd)
 	{
-		write(1, "-", 1);
-		nbr = nbr * -1;
-	}
-	if (nbr < len)
-	{
-		print = base[nbr % len];
-		write(1, &print, 1);
+		printf("%s\n", pwd);
+		return (1000);
 	}
 	else
-	{
-		ft_putnbr_base(nbr / len, base);
-		print = base[nbr % len];
-		write(1, &print, 1);
-	}
+<<<<<<< HEAD
+    	return (1002);
+=======
+    	return (1001);
+>>>>>>> main
 }

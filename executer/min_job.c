@@ -69,7 +69,6 @@ static int		ft_job(t_jobnode *job, t_dict *dict, t_builtins *build)
 {
 	if (ft_cmd_is_buildin(job, dict ,build))
 	{
-		printf("hallo1\n");
 		return (min_buildin_cmd(job, dict, build));
 	}
 	else
