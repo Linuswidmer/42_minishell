@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:55:25 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/03 09:29:29 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/03 09:55:53 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ int min_cd(t_dict *dict, char **arg)
 	dict_pwd = search_key_in_dict(dict, "PWD");
 	dict_oldpwd = search_key_in_dict(dict, "OLDPWD");
 	dict_home = search_key_in_dict(dict, "HOME");
+
+	/* have to change the logic of cd to home*/
 
 	if (ft_strncmp(arg[1], "-", ft_strlen(arg[1])) == 0)
 		status = cd_to_oldpwd(dict_oldpwd);
