@@ -6,7 +6,7 @@
 #    By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/07 09:41:35 by lwidmer           #+#    #+#              #
-#    Updated: 2023/05/02 09:30:26 by lwidmer          ###   ########.fr        #
+#    Updated: 2023/05/03 09:34:01 by lwidmer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ FILENAMES_INIT = signals init dict free_dict_builtins_min builtins builtins_wrap
 
 FILENAMES_BUILTINS = cd echo env exit export pwd unset
 
-FILENAMES_JOB = min_buildin_cmd min_ex_get_cmd min_expander min_set_cmd min_common_cmd min_ex_io min_io_and_cmd min_set_io
+FILENAMES_JOB = min_buildin_cmd min_ex_get_cmd min_expander min_set_cmd min_common_cmd min_ex_io min_io_and_cmd min_set_io min_get_envp
 
 FILENAMES_EXPANDER = min_asterisk min_free_expander min_last_expander min_word_eval min_dollar min_init_expander min_word
 
