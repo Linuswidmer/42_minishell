@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 12:05:30 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/27 14:38:07 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/02 15:24:06 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,22 @@ static int	ft_checkpath(char *cmd, t_dict *dict, char **path)
 	return (1);
 }
 
+static void handle_sigpipe(int sig, siginfo_t *siginfo , void *context)
+{
+	write(2, "\n pid sighandler:", 18);
+	ft_putnbr_fd(siginfo->si_value.sival_int, 2);
+	kill(siginfo->si_value.sival_int, SIGPIPE);
+}
+
+
 int min_common_cmd(t_jobnode *astjob, t_dict *dict)
 {
     char	**cmd;
     char	*path;
     int		exit;
     pid_t   id;
+	int status;
+	struct sigaction sa_sigpipe;
 
     id = fork();
     if (!id)
@@ -93,11 +103,29 @@ int min_common_cmd(t_jobnode *astjob, t_dict *dict)
 			//min_dfree(&cmd);			
 			//min_free(&path);
 	}
-	return (1);		
+		return (1);		
 	}
-	if (id)						
-		waitpid(id, NULL, 0);
-    return (0);
+	if (id)
+	{
+	/*
+		write(2, "\n pid:", 6);
+		ft_putnbr_fd(id, 2);
+	write(2, "\n", 2);
+		union sigval value;
+    	value.sival_int = (int)id;
+		sa_sigpipe.sa_sigaction = &handle_sigpipe;
+    	sa_sigpipe.sa_flags = SA_SIGINFO;
+    	sigemptyset(&sa_sigpipe.sa_mask);
+		if (sigaction(SIGPIPE, &sa_sigpipe, NULL) == -1)
+    	{
+        	perror("sigaction");
+        	return (1);
+    	}*/
+		waitpid(id, &status, 0);
+	}
+	exit = WEXITSTATUS(status) + 1000;
+	ft_putnbr_fd(exit, 2);
+    return (exit);
 }	
 
 	

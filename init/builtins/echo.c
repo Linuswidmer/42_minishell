@@ -6,12 +6,11 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:21:00 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/25 10:11:21 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/28 12:02:17 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include "../init.h"
+#include "minishell.h"
 
 int echo_check_arg(char *arg)
 {
@@ -41,21 +40,15 @@ int min_echo (char **arg)
 	i = 0;
 	n_flag = echo_check_arg(arg[0]);
 	if (n_flag)
-	{
 		i++;
-		while (arg[i])
-		{
-			printf("%s\n", arg[i]);
-			i++;
-		}
-	}
-	else
+	while (arg[i])
 	{
-		while (arg[i])
-		{
-			printf("%s", arg[i]);
-			i++;
-		}
+		printf("%s", arg[i]);
+		if (arg[i + 1])
+			printf(" ");
+		i++;
 	}
-	return (0);
+	if (!n_flag)
+		printf("\n");
+	return (1000);
 }

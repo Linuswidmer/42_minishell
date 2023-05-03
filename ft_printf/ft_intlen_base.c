@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_intlen_base.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/20 12:44:38 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/21 17:29:49 by lwidmer          ###   ########.fr       */
+/*   Created: 2022/12/22 09:42:26 by lwidmer           #+#    #+#             */
+/*   Updated: 2022/12/22 09:43:01 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../init.h"
+#include "ft_printf.h"
 
-int min_pwd(char **args)
+unsigned int	ft_intlen_base(long int n, unsigned int baselen)
 {
-	char *pwd;
+	unsigned int	i;
 
-	(void)args;
-	pwd = getcwd(NULL, 0);
-	if (pwd)
+	i = 0;
+	if (n < 0)
 	{
-		printf("%s\n", pwd);
-		return (1000);
+		i++;
+		n = n * -1;
 	}
-	else
-    	return (1001);
+	while (n > (baselen - 1))
+	{
+		i++;
+		n = n / baselen;
+	}
+	return (i + 1);
 }

@@ -6,7 +6,7 @@
 #    By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/07 09:41:35 by lwidmer           #+#    #+#              #
-#    Updated: 2023/04/26 14:45:16 by lwidmer          ###   ########.fr        #
+#    Updated: 2023/05/02 17:30:33 by lwidmer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,9 @@ FILENAMES_JOB = min_buildin_cmd min_ex_get_cmd min_expander min_set_cmd min_comm
 
 FILENAMES_EXPANDER = min_asterisk min_free_expander min_last_expander min_word_eval min_dollar min_init_expander min_word
 
-FILENAMES_EXECUTER = min_executer min_exit_handler min_job
+FILENAMES_EXECUTER = min_executer min_exit_handler min_job min_sub min_route
+
+FILENAMES_PIPE = min_pipe
 
 LEXER_SRCS_DIR = ./src_lexer/
 LEXER_OBJS_DIR = ./src_lexer/
@@ -55,6 +57,9 @@ EXPANDER_OBJS_DIR = ./expander/
 EXECUTER_SRCS_DIR = ./executer/
 EXECUTER_OBJS_DIR = ./executer/
 
+PIPE_SRCS_DIR = ./pipe/
+PIPE_OBJS_DIR = ./pipe/
+
 SRCS_LEXER = $(addprefix $(LEXER_SRCS_DIR), $(addsuffix .c, $(FILENAMES_LEXER)))
 OBJS_LEXER = $(addprefix $(LEXER_OBJS_DIR), $(addsuffix .o, $(FILENAMES_LEXER)))
 
@@ -79,8 +84,11 @@ OBJS_EXPANDER = $(addprefix $(EXPANDER_OBJS_DIR), $(addsuffix .o, $(FILENAMES_EX
 SRCS_EXECUTER = $(addprefix $(EXECUTER_SRCS_DIR), $(addsuffix .c, $(FILENAMES_EXECUTER)))
 OBJS_EXECUTER = $(addprefix $(EXECUTER_OBJS_DIR), $(addsuffix .o, $(FILENAMES_EXECUTER)))
 
-SRCS = $(SRCS_LEXER) ${SRCS_MS} ${SRCS_INIT} ${SRCS_BUILTINS} ${SRCS_PARSER} ${SRCS_JOB} ${SRCS_EXPANDER} ${SRCS_EXECUTER}
-OBJS = $(OBJS_LEXER) ${OBJS_MS} ${OBJS_INIT} ${OBJS_BUILTINS} ${OBJS_PARSER} ${OBJS_JOB} ${OBJS_EXPANDER} ${OBJS_EXECUTER}
+OBJS_PIPE = $(addprefix $(PIPE_OBJS_DIR), $(addsuffix .o, $(FILENAMES_PIPE)))
+SRCS_PIPE = $(addprefix $(PIPE_SRC_DIR), $(addsuffix .c, $(FILENAMES_PIPE)))
+
+SRCS = $(SRCS_LEXER) ${SRCS_MS} ${SRCS_INIT} ${SRCS_BUILTINS} ${SRCS_PARSER} ${SRCS_JOB} ${SRCS_EXPANDER} ${SRCS_EXECUTER} ${SRCS_PIPE}
+OBJS = $(OBJS_LEXER) ${OBJS_MS} ${OBJS_INIT} ${OBJS_BUILTINS} ${OBJS_PARSER} ${OBJS_JOB} ${OBJS_EXPANDER} ${OBJS_EXECUTER} ${OBJS_PIPE}
 INCLUDES_DIR = -I./includes/
 
 ${NAME}: ${OBJS}

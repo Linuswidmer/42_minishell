@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   min_ex_io2.c                                       :+:      :+:    :+:   */
+/*   min_ex_io.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 12:24:31 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/27 12:42:37 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/28 11:07:40 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -82,10 +82,13 @@ static int  ft_open_io_in(t_lexertype key, char **filename)
     int fd2;
     char *file;
 
+	
     if (min_token_is_io(key)== 2)
-        file = ft_filepath(*filename, HEREDOC_PATH);
+        file = *filename;
     else
         file = ft_filepath(*filename, NULL);
+	
+	printf("file is %s\n", file);
 	//min_free(filename);
     if (file)
     {

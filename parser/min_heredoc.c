@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 12:43:28 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/27 14:10:17 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/04/28 10:58:38 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,10 @@
 
 static char *ft_find_filename(char *heredoc)
 {
-
 	char *path;
 	char *temp;
 
-	path = ft_strdup(heredoc);
+	path = ft_strjoin("/tmp/", heredoc);
 	//printf("%s\n", path);	
 	//printf("%i\n", access(path, F_OK));			
 	while (!access(path, F_OK))

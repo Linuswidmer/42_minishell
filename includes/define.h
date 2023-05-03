@@ -17,6 +17,6 @@
 # define SUB '('
 # define ERR_SUB "$() not implemented.\n"  
 # define CURRDIR "./"
-# define HEREDOC_PATH "./"
+# define HEREDOC_PATH "/tmp/"
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 10:35:08 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/25 10:35:17 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/28 09:37:17 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int exit_wrapper(t_builtins *builtin, char **args)
 
 int echo_wrapper(t_builtins *builtin, char **args)
 {
-	return (builtin->commands.min_echo(args));
+	return (builtin->commands.min_echo(args + 1));
 }
 
 int unset_wrapper(t_builtins *builtin, char **args)

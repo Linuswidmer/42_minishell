@@ -32,5 +32,7 @@ int init_minishell(t_min **min, char **env)
 	// create builtins here
 	create_builtin_commands(*min);	
 	(*min)->builtins = create_builtins((*min)->dict, &(*min)->commands);
+	(*min)->in = dup(STDIN_FILENO);
+	(*min)->out = dup(STDOUT_FILENO);
 	return (0);
 }

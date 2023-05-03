@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_putnbr_base_fd.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/20 12:44:38 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/21 17:29:49 by lwidmer          ###   ########.fr       */
+/*   Created: 2022/12/22 09:41:17 by lwidmer           #+#    #+#             */
+/*   Updated: 2023/05/02 17:57:31 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../init.h"
+#include "libft.h"
 
-int min_pwd(char **args)
+void	ft_putnbr_base_fd(long int nbr, char *base, int fd)
 {
-	char *pwd;
+	int		len;
+	char	print;
 
-	(void)args;
-	pwd = getcwd(NULL, 0);
-	if (pwd)
+	len = ft_strlen(base);
+	if (nbr < 0)
 	{
-		printf("%s\n", pwd);
-		return (1000);
+		write(fd, "-", 1);
+		nbr = nbr * -1;
+	}
+	if (nbr < len)
+	{
+		print = base[nbr % len];
+		write(fd, &print, 1);
 	}
 	else
-    	return (1001);
+	{
+		ft_putnbr_base_fd(nbr / len, base, fd);
+		print = base[nbr % len];
+		write(fd, &print, 1);
+	}
 }

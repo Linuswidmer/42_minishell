@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 11:02:12 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/25 11:27:24 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/02 17:54:23 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char			*get_next_line(int fd);
 size_t			search_new_line(const char *s);
 
 unsigned int	ft_intlen_base(long int n, unsigned int base);
-void			ft_putnbr_base(long int nbr, char *base);
-unsigned int	ft_print_address_hex(unsigned long long address);
-int				ft_printf(const char *arg, ...);
+void			ft_putnbr_base_fd(long int nbr, char *base, int fd);
+unsigned int	ft_print_address_hex(unsigned long long address, int fd);
+int				ft_printf(const char *arg, int fd, ...);
 #endif

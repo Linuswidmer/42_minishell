@@ -174,6 +174,9 @@ struct s_min{
 		t_lexer *token;
 		// parser AST
 		t_ast *ast;
+		// STDIN
+		int in;
+		int out;
 };
 
 #endif

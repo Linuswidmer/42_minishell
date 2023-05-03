@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   pipe.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/20 12:44:38 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/21 17:29:49 by lwidmer          ###   ########.fr       */
+/*   Created: 2023/04/28 14:07:22 by lwidmer           #+#    #+#             */
+/*   Updated: 2023/04/28 14:16:49 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../init.h"
+#ifndef PIPE_H
+# define PIPE_H
 
-int min_pwd(char **args)
-{
-	char *pwd;
 
-	(void)args;
-	pwd = getcwd(NULL, 0);
-	if (pwd)
-	{
-		printf("%s\n", pwd);
-		return (1000);
-	}
-	else
-    	return (1001);
-}
+int min_pipe(t_pipenode *pipe, t_dict *dict, t_builtins *build);
+
+#endif
+
