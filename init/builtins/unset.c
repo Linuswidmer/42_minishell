@@ -6,11 +6,11 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:37:37 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/25 09:59:47 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/02 10:17:27 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../init.h"
+#include "minishell.h"
 
 int min_unset(t_dict **dict, char **arg)
 {
@@ -22,7 +22,7 @@ int min_unset(t_dict **dict, char **arg)
     var = search_key_in_dict(*dict, arg[0]);
     var_next = var->next_entry;
     if (var == NULL)
-        return (0);
+        return (1000);
     else if (var == *dict)
     {
         *dict = var_next;
@@ -38,5 +38,5 @@ int min_unset(t_dict **dict, char **arg)
     free(var);
     if (var_prev)
         var_prev->next_entry = var_next;
-    return (0);
+    return (1000);
 }

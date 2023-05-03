@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 10:04:52 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/21 13:59:57 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/03 09:21:02 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/04/07 17:50:52 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -33,7 +33,8 @@ char *lexertype_names[] =
     "PIPE",
     "ESCAPE",
 	"SPACE",
-	"AMP"
+	"AMP",
+	"TIL"
 };
 
 int ft_isspace(char c)
