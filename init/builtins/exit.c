@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:57:33 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/25 10:16:38 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/02 10:13:56 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,30 @@
 
 int min_exit (char **arg)
 {
-	int status;
+	int exit;
 	int i;
 
 
 	i = 0;
 	if (!arg[0])
-		status = 256;
+		exit = 256;
 	else if (arg[1])
-		status = 2;
+		exit = 2;
 	else
 	{
 		while (arg[0][i] != '\0')
 		{
 			if (ft_isdigit(arg[0][i]) != 0)
 			{
-				status = 2;
+				exit = 2;
 				break;
 			}
 			i++;
 		}
-		status = ft_atoi(arg[0]);
-		status = status % 256;
-		if (status == 0)
-			status = 256;
+		exit = ft_atoi(arg[0]);
+		exit = exit % 256;
+		if (exit == 0)
+			exit = 256;
   	}
-  return (status);
+  return (exit);
 }

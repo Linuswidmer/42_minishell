@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:41:03 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/28 11:39:29 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/03 11:00:16 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	min_expander(t_lexer *token, t_dict *dict, t_lexer *end, char ***cmd)
 	
 	exit = 0;
 	cmdnode = NULL;	
-		printf("test\n");	
 	while (token != end && !exit)
 	{	
 		if (min_token_is_io(token->key))

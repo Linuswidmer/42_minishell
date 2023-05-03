@@ -6,14 +6,11 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:18:08 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/25 11:01:46 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/02 10:11:45 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include "libft.h"
-#include "../init.h"
+#include "minishell.h"
 
 void    print_dict_export(t_dict *dict)
 {
@@ -24,11 +21,15 @@ void    print_dict_export(t_dict *dict)
     }   
 }
 
-int export_check_if_key_is_valid(char *arg)
+static int export_check_if_key_is_valid(char *arg)
 {
 	int i;
+	int j;
+	int only_digits_flag;
 
 	i = 0;
+	j = 0;
+	only_digits_flag = 1;
 	while (arg[i] != '=' && arg[i] != '\0')
 	{
 		if (ft_isalnum(arg[i]) == 0) 
@@ -41,7 +42,16 @@ int export_check_if_key_is_valid(char *arg)
 		else
 			i++;
 	}
-	return (0);
+	while (arg[j] != '=' && arg[j] != '\0')
+	{
+		if (ft_isalpha(arg[j]) != 0 || arg[j] == '_')
+			only_digits_flag = 0;
+		j++;
+	}
+	if (only_digits_flag == 1)
+		return (1);
+	else
+		return (0);
 }
 
 int min_export(t_dict *dict, char **arg)
@@ -52,18 +62,30 @@ int min_export(t_dict *dict, char **arg)
 	char *new_key;
 	char *new_value;
 	int i;
+	int exit;
 
 	i = 0;
+	exit = 1000;
+	printf("enters export\n");
 	if (!dict)
-		return (0);
+	{
+		printf("no dictionary\n");
+		return (1002);
+	}
 	if (arg[0] == NULL)
+	{
 		print_dict_export(dict);
+		return (1000);
+	}
 	else
 	{
 		while (arg[i])
 		{
 			if (export_check_if_key_is_valid(arg[i]) == 1)
+			{
+				exit = 1002;
 				printf("export: not an identifier %s\n", arg[i]);
+			}
 			else
 			{
 				split_str = ft_split(arg[i], '=');
@@ -84,22 +106,5 @@ int min_export(t_dict *dict, char **arg)
 			i++;
 		}
 	}
-	return (0);
+	return (exit);
 }
-
-/*
-int main(int argc, char **argv, char **env)
-{
-	t_dict *dict;
-
-	dict = init_env_variable();
-	create_dict_on_startup(dict, env);
-
-	export(dict, "_");
-	export(dict, "_l");
-	export(dict, "12345");
-	export(dict, "new_var");
-	export(dict, "new_var=100");
-	//export(dict, NULL);
-}
-*/

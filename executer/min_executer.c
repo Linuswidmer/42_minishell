@@ -6,13 +6,13 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:18:16 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/28 20:17:27 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/03 10:58:28 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
+/*
 int ft_pipe_fork(t_ast *ast, t_dict *dict, t_builtins *build)
 {
     pid_t   pipe_pid;
@@ -25,10 +25,10 @@ int ft_pipe_fork(t_ast *ast, t_dict *dict, t_builtins *build)
     if (!pipe_pid) 
 		return (min_exit_handler(min_pipe(ast->node.pipe, dict, build)));
     waitpid(-1, &status, 0);
- if (WEXITSTATUS(status) == 256 )
-                                                exit = 1000;
+	 if (WEXITSTATUS(status) == 256 )
+        exit = 1000;
     else
-                                                exit = WEXITSTATUS(status) + 1000;	
+        exit = WEXITSTATUS(status) + 1000;	
     
 	write(2, "pk\n", 4);
                                         ft_putnbr_fd(exit, 2);
@@ -37,20 +37,25 @@ int ft_pipe_fork(t_ast *ast, t_dict *dict, t_builtins *build)
 	return (exit);
 }
 
-
-int	min_executer(t_ast *ast, t_dict *dict, t_builtins *build)
+*/
+int	min_executer(t_ast *ast, t_dict *dict, t_builtins *build, char fork)
 {
 	if (ast->key == routenode)
+	{
 		return (min_route(ast, dict, build));	
+	}
 	if (ast->key == pipenode)
 	{
-	  return (ft_pipe_fork(ast, dict, build));
+	  return (min_pipe(ast->node.pipe, dict, build));
 	}	
 	if (ast->key == subnode)
+	{
     		  return (min_sub(ast, dict, build));
+	}
 	if (ast->key == jobnode)
 	{
-      		return (min_job(ast, dict, build));
+      		return (min_job(ast, dict, build, fork));
 	}
+	return (1);
 
 }

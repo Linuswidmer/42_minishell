@@ -6,11 +6,11 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 09:36:32 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/02 17:59:24 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/02 17:39:26 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minshell.h"
 
 static void	print_address(unsigned long long address, int fd)
 {
@@ -25,7 +25,7 @@ static void	print_address(unsigned long long address, int fd)
 	}
 	else
 	{
-		print_address(address / 16, fd);
+		print_address(address / 16);
 		print = base[address % 16];
 		write(fd, &print, 1);
 	}
