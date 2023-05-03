@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 18:30:25 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/02 14:55:28 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/03 09:42:16 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	min_route(t_ast *ast, t_dict *dict, t_builtins *build)
 	len = ft_count_routenode(new->node.route);
 	printf("len: %i\n", len);
 
-	exit = min_executer(new->node.route->down, dict, build);
+	exit = min_executer(new->node.route->down, dict, build, 1);
 	
 	while (exit >= 1000 && exit < 2000)
 	{
@@ -61,7 +61,7 @@ int	min_route(t_ast *ast, t_dict *dict, t_builtins *build)
 			new = new->node.route->next;
 			if (!new)
 				break;
-			exit = min_executer(new->node.route->down, dict, build);	
+			exit = min_executer(new->node.route->down, dict, build, 1);	
 	}		
 	return (exit);
 }	

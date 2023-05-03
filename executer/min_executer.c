@@ -6,13 +6,13 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:18:16 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/03 08:52:34 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/03 09:53:25 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
+/*
 int ft_pipe_fork(t_ast *ast, t_dict *dict, t_builtins *build)
 {
     pid_t   pipe_pid;
@@ -37,8 +37,8 @@ int ft_pipe_fork(t_ast *ast, t_dict *dict, t_builtins *build)
 	return (exit);
 }
 
-
-int	min_executer(t_ast *ast, t_dict *dict, t_builtins *build)
+*/
+int	min_executer(t_ast *ast, t_dict *dict, t_builtins *build, char fork)
 {
 	if (ast->key == routenode)
 	{
@@ -49,7 +49,7 @@ int	min_executer(t_ast *ast, t_dict *dict, t_builtins *build)
 	{
 		ft_printf_fd("pipe\n",2);
 	
-	  return (ft_pipe_fork(ast, dict, build));
+	  return (min_pipe(ast->node.pipe, dict, build));
 	}	
 	if (ast->key == subnode)
 	{
@@ -59,7 +59,7 @@ int	min_executer(t_ast *ast, t_dict *dict, t_builtins *build)
 	if (ast->key == jobnode)
 	{
 		ft_printf_fd("job\n",2);
-      		return (min_job(ast, dict, build));
+      		return (min_job(ast, dict, build, fork));
 	}
 
 }

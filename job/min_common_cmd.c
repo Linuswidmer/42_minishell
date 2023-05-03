@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 12:05:30 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/02 15:24:06 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/03 09:52:12 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,49 +82,36 @@ static void handle_sigpipe(int sig, siginfo_t *siginfo , void *context)
 }
 
 
-int min_common_cmd(t_jobnode *astjob, t_dict *dict)
+int min_common_cmd(t_jobnode *astjob, t_dict *dict, char f)
 {
     char	**cmd;
     char	*path;
     int		exit;
     pid_t   id;
 	int status;
-	struct sigaction sa_sigpipe;
 
-    id = fork();
+	if (f)
+    	id = fork();
+	else
+		id = 0;
     if (!id)
 	{
     	cmd = NULL;
     	exit = min_io_and_cmd(astjob, dict, &cmd);
     	if (!exit)
-	{	
+		{	
 			exit = ft_checkpath(cmd[0], dict, &path);
 			exit = execve(path, cmd, ft_get_envp(dict));
 			//min_dfree(&cmd);			
 			//min_free(&path);
-	}
-		return (1);		
+		}
+			return (1);		
 	}
 	if (id)
 	{
-	/*
-		write(2, "\n pid:", 6);
-		ft_putnbr_fd(id, 2);
-	write(2, "\n", 2);
-		union sigval value;
-    	value.sival_int = (int)id;
-		sa_sigpipe.sa_sigaction = &handle_sigpipe;
-    	sa_sigpipe.sa_flags = SA_SIGINFO;
-    	sigemptyset(&sa_sigpipe.sa_mask);
-		if (sigaction(SIGPIPE, &sa_sigpipe, NULL) == -1)
-    	{
-        	perror("sigaction");
-        	return (1);
-    	}*/
 		waitpid(id, &status, 0);
+		exit = WEXITSTATUS(status) + 1000;
 	}
-	exit = WEXITSTATUS(status) + 1000;
-	ft_putnbr_fd(exit, 2);
     return (exit);
 }	
 

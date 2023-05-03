@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 07:45:11 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/27 15:03:20 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/03 09:52:41 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int min_io_and_cmd(t_jobnode *astjob, t_dict *dict, char ***cmd);
 
 
 /* common */
-int     min_common_cmd(t_jobnode *astjob, t_dict *dict);
+int     min_common_cmd(t_jobnode *astjob, t_dict *dict, char f);
 
 
 /* buildin */

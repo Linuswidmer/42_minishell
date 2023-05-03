@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:14:00 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/02 15:30:10 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/03 10:09:38 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,7 @@ int min_pipe(t_pipenode *pipenode, t_dict *dict, t_builtins *build)
         		if (dup2(pipefd[1], STDOUT_FILENO) == -1)
             		return (1);
 			}
-			exit = min_exit_handler(min_executer(pipenode->down, dict, build));
-			write(2, "\nbb\n", 5);
-                                        ft_putnbr_fd(exit, 2);
-                                        write(2,"\n", 2);
+			exit = min_exit_handler(min_executer(pipenode->down, dict, build, 0));
 			close(pipefd[0]);
 		}	
 		if (!exit && pipenode->next)
@@ -144,15 +141,10 @@ int min_pipe(t_pipenode *pipenode, t_dict *dict, t_builtins *build)
 				if (pid_pos - 1 >= 0)
 				{
 					write (2, "killing ", 8);
-					ft_putnbr_fd(pid[pid_pos - 1], 2);
-					write(2, "\n", 2);
 					kill(pid[pid_pos - 1], SIGPIPE);
 				}
-				//waitpid(pid[n], NULL, 0);
 				n++;
-				
             }
-		//waitpid(pid[0], NULL, 0);
      }
 	return (exit);	
 }

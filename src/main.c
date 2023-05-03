@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:19:36 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/02 18:00:09 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/03 09:51:17 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int ft_readline_loop(t_min *min)
 		{
 			min->ast = min_parser(min->token);
 			if (min->ast) 
-				exit = min_executer(min->ast, min->dict, min->builtins);
+				exit = min_executer(min->ast, min->dict, min->builtins, 1);
 			else
 				exit = 0;
 		}

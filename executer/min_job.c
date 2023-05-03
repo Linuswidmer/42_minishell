@@ -65,18 +65,18 @@ static int ft_cmd_is_buildin(t_jobnode *job, t_dict *dict, t_builtins *build)
 
 /*      */
 
-static int		ft_job(t_jobnode *job, t_dict *dict, t_builtins *build)
+static int		ft_job(t_jobnode *job, t_dict *dict, t_builtins *build, char fork)
 {
 	if (ft_cmd_is_buildin(job, dict ,build))
 	{
 		return (min_buildin_cmd(job, dict, build));
 	}
 	else
-		return (min_common_cmd(job ,dict));
+		return (min_common_cmd(job ,dict, fork));
 }		
 
 /*    */
-int 	min_job(t_ast *ast, t_dict *dict, t_builtins *build )
+int 	min_job(t_ast *ast, t_dict *dict, t_builtins *build, char fork)
 {
-	return (ft_job(ast->node.job, dict, build));
+	return (ft_job(ast->node.job, dict, build, fork));
 }
