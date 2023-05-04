@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 17:12:46 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/26 15:00:38 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:34:20 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -211,7 +211,8 @@ void    min_bring_ast_to_beginning(t_ast **ast)
         return;
     while (1)
     {	
-//	 printf("BEGIN: NODETYPE is: %s     \n", nodetype_names[(*ast)->key]);
+//	 	printf("hallo\n");
+//		printf("BEGIN: NODETYPE is: %s     \n", nodetype_names[(*ast)->key]);
         if ((*ast)->key == jobnode)
         {
             if ((*ast)->node.job->up)

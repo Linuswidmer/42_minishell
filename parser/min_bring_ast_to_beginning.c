@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 19:20:03 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/09 19:50:24 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:23:13 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -50,4 +50,5 @@ void	min_bring_ast_to_beginning(t_ast **ast)
                 break;
 		}
 	}
+	printf("end_bring\n");
 }

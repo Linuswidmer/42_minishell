@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:43:03 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/09 22:09:53 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:36:17 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -70,7 +70,7 @@ t_ast	*ft_find_brange(t_ast *ast, t_ast **temp)
 {
 	if (ast->key == jobnode)
 	{
-		if (ast->node.job->up && ast->node.job->up->key != subnode) 
+		if (ast->node.job->up  && ast->node.job->up->key != subnode) 
 			ast = ast->node.job->up;
 		else
 			*temp = ast->node.job->up;
@@ -143,6 +143,7 @@ t_lexer	*min_routenode(t_lexer *token, t_ast **ast)
         		*ast = new;
 			}
 		}
-	}	
+	}
+	
 	return (token->next);
 }		

@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:26:53 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/09 19:49:33 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:32:44 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ static t_ast	*ft_navigate_to_next_sub(t_ast *ast, char first)
                         ast = ast->node.pipe->prev;
         else if (ast->key == pipenode && !ast->node.pipe->prev)
                         ast = ast->node.pipe->up;
+		else if (ast->key == routenode && ast->node.route->prev)
+						ast = ast->node.route->prev;
+		else if (ast->key == routenode && !ast->node.route->prev)
+                        ast = ast->node.route->up;
 		else if (ast->key == subnode  && !first)
                         return (ast);
 		return (ft_navigate_to_next_sub(ast, 0));

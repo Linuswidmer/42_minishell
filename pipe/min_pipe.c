@@ -93,7 +93,7 @@ int min_pipe(t_pipenode *pipenode, t_dict *dict, t_builtins *build)
                 close(old_pipefd[0]);
                 close(old_pipefd[1]);
         }   
-		if (pid[n])
+		if (!pid[n])
 		{
 			if (!n)
 			{
@@ -101,7 +101,7 @@ int min_pipe(t_pipenode *pipenode, t_dict *dict, t_builtins *build)
                 close (outfd);
 				exit = redirect_child(infd, pipefd[1]);
 			}
-			if (!pipenode->next)
+			else if (!pipenode->next)
 			{
 				close (old_pipefd[1]);
                 close (pipefd[0]);
@@ -148,7 +148,7 @@ int min_pipe(t_pipenode *pipenode, t_dict *dict, t_builtins *build)
 
 
                 //write(2, "xxx\n", 5);
-                return_pid = waitpid(pid[n], &status, 0);
+                return_pid = waitpid(pid[lenpipe -1 - n], &status, 0);
                 if (return_pid == pid[lenpipe - 1] )
                 {
                     write(2, "\nxx\n", 5);
@@ -167,7 +167,7 @@ int min_pipe(t_pipenode *pipenode, t_dict *dict, t_builtins *build)
                 }
                 n++;
 			}
-                return_pid = waitpid(pid[lenpipe -1 - n], &status, 0);
+            /*    return_pid = waitpid(pid[lenpipe -1 - n], &status, 0);
 				if (return_pid == pid[lenpipe - 1] )
 				{
 					if (WEXITSTATUS(status) == 256 )
@@ -180,7 +180,7 @@ int min_pipe(t_pipenode *pipenode, t_dict *dict, t_builtins *build)
 				if (pid_pos - 1 >= 0)
 				{
 					kill(pid[pid_pos - 1], SIGPIPE);
-				}
-            }
+				}*/
+    }
 	return (exit);	
 }
