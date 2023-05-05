@@ -32,6 +32,7 @@ extern int g_status;
 #include "typedef.h"
 #include "define.h"
 #include "structs.h"
+#include "macros.h"
 #include "libft.h"
 #include "lexer.h"
 #include "init.h"

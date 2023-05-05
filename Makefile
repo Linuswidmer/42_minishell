@@ -6,7 +6,7 @@
 #    By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/07 09:41:35 by lwidmer           #+#    #+#              #
-#    Updated: 2023/05/03 09:43:22 by lwidmer          ###   ########.fr        #
+#    Updated: 2023/05/05 13:27:03 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/05/02 17:30:33 by lwidmer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
@@ -127,6 +127,5 @@ re: fclean all
 libclean: 
 	make fclean -C ./libft
 
-
-
+PREPROCESSOR_OUTPUT := preprocessor_output.txt
 
