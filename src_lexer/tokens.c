@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 13:13:58 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/03 09:27:50 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/05 18:06:15 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ t_lexertype check_single_tokens(char c)
 	else if (c == '*')
 		return (l_asterisk);
 	else if (c == '(')
-		return (l_paraopen);
-	else if (c == ')')
 		return (l_paraclose);
 	else if (c == '<')
 		return (l_in);
@@ -47,16 +45,18 @@ t_lexertype check_single_tokens(char c)
 		return (l_semi);
 	else if (c == '|')
 		return (l_pipe);
-	else if (c == 92)
-		return (l_escape);
-	else if (c == '&')
-		return (l_amp);
 	else if (ft_isspace(c) == 1)
 		return (l_space);
 	else if (c == '~')
 		return (l_til);
 	else	
 		return (l_word);
+}
+
+t_lexertype check_token_with_prev(char c, char prev)
+{
+	if (c == '(' && prev != '$')
+		return (l_paraopen);
 }
 
 t_lexertype check_double_tokens(char c, char next)

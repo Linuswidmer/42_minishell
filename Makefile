@@ -6,7 +6,7 @@
 #    By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/07 09:41:35 by lwidmer           #+#    #+#              #
-#    Updated: 2023/05/05 13:27:03 by lwidmer          ###   ########.fr        #
+#    Updated: 2023/05/05 17:59:28 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/05/02 17:30:33 by lwidmer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
@@ -24,7 +24,7 @@ NAME = minishell
 
 REMOVE = rm -f
 
-FILENAMES_LEXER = lexer tokens check_token_list lexer_parser lexer_utils free_lexer token_list_utils \
+FILENAMES_LEXER = lexer tokens lexer_parser lexer_utils free_lexer token_list_utils \
 				dollar_postprocessing
 
 FILENAMES_PARSER = min_parser_error  min_token_is_para min_jobnode	min_parser_malloc_fail  min_token_is_route min_pipenode min_subnode min_token_is_word  min_routenode min_token_is_io min_parser  min_token_is_io_in min_debug min_heredoc_fail min_free_ast min_heredoc

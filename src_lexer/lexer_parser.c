@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:24:19 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/26 15:53:54 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/05 18:04:03 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,6 @@ int parse_dollar(char *input, int pos, t_lexer *tmp)
 	write_key_and_value_to_token(tmp, l_dollar, input + start, len);
 	return (pos);
 }
-
-/*
-empty quotes are not working yet!!! again :((
-*/
 
 static int quote_find_next_token_pos(char *input, int pos, t_lexertype token)
 {
