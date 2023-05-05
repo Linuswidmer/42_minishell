@@ -6,13 +6,13 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:38:59 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/21 14:11:28 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/05 11:36:17 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_asterisk(t_lexer **token, t_expander **word)
+static void	ft_asterisk(t_lexer **token, t_expander **word)
 {	
 	t_expander	*end;
 	
@@ -29,7 +29,7 @@ void	ft_asterisk(t_lexer **token, t_expander **word)
 	*token = (*token)->next;
 } 	
 
-char **ft_get_values(t_expander *word)
+static char **ft_get_values(t_expander *word)
 {
 	char **values;
 	char *temp;
@@ -65,6 +65,8 @@ char **min_word_eval(t_lexer **token, t_dict *dict)
 			min_word(token, &word);
 		else if (min_token_is_word((*token)->key) == 2)
 			min_dollar(token, &word, dict);
+		else if ((min_token_is_word((*token)->key) == 4))
+			min_til(token, &word, dict);
 		else
 			ft_asterisk(token, &word);
 	}

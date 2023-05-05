@@ -14,9 +14,11 @@
 # define DOLLAR "$"
 # define QUESTION '?'	
 # define E_SPACE	' '
+# define TIL "~" 
 # define SUB '('
 # define ERR_SUB "$() not implemented.\n"  
 # define CURRDIR "./"
 # define HEREDOC_PATH "/tmp/"
+# define HOME "HOME"
 
 #endif
