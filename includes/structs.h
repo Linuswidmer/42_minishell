@@ -94,6 +94,10 @@ struct s_subnode
 {
 	t_ast *up;
     t_ast *down;
+	t_lexer     *start;
+    t_lexer     *last;
+
+	
 };
 
 struct s_routenode

@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:02:20 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/25 12:33:25 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:45:08 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void    min_print_jobnode(t_jobnode *job);
 int min_heredoc(t_lexer **token, char *heredoc);
 void	min_heredoc_fail(t_ast **ast);
 
+t_lexer *min_add_io_to_sub(t_lexer *token, t_ast **ast);
 
 
 #endif
