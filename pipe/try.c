@@ -41,7 +41,7 @@ int main()
 	{
 		pipe(pipefd);
 		pid[i] = fork();
-		if (!pid[i])
+		if (pid[i])
 		{	
 			if ( i > 0)
 			{
@@ -50,13 +50,13 @@ int main()
 			}
 
 		}	
-		if (pid[i])
+		if (!pid[i])
 		{
 			if (i == 0)
 			{
 				close (pipefd[0]);
 				close (fdout);
-				exec_child(fdin, pipefd[1], cat_cmd, "/usr/bin/cat");
+				exec_child(fdin, pipefd[1], cat_cmd, "/bin/cat");
 			}
 			if (i == 2)
 			{
@@ -64,7 +64,7 @@ int main()
 				close (pipefd[0]);
 				close (pipefd[1]);
 				close(fdin);
-				exec_child(old_pipefd[0], fdout, ls_cmd, "/usr/bin/ls");
+				exec_child(old_pipefd[0], fdout, ls_cmd, "/bin/ls");
 			}
 			else
 			{
@@ -72,7 +72,7 @@ int main()
 				close (pipefd[0]);
 				close (fdout);
 				close(fdin);
-				exec_child(old_pipefd[0], pipefd[1], cat_cmd, "/usr/bin/cat");
+				exec_child(old_pipefd[0], pipefd[1], cat_cmd, "/bin/cat");
 			}
 		}
 		old_pipefd[0] = pipefd[0];
