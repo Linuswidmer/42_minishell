@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 12:05:30 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/03 10:15:05 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/05 17:19:17 by jstrotbe         ###   ########.fr       */
 /*   Updated: 2023/05/03 09:46:10 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/05/02 15:24:06 by lwidmer          ###   ########.fr       */
 /*                                                                            */
@@ -68,12 +68,6 @@ static int	ft_checkpath(char *cmd, t_dict *dict, char **path)
 	return (1);
 }
 
-static void handle_sigpipe(int sig, siginfo_t *siginfo , void *context)
-{
-	write(2, "\n pid sighandler:", 18);
-	ft_putnbr_fd(siginfo->si_value.sival_int, 2);
-	kill(siginfo->si_value.sival_int, SIGPIPE);
-}
 
 
 int min_common_cmd(t_jobnode *astjob, t_dict *dict, char f)

@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:41:03 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/03 11:00:16 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/05 17:26:36 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	min_expander(t_lexer *token, t_dict *dict, t_lexer *end, char ***cmd)
 			exit = min_set_cmd(&token, dict, &cmdnode);
 		}	
 	}
-	if (!exit)
+	if (!exit && cmd)
 	{
 		*cmd = min_ex_get_cmd(cmdnode);
 		if (!**cmd)

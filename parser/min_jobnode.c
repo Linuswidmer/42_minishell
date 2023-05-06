@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:31:01 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/27 14:01:17 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:49:56 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,18 @@ static void	ft_link_jobnode_into_ast(t_ast **ast, t_ast *new)
 		(*ast)->node.sub->down = new;
 }
 
+static int	ft_check_subshell(t_lexer *token)
+{
+	token = token->prev;
+	while (token && token->key == l_space)
+		token = token->prev;
+	if (token && token->key == l_paraclose)
+		return (1);
+	else 
+		return (0);
+}	 	
+
+
 
 /*
 min_jobnode 
@@ -59,10 +71,16 @@ min_jobnode
 t_lexer	*min_jobnode(t_lexer *token, t_ast **ast)
 {
 	t_ast *new;
-	char heredoc[5] = "temp";
+//	char heredoc[5] = "temp";
 	char	io;
-		
+	
 	io = 0;
+	if (ft_check_subshell(token))
+	{
+		token = min_add_io_to_sub(token, ast);
+	}
+	else
+	{
 	new = ft_init_jobnode(token);
 	if (new)
 	{		
@@ -76,7 +94,7 @@ t_lexer	*min_jobnode(t_lexer *token, t_ast **ast)
 			{
 				if (min_token_is_io(token->key) == 2 && !io)
 				{	
-					if (min_heredoc(&token, heredoc))
+					if (min_heredoc(&token, HEREDOC))
 					{
 						min_heredoc_fail(ast);
 						printf("error io file\n");
@@ -96,7 +114,7 @@ t_lexer	*min_jobnode(t_lexer *token, t_ast **ast)
 				}
 				else if (min_token_is_word(token->key) && io)
 						io = 0;		
-				token = token->next;
+			token = token->next;
 					
 			}
 			else
@@ -108,12 +126,14 @@ t_lexer	*min_jobnode(t_lexer *token, t_ast **ast)
 				}
 				break;
 			}		
-	}
+		}
 	new->node.job->last = token;
 	}
 	else
 	{
 		min_parser_malloc_fail(ast);
+	}
 	}	
 	return (token);
 }
+
