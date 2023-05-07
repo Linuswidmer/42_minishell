@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:24:19 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/05 18:04:03 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/07 23:35:35 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,20 @@ static int dollar_find_next_token_pos(char *input, int pos)
 	i = 0;
 	while (input[pos] != '\0')
 	{
-		next_token = check_token(input[pos], input[pos + 1]);
+		next_token = check_token(input, pos);
 		if (next_token == l_dollar)
 		{
 			pos++;
 			break;
+		}
+		if (next_token == l_paraopen)
+		{
+			while (input[pos] != '\0')
+			{
+				if (check_token(input, pos) == l_paraclose)
+					return (pos + 1);
+				pos++;
+			}
 		}
 		if (next_token == l_word)
 			pos++;
@@ -63,7 +72,6 @@ int parse_token(char *input, int pos, t_lexer *tmp, t_lexertype token_type, int 
 
 int parse_dollar(char *input, int pos, t_lexer *tmp)
 {
-	//int i;
 	int len;
 	int start;
 	t_lexertype next_token;
@@ -75,6 +83,26 @@ int parse_dollar(char *input, int pos, t_lexer *tmp)
 	return (pos);
 }
 
+int parse_subshell(char *input, int pos, t_lexer *tmp)
+{
+	t_lexertype next_token;
+	int start;
+	int len;
+
+	start = pos - 1;
+	while (input[pos] != '\0')
+	{
+		next_token = check_token(input, pos);
+		if (next_token == l_paraclose)
+			break;
+		else
+			pos++;
+	}
+	len = pos - start;
+	write_key_and_value_to_token(tmp, l_word, input + start, len);
+	return (pos + 1);
+}
+
 static int quote_find_next_token_pos(char *input, int pos, t_lexertype token)
 {
 	int dollar_flag;
@@ -84,7 +112,7 @@ static int quote_find_next_token_pos(char *input, int pos, t_lexertype token)
 	i = 0;
 	while (input[pos] != '\0')
 	{
-		next_token = check_token(input[pos], input[pos + 1]);
+		next_token = check_token(input, pos);
 		if (next_token == token)
 			break;
 		else
@@ -105,7 +133,7 @@ static int check_if_dollar_occurrs_in_dquote(char *input, int start, int pos, t_
 	dollar_flag = 0;
 	while (i < pos)
 	{
-		next_token = check_token(input[start + i], input[start + 1 + i]);
+		next_token = check_token(input, start + i);
 		if (token == l_dquote && next_token == l_dollar)
 			dollar_flag = 1;
 		i++;
@@ -157,7 +185,7 @@ int parse_word(char *input, int pos, t_lexer *tmp)
 	start = pos - 1;
 	while (input[pos] != '\0')
 	{
-		next_token = check_token(input[pos], input[pos + 1]);
+		next_token = check_token(input, pos);
 		if (next_token != l_word)
 			break;
 		else
@@ -170,6 +198,7 @@ int parse_word(char *input, int pos, t_lexer *tmp)
 
 int parse_token_to_list(t_lexertype current_token, char *input, int pos, t_lexer *tmp, int start)
 {
+	printf("char at pos is %c\n", input[pos]);
 	pos++;
 	if (current_token == l_quote || current_token == l_dquote)
 		return (parse_quote(input, pos, tmp, current_token));
@@ -178,8 +207,10 @@ int parse_token_to_list(t_lexertype current_token, char *input, int pos, t_lexer
 	else if (current_token == l_or || current_token == l_and 
         || current_token == l_heredoc || current_token == l_append)
 		return (parse_double_tokens(input, pos, current_token, tmp));
+	else if (current_token == l_word && input[pos - 1] == '(')
+		return (parse_subshell(input, pos, tmp));
 	else if (current_token == l_word)
 		return (parse_word(input, pos, tmp));
-  else
-	  return (parse_single_tokens(tmp, current_token, pos));
+	else
+		return (parse_single_tokens(tmp, current_token, pos));
 }
