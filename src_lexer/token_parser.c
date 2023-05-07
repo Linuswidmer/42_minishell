@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_parser.c                                     :+:      :+:    :+:   */
+/*   token_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:24:19 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/07 23:35:35 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/07 23:43:38 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,26 +81,6 @@ int parse_dollar(char *input, int pos, t_lexer *tmp)
 	len = pos - start;
 	write_key_and_value_to_token(tmp, l_dollar, input + start, len);
 	return (pos);
-}
-
-int parse_subshell(char *input, int pos, t_lexer *tmp)
-{
-	t_lexertype next_token;
-	int start;
-	int len;
-
-	start = pos - 1;
-	while (input[pos] != '\0')
-	{
-		next_token = check_token(input, pos);
-		if (next_token == l_paraclose)
-			break;
-		else
-			pos++;
-	}
-	len = pos - start;
-	write_key_and_value_to_token(tmp, l_word, input + start, len);
-	return (pos + 1);
 }
 
 static int quote_find_next_token_pos(char *input, int pos, t_lexertype token)
@@ -198,7 +178,6 @@ int parse_word(char *input, int pos, t_lexer *tmp)
 
 int parse_token_to_list(t_lexertype current_token, char *input, int pos, t_lexer *tmp, int start)
 {
-	printf("char at pos is %c\n", input[pos]);
 	pos++;
 	if (current_token == l_quote || current_token == l_dquote)
 		return (parse_quote(input, pos, tmp, current_token));
@@ -207,8 +186,6 @@ int parse_token_to_list(t_lexertype current_token, char *input, int pos, t_lexer
 	else if (current_token == l_or || current_token == l_and 
         || current_token == l_heredoc || current_token == l_append)
 		return (parse_double_tokens(input, pos, current_token, tmp));
-	else if (current_token == l_word && input[pos - 1] == '(')
-		return (parse_subshell(input, pos, tmp));
 	else if (current_token == l_word)
 		return (parse_word(input, pos, tmp));
 	else
