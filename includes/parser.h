@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:02:20 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/05 16:45:08 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/08 15:00:51 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	min_parser_error(t_ast **ast, t_lexer *token);
 void    min_parser_malloc_fail(t_ast **ast);
 void	min_bring_ast_to_beginning(t_ast **ast);
 void    min_free_ast(t_ast **ast);
+int		min_is_last_token(t_lexer *token);
+
 
 /* ROUTE */
 t_lexer *min_routenode(t_lexer *token,t_ast **ast);

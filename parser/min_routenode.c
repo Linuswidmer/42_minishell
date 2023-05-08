@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:43:03 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/04 11:36:17 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/08 14:53:23 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -101,14 +101,16 @@ min_routenode	--> 1. check if parse_error
 		--> 4. add new routenode in routenode list and store evaluations in old one.
 		return next token and clean total ast if any malloc faiuled or parse error. 			
 */
+	
+
 t_lexer	*min_routenode(t_lexer *token, t_ast **ast)
 {
 
 	t_ast	*new;
 	t_ast   *temp;
 	
-	if (!(*ast) || (*ast)->key == pipenode || (*ast)->key == routenode)
-		min_parser_error(ast, token);
+	if (!(*ast) || min_is_last_token(token) || (*ast)->key == pipenode || (*ast)->key == routenode)
+		min_parser_error1(ast, token->key, NULL);
 	else
 	{	
 		new = ft_init_routenode();

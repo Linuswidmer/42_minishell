@@ -6,49 +6,88 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 19:20:03 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/04 11:23:13 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/08 10:41:25 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
 
+static int	ft_jobnode(t_ast **ast)
+{
+	if ((*ast)->node.job->up)
+	{
+		*ast = (*ast)->node.job->up;
+		return (0);
+	}
+	else
+		return (1);
+}
+
+static int	ft_subnode(t_ast **ast)
+{
+	if ((*ast)->node.sub->up)
+	{
+		*ast = (*ast)->node.sub->up;
+		return (0);
+	}
+	else
+		return (1);
+}	
+
+static int	ft_pipenode(t_ast **ast)
+{
+	if ((*ast)->node.pipe->prev)
+	{
+		*ast = (*ast)->node.pipe->prev;
+		return (0);
+	}
+	else if ((*ast)->node.pipe->up)
+	{
+		*ast = (*ast)->node.pipe->up;
+		return (0);
+	}
+	return (1);
+}
+
+static int	ft_routenode(t_ast **ast)
+{
+	if ((*ast)->node.route->prev)
+	{
+		*ast = (*ast)->node.route->prev;
+		return (0);
+	}
+	else if ((*ast)->node.route->up)
+	{
+		*ast = (*ast)->node.route->up;
+		return (0);
+	}
+	return (1);
+}
+
 void	min_bring_ast_to_beginning(t_ast **ast)
 {
-	if (!*ast)	
-		return;		
+	if (!*ast)
+		return ;
 	while (1)
 	{
 		if ((*ast)->key == jobnode)
 		{
-			if ((*ast)->node.job->up)
-				*ast = (*ast)->node.job->up;
-			else
-				break;
+			if (ft_jobnode(ast))
+				break ;
 		}
-		else if((*ast)->key == subnode)
+		else if ((*ast)->key == subnode)
 		{
-			if ((*ast)->node.sub->up)
-                *ast = (*ast)->node.sub->up;
-            else
-                break;
-        }
+			if (ft_subnode(ast))
+				break ;
+		}
 		else if ((*ast)->key == pipenode)
 		{
-			if ((*ast)->node.pipe->prev)
-				*ast = (*ast)->node.pipe->prev;
-			else if ((*ast)->node.pipe->up)
-                *ast = (*ast)->node.pipe->up;
-			else
-                break;
-        }
+			if (ft_pipenode(ast))
+				break ;
+		}
 		else if ((*ast)->key == routenode)
-        {
-            if ((*ast)->node.route->prev)
-                *ast = (*ast)->node.route->prev;
-            else if ((*ast)->node.route->up)
-                *ast = (*ast)->node.route->up;
-            else
-                break;
+		{
+			if (ft_routenode(ast))
+				break ;
 		}
 	}
-	printf("end_bring\n");
 }

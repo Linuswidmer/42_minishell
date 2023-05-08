@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:55:49 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/28 11:45:26 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/08 09:54:49 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,17 @@ int min_set_io(t_lexer **token, t_dict *dict)
 {
 	t_lexertype key;
 	char * filename;
+	char * evalhere;
 
 	key = (*token)->key;
-	printf("key is %i\n", key);
+	evalhere = (*token)->value;
 	*token = (*token)->next; 
 	printf("value is %s\n", (*token)->value);
 	filename = ft_set_file_io(token, dict);
 	printf("filename %s\n", filename);
 	if (!filename)
 		return (1);
-	return (min_ex_io(key, filename));
+	return (min_ex_io(key, filename, evalhere));
 }
  
  

@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 12:24:31 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/28 11:07:40 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/08 10:03:13 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -76,14 +76,16 @@ static int  ft_open_io_out(t_lexertype key, char **filename)
 
 
 
-static int  ft_open_io_in(t_lexertype key, char **filename)
+static int  ft_open_io_in(t_lexertype key, char **filename, char *evalhere)
 {
     int fd1;
     int fd2;
     char *file;
 
+	/*if (min_token_is_io(key)== 2 && evalhere)
+		file = min_eval_heredoc(*filename);	
 	
-    if (min_token_is_io(key)== 2)
+    else*/ if (min_token_is_io(key)== 2)
         file = *filename;
     else
         file = ft_filepath(*filename, NULL);
@@ -99,7 +101,7 @@ static int  ft_open_io_in(t_lexertype key, char **filename)
                 fd2 = dup2(fd1, STDIN_FILENO);
                 fd2 = close(fd1);
                 if (min_token_is_io(key) == 2)
-                fd2 = unlink(file);
+                	fd2 = unlink(file);
             //min_free(&file);
                 if (fd2 != -1)
                         return (0);
@@ -111,12 +113,12 @@ static int  ft_open_io_in(t_lexertype key, char **filename)
 
 
 
-int min_ex_io(t_lexertype key, char *filename)
+int min_ex_io(t_lexertype key, char *filename, char *evalhere)
 {
 	if (min_token_is_io(key) > 2)
 	{
         return(ft_open_io_out(key, &filename));
     }
     else
-        return (ft_open_io_in(key, &filename));
+        return (ft_open_io_in(key, &filename, evalhere));
 }

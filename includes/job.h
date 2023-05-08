@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 07:45:11 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/03 10:16:43 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/08 09:01:00 by jstrotbe         ###   ########.fr       */
 /*   Updated: 2023/05/03 09:32:23 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -17,7 +17,7 @@
 
 char    **min_ex_get_cmd(t_cmdnode *cmd);
 
-int min_ex_io(t_lexertype key, char *filename);
+int min_ex_io(t_lexertype key, char *filename, char *heredoc);
 
 int	min_set_cmd(t_lexer **token, t_dict *dict, t_cmdnode **cmd);
 

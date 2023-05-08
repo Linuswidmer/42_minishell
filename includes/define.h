@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:51:43 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/05 16:51:45 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/08 15:00:32 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,14 @@
 # define SUB '('
 # define ERR_SUB "$() not implemented.\n"  
 # define CURRDIR "./"
+
+/* HEREDOC*/
 # define HEREDOC "temp"	
 # define HEREDOC_PATH "/tmp/"
-# define HOME "HOME"
+# define HERETXT "heredoc :"	
+# define HERENUM "1"	
+# define HEREDOC_EVAL "b"
 
+
+# define HOME "HOME"
 #endif

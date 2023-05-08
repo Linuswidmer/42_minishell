@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.h                                             :+:      :+:    :+:   */
+/*   min_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/08 11:11:55 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/08 15:00:40 by jstrotbe         ###   ########.fr       */
+/*   Created: 2023/05/08 11:01:35 by jstrotbe          #+#    #+#             */
+/*   Updated: 2023/05/08 11:15:50 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FREE_H
-# define FREE_H
+#include "minishell.h"
 
-
-
-void    min_free(char **tofree);
-
-/**/
-void double_free(char ***str);
-
-/* free_lexer */
-void ft_free_token_list(t_lexer **list);
-void free_token_list(t_lexer **token_list);
-
-#endif
+void	min_free(char **tofree)
+{
+	free(*tofree);
+	*tofree = NULL;
+}	

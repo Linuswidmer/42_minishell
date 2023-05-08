@@ -1,27 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.h                                             :+:      :+:    :+:   */
+/*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/08 11:11:55 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/08 15:00:40 by jstrotbe         ###   ########.fr       */
+/*   Created: 2023/05/08 12:28:09 by jstrotbe          #+#    #+#             */
+/*   Updated: 2023/05/08 13:27:07 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FREE_H
-# define FREE_H
+#ifndef ERROR_H
+# define ERROR_H
+
+/* PARSER*/
+# define APPEND ">>"
+# define IN "<"
+# define OUT ">"
+# define ASTERISK "*"
+# define PARAOPEN "("
+# define PARACLOSE ")"
+# define L_HEREDOC "<<"
+# define L_AND "&&"
+# define L_OR "||"
+# define L_SEMI ";"
+# define L_PIPE "|"
+# define L_TIL "~" 
 
 
 
-void    min_free(char **tofree);
 
-/**/
-void double_free(char ***str);
 
-/* free_lexer */
-void ft_free_token_list(t_lexer **list);
-void free_token_list(t_lexer **token_list);
+
+void    min_parser_error1(t_ast **ast, t_lexertype key, char *value);
+
+
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 12:43:28 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/28 10:58:38 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/08 11:16:39 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,16 @@ static char *ft_find_filename(char *heredoc)
 	char *path;
 	char *temp;
 
-	path = ft_strjoin("/tmp/", heredoc);
-	//printf("%s\n", path);	
-	//printf("%i\n", access(path, F_OK));			
+	path = ft_strjoin(HEREDOC_PATH, heredoc);
 	while (!access(path, F_OK))
 	{
 		temp = path;
-		path = ft_strjoin(path, "1");
-		//printf("%s\n", path);
-		//min_free(temp);
-		//min_free(num);
+		path = ft_strjoin(path, HERENUM);
+		min_free(&temp);
 	}
 	return (path);
 }
 
-				
 static char *ft_get_limiter(t_lexer *token)
 {
 	char *limiter;
@@ -103,22 +98,17 @@ int	min_heredoc(t_lexer **token, char *heredoc)
 	char	*line;
 	char	*limiter;
 	
-	printf("start heredoc\n");	
-
 	path = ft_find_filename(heredoc);
-	printf("%s\n", path);
 	if (!path)
 		return (1);
 	limiter = ft_get_limiter((*token)->next);
-	 printf("%s\n", limiter);
 	if (limiter)
 		fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	printf("%s\n", limiter);
 	if (fd != -1 && limiter)
 	{
 		while(1)
 		{
-			write(1, "heredoc :", 10);
+			write(1, HERETXT, ft_strlen(HERETXT));
 			line = get_next_line(0);
 			if (!line)
 			{

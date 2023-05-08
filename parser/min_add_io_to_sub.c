@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:04:41 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/05 17:12:23 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/08 10:05:43 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,65 +97,3 @@ t_lexer *min_add_io_to_sub(t_lexer *token, t_ast **ast)
  	}
 	return (token);		
 }
-
-
-
-
-
-/*
-
-        	{
-            	if (ft_token_is_jobnode(token->key))
-            	{
-					if (min_token_is_io(token->key) == 2 && !io)
-					{	
-                    	if (min_heredoc(&token, heredoc))
-                    	{
-                        	min_heredoc_fail(ast);
-                        	printf("error io file\n");
-                        	break;
-                    	}
-                	}
-                	else if (min_token_is_io(token->key))
-                	{
-                    	if( !io)
-                        	io = 1;
-                    	else
-                    	{
-                        	printf("error io file\n");
-                        	*ast = NULL;
-                        	break;
-                    	}
-						token = token->next;
-                	}
-                	else if (min_token_is_word(token->key) && !io)
-    				{
-						printf("error sub cmd\n");
-                        *ast = NULL;
-                        break;
-					}
-					
-					while (token && token->key == l_space)
-						token = token->next;
-					while (token && min_token_is_word(token->key))
-					{
-						token = token->next;
-				 		io = 0;				             
-					}	
-				}
-            	else
-            	{
-                	if (io)
-               		{
-                    	printf("error io file\n");
-                    	*ast = NULL;
-                	}
-                	break;
-            	}
-			}
-			if (*ast)
-			{	
-				(*ast)->node.sub->last = token;
-				printf("[ %p ]\n", (*ast)->node.sub->last = token);		
-			}
-		}*/

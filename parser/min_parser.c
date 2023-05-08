@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:59:26 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/04 11:37:01 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/08 12:03:39 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -49,18 +49,19 @@ t_ast	*min_parser(t_lexer *token)
 	ast = NULL;
 	while (token)
 	{	
-		while (token->key == l_space)
+		while ( token && token->key == l_space)
 			token = token->next;
-		if (ft_token_is_jobnode(token->key))
+		if (token && ft_token_is_jobnode(token->key))
 			token =	min_jobnode(token, &ast);	
-		else if (ft_token_is_pipenode(token->key))
+		else if (token && ft_token_is_pipenode(token->key))
 			token = min_pipenode(token, &ast);
-		else if (ft_token_is_routenode(token->key))			
+		else if (token && ft_token_is_routenode(token->key))			
 			token = min_routenode(token, &ast);
-		else if (ft_token_is_subnode(token->key))
+		else if (token && ft_token_is_subnode(token->key))
 			token = min_subnode(token, &ast);
 		if (!ast)
 		{
+		//	printf("syntax error near unexpected token: %s\n", token->value);
 			printf("ERROR\n");
 			break;
 		}	
@@ -68,6 +69,5 @@ t_ast	*min_parser(t_lexer *token)
 	min_bring_ast_to_beginning(&ast);
 	if (_DEBUG)
 		min_print_ast(ast);
-	//min_free_ast(&ast);
 	return (ast);
 }
