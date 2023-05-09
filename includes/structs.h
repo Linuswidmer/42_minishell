@@ -19,7 +19,7 @@ typedef struct s_cmdnode    t_cmdnode;
 typedef struct s_ionode     t_ionode;
 typedef struct s_expander     t_expander;
 typedef struct s_dollar     t_dollar;
-
+typedef struct s_pipestruct t_pipestruct;
 
 typedef enum 
 {
@@ -166,6 +166,15 @@ struct s_dollar
 //	t_ast	*ast;
 };
 
+struct s_pipestruct
+{
+	int dup_in;
+	int dup_out;
+	int *old_pipefd;
+	int *pipefd;
+	int lenpipe;
+	pid_t *pid;
+};
 
 /* main */
 struct s_min{

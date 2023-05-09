@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:55:25 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/03 09:55:53 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/08 00:24:26 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static int cd_to_home(t_dict *dict_home)
 {
   int status;
 
+	printf("enters here\n");
   if (dict_home)
     status = chdir(dict_home->value);  
   else
@@ -77,7 +78,7 @@ int min_cd(t_dict *dict, char **arg)
 	t_dict *dict_pwd;
 	t_dict *dict_oldpwd;
 	
-	if (arg[2])
+	if (arg[1])
 	{
 		printf("cd: too many arguments");
 		return (1002);
@@ -88,16 +89,16 @@ int min_cd(t_dict *dict, char **arg)
 
 	/* have to change the logic of cd to home*/
 
-	if (ft_strncmp(arg[1], "-", ft_strlen(arg[1])) == 0)
-		status = cd_to_oldpwd(dict_oldpwd);
-	else if (arg[1] == NULL || ft_strncmp(arg[1], "~", ft_strlen(arg[1])) == 0)
+	if (!arg[0])
 		status = cd_to_home(dict_home);
+	if (ft_strncmp(arg[0], "-", ft_strlen(arg[0])) == 0)
+		status = cd_to_oldpwd(dict_oldpwd);
 	else
 	{
-		status = chdir(arg[1]);
+		status = chdir(arg[0]);
 		if (status == -1)
 		{
-			printf("%s: No such file or directory\n", arg[1]);
+			printf("%s: No such file or directory\n", arg[0]);
 			return (1000);
 		}
 	}

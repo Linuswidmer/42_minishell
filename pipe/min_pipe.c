@@ -43,89 +43,118 @@ int search_pid(pid_t *pid_arr, pid_t return_pid, int arr_len)
 	return (i);
 }
 
-static int	redirect_child(int in_fd, int out_fd)
+
+static int redirect_first_child(t_pipestruct *pipes)
 {
-	dup2(out_fd, STDOUT_FILENO);
-    close (out_fd);
-    dup2(in_fd, STDIN_FILENO);
-    close(in_fd);
-	return (0);	
+	int exit;
+
+	exit = 0;
+	SET_EXIT_ON_ERROR(close((pipes->pipefd)[0]));
+    SET_EXIT_ON_ERROR(close(pipes->dup_out));
+	if (!exit)
+		SET_EXIT_ON_ERROR(dup2((pipes->pipefd)[1], STDOUT_FILENO));
+    SET_EXIT_ON_ERROR(close((pipes->pipefd)[1]));
+	if (!exit)
+		SET_EXIT_ON_ERROR(dup2(pipes->dup_in, STDIN_FILENO));
+    SET_EXIT_ON_ERROR(close(pipes->dup_in));
+	return (exit);	
+}
+
+static int redirect_middle_child(int *old_fd, int *fd, int dup_in, int dup_out)
+{
+	int exit;
+
+	exit = 0;
+	SET_EXIT_ON_ERROR(close(old_fd[1]));
+    SET_EXIT_ON_ERROR(close(fd[0]));
+    SET_EXIT_ON_ERROR(close(dup_out));
+    SET_EXIT_ON_ERROR(close(dup_in));
+	if (!exit)
+		SET_EXIT_ON_ERROR(dup2(fd[1], STDOUT_FILENO));
+    SET_EXIT_ON_ERROR(close (fd[1]));
+    if (!exit)
+		SET_EXIT_ON_ERROR(dup2(old_fd[0], STDIN_FILENO));
+    SET_EXIT_ON_ERROR(close(old_fd[0]));
+	return (exit);	
+	
 }
 
 
+static int redirect_last_child(int *old_fd, int *fd, int dup_in, int dup_out)
+{
+	int exit;
 
+	exit = 0;
+	SET_EXIT_ON_ERROR(close (old_fd[1]));
+    SET_EXIT_ON_ERROR(close(fd[0]));
+    SET_EXIT_ON_ERROR(close(fd[1]));
+    SET_EXIT_ON_ERROR(close(dup_in));
+	if (!exit)
+		SET_EXIT_ON_ERROR(dup2(dup_out, STDOUT_FILENO));
+    SET_EXIT_ON_ERROR(close (dup_out));
+    if (!exit)
+		SET_EXIT_ON_ERROR(dup2(old_fd[0], STDIN_FILENO));
+    SET_EXIT_ON_ERROR(close(old_fd[0]));
+	return (0);	
+
+}
+
+
+int init_pipes(t_pipestruct **pipes, t_pipenode *pipenode)
+{
+	*pipes = malloc(sizeof(t_pipestruct)) ;
+
+	(*pipes)->dup_out = dup(STDOUT_FILENO);
+	(*pipes)->dup_in =  dup(STDIN_FILENO);	
+	(*pipes)->old_pipefd = malloc(sizeof(int) * 2);
+	(*pipes)->pipefd = malloc(sizeof(int) * 2);
+	(*pipes)->lenpipe = ft_count_pipeline(pipenode);
+	(*pipes)->pid = malloc(sizeof(pid_t) * (*pipes)->lenpipe);
+	//printf("lenpipe is %lu\n", (sizeof(pid_t) * (*pipes)->lenpipe));
+	// hier noch exit status setzen
+	return (0);
+}
 
 int min_pipe(t_pipenode *pipenode, t_dict *dict, t_builtins *build)
 {
-	int 	lenpipe;
-	int 	outfd;
-	int		infd;
-	pid_t	*pid;
-	int		pipefd[2];
-	int *old_pipefd;
+	t_pipestruct *pipes;
+	//int 	lenpipe;
+	//pid_t	*pid;
 	int 	n;
 	int		exit;
 	int		status;
-
 	
 	exit = 0;
 	n = 0;
-	outfd = dup(STDOUT_FILENO);
-	infd  = dup(STDIN_FILENO);	
-	old_pipefd = malloc(sizeof(int) * 2);
+	exit = init_pipes(&pipes, pipenode);
+	//if (!exit)
+	//exit = pipe_loop(pipenode, dict, build, pipes);
 	
-
-	if (outfd == -1 || infd == -1)
-	{
-		return (1);
-	}
-	
-	lenpipe = ft_count_pipeline(pipenode);
-	pid = (pid_t *)malloc(sizeof(pid_t) * lenpipe);
-	if (!pid || !old_pipefd)
-		return (1);
 	while (pipenode && !exit)
 	{
-		pipe(pipefd);
-        pid[n] = fork();
-		if (pid[n] && n > 0)
+		pipe(pipes->pipefd);
+        (pipes->pid)[n] = fork();
+		if ((pipes->pid)[n] && n > 0)
         {   
-                close(old_pipefd[0]);
-                close(old_pipefd[1]);
+                close(pipes->old_pipefd[0]);
+                close(pipes->old_pipefd[1]);
         }   
-		if (!pid[n])
+		if (!((pipes->pid)[n]))
 		{
 			if (!n)
-			{
-				close (pipefd[0]);
-                close (outfd);
-				exit = redirect_child(infd, pipefd[1]);
-			}
+				exit = redirect_first_child(pipes);
 			else if (!pipenode->next)
-			{
-				close (old_pipefd[1]);
-                close (pipefd[0]);
-                close (pipefd[1]);
-                close(infd);
-				exit = redirect_child(old_pipefd[0], outfd);
-	  		}
+				exit = redirect_last_child(pipes->old_pipefd, pipes->pipefd, pipes->dup_in, pipes->dup_out);
 			else
-			{
-				close (old_pipefd[1]);
-                close (pipefd[0]);
-                close (outfd);
-                close(infd);
-				exit = redirect_child(old_pipefd[0], pipefd[1]);		
-			}
-	
+				exit = redirect_middle_child(pipes->old_pipefd, pipes->pipefd, pipes->dup_in, pipes->dup_out);
 			if (!exit)
 				exit = min_exit_handler(min_executer(pipenode->down, dict, build, 0));
 				ft_printf_fd("exit: %i", exit);
 		}
 		if (!exit)
 		{				
-			old_pipefd[0] = pipefd[0];
-        	old_pipefd[1] = pipefd[1];	
+			(pipes->old_pipefd)[0] = (pipes->pipefd)[0];
+        	(pipes->old_pipefd)[1] = (pipes->pipefd)[1];	
 		}
 		if (pipenode->next)
             pipenode = pipenode->next->node.pipe;
@@ -133,54 +162,40 @@ int min_pipe(t_pipenode *pipenode, t_dict *dict, t_builtins *build)
             pipenode = NULL;
 		n++;
 	}
+	
 	if (!exit)
 	{
-		close(old_pipefd[0]);
-    	close(old_pipefd[1]);
-    	close (pipefd[0]);
-    	close (pipefd[1]);
-    	close(outfd);
-		 n = 0;
-        while ( n < lenpipe)
+		SET_EXIT_ON_ERROR(close((pipes->old_pipefd)[0]));
+    	SET_EXIT_ON_ERROR(close((pipes->old_pipefd)[1]));
+    	SET_EXIT_ON_ERROR(close((pipes->pipefd)[0]));
+    	SET_EXIT_ON_ERROR(close((pipes->pipefd)[1]));
+    	SET_EXIT_ON_ERROR(close(pipes->dup_out));
+		SET_EXIT_ON_ERROR(close(pipes->dup_in));
+		n = 0;
+        while ( n < pipes->lenpipe)
             {
-                pid_t return_pid;
+                pid_t result;
                 int pid_pos;
 
-
-                //write(2, "xxx\n", 5);
-                return_pid = waitpid(pid[lenpipe -1 - n], &status, 0);
-                if (return_pid == pid[lenpipe - 1] )
+                result = waitpid(pipes->pid[pipes->lenpipe -1 - n], &status, 0);
+				ft_printf_fd("result: %i\n", 2, result);
+                if (result == pipes->pid[pipes->lenpipe - 1] )
                 {
-                    write(2, "\nxx\n", 5);
-                    ft_putnbr_fd(return_pid, 2);
-                    write(2,"\n", 2);
-                    ft_putnbr_fd(pid[lenpipe - 1], 2);
-                    write(2,"\n", 2);
+					ft_printf_fd("last child enters exit status\n", 2);
                     if (WEXITSTATUS(status) == 256 )
                         exit = 1000;
                     else
                         exit = WEXITSTATUS(status) + 1000;
-                    write(2, "xx\n", 4);
-                    ft_putnbr_fd(exit, 2);
-                    write(2,"\n", 2);
-
                 }
+				if (result == -1)
+				{
+					ft_printf_fd("last child %i enters [-1]\n", 2, pipes->pid[pipes->lenpipe - 1 -n]);
+					result = waitpid(pipes->pid[pipes->lenpipe - 1 -n], &status, 0);
+					ft_printf_fd("result[-1]: %i\n", 2, result);
+					exit = 1130;
+				}
                 n++;
 			}
-            /*    return_pid = waitpid(pid[lenpipe -1 - n], &status, 0);
-				if (return_pid == pid[lenpipe - 1] )
-				{
-					if (WEXITSTATUS(status) == 256 )
-						exit = 1000;
-					else		
-						exit = WEXITSTATUS(status) + 1000;
-				}
-				
-				pid_pos = search_pid(pid, return_pid, lenpipe);
-				if (pid_pos - 1 >= 0)
-				{
-					kill(pid[pid_pos - 1], SIGPIPE);
-				}*/
     }
 	return (exit);	
 }

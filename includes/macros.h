@@ -1,33 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_lexer.c                                       :+:      :+:    :+:   */
+/*   macros.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/07 09:48:22 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/07 09:48:37 by lwidmer          ###   ########.fr       */
+/*   Created: 2023/05/05 13:34:16 by lwidmer           #+#    #+#             */
+/*   Updated: 2023/05/05 17:47:42 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef MACROS_H
 
-void free_token_list(t_lexer **token_list)
-{
-  t_lexer *tmp;
+# define SET_EXIT_ON_ERROR(result) ((result) == - 1 ? (exit = 1) : 0)
 
-  while (*token_list)
-  {
-    tmp = (*token_list)->next;
-    if (*token_list)
-    {
-    	if ((*token_list)->value)
-		free((*token_list)->value);
-	free(*token_list);
-    }
-    *token_list = tmp;
-  }
-  //free(token_list);
- 
-}
-
+# define MACROS_H
+#endif

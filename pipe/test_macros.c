@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   test_macros.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/07 12:03:49 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/10 10:12:05 by lwidmer          ###   ########.fr       */
+/*   Created: 2023/05/05 15:25:42 by lwidmer           #+#    #+#             */
+/*   Updated: 2023/05/05 15:28:30 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "minishell.h"
 
-int main(int argc, char **argv)
+int main()
 {
-	t_lexer *first;
-	char *readline_input;
-	t_lexer *token_list;
+	int exit;
 
-  while (1)
-  {
-	readline_input = readline("minishell> ");
-    if (readline_input == NULL)
-	{
-		free(readline_input);
-		break;
-	}
-	token_list = lexer(readline_input);
-    print_token_list(token_list);
-    free(readline_input);
-	free_token_list(token_list);
-  }
+	exit = 0;
+	SET_EXIT_ON_ERROR(0);
+	printf("exit is %i\n", exit);
+
 }

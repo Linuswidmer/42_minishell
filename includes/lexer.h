@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 16:55:26 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/21 12:50:26 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/07 22:23:12 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/04/09 22:09:45 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -20,7 +20,7 @@
 
 char    *get_next_line(int fd);
 
-t_lexertype check_token(char c, char next);
+t_lexertype check_token(char * input, int pos);
 
 t_lexer *lexer(char **input);
 
