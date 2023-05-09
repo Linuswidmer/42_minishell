@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 18:20:46 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/05 17:51:56 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/09 19:02:56 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	min_sub(t_ast *ast, t_dict *dict, t_builtins *build)
 	int 	status;
 	int		exit;	 	
 	
-	if (!ast->node.sub->up || (ast->node.sub->up && !(ast->node.sub->up->key == subnode))) 	
-	{	
+	/*if (!ast->node.sub->up || (ast->node.sub->up && !(ast->node.sub->up->key == subnode))) 	
+	{*/	
 		exit =  min_expander(ast->node.sub->start, dict, ast->node.sub->last,NULL);
 		if (!exit)
 		{
@@ -40,12 +40,12 @@ int	min_sub(t_ast *ast, t_dict *dict, t_builtins *build)
 		}
 		else
 			exit += 1000;
-	}
+/*	}
 	else
 	{
 		//min_print_error();
 		printf("too many subchells\n");
 		exit = 256;
-	}
+	}*/
 	return (exit);
 }	

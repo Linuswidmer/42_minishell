@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 14:00:43 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/09 17:46:53 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/09 18:18:53 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -81,7 +81,7 @@ static char	*ft_dollar(t_lexer **token, char *temp, t_dict *dict)
 }
 
 
-void	min_dollar(t_lexer **token, t_expander **word, t_dict *dict)
+void min_dollar(t_lexer **token, t_expander **word, t_dict *dict)
 {
     t_expander  *end;
     char *temp;
