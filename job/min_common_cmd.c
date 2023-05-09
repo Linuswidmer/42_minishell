@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 12:05:30 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/09 12:44:01 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/09 13:02:05 by jstrotbe         ###   ########.fr       */
 /*   Updated: 2023/05/09 11:33:08 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/05/03 09:46:10 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/05/02 15:24:06 by lwidmer          ###   ########.fr       */
@@ -46,7 +46,11 @@ static int	ft_checkpath(char *cmd, t_dict *dict, char **path)
 	char	**paths;
 
 /* check if cmd is already path*/
-	
+	if (!access(cmd, F_OK))
+	{
+		*path = cmd;
+		return (0);	
+	}
 	i = 0;
 	paths = ft_get_paths(dict);
 	if (!path)
