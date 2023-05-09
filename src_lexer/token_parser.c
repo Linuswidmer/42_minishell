@@ -12,50 +12,6 @@
 
 #include "minishell.h"
 
-
-int write_key_and_value_to_token(t_lexer *token, t_lexertype key, char *input, int len)
-{
-	if (len > 0)
-	{
-		token->key = key;
-		token->value = ft_substr(input, 0, len);
-		if (!token->value)
-			return (-1);
-	}
-	return (0);
-}
-
-static int dollar_find_next_token_pos(char *input, int pos)
-{
-	int i;
-	t_lexertype next_token;
-	
-	i = 0;
-	while (input[pos] != '\0')
-	{
-		next_token = check_token(input, pos);
-		if (next_token == l_dollar)
-		{
-			pos++;
-			break;
-		}
-		if (next_token == l_paraopen)
-		{
-			while (input[pos] != '\0')
-			{
-				if (check_token(input, pos) == l_paraclose)
-					return (pos + 1);
-				pos++;
-			}
-		}
-		if (next_token == l_word)
-			pos++;
-		else
-			break ;
-	}
-	return (pos);
-}
-
 /*
 int parse_token(char *input, int pos, t_lexer *tmp, t_lexertype token_type, int (*find_next_token_pos)(char *, int))
 {
@@ -68,81 +24,6 @@ int parse_token(char *input, int pos, t_lexer *tmp, t_lexertype token_type, int 
     return pos;
 }
 */
-
-
-int parse_dollar(char *input, int pos, t_lexer *tmp)
-{
-	int len;
-	int start;
-	t_lexertype next_token;
-
-	start = pos - 1;
-	pos = dollar_find_next_token_pos(input, pos);
-	len = pos - start;
-	write_key_and_value_to_token(tmp, l_dollar, input + start, len);
-	return (pos);
-}
-
-static int quote_find_next_token_pos(char *input, int pos, t_lexertype token)
-{
-	int dollar_flag;
-	int i;
-	t_lexertype next_token;
-
-	i = 0;
-	while (input[pos] != '\0')
-	{
-		next_token = check_token(input, pos);
-		if (next_token == token)
-			break;
-		else
-			pos++;
-		if (token == l_dquote && next_token == l_dollar)
-			dollar_flag = 1;
-	}
-	return (pos);
-}
-
-static int check_if_dollar_occurrs_in_dquote(char *input, int start, int pos, t_lexertype token)
-{
-	t_lexertype next_token;
-	int dollar_flag;
-	int i;
-	
-	i = 0;
-	dollar_flag = 0;
-	while (i < pos)
-	{
-		next_token = check_token(input, start + i);
-		if (token == l_dquote && next_token == l_dollar)
-			dollar_flag = 1;
-		i++;
-	}
-	return (dollar_flag);
-}
-
-int parse_quote(char *input, int pos, t_lexer *tmp, t_lexertype token)
-{
-	t_lexertype key;
-	int i;
-	int len;
-	int start;
-	int dollar_flag;
-
-	start = pos;
-	i = 0;
-	pos = quote_find_next_token_pos(input, pos, token);
-	len = pos - start;
-	dollar_flag = check_if_dollar_occurrs_in_dquote(input, start, pos, token);
-	if (dollar_flag == 1)
-		key = l_dollar;
-	else
-		key = l_word;
-	write_key_and_value_to_token(tmp, key, input + start, len);
-	if (input[pos] == '\0')
-		return (- token);
-	return (pos + 1);
-}
 
 int parse_double_tokens(char *input, int pos, t_lexertype token, t_lexer *tmp)
 {
@@ -172,7 +53,7 @@ int parse_word(char *input, int pos, t_lexer *tmp)
 			pos++;
 	}
 	len = pos - start;
-	write_key_and_value_to_token(tmp, l_word, input + start, len);
+	key_value_to_token(tmp, l_word, input + start, len);
 	return (pos);
 }
 

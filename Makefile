@@ -26,7 +26,7 @@ NAME = minishell
 REMOVE = rm -f
 
 FILENAMES_LEXER = lexer tokens token_parser lexer_utils free_lexer token_list_utils \
-				dollar_postprocessing
+				dollar_postprocessing parse_quote parse_dollar
 
 FILENAMES_PARSER = min_token_is_para min_jobnode	min_parser_malloc_fail  min_token_is_route min_pipenode min_subnode min_token_is_word  min_routenode min_token_is_io min_parser  min_token_is_io_in min_debug min_heredoc_fail min_free_ast min_heredoc min_add_io_to_sub min_bring_ast_to_beginning min_is_last_token
 

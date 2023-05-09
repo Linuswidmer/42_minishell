@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:37:37 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/02 10:17:27 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/09 14:43:43 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int min_unset(t_dict **dict, char **arg)
 
     var_prev = *dict;
     var = search_key_in_dict(*dict, arg[0]);
-    var_next = var->next_entry;
+	if (var)
+    	var_next = var->next_entry;
     if (var == NULL)
         return (1000);
     else if (var == *dict)

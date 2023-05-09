@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:26:19 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/26 11:26:32 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/09 14:45:27 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int free_dict(t_dict *dict)
 			free(dict->key);
 		if (dict->value)
 			free(dict->value);
-	tmp = dict->next_entry;
-	free(dict);
-	dict = tmp;
+		tmp = dict->next_entry;
+		free(dict);
+		dict = tmp;
 	}
 	return (0);
 }
@@ -36,7 +36,7 @@ int free_builtins(t_builtins *builtins)
 	i = 0;
 	while (i < 7)
 	{
-		free(builtins[i].name);
+		free((char *)(builtins[i].name));
 		i++;
 	}
 	free (builtins);

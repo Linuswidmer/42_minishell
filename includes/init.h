@@ -3,7 +3,7 @@
 
 /* signals.c */
 int init_signals(void);
-void sigint_in_job(int sig);
+int init_signals_cmd(void);
 
 /* dict.c */
 t_dict *init_env_variable();

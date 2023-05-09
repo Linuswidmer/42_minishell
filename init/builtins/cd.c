@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:55:25 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/08 00:24:26 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/09 14:33:28 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static int update_directories_in_dict(char *pwd, t_dict *dict_pwd, t_dict *dict_
 {
   if (dict_oldpwd && dict_pwd)
   {
-	printf("pwd %s\n", dict_pwd->value);
-	printf("oldpwd %s\n", dict_oldpwd->value);
-    //free(dict_oldpwd->value);
+	//printf("pwd %s\n", dict_pwd->value);
+	//printf("oldpwd %s\n", dict_oldpwd->value);
+    free(dict_oldpwd->value);
     dict_oldpwd->value = dict_pwd->value;
   }
   else if (dict_pwd)
