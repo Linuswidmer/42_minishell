@@ -174,17 +174,26 @@ int min_pipe(t_pipenode *pipenode, t_dict *dict, t_builtins *build)
 		n = 0;
         while ( n < pipes->lenpipe)
             {
-                pid_t return_pid;
+                pid_t result;
                 int pid_pos;
 
-                return_pid = waitpid(pipes->pid[pipes->lenpipe -1 - n], &status, 0);
-                if (return_pid == pipes->pid[pipes->lenpipe - 1] )
+                result = waitpid(pipes->pid[pipes->lenpipe -1 - n], &status, 0);
+				ft_printf_fd("result: %i\n", 2, result);
+                if (result == pipes->pid[pipes->lenpipe - 1] )
                 {
+					ft_printf_fd("last child enters exit status\n", 2);
                     if (WEXITSTATUS(status) == 256 )
                         exit = 1000;
                     else
                         exit = WEXITSTATUS(status) + 1000;
                 }
+				if (result == -1)
+				{
+					ft_printf_fd("last child %i enters [-1]\n", 2, pipes->pid[pipes->lenpipe - 1 -n]);
+					result = waitpid(pipes->pid[pipes->lenpipe - 1 -n], &status, 0);
+					ft_printf_fd("result[-1]: %i\n", 2, result);
+					exit = 1130;
+				}
                 n++;
 			}
     }

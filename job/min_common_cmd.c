@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 12:05:30 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/03 10:15:05 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/09 11:33:08 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/05/03 09:46:10 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/05/02 15:24:06 by lwidmer          ###   ########.fr       */
 /*                                                                            */
@@ -83,6 +83,8 @@ int min_common_cmd(t_jobnode *astjob, t_dict *dict, char f)
     int		exit;
     pid_t   id;
 	int status;
+	int result;
+	//struct sigaction sa_sigint_job;
 
 	if (f)
     	id = fork();
@@ -103,8 +105,31 @@ int min_common_cmd(t_jobnode *astjob, t_dict *dict, char f)
 	}
 	if (id)
 	{
-		waitpid(id, &status, 0);
-		exit = WEXITSTATUS(status) + 1000;
+		//sa_sigint_job.sa_handler = sigint_in_job;
+    	//sigemptyset(&sa_sigint_job.sa_mask);
+    	//sa_sigint_job.sa_flags = 0;
+		result = waitpid(id, &status, 0);
+		ft_printf_fd("result is %i\n",2, result);
+		if (result == -1)
+		{
+			//kill(id, SIGINT);
+			result = waitpid(id, &status, 0);
+			exit = 1130;
+		}
+		else
+			exit = WEXITSTATUS(status) + 1000;
+		ft_printf_fd("enters here\n", 2);
+		ft_printf_fd("sending topid %i\n", 2, id);
+		ft_printf_fd("exit status is %i\n", 2, WEXITSTATUS(status));
+		ft_printf_fd("WIFSIGNALED is %i\n", 2, WIFSIGNALED(status));
+		ft_printf_fd("result is %i\n",2, result);
+		//kill(id, SIGINT);
+		/*
+		if (sigaction(SIGINT, &sa_sigint_job, NULL) == -1)
+    	{
+        	perror("sigaction");
+        	return (1);
+    	}*/
 	}
     return (exit);
 }	
