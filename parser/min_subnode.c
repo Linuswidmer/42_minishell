@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:26:53 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/08 14:59:58 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/09 08:52:40 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ static t_ast	*ft_close_para(t_ast **ast, t_lexer *token)
 	t_ast **temp;
 
 	if (!*ast || (*ast)->key == pipenode || (*ast)->key == routenode)
-                min_parser_error1(ast, token->key, NULL);
+                min_parser_error(ast, token->key, NULL);
 	else
 	{
 		temp = ast;
 		*ast = ft_navigate_to_next_sub(*ast, 1);
 		if (!*ast)
-			min_parser_error1(temp, token->key, NULL);
+			min_parser_error(temp, token->key, NULL);
 	}
 	return (*ast);
 }
@@ -93,7 +93,7 @@ static t_ast  *ft_open_para(t_ast **ast, t_lexer *token)
 	{
 		if ((*ast)->key == jobnode || ((*ast)->key == subnode &&  ft_last_is_paraclose(token)))
 		{
-			min_parser_error1(ast, token->key, NULL);
+			min_parser_error(ast, token->key, NULL);
 			return (NULL);
 		}
 	}	
@@ -123,10 +123,10 @@ t_lexer *min_subnode(t_lexer *token, t_ast **ast)
 {
 	if (min_token_is_para(token->key) == 1)
 	{	
-		if (token->next) 
+		if (!min_is_last_token(token)) 
 			*ast = ft_open_para(ast, token);
 		else
-			 min_parser_error1(ast, token->key, NULL);
+			 min_parser_error(ast, token->key, NULL);
 	}
 	else
 		*ast = ft_close_para(ast, token);

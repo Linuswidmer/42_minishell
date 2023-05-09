@@ -6,30 +6,22 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:04:41 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/08 10:05:43 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/09 12:30:52 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//static int	ft_token_is_sub_falid
-
 
 t_lexer *min_add_io_to_sub(t_lexer *token, t_ast **ast)
 {
 	char io;
-
 		
 	if (min_token_is_word(token->key))	
-	{	
-		printf("token error\n");
-		//min_print_error();
-		*ast = NULL;	
-	}
+		min_parser_error(ast, token->key, token->value);
 	else
 	{
 		(*ast)->node.sub->start = token;
-		printf("[ %p ]\n", (*ast)->node.sub->start = token);	
 		while (token)
 		{
 			while (token && token->key == l_space)
@@ -61,11 +53,17 @@ t_lexer *min_add_io_to_sub(t_lexer *token, t_ast **ast)
                             *ast = NULL;
                             break;
                     }
-					token = token->next;
+					if (token->next)
+						token = token->next;
+					else
+					{
+						min_parser_error(ast, token->key, P_NEWLINE);	
+						break;
+					}
 				}
 				while (token && token->key == l_space)
                         token = token->next;
-				while (token->next && min_token_is_word(token->key))
+				while (token && token->next && min_token_is_word(token->key))
 				{
 						token = token->next;
 						io = 0;

@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:51:43 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/08 15:00:32 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/09 10:31:51 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@
 # ifndef _DEBUG    
 #  define _DEBUG 1 
 # endif
+
+/* PARSER*/
+# define P_NEWLINE "newline"
+
+
 
 # define EMPTY ""
 # define ASTERISK "*"

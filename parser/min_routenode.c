@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:43:03 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/08 14:53:23 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/09 08:52:57 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -110,7 +110,7 @@ t_lexer	*min_routenode(t_lexer *token, t_ast **ast)
 	t_ast   *temp;
 	
 	if (!(*ast) || min_is_last_token(token) || (*ast)->key == pipenode || (*ast)->key == routenode)
-		min_parser_error1(ast, token->key, NULL);
+		min_parser_error(ast, token->key, NULL);
 	else
 	{	
 		new = ft_init_routenode();

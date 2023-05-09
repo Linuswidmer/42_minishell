@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:02:20 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/08 15:00:51 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/09 08:46:29 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 /* FUNCTIONS */
 t_ast	*min_parser(t_lexer *token); /* x */
-void	min_parser_error(t_ast **ast, t_lexer *token);
 void    min_parser_malloc_fail(t_ast **ast);
 void	min_bring_ast_to_beginning(t_ast **ast);
 void    min_free_ast(t_ast **ast);

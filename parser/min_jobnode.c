@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:31:01 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/08 15:00:37 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/09 12:30:48 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,20 +106,25 @@ t_lexer	*min_jobnode(t_lexer *token, t_ast **ast)
 						io = 1;	
 					else
 					{
-						min_parser_error1(ast, token->key, NULL);
+						min_parser_error(ast, token->key, NULL);
 						break;						
 					}
 				}
 				else if (min_token_is_word(token->key) && io)
 						io = 0;		
-			token = token->next;
-					
-			}
+				if (token->next || !io)
+					token = token->next;
+				else
+				{
+					min_parser_error(ast, token->key, P_NEWLINE);
+					break;
+				}			
+			}		
 			else
 			{
 				if (io)
 				{
-					min_parser_error1(ast, token->key, NULL);
+					min_parser_error(ast, token->key, NULL);
 				}
 				break;
 			}		

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   min_parser_error1.c                                :+:      :+:    :+:   */
+/*   min_parser_error.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 12:32:15 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/08 15:00:01 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/09 10:31:47 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -51,14 +51,14 @@ char *ft_get_token(t_lexertype key)
 
 
 
-void	min_parser_error1(t_ast **ast, t_lexertype key, char *value)
+void	min_parser_error(t_ast **ast, t_lexertype key, char *value)
 {
 	if (value)
 	{
-		printf("syntax error near unexpected token: %s\n", value);
+		ft_printf_fd("syntax error near unexpected token: '%s'\n",2, value );
 	}		
   	else
-	{		 printf("syntax error near unexpected token: %s\n", ft_get_token(key));
+	{		 ft_printf_fd("syntax error near unexpected token: '%s'\n",2, ft_get_token(key));
 
 	}
 	//min_free_ast(ast);
