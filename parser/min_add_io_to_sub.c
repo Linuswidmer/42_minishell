@@ -70,9 +70,8 @@ t_lexer *min_add_io_to_sub(t_lexer *token, t_ast **ast)
 				}
 	    		if (!token->next && io && !min_token_is_word(token->key))
 				{	
-					printf("error io2 file\n");
-                            *ast = NULL;
-                            break;
+					min_parser_error(ast, token->key, NULL);
+                            		break;
 				}
 				else
 					token = token->next;

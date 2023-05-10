@@ -51,7 +51,7 @@ char *ft_get_token(t_lexertype key)
 
 
 
-void	min_parser_error(t_ast **ast, t_lexertype key, char *value)
+int	min_parser_error(t_ast **ast, t_lexertype key, char *value)
 {
 	if (value)
 	{
@@ -64,4 +64,5 @@ void	min_parser_error(t_ast **ast, t_lexertype key, char *value)
 	//min_free_ast(ast);
 	if (ast)
 		*ast = NULL;
+	return (1);
 }

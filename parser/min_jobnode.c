@@ -58,6 +58,51 @@ static int	ft_check_subshell(t_lexer *token)
 		return (0);
 }	 	
 
+static int	ft_token_not_valid(t_lexer *token, t_ast ** ast, char *io)
+{
+		if (min_token_is_io(token->key) == 2 && !*io)
+		{   
+			if (min_heredoc(&token, HEREDOC)) 
+				return (min_heredoc_fail(ast));
+		}	
+		else if (min_token_is_io(token->key))
+                {
+				if(!*io)
+					*io = 1;
+				else
+					return(min_parser_error(ast, token->key, NULL));   
+		}
+		else if (min_token_is_word(token->key) && *io)
+			   *io = 0;
+		if (token->next || !*io)
+			return (0);
+		else
+			return (min_parser_error(ast, token->key, P_NEWLINE));
+}
+
+
+static t_lexer	*ft_find_last_token(t_lexer *token, t_ast **ast)
+{
+	char io;
+	
+	io = 0;
+                        while (token)
+                        {
+                                if (ft_token_is_jobnode(token->key))
+                                {
+					if (ft_token_not_valid(token, ast, &io))
+						break;
+					token = token->next;
+                                else
+                                {
+                                        if (io)
+                                                min_parser_error(ast, token->key, NULL);
+                                        break;
+                                }
+                        }
+	return (token);
+}
+
 
 
 /*
@@ -71,70 +116,25 @@ min_jobnode
 t_lexer	*min_jobnode(t_lexer *token, t_ast **ast)
 {
 	t_ast *new;
-	char	io;
 	
-	io = 0;
 	if (ft_check_subshell(token))
-	{
 		token = min_add_io_to_sub(token, ast);
-	}
 	else
 	{
-	new = ft_init_jobnode(token);
-	if (new)
-	{		
-		new->node.job->up = *ast;	
-		if (*ast)
-			ft_link_jobnode_into_ast(ast, new);
-		*ast = new;
-		while (token)
-		{
-			if (ft_token_is_jobnode(token->key))
-			{
-				if (min_token_is_io(token->key) == 2 && !io)
-				{	
-					if (min_heredoc(&token, HEREDOC))
-					{
-						min_heredoc_fail(ast);
-						printf("error io file\n");
-						break;
-					}
-				}
-				else if (min_token_is_io(token->key))
-				{
-					if(	!io)
-						io = 1;	
-					else
-					{
-						min_parser_error(ast, token->key, NULL);
-						break;						
-					}
-				}
-				else if (min_token_is_word(token->key) && io)
-						io = 0;		
-				if (token->next || !io)
-					token = token->next;
-				else
-				{
-					min_parser_error(ast, token->key, P_NEWLINE);
-					break;
-				}			
-			}		
-			else
-			{
-				if (io)
-				{
-					min_parser_error(ast, token->key, NULL);
-				}
-				break;
-			}		
+		new = ft_init_jobnode(token);
+		if (new)
+		{		
+			new->node.job->up = *ast;	
+			if (*ast)
+				ft_link_jobnode_into_ast(ast, new);
+			*ast = new;
+			token = ft_find_last_token(token, ast);
+			new->node.job->last = token;
 		}
-	new->node.job->last = token;
-	}
-	else
-	{
-		min_parser_malloc_fail(ast);
-	}
+		else
+		{
+			min_parser_malloc_fail(ast);
+		}
 	}	
 	return (token);
 }
