@@ -32,7 +32,7 @@
 
 
 
-void    min_parser_error(t_ast **ast, t_lexertype key, char *value);
+int    min_parser_error(t_ast **ast, t_lexertype key, char *value);
 
 
 

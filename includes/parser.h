@@ -51,7 +51,7 @@ void    min_print_jobnode(t_jobnode *job);
 
 /* HEREDOC*/
 int min_heredoc(t_lexer **token, char *heredoc);
-void	min_heredoc_fail(t_ast **ast);
+int	min_heredoc_fail(t_ast **ast);
 
 t_lexer *min_add_io_to_sub(t_lexer *token, t_ast **ast);
 

@@ -93,6 +93,7 @@ static t_lexer	*ft_find_last_token(t_lexer *token, t_ast **ast)
 					if (ft_token_not_valid(token, ast, &io))
 						break;
 					token = token->next;
+				}	
                                 else
                                 {
                                         if (io)

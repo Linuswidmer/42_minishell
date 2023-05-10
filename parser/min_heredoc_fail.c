@@ -12,7 +12,8 @@
 
 #include "minishell.h"
 
-void	min_heredoc_fail(t_ast **ast)
+int	min_heredoc_fail(t_ast **ast)
 {
 	*ast =NULL;
+	return (1);
 }
