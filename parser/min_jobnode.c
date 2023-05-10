@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:31:01 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/09 12:30:48 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/10 19:25:12 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,26 +58,26 @@ static int	ft_check_subshell(t_lexer *token)
 		return (0);
 }	 	
 
-static int	ft_token_not_valid(t_lexer *token, t_ast ** ast, char *io)
+static int	ft_token_not_valid(t_lexer **token, t_ast ** ast, char *io)
 {
-		if (min_token_is_io(token->key) == 2 && !*io)
+		if (min_token_is_io((*token)->key) == 2 && !*io)
 		{   
-			if (min_heredoc(&token, HEREDOC)) 
+			if (min_heredoc(token, HEREDOC)) 
 				return (min_heredoc_fail(ast));
 		}	
-		else if (min_token_is_io(token->key))
+		else if (min_token_is_io((*token)->key))
                 {
 				if(!*io)
 					*io = 1;
 				else
-					return(min_parser_error(ast, token->key, NULL));   
+					return(min_parser_error(ast, (*token)->key, NULL));   
 		}
-		else if (min_token_is_word(token->key) && *io)
+		else if (min_token_is_word((*token)->key) && *io)
 			   *io = 0;
-		if (token->next || !*io)
+		if ((*token)->next || !*io)
 			return (0);
 		else
-			return (min_parser_error(ast, token->key, P_NEWLINE));
+			return (min_parser_error(ast, (*token)->key, P_NEWLINE));
 }
 
 
@@ -90,7 +90,7 @@ static t_lexer	*ft_find_last_token(t_lexer *token, t_ast **ast)
                         {
                                 if (ft_token_is_jobnode(token->key))
                                 {
-					if (ft_token_not_valid(token, ast, &io))
+					if (ft_token_not_valid(&token, ast, &io))
 						break;
 					token = token->next;
 				}	
@@ -130,7 +130,8 @@ t_lexer	*min_jobnode(t_lexer *token, t_ast **ast)
 				ft_link_jobnode_into_ast(ast, new);
 			*ast = new;
 			token = ft_find_last_token(token, ast);
-			new->node.job->last = token;
+			if (*ast)
+				(*ast)->node.job->last = token;
 		}
 		else
 		{
