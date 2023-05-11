@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:19:36 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/09 12:10:59 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/11 09:53:34 by jstrotbe         ###   ########.fr       */
 /*   Updated: 2023/05/03 09:45:15 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/05/02 18:00:09 by lwidmer          ###   ########.fr       */
 /*                                                                            */
@@ -36,17 +36,19 @@ int ft_readline_loop(t_min *min)
 		if (min->token)
 		{
 			min->ast = min_parser(min->token);
+		
+
 			if (min->ast) 
 				exit = min_executer(min->ast, min->dict, min->builtins, 1);
 			else
-				exit = 0;
-		}
+				exit = 2;
+		}	
 		else
-				exit = 0;
+				exit = 2;
 		
 		add_history(readline_input);
 		free(readline_input);
-		//min_free_ast(&min->ast)
+		//min_free_ast(&min->ast);
 		free_token_list(&(min->token));
 		dup2(min->in, STDIN_FILENO);
 		dup2(min->out, STDOUT_FILENO);

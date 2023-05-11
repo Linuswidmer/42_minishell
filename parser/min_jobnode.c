@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:31:01 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/10 19:25:12 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/11 07:26:51 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,6 @@ static t_ast *ft_init_jobnode(t_lexer *token)
 	ft_bzero(job->node.job, sizeof(t_jobnode));
 	job->node.job->start = token; 
 	return (job);
-}
-
-static int ft_token_is_jobnode(t_lexertype key)
-{
-	if (min_token_is_io(key) || min_token_is_word(key)
-			|| key == l_space)
-		return (1);
-	else
-		return (0);	
 }
 
 static void	ft_link_jobnode_into_ast(t_ast **ast, t_ast *new)
@@ -88,7 +79,7 @@ static t_lexer	*ft_find_last_token(t_lexer *token, t_ast **ast)
 	io = 0;
                         while (token)
                         {
-                                if (ft_token_is_jobnode(token->key))
+                                if (min_token_is_jobnode(token->key))
                                 {
 					if (ft_token_not_valid(&token, ast, &io))
 						break;
