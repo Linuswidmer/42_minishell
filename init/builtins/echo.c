@@ -6,15 +6,15 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:21:00 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/28 12:02:17 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/10 11:10:49 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int echo_check_arg(char *arg)
+int	echo_check_arg(char *arg)
 {
-	int i;
+	int	i;
 
 	if (arg[0] == '-')
 	{
@@ -30,13 +30,18 @@ int echo_check_arg(char *arg)
 	}
 	else
 		return (0);
-} 
+}
 
-int min_echo (char **arg)
+int	min_echo(char **arg)
 {
-	int i;
-	int n_flag;
+	int	i;
+	int	n_flag;
 
+	if (!arg[0])
+	{
+		printf("\n");
+		return (1000);
+	}
 	i = 0;
 	n_flag = echo_check_arg(arg[0]);
 	if (n_flag)

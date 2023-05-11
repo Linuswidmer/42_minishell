@@ -6,11 +6,11 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 10:35:08 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/08 00:21:22 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/10 09:49:19 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "init.h"
+#include "minishell.h"
 
 int export_wrapper(t_builtins *builtin, char **args)
 {
@@ -24,7 +24,7 @@ int cd_wrapper(t_builtins *builtin, char **args)
 
 int pwd_wrapper(t_builtins *builtin, char **args)
 {
-	return (builtin->commands.min_pwd(args));
+	return (builtin->commands.min_pwd(args + 1));
 }
 
 int env_wrapper(t_builtins *builtin, char **args)
@@ -44,5 +44,5 @@ int echo_wrapper(t_builtins *builtin, char **args)
 
 int unset_wrapper(t_builtins *builtin, char **args)
 {
-	return (builtin->commands.min_unset(&builtin->dict, args));
+	return (builtin->commands.min_unset(&builtin->dict, args + 1));
 }

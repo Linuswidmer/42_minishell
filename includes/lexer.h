@@ -36,6 +36,7 @@ void expand_dollar_tokens(t_lexer *first);
 /* token _list_utils.c */
 t_lexer *add_to_token_list(t_lexer *list_end, t_lexertype key, char *str, int start, int pos);
 t_lexer *remove_token_from_list_end(t_lexer *list_end);
+int key_value_to_token(t_lexer *token, t_lexertype key, char *input, int len);
 
 /*dollar_postprocesing */
 t_lexer *dollar_postprocessing(t_lexer *tmp);

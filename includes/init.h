@@ -3,12 +3,12 @@
 
 /* signals.c */
 int init_signals(void);
-void sigint_in_job(int sig);
+int init_signals_cmd(void);
 
 /* dict.c */
 t_dict *init_env_variable();
 t_dict *create_dict_on_startup(char **env);
-void write_to_dict(t_dict *var, char *key, char *value);
+int write_to_dict(t_dict *var, char *key, char *value);
 t_dict *search_key_in_dict(t_dict *var, char *arg);
 t_dict *get_dict_last(t_dict *dict);
 

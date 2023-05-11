@@ -6,12 +6,11 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 10:43:58 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/25 10:47:55 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/10 09:48:47 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "init.h"
-#include "libft.h"
+#include "minishell.h"
 
 t_builtins *create_builtins(t_dict *dict, t_commands *commands)
 {

@@ -22,7 +22,7 @@ static int ft_is_buildin(char *cmd, t_builtins *build)
 	i = 0;
 	while (build && cmd && i < 7)
 	{
-		if (!ft_strncmp((*build).name, cmd, ft_strlen(cmd)))
+		if (!ft_strncmp((*build).name, cmd, ft_strlen(cmd)) && ft_strlen(cmd) == ft_strlen((*build).name))
 			return (1);
 		build++;
 		i++;

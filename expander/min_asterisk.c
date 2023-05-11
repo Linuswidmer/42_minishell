@@ -6,15 +6,10 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:50:43 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/09 18:18:05 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/11 19:14:16 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
-
-void ft_free_values(char ***values)
-{
-	(void)values;
-}
 
 int	ft_word_in_filename(char *filename, char *word, t_expander *curr)
 {
@@ -74,50 +69,30 @@ int	ft_fit_to_asterisk(char *filename, t_expander *word)
 	return (1);
 }
 
-int	ft_count_values(t_expander *word)
+
+void 	min_evaluate_asterisk(t_expander **word, t_expander *asterisk, char wo)
 {
-	int             counter;
-	struct dirent   *d;
-	DIR             *dh;
-
-    dh = opendir("./");
-    d = readdir(dh);
-	counter = 0;
-	while (d) 
-    {   
-        if (ft_fit_to_asterisk(d->d_name, word))
-			counter ++;
-		d = readdir(dh);
-	}	
-	free (dh);
-	return (counter);
-}
-
-
-char 	**min_asterisk(t_expander *word)
-{
-	char			**values;
-	int				counter;
 	struct dirent	*d;
     DIR 			*dh;
-
-	counter = ft_count_values(word);
-	values = (char **)malloc(sizeof(values) * (counter + 1));
+	char			found;
+	t_expander		*end;
+	
 	dh = opendir("./");
 	d = readdir(dh);
-	counter = 0;
-	while (d && values)
+	found = 0;
+
+	while (d)
 	{
-		if (ft_fit_to_asterisk(d->d_name, word))
-		{
-			values[counter] = ft_strdup((const char *)d->d_name);
-			if (!values[counter++])
-					ft_free_values(&values);
+		if (ft_fit_to_asterisk(d->d_name, asterisk))
+		{	
+			found = 1;
+			if (min_addlast_expander(word, d->d_name, &wo)
+				break
+		}
 		}			
 		d = readdir(dh);
 	}
-	if (values)
-		values[counter] = NULL;
+	if (!found)
+		min_addlast_expander(word, ft_notfound(asterisk), &wo)
 	free (dh);
-	return (values);
 }
