@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:38:59 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/09 18:17:57 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/11 11:40:55 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,19 +106,21 @@ char **min_word_eval(t_lexer **token, t_dict *dict)
 	while (word && *token && min_token_is_word((*token)->key))
 	{
 		if (min_token_is_word((*token)->key) == 1)
-			min_word(token, &word);
+			min_word(token, word);
 		else if (min_token_is_word((*token)->key) == 2)
 			min_dollar(token, &word, dict);
 		else if ( min_token_is_word((*token)->key) == 4)
 			min_til(token, &word, dict);
-		else 
-			asterisk = ft_asterisk(token, &word);
+		else
+		/*    min_asterisk(token, word, setoken, useword) 
+				 $ == char **values + flag is space
+				if !space
+					ende values[0]
+				"hdhdh*jfdkjkj*hfjghsgj"   	
+			*/	 
+			ft_asterisk(token, &word);
 	}
-	if (word && asterisk)
-		values = min_asterisk(word);
-	else
-
-		values = ft_get_values(&word);
+	values = ft_get_values(&word);
 	min_free_expander(&word);
 	
 	return (values);
