@@ -6,12 +6,13 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 18:04:33 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/09 18:19:56 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/11 09:25:04 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
 static int	dollar_find_next_token_pos(char *input, int pos)
 {
 	int			i;
@@ -39,6 +40,7 @@ static int	dollar_find_next_token_pos(char *input, int pos)
 	}
 	return (pos);
 }
+*/
 
 int	parse_dollar(char *input, int pos, t_lexer *tmp)
 {
@@ -46,9 +48,12 @@ int	parse_dollar(char *input, int pos, t_lexer *tmp)
 	int			start;
 	t_lexertype	next_token;
 
+	printf("enters parse dollar\n");
 	start = pos - 1;
-	pos = dollar_find_next_token_pos(input, pos);
+	//pos = dollar_find_next_token_pos(input, pos);
 	len = pos - start;
-	key_value_to_token(tmp, l_dollar, input + start, len);
+	//key_value_to_token(tmp, l_dollar, input + start, len);
+	key_value_to_token(tmp, l_dollar, input, 0);
+	
 	return (pos);
 }

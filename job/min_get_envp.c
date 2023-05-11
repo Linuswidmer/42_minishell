@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 09:31:15 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/03 09:31:54 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/10 10:47:21 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ char    *const* ft_get_envp(t_dict *dict)
 
     i = 0;
     dict_len = calc_dict_len(dict);
-    envp = malloc(sizeof(char *) * dict_len + 1);
+	printf("dict len is %i\n", dict_len);
+    envp = malloc(sizeof(char *) * (dict_len + 2));
     while (i < dict_len)
     {
         entry_len = ft_strlen(dict->key) + ft_strlen(dict->value) + 2;

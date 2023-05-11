@@ -6,11 +6,11 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 10:35:08 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/09 14:24:13 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/10 09:49:19 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "init.h"
+#include "minishell.h"
 
 int export_wrapper(t_builtins *builtin, char **args)
 {

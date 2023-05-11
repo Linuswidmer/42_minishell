@@ -6,18 +6,16 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:57:33 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/02 10:13:56 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/10 11:10:25 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../init.h"
-#include "libft.h"
+#include "minishell.h"
 
-int min_exit (char **arg)
+int	min_exit(char **arg)
 {
-	int exit;
-	int i;
-
+	int	exit;
+	int	i;
 
 	i = 0;
 	if (!arg[0])
@@ -31,7 +29,7 @@ int min_exit (char **arg)
 			if (ft_isdigit(arg[0][i]) != 0)
 			{
 				exit = 2;
-				break;
+				break ;
 			}
 			i++;
 		}
@@ -39,6 +37,6 @@ int min_exit (char **arg)
 		exit = exit % 256;
 		if (exit == 0)
 			exit = 256;
-  	}
-  return (exit);
+	}
+	return (exit);
 }

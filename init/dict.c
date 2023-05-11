@@ -6,12 +6,11 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:25:40 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/25 11:40:08 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/10 11:44:28 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "init.h"
-#include "libft.h"
+#include "minishell.h"
 
 t_dict *search_key_in_dict(t_dict *var, char *arg)
 {
@@ -32,9 +31,11 @@ t_dict *get_dict_last(t_dict *dict)
 	return (dict);
 }
 
-void write_to_dict(t_dict *var, char *key, char *value)
+int write_to_dict(t_dict *var, char *key, char *value)
 {
 	var->key = ft_strdup(key);
+	if (!var->key)
+		return (0);
 	if (var->value)
 		free(var->value);
 	var->value = ft_strdup(value);
