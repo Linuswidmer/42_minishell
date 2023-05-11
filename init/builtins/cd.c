@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:55:25 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/10 10:53:45 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/11 09:39:25 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,12 +108,22 @@ int	min_cd(t_dict *dict, char **arg)
 	if (!arg[0])
 		status = cd_to_home(dict);
 	else if (ft_strncmp(arg[0], "-", ft_strlen(arg[0])) == 0)
+	{
+		status = cd_to_oldpwd(dict);
+		if (!status)
+		{
+			pwd = getcwd(NULL, 0);
+			printf("%s\n", pwd);
+			update_directories_in_dict(pwd, dict);
+			free(pwd);
+		}
+		return (1000 + status);
+	}
+	else if (ft_strncmp(arg[0], "--", ft_strlen(arg[0])) == 0)
 		status = cd_to_oldpwd(dict);
 	else
 		status = cd_to_arg(arg[0]);
 	pwd = getcwd(NULL, 0);
-	if (!status)
-		printf("%s\n", pwd);
 	update_directories_in_dict(pwd, dict);
 	free(pwd);
 	return (1000 + status);
