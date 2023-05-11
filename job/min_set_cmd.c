@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 13:22:37 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/28 09:55:06 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/09 15:54:15 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ int	min_set_cmd(t_lexer **token, t_dict *dict, t_cmdnode **cmd)
 	{
 		exit = 0;
 		while (*values && !exit)
+		{
+			printf("min_set_cmd: %s\n", *values);
 			exit = ft_set_cmd(*values++, cmd);
+		}	
 	}
 	return (exit);
 }

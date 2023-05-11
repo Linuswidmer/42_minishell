@@ -1,40 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   min_token_is_jobnode.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/08 12:28:09 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/09 08:49:28 by jstrotbe         ###   ########.fr       */
+/*   Created: 2023/05/11 07:22:50 by jstrotbe          #+#    #+#             */
+/*   Updated: 2023/05/11 07:28:46 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-# define ERROR_H
+#include "minishell.h"
 
-/* PARSER*/
-# define APPEND ">>"
-# define IN "<"
-# define OUT ">"
-# define ASTERISK "*"
-# define PARAOPEN "("
-# define PARACLOSE ")"
-# define L_HEREDOC "<<"
-# define L_AND "&&"
-# define L_OR "||"
-# define L_SEMI ";"
-# define L_PIPE "|"
-# define L_TIL "~" 
-
-
-
-
-
-
-int    min_parser_error(t_ast **ast, t_lexertype key, char *value);
-
-
-
-
-#endif
+int min_token_is_jobnode(t_lexertype key)
+{
+	if (min_token_is_io(key) || min_token_is_word(key)
+		|| key == l_space)
+		return (1);
+	else
+		return (0);
+}

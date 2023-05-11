@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 12:43:28 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/08 11:16:39 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/10 18:20:53 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,13 @@ static char *ft_get_limiter(t_lexer *token)
 	char *limiter;
 	char *temp;
 	
-	limiter = ft_strdup(EMPTY); 
+	limiter = ft_strdup(EMPTY);
 	while (token && token->key == l_space)
 		token = token->next;
+	if (!token)
+		min_parser_error(NULL, 0, P_NEWLINE);
+	else
+		limiter = ft_strdup(EMPTY);	
 	if (limiter && token && min_token_is_word(token->key))
 	{
 		while (limiter && token && min_token_is_word(token->key))
@@ -55,6 +59,7 @@ static char *ft_get_limiter(t_lexer *token)
 	}
 	else
 		return (NULL);
+		
 }	
 	
 /* set path to next next wrd and delete the others*/

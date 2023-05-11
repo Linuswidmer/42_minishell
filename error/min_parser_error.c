@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 12:32:15 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/09 10:31:47 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/10 18:55:06 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -44,6 +44,8 @@ char *ft_get_token(t_lexertype key)
 		return (L_PIPE);
 	else if (key == l_til)
 		return (L_TIL);
+	else if (key == l_space)
+		return ("kkk");
 	else
 		return (NULL);
 }
@@ -51,7 +53,7 @@ char *ft_get_token(t_lexertype key)
 
 
 
-void	min_parser_error(t_ast **ast, t_lexertype key, char *value)
+int	min_parser_error(t_ast **ast, t_lexertype key, char *value)
 {
 	if (value)
 	{
@@ -64,4 +66,5 @@ void	min_parser_error(t_ast **ast, t_lexertype key, char *value)
 	//min_free_ast(ast);
 	if (ast)
 		*ast = NULL;
+	return (1);
 }

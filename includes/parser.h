@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:02:20 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/09 08:46:29 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/11 07:28:49 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ t_lexer *min_pipenode(t_lexer *token, t_ast **ast);
 
 /* JOBNODE */
 t_lexer	*min_jobnode(t_lexer *token, t_ast **ast);
+int		min_token_is_jobnode(t_lexertype key);
+
+
 
 /* IO */
 int			min_token_is_io(t_lexertype key); /*x*/
@@ -51,7 +54,7 @@ void    min_print_jobnode(t_jobnode *job);
 
 /* HEREDOC*/
 int min_heredoc(t_lexer **token, char *heredoc);
-void	min_heredoc_fail(t_ast **ast);
+int	min_heredoc_fail(t_ast **ast);
 
 t_lexer *min_add_io_to_sub(t_lexer *token, t_ast **ast);
 
