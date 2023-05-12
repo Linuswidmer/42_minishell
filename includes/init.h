@@ -11,6 +11,7 @@ t_dict *create_dict_on_startup(char **env);
 int write_to_dict(t_dict *var, char *key, char *value);
 t_dict *search_key_in_dict(t_dict *var, char *arg);
 t_dict *get_dict_last(t_dict *dict);
+int write_new_entry_to_dict(t_dict *dict, char *new_key, char *new_value);
 
 /*init.c*/
 int init_minishell(t_min **min, char **env);

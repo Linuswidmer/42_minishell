@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:18:08 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/10 11:58:44 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/12 11:52:51 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,12 @@
 void	print_dict_export(t_dict *dict)
 {
     while (dict)
-    {   
-        printf("declare -x %s=\"%s\"\n", dict->key, dict->value);
-        dict = dict->next_entry;
+    {
+		if (dict->value)
+        	printf("declare -x %s=\"%s\"\n", dict->key, dict->value);
+        else
+        	printf("declare -x %s=\"\"\n", dict->key);
+		dict = dict->next_entry;
     }   
 }
 
@@ -54,16 +57,28 @@ static int	export_check_if_key_is_valid(char *arg)
 		return (0);
 }
 
-int write_new_entry_to_dict(t_dict *dict, char *new_key, char *new_value)
+char **split_export(char *arg)
 {
-	t_dict *var;
-	t_dict *last;
+	int		i;
+	char	**split_str;
 
-	var = init_env_variable();
-	last = get_dict_last(dict);	
-	write_to_dict(var, new_key, new_value);
-	last->next_entry = var;
-	return (0);
+	i = 0;
+	split_str = malloc(sizeof(char *) * 3);
+	while (arg[i] != '=' && arg[i] != '\0')
+		i++;
+	split_str[0] = ft_substr(arg, 0, i);
+	if (!(split_str[0]))
+		return (NULL);
+	if (i < ft_strlen(arg))
+	{
+		split_str[1] = ft_substr(arg, i + 1, ft_strlen(arg));
+		if (!(split_str[1]))
+			return (NULL);
+	}
+	else
+		split_str[1] = NULL;
+	split_str[2] = NULL;
+	return (split_str);
 }
 
 int export_new_entry(t_dict *dict, char *arg)
@@ -76,7 +91,7 @@ int export_new_entry(t_dict *dict, char *arg)
 
 	/* wie mache ich das hier, wenn ein malloc failed? sollte dann die ganze
 	Minishell abbrechen? wir riskieren sonst leaks*/
-	split_str = ft_split(arg, '=');
+	split_str = split_export(arg);
 	if (!split_str)
 		return (1);
 	new_key = split_str[0];
@@ -86,9 +101,15 @@ int export_new_entry(t_dict *dict, char *arg)
 	if (var != NULL)
 		write_to_dict(var, var->key, new_value);
 	else
-		write_new_entry_to_dict(dict, new_key, new_value);
+	{
+		if (new_value)
+			write_new_entry_to_dict(dict, new_key, new_value);
+		else
+			write_new_entry_to_dict(dict, new_key, NULL);
+	}
 	return (0);
 }
+
 
 int	min_export(t_dict *dict, char **arg)
 {

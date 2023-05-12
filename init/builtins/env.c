@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:29:59 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/10 11:09:20 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/12 10:00:24 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	print_dict_env(t_dict *dict)
 {
 	while (dict)
 	{
-		printf("%s=%s\n", dict->key, dict->value);
+		if (dict->value)
+			printf("%s=%s\n", dict->key, dict->value);
 		dict = dict->next_entry;
 	}
 }

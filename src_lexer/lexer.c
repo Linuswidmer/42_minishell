@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 16:54:21 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/11 09:25:59 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/12 11:13:51 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ t_lexer	*lexer(char **input)
 	while (beginning_token_list && token_exit_status < 0)
 	{
 		new_input = readline_prompt_quotes(-token_exit_status);
+		if (!new_input)
+			new_input = ft_strdup("");
 		new_input2 = ft_strjoin(*input, new_input);
 		free_token_list(&beginning_token_list);
 		beginning_token_list = init_lexer_struct();
