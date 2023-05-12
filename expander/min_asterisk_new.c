@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:59:48 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/11 19:14:01 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/12 16:14:00 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,20 +74,13 @@ static char	ft_dollar(token, asterisk, extra, dict)
 	t_epander 	*end;	
 
 
-	space = min_dollar(token, &dollar, dict);
+	space = min_dollar(token, &dollar, extra , dict);
 	if (!dollar)
 		min_free_expander(asterisk);
 	else
 	{
 		end = min_last_expander(*asterisk);
-		if (!ft_dollar_many(dollar))
-			end->next = dollar;
-		else
-		{
-			extra = dollar->next;
-			end->next = dollar;
-			end->next->next = NULL;	
-		}
+		end->next = dollar;
 	}
 	return (space);
 }
@@ -129,7 +122,7 @@ static char	ft_get_all_asterisk_members(t_lexer **token, t_expander **asterisk, 
 
 
 
-char	min_asterisk_new(t_lexer **token, t_expander **word, char to, char wo, t_expander *old, t_dict *dict)
+char	min_asterisk(t_lexer **token, t_expander **word, char to, char wo, t_expander *old, t_dict *dict)
 {
 	t_expander	*asterisk;
 	t_expander	*extra;	

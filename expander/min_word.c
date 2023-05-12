@@ -6,13 +6,13 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 13:34:03 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/11 19:14:30 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/12 16:22:50 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	min_word(t_lexer **token, t_expander *word, char space)
+char	min_word(t_lexer **token, t_expander **word, char *value,  char space)
 {
     t_expander  *end;
 	char *temp;
@@ -28,13 +28,20 @@ void	min_word(t_lexer **token, t_expander *word, char space)
     }
 	if (end)
 	{
-		temp = end->word;
-		end->word = ft_strjoin( temp, (*token)->value);
-		min_free(&temp);
+		if (!space)
+		{
+			temp = end->word;
+			end->word = ft_strjoin( temp, (*token)->value);
+			min_free(&temp);
+			if (!end->word)
+        		min_free_expander(&word);
+		}
+		else
+			min_addlast_expander(word, value, NULL)
 	}
-	if (!end->word)
-		min_free_expander(&word);	
-    *token = (*token)->next;
+	if (token)
+    	*token = (*token)->next;
+	return (0);
 }
 
 
