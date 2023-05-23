@@ -6,7 +6,7 @@
 #    By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/07 09:41:35 by lwidmer           #+#    #+#              #
-#    Updated: 2023/05/11 07:28:00 by jstrotbe         ###   ########.fr        #
+#    Updated: 2023/05/23 12:51:33 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/05/07 23:38:37 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/05/02 17:30:33 by lwidmer          ###   ########.fr        #
 #                                                                              #
@@ -32,7 +32,7 @@ FILENAMES_PARSER = min_token_is_para min_jobnode	min_parser_malloc_fail  min_tok
 
 FILENAMES_MS = main
 
-FILENAMES_INIT = signals init dict free_dict_builtins_min builtins builtins_wrapper
+FILENAMES_INIT = signals init dict free_dict_builtins_min builtins builtins_wrapper_1 builtins_wrapper_2
 
 FILENAMES_BUILTINS = cd echo env exit export pwd unset
 
