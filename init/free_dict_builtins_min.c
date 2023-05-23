@@ -6,15 +6,15 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:26:19 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/09 14:45:27 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/23 14:18:47 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int free_dict(t_dict *dict)
+int	free_dict(t_dict *dict)
 {
-	t_dict *tmp;
+	t_dict	*tmp;
 
 	while (dict)
 	{
@@ -29,9 +29,9 @@ int free_dict(t_dict *dict)
 	return (0);
 }
 
-int free_builtins(t_builtins *builtins)
+int	free_builtins(t_builtins *builtins)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < 7)
@@ -43,7 +43,7 @@ int free_builtins(t_builtins *builtins)
 	return (0);
 }
 
-int free_min(t_min *min)
+int	free_min(t_min *min)
 {
 	free(min);
 	return (0);

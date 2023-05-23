@@ -6,15 +6,15 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:44:38 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/03 09:40:21 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/23 17:32:30 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int min_pwd(char **args)
+int	min_pwd(char **args)
 {
-	char *pwd;
+	char	*pwd;
 
 	(void)args;
 	pwd = getcwd(NULL, 0);
@@ -24,5 +24,5 @@ int min_pwd(char **args)
 		return (1000);
 	}
 	else
-    	return (1002);
+		return (1002);
 }

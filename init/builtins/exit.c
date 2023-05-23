@@ -6,13 +6,13 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:57:33 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/12 10:27:33 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/23 15:58:01 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int exit_check_if_numeric(char *arg)
+static int	exit_check_if_numeric(char *arg)
 {
 	int	i;
 

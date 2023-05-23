@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:55:25 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/11 09:39:25 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/23 15:26:38 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static int	cd_to_oldpwd(t_dict *dict)
 {
 	int		status;
 	t_dict	*dict_oldpwd;
+	char	*pwd;
 
 	dict_oldpwd = search_key_in_dict(dict, "OLDPWD");
 	if (dict_oldpwd)
@@ -49,12 +50,17 @@ static int	cd_to_oldpwd(t_dict *dict)
 	}
 	if (status == -1)
 	{
-		ft_printf_fd("cd: %s: No such file or directory\n", 2,
-			dict_oldpwd->value);
+		ft_printf_fd("cd: %s: No such file or dir\n", 2, dict_oldpwd->value);
 		return (1);
 	}
 	else
+	{
+		pwd = getcwd(NULL, 0);
+		printf("%s\n", pwd);
+		update_directories_in_dict(pwd, dict);
+		free(pwd);
 		return (0);
+	}	
 }
 
 static int	cd_to_home(t_dict *dict)
@@ -110,13 +116,6 @@ int	min_cd(t_dict *dict, char **arg)
 	else if (ft_strncmp(arg[0], "-", ft_strlen(arg[0])) == 0)
 	{
 		status = cd_to_oldpwd(dict);
-		if (!status)
-		{
-			pwd = getcwd(NULL, 0);
-			printf("%s\n", pwd);
-			update_directories_in_dict(pwd, dict);
-			free(pwd);
-		}
 		return (1000 + status);
 	}
 	else if (ft_strncmp(arg[0], "--", ft_strlen(arg[0])) == 0)
