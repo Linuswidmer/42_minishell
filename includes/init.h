@@ -21,4 +21,10 @@ int free_dict(t_dict *dict);
 int free_builtins(t_builtins *builtins);
 int free_min(t_min *min);
 
+/* export_utils */
+int	export_no_dictionary(void);
+int	export_not_valid_identifier(char *arg);
+int	export_check_if_only_digits(char *arg);
+int	export_check_if_key_is_valid(char *arg);
+
 #endif

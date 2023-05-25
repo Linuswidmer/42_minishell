@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:18:08 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/23 16:17:42 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/25 10:08:21 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,49 +22,6 @@ void	print_dict_export(t_dict *dict)
 			printf("declare -x %s=\"\"\n", dict->key);
 		dict = dict->next_entry;
 	}
-}
-
-int	export_check_if_only_digits(char *arg)
-{
-	int	only_digits_flag;
-	int	i;
-
-	i = 0;
-	only_digits_flag = 1;
-	while (arg[i] != '=' && arg[i] != '\0')
-	{
-		if (ft_isalpha(arg[i]) != 0 || arg[i] == '_')
-			only_digits_flag = 0;
-		i++;
-	}
-	return (only_digits_flag);
-}
-
-static int	export_check_if_key_is_valid(char *arg)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	if (i == 0 && ft_isdigit(arg[0]) != 0)
-		return (1);
-	while (arg[i] != '=' && arg[i] != '\0')
-	{
-		if (ft_isalnum(arg[i]) == 0)
-		{
-			if (arg[i] == '_' && ft_strlen(arg) > 1)
-				i++ ;
-			else
-				return (1);
-		}
-		else
-			i++;
-	}
-	if (exprot_check_if_only_digits(arg))
-		return (1);
-	else
-		return (0);
 }
 
 char	**split_export(char *arg)
@@ -128,10 +85,7 @@ int	min_export(t_dict *dict, char **arg)
 	status = 0;
 	exit = 0;
 	if (!dict)
-	{
-		ft_printf_fd("no dictionary\n", 2);
-		return (1002);
-	}
+		return (export_no_dictionary());
 	if (arg[0] == NULL)
 		print_dict_export(dict);
 	else
@@ -139,10 +93,7 @@ int	min_export(t_dict *dict, char **arg)
 		while (arg[i])
 		{
 			if (export_check_if_key_is_valid(arg[i]) == 1)
-			{
-				ft_printf_fd("export: not a valid identifier %s\n", 2, arg[i]);
-				status = 1;
-			}
+				status = export_not_valid_identifier(arg[i]);
 			else
 				status = export_new_entry(dict, arg[i]);
 			if (!exit)

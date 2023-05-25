@@ -6,16 +6,15 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 14:39:31 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/11 09:51:34 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/25 11:07:40 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void ft_free_ast(t_ast *ast);
+void	ft_free_ast(t_ast *ast);
 
-
-static void ft_free_subnode(t_ast *ast)
+static void	ft_free_subnode(t_ast *ast)
 {
 	ft_free_ast(ast->node.sub->down);
 	ast->node.sub->down = NULL;
@@ -79,10 +78,10 @@ static void ft_free_routenode(t_ast **ast)
 
 */
 
-static void ft_free_jobnode(t_ast *ast)
+static void	ft_free_jobnode(t_ast *ast)
 {
 	t_ast	*temp;
-	
+
 	temp = ast;
 	printf("in job.job[ %p ]\n", temp->node.job);
 	free(temp->node.job);
@@ -92,9 +91,7 @@ static void ft_free_jobnode(t_ast *ast)
 	temp = NULL;
 }
 
-
-
-void ft_free_ast(t_ast *ast)
+void	ft_free_ast(t_ast *ast)
 {	
 /*	
 	if (ast->key == routenode)
@@ -105,34 +102,28 @@ void ft_free_ast(t_ast *ast)
     {
       return (ft_free_pipenode(ast));
     }*/
-    if (ast->key == subnode)
-    {
+	if (ast->key == subnode)
+	{
 		printf("sub\n");
 		printf("start sub[ %p ]\n", ast);
 		ft_free_subnode(ast);
 		printf("end sub[ %p ]\n", ast);
-
-		
-    }
-    if (ast->key == jobnode)
-    {
-			printf("job\n");
-			printf("start job[ %p ]\n", ast);
-            ft_free_jobnode(ast);
-			printf("end job[ %p ]\n", ast);
-			
-    }
+	}
+	if (ast->key == jobnode)
+	{
+		printf("job\n");
+		printf("start job[ %p ]\n", ast);
+		ft_free_jobnode(ast);
+		printf("end job[ %p ]\n", ast);
+	}
 }
-
-
-
 
 void	min_free_ast(t_ast **ast)
 {
-	t_ast	*temp; 
-		
+	t_ast	*temp;
+
 	min_bring_ast_to_beginning(ast);
 	printf("start ast[ %p ]\n", *ast);
-	ft_free_ast(*ast);	
-	*ast = NULL; 
-}		 	
+	ft_free_ast(*ast);
+	*ast = NULL;
+}
