@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 16:54:21 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/12 11:13:51 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/29 13:20:32 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ returns -1 or -2 if it is a quote or dquote respectively
 int	create_token_list(char *input, t_lexer *tmp)
 {
 	int			start;
-	int			pos;
+	size_t		pos;
 	t_lexertype	current_token;
 	t_lexer		*tmp2;
 
@@ -29,7 +29,7 @@ int	create_token_list(char *input, t_lexer *tmp)
 	while (pos < ft_strlen(input) && pos >= 0)
 	{
 		current_token = check_token(input, pos);
-		pos = parse_token_to_list(current_token, input, pos, tmp, start);
+		pos = parse_token_to_list(current_token, input, pos, tmp);
 		start = pos;
 		if (tmp->key == l_dollar && tmp->value)
 			tmp = dollar_postprocessing(tmp);

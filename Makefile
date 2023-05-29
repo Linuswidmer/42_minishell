@@ -6,7 +6,7 @@
 #    By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/07 09:41:35 by lwidmer           #+#    #+#              #
-#    Updated: 2023/05/25 10:11:29 by lwidmer          ###   ########.fr        #
+#    Updated: 2023/05/29 13:24:21 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/05/07 23:38:37 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/05/02 17:30:33 by lwidmer          ###   ########.fr        #
 #                                                                              #
@@ -32,9 +32,9 @@ FILENAMES_PARSER = min_token_is_para min_jobnode	min_parser_malloc_fail  min_tok
 
 FILENAMES_MS = main
 
-FILENAMES_INIT = signals init dict free_dict_builtins_min builtins builtins_wrapper_1 builtins_wrapper_2
+FILENAMES_INIT = signals init dict min_dict_utils min_shlvl free_dict_builtins_min builtins 
 
-FILENAMES_BUILTINS = cd echo env exit export export_utils pwd unset
+FILENAMES_BUILTINS = cd echo env exit export export_utils pwd unset min_builtins_wrapper_1 min_builtins_wrapper_2
 
 FILENAMES_JOB = min_buildin_cmd min_ex_get_cmd min_expander min_set_cmd min_common_cmd min_ex_io min_io_and_cmd min_set_io min_get_envp
 
@@ -42,7 +42,7 @@ FILENAMES_EXPANDER = min_asterisk min_free_expander min_last_expander min_word_e
 
 FILENAMES_EXECUTER = min_executer min_exit_handler min_job min_sub min_route
 
-FILENAMES_PIPE = min_pipe
+FILENAMES_PIPE = min_pipe min_pipe_loop pipe_redirection
 	
 FILENAMES_FREE = min_free
 
@@ -61,8 +61,8 @@ MS_OBJS_DIR = ./src/
 INIT_SRCS_DIR = ./init/
 INIT_OBJS_DIR = ./init/
 
-BUILTINS_SRCS_DIR = ./init/builtins/
-BUILTINS_OBJS_DIR = ./init/builtins/
+BUILTINS_SRCS_DIR = ./builtins/
+BUILTINS_OBJS_DIR = ./builtins/
 
 JOB_SRCS_DIR = ./job/
 JOB_OBJS_DIR = ./job/
@@ -124,6 +124,8 @@ SRCS_ERROR = $(addprefix $(ERROR_SRC_DIR), $(addsuffix .c, $(FILENAMES_ERROR)))
 SRCS = $(SRCS_LEXER) ${SRCS_MS} ${SRCS_INIT} ${SRCS_BUILTINS} ${SRCS_PARSER} ${SRCS_JOB} ${SRCS_EXPANDER} ${SRCS_EXECUTER} ${SRCS_PIPE} ${SRCS_FREE} ${SRCS_ERROR}
 OBJS = $(OBJS_LEXER) ${OBJS_MS} ${OBJS_INIT} ${OBJS_BUILTINS} ${OBJS_PARSER} ${OBJS_JOB} ${OBJS_EXPANDER} ${OBJS_EXECUTER} ${OBJS_PIPE} ${OBJS_FREE} ${OBJS_ERROR}
 INCLUDES_DIR = -I./includes/
+
+CFLAGS = -Werror -Wall -Wextra
 
 ${NAME}: ${OBJS}
 	cc -o ${NAME} $^ -lreadline -L. ./libft/libft.a

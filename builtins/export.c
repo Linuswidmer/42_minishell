@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:18:08 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/25 10:08:21 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/29 13:23:10 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	print_dict_export(t_dict *dict)
 
 char	**split_export(char *arg)
 {
-	int		i;
+	size_t		i;
 	char	**split_str;
 
 	i = 0;
@@ -50,7 +50,6 @@ char	**split_export(char *arg)
 
 int	export_new_entry(t_dict *dict, char *arg)
 {
-	int		exit;
 	t_dict	*var;
 	char	**split_str;
 	char	*new_key;

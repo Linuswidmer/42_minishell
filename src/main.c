@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:19:36 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/25 10:41:40 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/29 10:07:28 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/05/11 09:53:34 by jstrotbe         ###   ########.fr       */
 /*   Updated: 2023/05/03 09:45:15 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/05/02 18:00:09 by lwidmer          ###   ########.fr       */
@@ -26,6 +26,7 @@ int ft_readline_loop(t_min *min)
 	//printf("min_status %i\n", min_status);
 	while (!exit && min->dict)
 	{
+		exit = init_signals();
 		readline_input = readline("minishell> ");
     	if (!readline_input)
    		{
@@ -81,7 +82,6 @@ int main(int argc, char **argv, char **env)
 	
 	(void)argc;
 	(void)argv;
-	exit = init_signals();
 	exit = init_minishell(&min, env);
 	if (!exit)
 		exit = ft_readline_loop(min);

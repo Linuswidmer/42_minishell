@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 14:39:31 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/25 11:07:40 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/29 13:23:44 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,6 @@ void	ft_free_ast(t_ast *ast)
 
 void	min_free_ast(t_ast **ast)
 {
-	t_ast	*temp;
-
 	min_bring_ast_to_beginning(ast);
 	printf("start ast[ %p ]\n", *ast);
 	ft_free_ast(*ast);

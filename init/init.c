@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:11:19 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/25 10:56:21 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/29 12:40:51 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	init_minishell(t_min **min, char **env)
 	if (!status)
 	{
 		ft_bzero(*min, sizeof(t_min));
-		(*min)->dict = create_dict_on_startup(env);
+		status = create_dict_on_startup(env, &((*min)->dict));
 		if (!(*min)->dict)
 			return (1);
 		create_builtin_commands(*min);

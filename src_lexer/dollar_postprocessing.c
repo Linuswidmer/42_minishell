@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 14:42:52 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/11 10:20:43 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/29 13:21:04 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	processing_word(char *str, int pos)
 
 t_lexer	*dollar_postprocessing(t_lexer *tmp)
 {
-	t_lexer	*tmp2;
 	char	*dollar_value;
 	int		pos;
 	int		start;

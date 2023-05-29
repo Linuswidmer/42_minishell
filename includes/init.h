@@ -7,7 +7,9 @@ int init_signals_cmd(void);
 
 /* dict.c */
 t_dict *init_env_variable();
-t_dict *create_dict_on_startup(char **env);
+int	create_dict_on_startup(char **env, t_dict **p_dict);
+
+/* min_dict_utils.c */
 int write_to_dict(t_dict *var, char *key, char *value);
 t_dict *search_key_in_dict(t_dict *var, char *arg);
 t_dict *get_dict_last(t_dict *dict);
@@ -26,5 +28,8 @@ int	export_no_dictionary(void);
 int	export_not_valid_identifier(char *arg);
 int	export_check_if_only_digits(char *arg);
 int	export_check_if_key_is_valid(char *arg);
+
+/* min_shlvl */
+int	min_update_shlvl_on_startup(t_dict *dict);
 
 #endif

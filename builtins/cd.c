@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:55:25 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/23 15:26:38 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/29 13:22:28 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static int	update_directories_in_dict(char *pwd, t_dict *dict)
 {
-	t_dict	*tmp;
 	t_dict	*dict_pwd;
 	t_dict	*dict_oldpwd;
 
