@@ -6,12 +6,20 @@
 #    By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/07 09:41:35 by lwidmer           #+#    #+#              #
-#    Updated: 2023/05/29 13:24:21 by lwidmer          ###   ########.fr        #
+#    Updated: 2023/05/29 16:19:23 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/05/07 23:38:37 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/05/02 17:30:33 by lwidmer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+
+#define MAKE_SRCS
+#    SRCS_$(1) = $(addprefix $(word 2,$$(value path)), $(addsuffix .c, $$(FILENAMES_$(1))))
+#endef
+
+#define MAKE_OBJS
+#  OBJS_$(1) = $(addprefix $(word 2,$$(value path)), $(addsuffix .o, $$(FILENAMES_$(1))))
+#endef
 
 define MAKE_SRCS
 	SRCS_$(1) = $(addprefix $(2), $(addsuffix .c, $(FILENAMES_$(1))))
@@ -21,9 +29,51 @@ define MAKE_OBJS
 	OBJS_$(1) = $(addprefix $(2), $(addsuffix .o, $(FILENAMES_$(1))))
 endef
 
+define MAKE_SRCS_OBJS
+    $(eval SRCS_$(1) := $(addprefix $(2), $(addsuffix .c, $$(FILENAMES_$(1)))))
+    $(eval OBJS_$(1) := $(addprefix $(2), $(addsuffix .o, $$(FILENAMES_$(1)))))
+endef
+
 NAME = minishell
 
-REMOVE = rm -f
+DIRS := \
+    LEXER \
+    PARSER \
+    MS \
+    INIT \
+    BUILTINS \
+    JOB \
+    EXPANDER \
+    EXECUTER \
+    PIPE \
+    FREE \
+    ERROR
+
+SRCS_DIRS := \
+    ./src_lexer/ \
+    ./parser/ \
+    ./src/ \
+    ./init/ \
+    ./builtins/ \
+    ./job/ \
+    ./expander/ \
+    ./executer/ \
+    ./pipe/ \
+    ./free/ \
+    ./error/
+
+DIR_PATHS = \
+	./src_lexer/ \
+	./parser/ \
+	./src/ \
+	./init/ \
+	./builtins/ \
+	./job/ \
+	./expander/ \
+	./executer/ \
+	./pipe/ \
+	./free/ \
+	./error \
 
 FILENAMES_LEXER = lexer tokens token_parser lexer_utils free_lexer token_list_utils \
 				dollar_postprocessing parse_quote parse_dollar
@@ -48,82 +98,45 @@ FILENAMES_FREE = min_free
 
 FILENAMES_ERROR = min_parser_error
 
+$(eval $(call MAKE_SRCS,LEXER,./src_lexer/))
+$(eval $(call MAKE_OBJS,LEXER,./src_lexer/))
 
-LEXER_SRCS_DIR = ./src_lexer/
-LEXER_OBJS_DIR = ./src_lexer/
+$(eval $(call MAKE_SRCS,PARSER,./parser/))
+$(eval $(call MAKE_OBJS,PARSER,./parser/))
 
-PARSER_SRCS_DIR = ./parser/
-PARSER_OBJS_DIR = ./parser/
+$(eval $(call MAKE_SRCS,MS,./src/))
+$(eval $(call MAKE_OBJS,MS,./src/))
 
-MS_SRCS_DIR = ./src/
-MS_OBJS_DIR = ./src/
+$(eval $(call MAKE_SRCS,INIT,./init/))
+$(eval $(call MAKE_OBJS,INIT,./init/))
 
-INIT_SRCS_DIR = ./init/
-INIT_OBJS_DIR = ./init/
+$(eval $(call MAKE_SRCS,BUILTINS,./builtins/))
+$(eval $(call MAKE_OBJS,BUILTINS,./builtins/))
 
-BUILTINS_SRCS_DIR = ./builtins/
-BUILTINS_OBJS_DIR = ./builtins/
+$(eval $(call MAKE_SRCS,JOB,./job/))
+$(eval $(call MAKE_OBJS,JOB,./job/))
 
-JOB_SRCS_DIR = ./job/
-JOB_OBJS_DIR = ./job/
+$(eval $(call MAKE_SRCS,EXPANDER,./expander/))
+$(eval $(call MAKE_OBJS,EXPANDER,./expander/))
 
-EXPANDER_SRCS_DIR = ./expander/
-EXPANDER_OBJS_DIR = ./expander/
+$(eval $(call MAKE_SRCS,EXECUTER,./executer/))
+$(eval $(call MAKE_OBJS,EXECUTER,./executer/))
 
-EXECUTER_SRCS_DIR = ./executer/
-EXECUTER_OBJS_DIR = ./executer/
+$(eval $(call MAKE_SRCS,PIPE,./pipe/))
+$(eval $(call MAKE_OBJS,PIPE,./pipe/))
 
-PIPE_SRCS_DIR = ./pipe/
-PIPE_OBJS_DIR = ./pipe/
+$(eval $(call MAKE_SRCS,FREE,./free/))
+$(eval $(call MAKE_OBJS,FREE,./free/))
 
-FREE_SRCS_DIR = ./free/
-FREE_OBJS_DIR = ./free/
-
-ERROR_SRCS_DIR = ./error/
-ERROR_OBJS_DIR = ./error/
-
-
-#SRCS_LEXER = $(addprefix $(LEXER_SRCS_DIR), $(addsuffix .c, $(FILENAMES_LEXER)))
-$(MAKE_SRCS, LEXER, ./src_lexer/)
-SRCS_LEXER = $(addprefix $(LEXER_SRCS_DIR), $(addsuffix .c, $(FILENAMES_LEXER)))
-OBJS_LEXER = $(addprefix $(LEXER_OBJS_DIR), $(addsuffix .o, $(FILENAMES_LEXER)))
-#$(MAKE_OBJS, LEXER, ./src_lexer/)
-
-SRCS_PARSER = $(addprefix $(PARSER_SRCS_DIR), $(addsuffix .c, $(FILENAMES_PARSER)))
-OBJS_PARSER = $(addprefix $(PARSER_OBJS_DIR), $(addsuffix .o, $(FILENAMES_PARSER)))
-
-SRCS_MS = $(addprefix $(MS_SRCS_DIR), $(addsuffix .c, $(FILENAMES_MS)))
-OBJS_MS = $(addprefix $(MS_OBJS_DIR), $(addsuffix .o, $(FILENAMES_MS)))
-
-SRCS_INIT = $(addprefix $(INIT_SRCS_DIR), $(addsuffix .c, $(FILENAMES_INIT)))
-OBJS_INIT = $(addprefix $(INIT_OBJS_DIR), $(addsuffix .o, $(FILENAMES_INIT)))
-
-SRCS_BUILTINS = $(addprefix $(BUILTINS_SRCS_DIR), $(addsuffix .c, $(FILENAMES_BUILTINS)))
-
-OBJS_BUILTINS = $(addprefix $(BUILTINS_OBJS_DIR), $(addsuffix .o, $(FILENAMES_BUILTINS)))
-
-SRCS_JOB = $(addprefix $(JOB_SRCS_DIR), $(addsuffix .c, $(FILENAMES_JOB)))
-OBJS_JOB = $(addprefix $(JOB_OBJS_DIR), $(addsuffix .o, $(FILENAMES_JOB)))
-
-SRCS_EXPANDER = $(addprefix $(EXPANDER_SRCS_DIR), $(addsuffix .c, $(FILENAMES_EXPANDER)))
-OBJS_EXPANDER = $(addprefix $(EXPANDER_OBJS_DIR), $(addsuffix .o, $(FILENAMES_EXPANDER)))
-
-SRCS_EXECUTER = $(addprefix $(EXECUTER_SRCS_DIR), $(addsuffix .c, $(FILENAMES_EXECUTER)))
-OBJS_EXECUTER = $(addprefix $(EXECUTER_OBJS_DIR), $(addsuffix .o, $(FILENAMES_EXECUTER)))
-
-OBJS_PIPE = $(addprefix $(PIPE_OBJS_DIR), $(addsuffix .o, $(FILENAMES_PIPE)))
-SRCS_PIPE = $(addprefix $(PIPE_SRC_DIR), $(addsuffix .c, $(FILENAMES_PIPE)))
-
-OBJS_FREE = $(addprefix $(FREE_OBJS_DIR), $(addsuffix .o, $(FILENAMES_FREE)))
-SRCS_FREE = $(addprefix $(FREE_SRC_DIR), $(addsuffix .c, $(FILENAMES_FREE)))
-
-OBJS_ERROR = $(addprefix $(ERROR_OBJS_DIR), $(addsuffix .o, $(FILENAMES_ERROR)))
-SRCS_ERROR = $(addprefix $(ERROR_SRC_DIR), $(addsuffix .c, $(FILENAMES_ERROR)))
-
+$(eval $(call MAKE_SRCS,ERROR,./error/))
+$(eval $(call MAKE_OBJS,ERROR,./error/))
 
 SRCS = $(SRCS_LEXER) ${SRCS_MS} ${SRCS_INIT} ${SRCS_BUILTINS} ${SRCS_PARSER} ${SRCS_JOB} ${SRCS_EXPANDER} ${SRCS_EXECUTER} ${SRCS_PIPE} ${SRCS_FREE} ${SRCS_ERROR}
 OBJS = $(OBJS_LEXER) ${OBJS_MS} ${OBJS_INIT} ${OBJS_BUILTINS} ${OBJS_PARSER} ${OBJS_JOB} ${OBJS_EXPANDER} ${OBJS_EXECUTER} ${OBJS_PIPE} ${OBJS_FREE} ${OBJS_ERROR}
+
 INCLUDES_DIR = -I./includes/
+
+REMOVE = rm -f
 
 CFLAGS = -Werror -Wall -Wextra
 
@@ -140,7 +153,6 @@ lib:
 
 clean:
 	$(REMOVE) $(OBJS)
-	$(REMOVE) $(NAME)
 
 fclean: clean
 	rm -rf ${NAME}
