@@ -16,7 +16,7 @@ int	min_addlast_expander(t_expander **word, char *value, char *wo)
 {
 	if (!*word)
 	{
-		*word = min_init_expander(l_word, d->d_name);
+		*word = min_init_expander(l_word, value);
 		if (!*word)
 			return (1);
 	}

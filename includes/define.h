@@ -35,6 +35,9 @@
 # define SUB '('
 # define ERR_SUB "$() not implemented.\n"  
 # define CURRDIR "./"
+# define DDOLLAR  "$$"
+# define DTIL	"$~"
+
 
 /* HEREDOC*/
 # define HEREDOC "temp"	

@@ -14,7 +14,7 @@
 
 t_expander *min_last_expander(t_expander *node)
 {
-	while (node->next)
+	while (node && node->next)
 		node = node->next;
 	return (node);
 }

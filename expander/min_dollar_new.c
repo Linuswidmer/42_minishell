@@ -48,11 +48,52 @@ static	int ft_add_to_back(t_expander *word, char *value, char space)
 	return (0);
 }
 
+static char	ft_dollar_asterisk_mode(t_lexer **token, t_expander **word, t_expander **extra, t_dict *dict, char space)
+{
+
+
+}
+
+static int 	ft_check_word(char *word)
+
+
+
+static char	ft_dollar(t_lexer **token, t_expander **word, t_expander **extra, t_dict *dict, char space)
+{
+	  
+
+	/* check first special caracter */
+	/*	a) split at special caracter 	*/
+	/*	b) join together */
+	
+	/* check word in dict */
+	/*	a ) split result */
+	/*	b ) check for *  */
+
+	/* load result to word */ 
+		
+	/* return if last was space*/
+		
+}
+
+
+
+
+/* if token->next is no word or DOLLAR or Til */
 char		min_dollar_new(t_lexer **token, t_expander **word, t_expander **extra, t_dict *dict, char space)
 {
-	(*token) = (*token)->next
+	(*token) = (*token)->next;
 	if (!*token || !min_token_is_word((*token)->key)
-		return (min_word(NULL, word, DOLLAR, space)
-	if (extra)
-		ft_dollar_asterisk_mode(token, word, extra,  
-	
+		return (min_word(token, word, DOLLAR, space)
+	else if ((*token)->key == l_dollar)
+	{
+		 //min_print_error(PRECESSID, 0);
+		return (min_word(token, word, DDOLLAR, space);
+	}	
+	else if ((*token)->key == l_til)
+		return (min_word(token, word, DTIL, space);
+	else if (extra)
+		return (ft_dollar_asterisk_mode(token, word, extra, dict, space));  
+	else
+		return (ft_dollar(token, word, extra, dict, space));
+}

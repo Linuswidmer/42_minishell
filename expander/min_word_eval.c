@@ -96,18 +96,20 @@ static char **ft_get_values(t_expander **word)
 }
 
 
+/* help struct for less varibels -> space && dict together*/
+
 char **min_word_eval(t_lexer **token, t_dict *dict)
 {
 	char	**values;
 	t_expander	*word;
 	char	space;
 	
-	space = 1;
+	space = 0;
 	word = min_init_expander(l_empty, EMPTY);
 	while (word && *token && min_token_is_word((*token)->key))
 	{
 		if (min_token_is_word((*token)->key) == 1)
-			min_word(token, word, space);
+			min_word(token, word, NULL, space);
 		else if (min_token_is_word((*token)->key) == 2)
 			space = min_dollar(token, &word, dict, space);
 		else if ( min_token_is_word((*token)->key) == 4)

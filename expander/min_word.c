@@ -14,33 +14,44 @@
 
 char	min_word(t_lexer **token, t_expander **word, char *value,  char space)
 {
-    t_expander  *end;
-	char *temp;
-
-    if (word->key == l_empty)
+	t_expander  	*end;
+	char		*temp;
+	
+	if (!*word)
+		*word = min_init_expander(l_empty, EMPTY); 				
+	if (*word && (*word)->key == l_empty)
 	{
-        word->key = l_word;
-		end = word;
+		(*word)->key = l_word;
+		end = *word;
 	}
-    else
-    {
-        end = min_last_expander(word);
-    }
+    	else
+    	{
+        	end = min_last_expander(*word);
+    	}
 	if (end)
 	{
-		if (!space)
+		if (space)
 		{
-			temp = end->word;
-			end->word = ft_strjoin( temp, (*token)->value);
-			min_free(&temp);
-			if (!end->word)
-        		min_free_expander(&word);
+			end->next =  min_init_expander(l_word, EMPTY);
+			if (!end->next)
+			{
+                                min_free_expander(word);
+				return (0);
+			}
+			end = end->next;
 		}
+		temp = end->word;
+		if (value)
+			end->word = ft_strjoin( temp, value);
 		else
-			min_addlast_expander(word, value, NULL)
+			end->word = ft_strjoin( temp, (*token)->value);
+		min_free(&temp);
+		if (!end->word)
+			min_free_expander(word);
+		}
 	}
 	if (token)
-    	*token = (*token)->next;
+    		*token = (*token)->next;
 	return (0);
 }
 
