@@ -114,13 +114,15 @@ static	int	ft_check_dict(char **dollar, char **value,  t_dict *dict)
 
 
 }
-static char **ft_create_splitvalue(char *value, char *space)
+static char **ft_delimiter_split(char *value, char *space, char delimiter)
 {
-	if (*space || *value == E_SPACE)
+	if (!value)
+		return (NULL); 
+	if (*space || *value == delimiter)
 		*space = 1;
-	if (value[ft_strlen -1] == E_SPACE)
+	if (value[ft_strlen(value) - 1] == delimiter)
 		*space += 2;
-	return ( ft_split(value, E_SPACE);
+	return ( ft_split(value, delimiter);
 }
 
 
@@ -136,13 +138,72 @@ static int ft_check_for_asterisk(char *value)
 	return (0);
 }	
 
+static int	ft_add_last_expander(t_expander **word, char *value, t_lexertype key)
+{
+        if (!*word)
+        {
+                *word = min_init_expander(key, value);
+                if (!*word)
+                        return (1);
+        }
+        else
+	{
+                end = min_last_expander(*word);
+        	end->next =  min_init_expander(key, value);
+                if (!(*word)->next)
+                {
+                        min_free_expander(word);
+                	return (1);
+               }
+         }
+        }
+        return (0);
+}
 
+	
+
+static void	ft_get_old_asterisk(char **values, char space, t_expander **old)
+{
+	int len;
+	int n;
+	
+	if (!values)
+	{	
+		*old = NULL;
+		return ;
+	}	
+	len = (int)ft_strlen(values);
+        n = 0;
+	if (space == 1 || space == 3)
+		ft_add_last_expander(old, NULL, l_asterisk);
+	if ((space == 1 || space == 3) && !old)
+		return ;
+	ft_add_last_expander(old, values[n], l_word);
+        while (old && values[++n])
+	{
+		ft_add_last_expander(old, NULL, l_asterisk);
+		if (old)
+			ft_add_last_expander(old, values[n], l_word);		
+	}
+	if (old && space == 2 || space 3)
+		 ft_add_last_expander(old, NULL, l_asterisk);
+}
+
+    	
 /* make from str asterisk */
 static t_expander *ft_asterisk_splitvalue(char *value)
 {
-
-
-
+	char	**values;
+	char	space;
+	t_expander *old;
+	
+	space = 0;
+	values = ft_delimiter_split(value, &space, E_ASTERISK);
+	ft_get_old_asterisk(values, space, &old);
+	min_doublefree(&values);
+	if (!old)
+		ft_putstr_fd(ERR_MALL, 2)			
+	return (old);
 }
 
 /* eval entry dict  and return if end with space if last ist asterisk return 3*/
@@ -158,7 +219,7 @@ static char	ft_eval_splitvalue( t_expander **word, t_expander **extra, char spac
 	{
 		if (ft_check_for_asterisk(splitvalue[n]))
 		{
-			if (n == len -1)
+			if (n == len -1 && ( space != 2 || space !=3))
 				return(3);
 			else if (!n && !extra && (space == 1 || space == 3))
 				min_asterisk(NULL, word, 0, 1, ft_asterisk_splitvalue(splitvalue[n]), NULL); 
@@ -181,7 +242,7 @@ static char	ft_eval_splitvalue( t_expander **word, t_expander **extra, char spac
 				min_word(NULL, extra, splitvalue[n], 1);				
 		}
 		if (n == 0 && (space == 1 || space == 3)
-			space -=1;
+			space--;
 	}
 	return (space);
 }
@@ -205,7 +266,7 @@ static char	ft_dollar(t_lexer **token, t_expander **word, t_expander **extra, t_
 	/* export && qoute mode */
 	if ( export || ( (*token)->prev && (*token)->prev->value == E_QUOTE))
 		return(ft_add_value_to_expander(token, word, &value, space); 
-	splitvalue = ft_create_splitvalue(value, &space);
+	splitvalue = ft_delimiter_split(value, &space, E_SPACE);
 	min_free(&value);
 	if (!splitvalue)
 		return (ft_add_value_to_expander(token, word, NULL, space);

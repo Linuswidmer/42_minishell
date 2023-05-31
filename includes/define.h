@@ -31,9 +31,11 @@
 # define DOLLAR "$"
 # define QUESTION '?'	
 # define E_SPACE	' '
+# dfine E_ASTERISK '*'	
 # define TIL "~" 
 # define SUB '('
-# define ERR_SUB "$() not implemented.\n"  
+# define ERR_SUB "$() not implemented.\n"
+# define ERR_MALL "MALLOC FAIL IN ASTERISK EVAL.\n"	  
 # define CURRDIR "./"
 # define DDOLLAR  "$$"
 # define DTIL	"$~"
