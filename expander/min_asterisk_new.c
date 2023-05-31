@@ -121,7 +121,7 @@ static char	ft_get_all_asterisk_members(t_lexer **token, t_expander **asterisk, 
 
 
 
-
+/* ???? */
 char	min_asterisk(t_lexer **token, t_expander **word, char to, char wo, t_expander *old, t_dict *dict)
 {
 	t_expander	*asterisk;
@@ -133,9 +133,9 @@ char	min_asterisk(t_lexer **token, t_expander **word, char to, char wo, t_expand
 	space = 1;
 		
 	if (wo)
-		ft_start_asterisk((*word)->word, &asteriski, oldasterisk);
+		ft_start_asterisk((*word)->word, &asteriski, old);
 	else
-		ft_start_asterisk(NULL, &asterisk, oldasterisk);
+		ft_start_asterisk(NULL, &asterisk, old);
 	if (!to)
 		min_evaluate_asterisk(word, asterisk, wo);
 	else

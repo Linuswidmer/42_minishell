@@ -37,6 +37,7 @@
 # define CURRDIR "./"
 # define DDOLLAR  "$$"
 # define DTIL	"$~"
+# define E_QUOTE '"'	
 
 
 /* HEREDOC*/

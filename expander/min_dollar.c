@@ -13,42 +13,42 @@
 
 static char *ft_status(char *old)
 {
-	char *status;
-	char *temp;
-	temp = ft_itoa(g_status);
-	status = ft_strjoin(old, temp);
-	//min_free(temp);
-	return (status);
+char *status;
+char *temp;
+temp = ft_itoa(g_status);
+status = ft_strjoin(old, temp);
+//min_free(temp);
+return (status);
 }
 
 
 
 static  char    *ft_dollar_in_dict(char *dollar, char *old,  t_dict *dict)
 {
-	char *temp; 
+char *temp; 
 
-	if (*dollar == QUESTION)
-		return (ft_status(old));
-	if (*dollar == E_SPACE)
-	{
-		temp = ft_strjoin(old, DOLLAR);
-		dollar = ft_strjoin(temp, dollar);
-		//min_free(temp);
-		return (dollar);
-	}
-	if (*dollar == SUB)
-		ft_putstr_fd(ERR_SUB, 2);	
-    while (dict)
-    	{
-        	if (ft_strncmp(dict->key, dollar, ft_strlen(dollar)))
-            		dict = dict->next_entry;
-        	else
-           		 break;
-    	}
-    if (!dict)
-    	   return (old);
-    else
-        	return (ft_strjoin(old, dict->value));
+if (*dollar == QUESTION)
+	return (ft_status(old));
+if (*dollar == E_SPACE)
+{
+	temp = ft_strjoin(old, DOLLAR);
+	dollar = ft_strjoin(temp, dollar);
+	//min_free(temp);
+	return (dollar);
+}
+if (*dollar == SUB)
+	ft_putstr_fd(ERR_SUB, 2);	
+while (dict)
+{
+	if (ft_strncmp(dict->key, dollar, ft_strlen(dollar)))
+		dict = dict->next_entry;
+	else
+		 break;
+}
+if (!dict)
+   return (old);
+else
+	return (ft_strjoin(old, dict->value));
 }
 
 
@@ -56,28 +56,28 @@ static  char    *ft_dollar_in_dict(char *dollar, char *old,  t_dict *dict)
 
 static char	*ft_dollar(t_lexer **token, char *temp, t_dict *dict)
 {
-	char *new;
+char *new;
 
+*token = (*token)->next;
+if (!*token || !min_token_is_word((*token)->key))
+{	
+	if (!temp)
+		new = ft_strdup(DOLLAR);	
+	else 
+		new = ft_strjoin(temp, DOLLAR); 
+}	
+else if ((*token)->key == l_dollar)
+{	
+	//min_print_error(PRECESSID, 0); 
+	new = temp;
+}
+else if ((*token)->key == l_til)
+	new = ft_strjoin(temp, TIL);
+else
+	new = ft_dollar_in_dict((*token)->value, temp, dict); 
+if (*token)	
 	*token = (*token)->next;
-	if (!*token || !min_token_is_word((*token)->key))
-	{	
-		if (!temp)
-			new = ft_strdup(DOLLAR);	
-		else 
-			new = ft_strjoin(temp, DOLLAR); 
-	}	
-	else if ((*token)->key == l_dollar)
-	{	
-		//min_print_error(PRECESSID, 0); 
-		new = temp;
-	}
-	else if ((*token)->key == l_til)
-		new = ft_strjoin(temp, TIL);
-	else
-		new = ft_dollar_in_dict((*token)->value, temp, dict); 
-	if (*token)	
-		*token = (*token)->next;
-	return (new);
+return (new);
 }
 
 
