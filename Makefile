@@ -6,7 +6,7 @@
 #    By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/07 09:41:35 by lwidmer           #+#    #+#              #
-#    Updated: 2023/05/29 16:19:23 by lwidmer          ###   ########.fr        #
+#    Updated: 2023/06/02 12:00:43 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/05/07 23:38:37 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/05/02 17:30:33 by lwidmer          ###   ########.fr        #
 #                                                                              #
@@ -144,7 +144,7 @@ ${NAME}: ${OBJS}
 	cc -o ${NAME} $^ -lreadline -L. ./libft/libft.a
 
 .c.o: ${SRCS}
-	cc -c -o $@ $< ${INCLUDES_DIR}
+	cc -c -o $@ $< ${CFLAGS} ${INCLUDES_DIR}
 	
 all: ${NAME}
 

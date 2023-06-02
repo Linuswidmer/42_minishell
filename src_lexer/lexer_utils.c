@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 10:04:52 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/09 17:59:06 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/02 11:11:09 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/04/07 17:50:52 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -34,7 +34,8 @@ char *lexertype_names[] =
     "ESCAPE",
 	"SPACE",
 	"AMP",
-	"TIL"
+	"TIL",
+	"DOLLAR_Q"
 };
 
 int	skip_space_tab(char *input, int pos)

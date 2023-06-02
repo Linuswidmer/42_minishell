@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 16:54:21 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/29 13:20:32 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/02 11:14:46 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	create_token_list(char *input, t_lexer *tmp)
 		current_token = check_token(input, pos);
 		pos = parse_token_to_list(current_token, input, pos, tmp);
 		start = pos;
-		if (tmp->key == l_dollar && tmp->value)
+		if ((tmp->key == l_dollar || tmp->key == l_dollar_q) && tmp->value)
 			tmp = dollar_postprocessing(tmp);
 		if (tmp->key != l_empty && pos < ft_strlen(input) && pos > 0)
 		{

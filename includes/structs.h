@@ -43,6 +43,7 @@ typedef enum
 	l_space,
 	l_amp,
 	l_til,
+	l_dollar_q,
 } t_lexertype ;	
 
 
