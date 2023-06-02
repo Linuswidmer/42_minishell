@@ -1,152 +1,98 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   min_asterisk_new.c                                 :+:      :+:    :+:   */
+/*   min_asterisk.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/11 14:59:48 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/12 16:14:00 by jstrotbe         ###   ########.fr       */
+/*   Created: 2023/04/17 08:50:43 by jstrotbe          #+#    #+#             */
+/*   Updated: 2023/05/12 16:22:53 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
 
-
-
-
-
-
-/* this can also handel if * are in $cmd  */
-static void	ft_start_asterisk(char *word, t_expander **asterisk, t_expander *old)
+int	ft_word_in_filename(char *filename, char *word, t_expander *curr)
 {
-		if ( word)
-		{
-			*asterisk = min_init_expander(l_word, word);
-			if (*asterisk)
-			{ 	
-				if (old)
-					(*asterisk)->next = old;
-				else
-				{
-					(*asterisk)->next = min_init_expander(l_asterisk, NULL);
-						if (!(*asterisk)->next)
-							min_free_asterisk(asterisk);
-				}
-			}	
-		}
-		else if (old)
-			 *asterisk = old;
-		else	
-			*asterisk = min_init_expander(l_asterisk, NULL);
+	if (!*filename)
+		return (0);
+	while(*filename && *word)
+	{ 		
+		if (*filename++ != *word++)
+			return (0);
 	}
+	if (!*filename && !*word)
+			return (1);
+	if (!*word && curr->next)
+			return (1);
+	else			
+			return (0);
+}
+	
+t_expander	*ft_move_filename_to_word(char **filename, t_expander *word)
+{
+	t_expander *next;
+
+	next = word->next;
+	while (**filename && **filename != (next->word)[0])
+		(*filename)++;
+	return (next);
 }
 
-
-static void ft_word(t_lexer **token, t_expander *asterisk, char *value)
+int	ft_fit_to_asterisk(char *filename, t_expander *word)
 {
-	t_expander  *end;
+	char first;
 	
-	 end = min_last_expander(asterisk);
-	if (end->key == l_asterisk)
+	first = 0;
+	while (word && *filename)
 	{
-		end->next = min_init_expander(l_word, EMPTY);
-		if (!end->next)
+		if(word->key == l_asterisk)
 		{
-			min_free_expander(asterisk);
+			if (!first++)
+			{
+				if (*filename == '.')
+					return (0);
+			}
+			if (!word->next)
+				return (1);
+			else
+				word = ft_move_filename_to_word(&filename, word);
 		}	
-		else
-			end = end->next;
-	}
-	temp = end->word;
-	if (!value)
-		end->word = ft_strjoin( temp, (*token)->value);
-	else
-		end->word = ft_strjoin( temp, value);
-	min_free(&temp);
-	*token = (*token)->next;
+		if(word->key == l_word )
+		{ 
+			first++;
+			if (!ft_word_in_filename(filename, word->word, word))
+				return (0);	
+			else
+				word = word->next;
+		}
+	}	
+	return (1);
 }
 
-static char	ft_dollar(token, asterisk, extra, dict)		
+
+void 	min_evaluate_asterisk(t_expander **word, t_expander *asterisk, char wo)
 {
-	char		space;
-	t_expander	*dollar;
-	t_epander 	*end;	
-
-
-	space = min_dollar(token, &dollar, extra , dict);
-	if (!dollar)
-		min_free_expander(asterisk);
-	else
-	{
-		end = min_last_expander(*asterisk);
-		end->next = dollar;
-	}
-	return (space);
-}
-
-static	void	ft_asterisk(t_lexer **token, t_expander **asterisk)
-{
+	struct dirent	*d;
+    DIR 			*dh;
+	char			found;
+	t_expander		*end;
 	
-	t_expander  *end;
+	dh = opendir("./");
+	d = readdir(dh);
+	found = 0;
 
-	end = min_last_expander(*asterisk);
-	end->next = min_init_expande(l_asterisk, NULL);
-	if (!end->next)
-		min_free_asterisk(asterisk);
-	*token = (*token)->next;
-		
-}
-
-static char	ft_get_all_asterisk_members(t_lexer **token, t_expander **asterisk, t_expander **extra, t_dict *dict)
-{
-	char	space;
-	
-	space = 0;
-	*extra = NULL;
-	while (space && !*extra && asterisk && *token && min_token_is_word((*token)->key))
+	while (d)
 	{
-		if (min_token_is_word((*token)->key) == 1)
-            		ft_word(token, asterisk, NULL);
-		else if (min_token_is_word((*token)->key) == 2)
-			space = ft_dollar(token, asterisk, extra, dict);
-		else if ( min_token_is_word((*token)->key) == 4)
-			ft_word(token, asterisk, TIL);
-		else
-			ft_asterisk(asterisk);
+		if (ft_fit_to_asterisk(d->d_name, asterisk))
+		{	
+			found = 1;
+			if (min_addlast_expander(word, d->d_name, &wo)
+				break
+		}
+		}			
+		d = readdir(dh);
 	}
-	return (space);
+	if (!found)
+		min_addlast_expander(word, ft_notfound(asterisk), &wo)
+	free (dh);
 }
-
-
-
-
-/* ???? */
-char	min_asterisk(t_lexer **token, t_expander **word, char to, char wo, t_expander *old, t_dict *dict)
-{
-	t_expander	*asterisk;
-	t_expander	*extra;	
-	char		space;
-
-	if (!*word)	
-		return (1);
-	space = 1;
-		
-	if (wo)
-		ft_start_asterisk((*word)->word, &asteriski, old);
-	else
-		ft_start_asterisk(NULL, &asterisk, old);
-	if (!to)
-		min_evaluate_asterisk(word, asterisk, wo);
-	else
-	{
-		space = ft_get_all_asterisk_members(token, &asterisk, &extra, dict);
-		min_evaluate_asterisk(word, asterisk);
-		min_add_extra_to_word(word, extra)
-	}
-	if (!asterisk)
-		min_free_expander(word);
-	min_free_asterisk(&asterisk);
-	return (space);	
-}
-
