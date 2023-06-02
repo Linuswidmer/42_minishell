@@ -6,20 +6,11 @@
 #    By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/07 09:41:35 by lwidmer           #+#    #+#              #
-#    Updated: 2023/06/02 12:08:42 by lwidmer          ###   ########.fr        #
+#    Updated: 2023/06/02 12:25:06 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/05/07 23:38:37 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/05/02 17:30:33 by lwidmer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-
-#define MAKE_SRCS
-#    SRCS_$(1) = $(addprefix $(word 2,$$(value path)), $(addsuffix .c, $$(FILENAMES_$(1))))
-#endef
-
-#define MAKE_OBJS
-#  OBJS_$(1) = $(addprefix $(word 2,$$(value path)), $(addsuffix .o, $$(FILENAMES_$(1))))
-#endef
 
 define MAKE_SRCS
 	SRCS_$(1) = $(addprefix $(2), $(addsuffix .c, $(FILENAMES_$(1))))
