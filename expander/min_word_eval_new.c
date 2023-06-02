@@ -12,27 +12,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int  ft_asterisk(t_lexer **token, t_expander **word)
-{	
-	t_expander	*end;
 	
-
-	if ((*word)->key == l_empty)
-		(*word)->key = l_asterisk;
-	else
-	{	
-		end = min_last_expander(*word);
-		if (end->key != l_asterisk)
-			end->next = min_init_expander(l_asterisk); 	
-		if (!end->next)
-			min_free_expander(word);
-	}
-	*token = (*token)->next;
-	return (1);
-} 	
-
-
 static int	ft_count_values(t_expander *word)
 {
 	int c;
@@ -97,34 +77,46 @@ static char **ft_get_values(t_expander **word)
 
 
 /* help struct for less varibels -> space && dict together*/
+typdef struct s_exphelp t_exphelp;
 
+struct s_exphelp{
+	t_dict	*dict;
+	char	space;
+	char	export;
+	char	token;
+	char	word;
+}		
+
+static void	ft_init_exphelp(t_dict *dict, t_exphelp *help)
+{
+	ft_bezero(help, sizeof(t_exphelp));
+	help->dict = dict;
+	help->token = 1;
+	help->word = 1;
+}		
+
+/* */
 char **min_word_eval(t_lexer **token, t_dict *dict)
 {
 	char	**values;
 	t_expander	*word;
-	char	space;
+	t_exphelp	help;
 	
-	space = 0;
+	ft_init_exphelp(dict, &help);
 	word = min_init_expander(l_empty, EMPTY);
 	while (word && *token && min_token_is_word((*token)->key))
 	{
 		if (min_token_is_word((*token)->key) == 1)
-			min_word(token, word, NULL, space);
+			min_word(token, word, NULL, help.space);
 		else if (min_token_is_word((*token)->key) == 2)
-			space = min_dollar(token, &word, dict, space);
+			help.space = min_dollar(token, &word, help);
 		else if ( min_token_is_word((*token)->key) == 4)
-			space = min_til(token, &word, dict);
+			help.space = min_til(token, &word, help);
 		else 
-			space = min_asterisk_new(token, &word, 1, 1);
+			help.space = min_asterisk_new(token, &word, help);
 	}
 
-	values = ft_get_values(&word);
-		/*    min_asterisk(token, word, usetoken, useword) 
-				 $ == char **values + flag is space
-				if !space
-					ende values[0]
-				"hdhdh*jfdkjkj*hfjghsgj"   	
-			*/	 
+	values = ft_get_values(&word);	 
 	min_free_expander(&word);
 	return (values);
 }

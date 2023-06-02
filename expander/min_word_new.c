@@ -12,6 +12,9 @@
 
 #include "minishell.h"
 
+
+
+
 char	min_word(t_lexer **token, t_expander **word, char *value,  char space)
 {
 	t_expander  	*end;
