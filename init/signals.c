@@ -6,13 +6,13 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 10:52:07 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/09 17:02:56 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/23 12:45:47 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void handle_signals(int sig) 
+void	handle_signals(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -23,19 +23,18 @@ void handle_signals(int sig)
 	}
 }
 
-void handle_signals_cmd(int sig)
+void	handle_signals_cmd(int sig)
 {
-
-	if(sig == SIGINT)
+	if (sig == SIGINT)
 		write(STDERR_FILENO, "\n", 1);
 	else if (sig == SIGQUIT)
 		write(STDERR_FILENO, "Quit(core dumped)\n", 18);
 }
 
-int init_signals_cmd(void)
+int	init_signals_cmd(void)
 {
-	struct sigaction sa_signals;
-	
+	struct sigaction	sa_signals;
+
 	sa_signals.sa_handler = handle_signals_cmd;
 	sigemptyset(&sa_signals.sa_mask);
 	sa_signals.sa_flags = 0;
@@ -43,21 +42,21 @@ int init_signals_cmd(void)
 	signal(SIGQUIT, handle_signals_cmd);
 	signal(SIGQUIT, SIG_DFL);
 	if (sigaction(SIGINT, &sa_signals, NULL) == -1)
-    {
-        perror("sigaction");
-        return (1);
-    }
-    if (sigaction(SIGQUIT, &sa_signals, NULL) == -1)
-    {
-        perror("sigaction");
-        return (1);
-    }
+	{
+		perror("sigaction");
+		return (1);
+	}
+	if (sigaction(SIGQUIT, &sa_signals, NULL) == -1)
+	{
+		perror("sigaction");
+		return (1);
+	}
 	return (0);
 }
 
-int init_signals(void)
+int	init_signals(void)
 {
-	struct sigaction sa_signals;
+	struct sigaction	sa_signals;
 
 	sa_signals.sa_handler = handle_signals;
 	sigemptyset(&sa_signals.sa_mask);
@@ -68,5 +67,5 @@ int init_signals(void)
 		perror("sigaction");
 		return (1);
 	}
-  return (0);
+	return (0);
 }

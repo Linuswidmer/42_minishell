@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:24:19 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/07 23:43:38 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/29 13:19:39 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int parse_token(char *input, int pos, t_lexer *tmp, t_lexertype token_type, int 
 
 int parse_double_tokens(char *input, int pos, t_lexertype token, t_lexer *tmp)
 {
-  tmp->key = token;
+	(void)input;
+	tmp->key = token;
 	return (pos + 1);
 }
 
@@ -57,7 +58,7 @@ int parse_word(char *input, int pos, t_lexer *tmp)
 	return (pos);
 }
 
-int parse_token_to_list(t_lexertype current_token, char *input, int pos, t_lexer *tmp, int start)
+int parse_token_to_list(t_lexertype current_token, char *input, int pos, t_lexer *tmp)
 {
 	pos++;
 	if (current_token == l_quote || current_token == l_dquote)

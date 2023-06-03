@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 16:54:21 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/11 09:25:59 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/02 11:14:46 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ returns -1 or -2 if it is a quote or dquote respectively
 int	create_token_list(char *input, t_lexer *tmp)
 {
 	int			start;
-	int			pos;
+	size_t		pos;
 	t_lexertype	current_token;
 	t_lexer		*tmp2;
 
@@ -29,9 +29,9 @@ int	create_token_list(char *input, t_lexer *tmp)
 	while (pos < ft_strlen(input) && pos >= 0)
 	{
 		current_token = check_token(input, pos);
-		pos = parse_token_to_list(current_token, input, pos, tmp, start);
+		pos = parse_token_to_list(current_token, input, pos, tmp);
 		start = pos;
-		if (tmp->key == l_dollar && tmp->value)
+		if ((tmp->key == l_dollar || tmp->key == l_dollar_q) && tmp->value)
 			tmp = dollar_postprocessing(tmp);
 		if (tmp->key != l_empty && pos < ft_strlen(input) && pos > 0)
 		{
@@ -74,6 +74,8 @@ t_lexer	*lexer(char **input)
 	while (beginning_token_list && token_exit_status < 0)
 	{
 		new_input = readline_prompt_quotes(-token_exit_status);
+		if (!new_input)
+			new_input = ft_strdup("");
 		new_input2 = ft_strjoin(*input, new_input);
 		free_token_list(&beginning_token_list);
 		beginning_token_list = init_lexer_struct();

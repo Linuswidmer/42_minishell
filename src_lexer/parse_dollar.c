@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 18:04:33 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/11 10:28:33 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/29 13:21:34 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	parse_dollar(char *input, int pos, t_lexer *tmp)
 {
 	int			len;
 	int			start;
-	t_lexertype	next_token;
 
 	start = pos - 1;
 	if (input[pos] == '"' || input[pos] == 39)

@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:51:43 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/09 10:31:51 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/02 12:09:48 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define DOLLAR "$"
 # define QUESTION '?'	
 # define E_SPACE	' '
-# dfine E_ASTERISK '*'	
+# define E_ASTERISK '*'	
 # define TIL "~" 
 # define SUB '('
 # define ERR_SUB "$() not implemented.\n"
