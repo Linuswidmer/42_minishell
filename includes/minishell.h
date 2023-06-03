@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:20:37 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/02 17:47:26 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/08 12:44:07 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ extern int g_status;
 #include "typedef.h"
 #include "define.h"
 #include "structs.h"
+#include "macros.h"
 #include "libft.h"
 #include "lexer.h"
 #include "init.h"
@@ -42,5 +43,8 @@ extern int g_status;
 #include "job.h"
 #include "pipe.h"	
 #include "executer.h"
+#include "free.h"
+#include "error.h"	
+
 
 # endif

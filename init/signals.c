@@ -6,46 +6,66 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 10:52:07 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/20 10:52:09 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/23 12:45:47 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void handle_sigint(int sig) 
+void	handle_signals(int sig)
 {
-  printf("\n");
-  rl_on_new_line();
-//  rl_replace_line("", 0); // second parameter not yet understood
-  rl_redisplay();
+	if (sig == SIGINT)
+	{
+		write(STDERR_FILENO, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
 
-void handle_sigquit(int sig) 
+void	handle_signals_cmd(int sig)
 {
-  // not sure how i stop CTRL + \  from making their weird thing
+	if (sig == SIGINT)
+		write(STDERR_FILENO, "\n", 1);
+	else if (sig == SIGQUIT)
+		write(STDERR_FILENO, "Quit(core dumped)\n", 18);
 }
 
-int init_signals(void)
+int	init_signals_cmd(void)
 {
-	struct sigaction sa_sigint;
-	struct sigaction sa_sigquit;
+	struct sigaction	sa_signals;
 
-	sa_sigint.sa_handler = handle_sigint;
-	sigemptyset(&sa_sigint.sa_mask);
-	sa_sigint.sa_flags = 0;
-
-	sa_sigquit.sa_handler = handle_sigquit;
-  sigemptyset(&sa_sigquit.sa_mask);
-  sa_sigquit.sa_flags = 0;
-
-	if (sigaction(SIGINT, &sa_sigint, NULL) == -1)
+	sa_signals.sa_handler = handle_signals_cmd;
+	sigemptyset(&sa_signals.sa_mask);
+	sa_signals.sa_flags = 0;
+	signal(SIGINT, handle_signals_cmd);
+	signal(SIGQUIT, handle_signals_cmd);
+	signal(SIGQUIT, SIG_DFL);
+	if (sigaction(SIGINT, &sa_signals, NULL) == -1)
 	{
 		perror("sigaction");
 		return (1);
 	}
-	if (sigaction(SIGQUIT, &sa_sigquit, NULL) == -1) {
-    perror("sigaction");
-    return (1);
-  }
-  return (0);
+	if (sigaction(SIGQUIT, &sa_signals, NULL) == -1)
+	{
+		perror("sigaction");
+		return (1);
+	}
+	return (0);
+}
+
+int	init_signals(void)
+{
+	struct sigaction	sa_signals;
+
+	sa_signals.sa_handler = handle_signals;
+	sigemptyset(&sa_signals.sa_mask);
+	sa_signals.sa_flags = 0;
+	signal(SIGQUIT, SIG_IGN);
+	if (sigaction(SIGINT, &sa_signals, NULL) == -1)
+	{
+		perror("sigaction");
+		return (1);
+	}
+	return (0);
 }

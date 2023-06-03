@@ -19,7 +19,7 @@ typedef struct s_cmdnode    t_cmdnode;
 typedef struct s_ionode     t_ionode;
 typedef struct s_expander     t_expander;
 typedef struct s_dollar     t_dollar;
-
+typedef struct s_pipestruct t_pipestruct;
 
 typedef enum 
 {
@@ -43,6 +43,7 @@ typedef enum
 	l_space,
 	l_amp,
 	l_til,
+	l_dollar_q,
 } t_lexertype ;	
 
 
@@ -94,6 +95,10 @@ struct s_subnode
 {
 	t_ast *up;
     t_ast *down;
+	t_lexer     *start;
+    t_lexer     *last;
+
+	
 };
 
 struct s_routenode
@@ -162,6 +167,15 @@ struct s_dollar
 //	t_ast	*ast;
 };
 
+struct s_pipestruct
+{
+	int dup_in;
+	int dup_out;
+	int *old_pipefd;
+	int *pipefd;
+	int lenpipe;
+	pid_t *pid;
+};
 
 /* main */
 struct s_min{

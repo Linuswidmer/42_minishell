@@ -6,13 +6,14 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:08:06 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/04/27 14:01:28 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/25 11:14:06 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	min_heredoc_fail(t_ast **ast)
+int	min_heredoc_fail(t_ast **ast)
 {
-	*ast =NULL;
+	*ast = NULL;
+	return (1);
 }

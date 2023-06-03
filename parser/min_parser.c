@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:59:26 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/04/28 18:57:12 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/25 11:24:23 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -16,58 +16,59 @@ static int	ft_token_is_jobnode(t_lexertype key)
 	if (min_token_is_io(key) || min_token_is_word(key))
 		return (1);
 	else
-		return (0);	 
+		return (0);
 }
 
 static int	ft_token_is_pipenode(t_lexertype key)
 {
 	if (key == l_pipe)
 		return (1);
-	else 
-		return(0);		
+	else
+		return (0);
 }
- 
+
 static int	ft_token_is_routenode(t_lexertype key)
 {
-	return (min_token_is_route(key));		
+	return (min_token_is_route(key));
 }
 
 static int	ft_token_is_subnode(t_lexertype key)
 {
-	return (min_token_is_para(key));	
+	return (min_token_is_para(key));
 }
 
 /* 
 PARSER MAIN	--> check each token from lexer
 		--> create the right node
-	return a full ast from the first node if something goes wrong at the nodes it will return NULL
+	return a full ast from the first node if something goes wrong 
+	at the nodes it will return NULL
 */
 t_ast	*min_parser(t_lexer *token)
 {
-	t_ast *ast;
-	
+	t_ast	*ast;
+
 	ast = NULL;
 	while (token)
 	{	
-		while (token->key == l_space)
+		while (token && token->key == l_space)
 			token = token->next;
-		if (ft_token_is_jobnode(token->key))
-			token =	min_jobnode(token, &ast);	
-		else if (ft_token_is_pipenode(token->key))
+		if (token && ft_token_is_jobnode(token->key))
+			token = min_jobnode(token, &ast);
+		else if (token && ft_token_is_pipenode(token->key))
 			token = min_pipenode(token, &ast);
-		else if (ft_token_is_routenode(token->key))			
+		else if (token && ft_token_is_routenode(token->key))
 			token = min_routenode(token, &ast);
-		else if (ft_token_is_subnode(token->key))
+		else if (token && ft_token_is_subnode(token->key))
 			token = min_subnode(token, &ast);
 		if (!ast)
 		{
+		//	printf("syntax error near unexpected token: %s\n", token->value);
 			printf("ERROR\n");
-			break;
+			break ;
 		}	
 	}
 	min_bring_ast_to_beginning(&ast);
 	if (_DEBUG)
 		min_print_ast(ast);
-	//min_free_ast(&ast);
 	return (ast);
 }
