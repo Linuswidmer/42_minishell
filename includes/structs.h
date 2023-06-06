@@ -1,12 +1,12 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-typedef struct s_dict t_dict;
-typedef struct s_min t_min;
-typedef struct s_builtins t_builtins;
+typedef struct s_dict		t_dict;
+typedef struct s_min		t_min;
+typedef struct s_builtins	t_builtins;
 typedef int (*builtin_ptr)(t_builtins *, char**);
-typedef struct s_commands t_commands;
-typedef struct s_lexer t_lexer;
+typedef struct s_commands	t_commands;
+typedef struct s_lexer		t_lexer;
 typedef struct s_ast		t_ast;
 typedef struct s_pipenode	t_pipenode;
 typedef struct s_jobnode 	t_jobnode;
@@ -14,12 +14,13 @@ typedef struct s_cmdnode 	t_cmdnode;
 typedef struct s_ionode		t_ionode;
 typedef struct s_routenode 	t_routenode;
 typedef struct s_subnode	t_subnode;
-typedef struct s_expandjob    t_expandjob;
-typedef struct s_cmdnode    t_cmdnode;
-typedef struct s_ionode     t_ionode;
-typedef struct s_expander     t_expander;
-typedef struct s_dollar     t_dollar;
-typedef struct s_pipestruct t_pipestruct;
+typedef struct s_expandjob	t_expandjob;
+typedef struct s_cmdnode	t_cmdnode;
+typedef struct s_ionode		t_ionode;
+typedef struct s_expander	t_expander;
+typedef struct s_dollar		t_dollar;
+typedef struct s_pipestruct	t_pipestruct;
+typedef	struct s_exphelp	t_exphelp;
 
 typedef enum 
 {
@@ -139,6 +140,8 @@ struct s_ast
     }node;
 };
 
+
+/* */
 struct s_expandjob
 {
     t_cmdnode   *cmd;
@@ -152,12 +155,23 @@ struct s_cmdnode
     t_cmdnode *next;
 };
 
+/* EXPANDER */
 struct s_expander
 {
     t_lexertype key;
     char    *word;
     t_expander *next;
 };
+
+struct s_exphelp
+{
+        t_dict  *dict;
+        char    space;
+        char    export;
+        char    token;
+        char    word;
+};
+
 
 struct s_dollar
 {

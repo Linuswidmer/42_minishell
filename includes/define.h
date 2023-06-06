@@ -36,10 +36,11 @@
 # define SUB '('
 # define ERR_SUB "$() not implemented.\n"
 # define ERR_MALL "MALLOC FAIL IN ASTERISK EVAL.\n"	  
+# define ERR_ID	"$$ not implemented.\n"
 # define CURRDIR "./"
 # define DDOLLAR  "$$"
 # define DTIL	"$~"
-# define E_QUOTE '"'	
+# define E_QUOTE 'q'	
 
 
 /* HEREDOC*/

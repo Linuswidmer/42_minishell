@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   min_word_eval.c                                    :+:      :+:    :+:   */
+/*   min_word_eval_new.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-	
+
 static int	ft_count_values(t_expander *word)
 {
 	int c;
@@ -35,7 +35,7 @@ static char **ft_get_values(t_expander **word)
 	int		count;
 	int		n;
 
-	n = 0;
+	n = -1;
 	if (!word)
 		return (NULL);
 	count = ft_count_values(*word);
@@ -47,21 +47,7 @@ static char **ft_get_values(t_expander **word)
 	}
 	while (*word)
 	{	 
-		if ((*word)->key == l_word)
-		{
-			if (!values[n])
-			{	
-				values[n] = ft_strdup((*word)->word); 
-			}	
-			else
-			{
-				temp = values[n];
-				values[n] = ft_strjoin(temp, (*word)->word);
-				//min_free(&temp);		
-			}
-		}
-		else
-			values[++n] = ft_strdup((*word)->word);
+		values[++n] = ft_strdup((*word)->word);
 		if (!values[n])
 		{
 			//min_double_free(&values);
@@ -74,49 +60,81 @@ static char **ft_get_values(t_expander **word)
 		values[n + 1] = NULL;
 	return (values);
 }
-
-
 /* help struct for less varibels -> space && dict together*/
 /*typdef struct s_exphelp t_exphelp;
 
 struct s_exphelp{
-	t_dict	*dict;
-	char	space;
-	char	export;
-	char	token;
-	char	word;
-}		
+        t_dict  *dict;
+        char    space;
+        char    export;
+        char    token;
+        char    word;
+}
 */
-static void	ft_init_exphelp(t_dict *dict, t_exphelp *help)
+static void     ft_init_exphelp(t_dict *dict, t_exphelp *help)
 {
-	ft_bezero(help, sizeof(t_exphelp));
-	help->dict = dict;
-	help->token = 1;
-	help->word = 1;
-}		
+        ft_bzero(help, sizeof(t_exphelp));
+        help->dict = dict;
+        help->token = 1;
+        help->word = 1;
+}
 
 /* */
 char **min_word_eval(t_lexer **token, t_dict *dict)
 {
+        char    **values;
+        t_expander      *word;
+        t_exphelp       help;
+
+        ft_init_exphelp(dict, &help);
+        word = min_init_expander(l_empty, EMPTY);
+        while (word && *token && min_token_is_word((*token)->key))
+        {
+                if (min_token_is_word((*token)->key) == 1)
+                        help.space = min_word(token, &word, NULL, help.space);
+                else if (min_token_is_word((*token)->key) == 2)
+                        help.space = min_dollar(token, &word, NULL, help);
+                else if ( min_token_is_word((*token)->key) == 4)
+                        help.space = min_til(token, &word, dict, help.space);
+             //   else
+             //           help.space = min_asterisk_new(token, &word, help);
+        }
+
+        values = ft_get_values(&word);
+        min_free_expander(&word);
+        return (values);
+}
+
+
+/* OLD_ONE
+
+char **min_word_eval(t_lexer **token, t_dict *dict)
+{
 	char	**values;
 	t_expander	*word;
-	t_exphelp	help;
+	char	space;
 	
-	ft_init_exphelp(dict, &help);
+	space = 0;
 	word = min_init_expander(l_empty, EMPTY);
 	while (word && *token && min_token_is_word((*token)->key))
 	{
 		if (min_token_is_word((*token)->key) == 1)
-			min_word(token, word, NULL, help.space);
-		else if (min_token_is_word((*token)->key) == 2)
-			help.space = min_dollar(token, &word, help);
-		else if ( min_token_is_word((*token)->key) == 4)
-			help.space = min_til(token, &word, help);
-		else 
-			help.space = min_asterisk_new(token, &word, help);
+			min_word(token, word, NULL, space);
+	//	else if (min_token_is_word((*token)->key) == 2)
+	//		space = min_dollar(token, &word, dict, space);
+	//	else if ( min_token_is_word((*token)->key) == 4)
+	//		space = min_til(token, &word);
+	//	else 
+	//		space = min_asterisk_new(token, &word, 1, 1);
 	}
 
-	values = ft_get_values(&word);	 
+	values = ft_get_values(&word);
+	  //min_asterisk(token, word, usetoken, useword) 
+	//			 $ == char **values + flag is space
+	//			if !space
+	//				ende values[0]
+	//			"hdhdh*jfdkjkj*hfjghsgj"   	
+			
 	min_free_expander(&word);
 	return (values);
-}
+} */

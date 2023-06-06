@@ -217,7 +217,7 @@ static char	ft_eval_splitvalue( t_expander **word, t_expander **extra, char spac
 	n = -1;
 	while (word && splitvalue[++n])
 	{
-		if (ft_check_for_asterisk(splitvalue[n]))
+		/*if (ft_check_for_asterisk(splitvalue[n]))
 		{
 			if (n == len -1 && ( space != 2 || space !=3))
 				return(3);
@@ -231,7 +231,7 @@ static char	ft_eval_splitvalue( t_expander **word, t_expander **extra, char spac
 				min_asterisk(NULL, word, 0, 0, ft_asterisk_splitvalue(splitvalue[n]), NULL);
 		}	
 		else
-		{
+		{/*
 			if (space == 1 || space == 3)
 				min_word(NULL, word, splitvalue[n], space);
 			else if (!n)
@@ -240,7 +240,7 @@ static char	ft_eval_splitvalue( t_expander **word, t_expander **extra, char spac
 				min_word(NULL, word, splitvalue[n], 1);
 			else
 				min_word(NULL, extra, splitvalue[n], 1);				
-		}
+		//}
 		if (n == 0 && (space == 1 || space == 3)
 			space--;
 	}
@@ -251,7 +251,7 @@ static char	ft_eval_splitvalue( t_expander **word, t_expander **extra, char spac
 
 
 
-static char	ft_dollar(t_lexer **token, t_expander **word, t_expander **extra, t_dict *dict, char space, char export)
+static char	ft_dollar(t_lexer **token, t_expander **word, t_expander **extra, t_exphelp help)
 {
 	char *dollar_value;
 	char *value;
@@ -259,21 +259,21 @@ static char	ft_dollar(t_lexer **token, t_expander **word, t_expander **extra, t_
 		
        /* check first special caracter */
 	if (!ft_check_word((*token)->value, &dollar_value))
-		return (ft_add_value_to_expander(token, word, &dollar_value, space));
+		return (ft_add_value_to_expander(token, word, &dollar_value, help.space));
 	/* check word in dict */
-	if (!ft_check_dict(&dollar_value, &value, dict))
-		return (space);
+	if (!ft_check_dict(&dollar_value, &value, help.dict))
+		return (help.space);
 	/* export && qoute mode */
 	if ( export || ( (*token)->prev && (*token)->prev->value == E_QUOTE))
-		return(ft_add_value_to_expander(token, word, &value, space); 
-	splitvalue = ft_delimiter_split(value, &space, E_SPACE);
+		return(ft_add_value_to_expander(token, word, &value, help.space); 
+	splitvalue = ft_delimiter_split(value, &help.space, E_SPACE);
 	min_free(&value);
 	if (!splitvalue)
-		return (ft_add_value_to_expander(token, word, NULL, space);
-	space = ft_eval_splitvalue(word, extra, space, splitvalue);
+		return (ft_add_value_to_expander(token, word, NULL, help.space);
+	space = ft_eval_splitvalue(word, extra, help.space, splitvalue);
 	*token = (*token)->next;
-	if (space == 3)
-		space = min_asterisk(token, word, 1, 0, ft_asterisk_splitvalue(splitvalue[(int)ft_strlen(splitvalue) -1]), dict));
+	//if (space == 3)
+	//	space = min_asterisk(token, word, 1, 0, ft_asterisk_splitvalue(splitvalue[(int)ft_strlen(splitvalue) -1]), dict));
 	min_doublefree(&splitvalue);
 	return (space);
 }
@@ -282,20 +282,18 @@ static char	ft_dollar(t_lexer **token, t_expander **word, t_expander **extra, t_
 
 
 /* if token->next is no word or DOLLAR or Til */
-char		min_dollar_new(t_lexer **token, t_expander **word, t_expander **extra, t_dict *dict, char space, char export)
+char		min_dollar(t_lexer **token, t_expander **word, t_expander **extra, t_exphelp help)
 {
 	(*token) = (*token)->next;
 	if (!*token || !min_token_is_word((*token)->key)
-		return (min_word(token, word, DOLLAR, space)
+		return (min_word(token, word, DOLLAR, help.space)
 	else if ((*token)->key == l_dollar)
 	{
-		 //min_print_error(PRECESSID, 0);
-		return (min_word(token, word, DDOLLAR, space);
+		ft_putstr_fd(ERR_ID, 2);
+		return (min_word(token, word, DDOLLAR, help.space);
 	}	
 	else if ((*token)->key == l_til)
-		return (min_word(token, word, DTIL, space);
-	else if (extra)
-		return (ft_dollar_asterisk_mode(token, word, extra, dict, space));  
-	else
-		return (ft_dollar(token, word, extra, dict, space));
+		return (min_word(token, word, DTIL, help.space);
+	else 
+		return (ft_dollar(token, word, extra, help));
 }

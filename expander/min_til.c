@@ -30,7 +30,7 @@ static  char    *ft_til_in_dict(t_dict *dict)
 
 
 
-void	min_til(t_lexer **token, t_expander **word, t_dict *dict)
+char	min_til(t_lexer **token, t_expander **word, t_dict *dict, char space)
 {
 	t_expander  *end;
     char *temp;
@@ -55,7 +55,7 @@ void	min_til(t_lexer **token, t_expander **word, t_dict *dict)
         end = min_last_expander(*word);
         if (end->key == l_asterisk)
         {
-            end->next = min_init_expander(l_word);
+            end->next = min_init_expander(l_word, EMPTY);
             end = end->next;
         }
     }
@@ -70,8 +70,9 @@ void	min_til(t_lexer **token, t_expander **word, t_dict *dict)
 		//min_free(value);
     }
 	if (!end || !end->word)
-        	min_free_expander(word);
+		min_free_expander(word);
 	if (*token)
 		*token = (*token)->next;
+	return (0);
 }
 

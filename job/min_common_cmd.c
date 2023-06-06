@@ -47,11 +47,11 @@ static int	ft_checkpath(char *cmd, t_dict *dict, char **path)
 	char	**paths;
 
 	/* check if cmd is already path*/
-	//if (!access(cmd, F_OK))
-	//{
+	if (!access(cmd, F_OK))
+	{
 		*path = cmd;
 		return (0);
-	//}
+	}
 	i = 0;
 	paths = ft_get_paths(dict);
 	if (!path)

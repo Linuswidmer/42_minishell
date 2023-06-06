@@ -34,11 +34,15 @@ static int	ft_create_new_entry(t_lexer **token, t_expander *end, char *value,  c
 {
 	char	*temp;
 
-	if (space)
+	if (space == 1)
 	{
+		printf("word , space== 1\n");
 		end->next =  min_init_expander(l_word, EMPTY);
                	if (!end->next)
+		{
+			printf("AAA\n");
 			return (1);
+		}	
                 end = end->next;
         }   
         temp = end->word;
@@ -62,7 +66,7 @@ char	min_word(t_lexer **token, t_expander **word, char *value,  char space)
 	
 	end = ft_find_last_entry(word);
 	if (end)
-		if (ft_create_new_entry(token, end, value, space);
+		if (ft_create_new_entry(token, end, value, space))
 			min_free_expander(word);	
 	if (token)
     		*token = (*token)->next;

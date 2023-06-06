@@ -13,7 +13,10 @@
 #include "minishell.h"
 
 void	min_free(char **tofree)
-{
-	free(*tofree);
-	*tofree = NULL;
+{		
+	if (*tofree)
+	{
+		free(*tofree);
+		*tofree = NULL;
+	}
 }	
