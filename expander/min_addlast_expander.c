@@ -14,6 +14,8 @@
 
 int	min_addlast_expander(t_expander **word, char *value, char *wo)
 {
+	t_expander *end;
+	
 	if (!*word)
 	{
 		*word = min_init_expander(l_word, value);
@@ -23,7 +25,7 @@ int	min_addlast_expander(t_expander **word, char *value, char *wo)
 	else
 	{
 		end = min_last_expander(*word);
-        if (*wo)
+        if (wo && *wo)
         {
 			end->key = l_word;
 			end->word = value;

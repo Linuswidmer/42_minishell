@@ -169,7 +169,6 @@ static int	ft_add_last_expander(t_expander **word, char *value, t_lexertype key)
 
 static void	ft_get_old_asterisk(char **values, char space, t_expander **old)
 {
-	int len;
 	int n;
 	
 	if (!values)
@@ -177,21 +176,20 @@ static void	ft_get_old_asterisk(char **values, char space, t_expander **old)
 		*old = NULL;
 		return ;
 	}	
-	len = (int)ft_strlen((char *)values);
         n = 0;
 	if (space == 1 || space == 3)
-		ft_add_last_expander(old, NULL, l_asterisk);
-	if ((space == 1 || space == 3) && !old)
+		ft_add_last_expander(old,EMPTY , l_asterisk);
+	if ((space == 1 || space == 3) && (!old || !values[n]))
 		return ;
 	ft_add_last_expander(old, values[n], l_word);
         while (old && values[++n])
 	{
-		ft_add_last_expander(old, NULL, l_asterisk);
+		ft_add_last_expander(old, EMPTY, l_asterisk);
 		if (old)
 			ft_add_last_expander(old, values[n], l_word);		
 	}
 	if (old && (space == 2 || space == 3))
-		 ft_add_last_expander(old, NULL, l_asterisk);
+		 ft_add_last_expander(old, EMPTY, l_asterisk);
 }
 
     	
@@ -201,19 +199,23 @@ static t_expander *ft_asterisk_splitvalue(char *value)
 	char	**values;
 	char	space;
 	t_expander *old;
-	
+
+	old = NULL;
+	printf ("start split asterisk\n");	
 	space = 0;
 	values = ft_delimiter_split(value, &space, E_ASTERISK);
 	ft_get_old_asterisk(values, space, &old);
 	//min_doublefree(&values);
 	if (!old)
 		ft_putstr_fd(ERR_MALL, 2);			
+	min_print_asterisk(old);
+	printf ("end split asterisk\n");
 	return (old);
 }
 
 /* eval entry dict  and return if end with space if last ist asterisk return 3*/
 
-static char	ft_eval_splitvalue( t_expander **word, t_expander **extra, char space, char **splitvalue)
+static char	ft_eval_splitvalue( t_expander **word, t_expander **extra, t_exphelp help, char **splitvalue)
 {
 	int len;
 	int n;
@@ -222,37 +224,39 @@ static char	ft_eval_splitvalue( t_expander **word, t_expander **extra, char spac
 	n = -1;
 	while (word && splitvalue[++n])
 	{
-		//if (ft_check_for_asterisk(splitvalue[n]))
-		//{
-		//	if (n == len -1 && ( space != 2 || space !=3))
-		//		return(3);
-//			else if (!n && !extra && (space == 1 || space == 3))
-//				min_asterisk(NULL, word, 0, 1, ft_asterisk_splitvalue(splitvalue[n]), NULL); 
-//			else if (!n && extra && (space == 1 || space == 3))
-//				ft_add_asterisk_to_asterisk(word,  ft_asterisk_splitvalue(splitvalue[n]);
-//			else if (extra)
-//			 	min_asterisk(NULL, extra, 0, 0, ft_asterisk_splitvalue(splitvalue[n]), NULL);
-//			else		
-//				min_asterisk(NULL, word, 0, 0, ft_asterisk_splitvalue(splitvalue[n]), NULL);
-//		}	
-//		else
-//		{
-			if (space == 1 || space == 3)
-				min_word(NULL, word, splitvalue[n], space);
+		if (ft_check_for_asterisk(splitvalue[n]))
+		{
+			printf("asteriks in $: %s with space : %i\n", splitvalue[n], (int)help.space);
+			
+			if (n == len -1 && ( help.space != 2 || help.space !=3))
+				return(3);
+			else if (!n && !extra && (!help.space)
+				min_asterisk(NULL, word, ft_asterisk_splitvalue(splitvalue[n]), help); 
+			//else if (!n && extra && (help.space == 1 || help.space == 3))
+			//	ft_add_asterisk_to_asterisk(word,  ft_asterisk_splitvalue(splitvalue[n]);
+			//else if (extra)
+			// 	min_asterisk(NULL, extra, 0, 0, ft_asterisk_splitvalue(splitvalue[n]), NULL);
+			else		
+				min_asterisk(NULL, word, ft_asterisk_splitvalue(splitvalue[n]), help);
+			
+		}	
+		else
+		{
+			if (help.space == 1 || help.space == 3)
+				min_word(NULL, word, splitvalue[n], help.space);
 			else if (!n)
 				  min_word(NULL, word, splitvalue[n], 0);
 			else if (!extra)
 			{
-				printf ("space == 1\n");
-				min_word(NULL, word, splitvalue[n], 1);
+					min_word(NULL, word, splitvalue[n], 1);
 			}
 			else
 				min_word(NULL, extra, splitvalue[n], 1);				
-//		}
-		if (n == 0 && (space == 1 || space == 3))
-			space--;
+		}
+		if (n == 0 && (help.space == 1 || help.space == 3))
+			help.space--;
 	}
-	return (space);
+	return (help.space);
 }
 	
 
@@ -270,19 +274,23 @@ static char	ft_dollar(t_lexer **token, t_expander **word, t_expander **extra, t_
 		return (ft_add_value_to_expander(token, word, &dollar_value, help.space));
 	/* check word in dict */
 	if (!ft_check_dict(&dollar_value, &value, help.dict))
+	{	
+		if (*token)
+			*token = (*token)->next;
 		return (help.space);
+	}
 	/* export && qoute mode */
 	if ( help.export)	
-	return(ft_add_value_to_expander(token, word, &value, help.space)); 
-	printf("hallo\n");
+		return(ft_add_value_to_expander(token, word, &value, help.space)); 
+	printf("split\n");
 	splitvalue = ft_delimiter_split(value, &help.space, E_SPACE);
 	min_free(&value);
 	if (!splitvalue)
 		return (ft_add_value_to_expander(token, word, NULL, help.space));
-	help.space = ft_eval_splitvalue(word, extra, help.space, splitvalue);
+	help.space = ft_eval_splitvalue(word, extra, help, splitvalue);
 	*token = (*token)->next;
-	//if (space == 3)
-	//	space = min_asterisk(token, word, 1, 0, ft_asterisk_splitvalue(splitvalue[(int)ft_strlen(splitvalue) -1]), dict));
+	//if (help.space == 3)
+	//	help.space = min_asterisk(token, word, 1, 0, ft_asterisk_splitvalue(splitvalue[(int)ft_strlen(splitvalue) -1]), dict));
 	//min_doublefree(&splitvalue);
 	return (help.space);
 }
@@ -294,11 +302,13 @@ static char	ft_dollar(t_lexer **token, t_expander **word, t_expander **extra, t_
 char		min_dollar(t_lexer **token, t_expander **word, t_expander **extra, t_exphelp help)
 {
 	if ((*token)->value[0] == E_QUOTE)
-
 		help.export = 1;
 	(*token) = (*token)->next;
-	if (!*token || !min_token_is_word((*token)->key))
-		return (min_word(token, word, DOLLAR, help.space));
+	if (!(*token) || (*token && !min_token_is_word((*token)->key)))
+	{
+		min_word(NULL, word, DOLLAR, help.space);
+		return (1);
+	}	
 	else if ((*token)->key == l_dollar)
 	{
 		ft_putstr_fd(ERR_ID, 2);
@@ -306,6 +316,12 @@ char		min_dollar(t_lexer **token, t_expander **word, t_expander **extra, t_exphe
 	}	
 	else if ((*token)->key == l_til)
 		return (min_word(token, word, DTIL, help.space));
-	else 
+	else if ((*token)->key == l_asterisk)
+	{	
+	        if (*token)
+                        *token = (*token)->next;
+                return (help.space);
+	}	
+	else
 		return (ft_dollar(token, word, extra, help));
 }

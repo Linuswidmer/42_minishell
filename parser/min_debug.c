@@ -85,6 +85,21 @@ void min_print_cmd (t_cmdnode *cmd)
     }
 }
 */
+
+void  min_print_asterisk(t_expander *asterisk) 
+{	
+	int n;
+	
+	ft_printf_fd("*START ASTERISK\n", 2);
+	n = 0;
+	while (asterisk)
+	{
+		ft_printf_fd("NUMBER: %i, Lexertype: %s, Value: %s \n", 2, n++, lexertype1_names[asterisk->key], asterisk->word);   
+		asterisk = asterisk->next;
+	}
+	ft_printf_fd("*END ASTERISK\n", 2);
+}
+
 void	min_print_jobnode(t_jobnode *job)
 {
 	//printf("JOBNODE: ");

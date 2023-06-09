@@ -20,41 +20,41 @@ static int	ft_count_values(t_expander *word)
 	c = 1;
 	while (word)
 	{
-		if (word->key == l_space)
-			c++;
+		c++;
 		word = word->next;
 	} 
 	return (c);		
 }
 
 
-static char **ft_get_values(t_expander **word)
+static char **ft_get_values(t_expander *word)
 {
 	char	**values;
 	char	*temp;
 	int		count;
 	int		n;
 
-	n = -1;
+	n = 0;
 	if (!word)
 		return (NULL);
-	count = ft_count_values(*word);
+	count = ft_count_values(word);
 	temp = NULL;
 	values = ft_calloc(sizeof(char **) , (count +1));
 	if (!values)
 	{
 		return (NULL);
 	}
-	while (*word)
-	{	 
-		values[++n] = ft_strdup((*word)->word);
+	while (word)
+	{	
+		values[n] = ft_strdup(word->word);
 		if (!values[n])
 		{
 			//min_double_free(&values);
-			*word = NULL;			
+			word = NULL;			
 		}
 		else					
-			*word = (*word)->next;
+			word = word->next;
+		n++;
 	}
 	if (values)
 		values[n + 1] = NULL;
@@ -76,7 +76,6 @@ static void     ft_init_exphelp(t_dict *dict, t_exphelp *help)
         ft_bzero(help, sizeof(t_exphelp));
         help->dict = dict;
         help->token = 1;
-        help->word = 1;
 }
 
 /* */
@@ -86,9 +85,9 @@ char **min_word_eval(t_lexer **token, t_dict *dict)
         t_expander      *word;
         t_exphelp       help;
 
-        ft_init_exphelp(dict, &help);
+        min_init_exphelp(dict, 0, 0, &help);
         word = min_init_expander(l_empty, EMPTY);
-        while (word && *token && min_token_is_word((*token)->key))
+        while (!help.space && word && *token && min_token_is_word((*token)->key))
         {
                 if (min_token_is_word((*token)->key) == 1)
                         help.space = min_word(token, &word, NULL, help.space);
@@ -96,12 +95,18 @@ char **min_word_eval(t_lexer **token, t_dict *dict)
                         help.space = min_dollar(token, &word, NULL, help);
                 else if ( min_token_is_word((*token)->key) == 4)
                         help.space = min_til(token, &word, dict, help.space);
-             //   else
-             //           help.space = min_asterisk_new(token, &word, help);
-        }
-
-        values = ft_get_values(&word);
+                else if (min_token_is_word((*token)->key) == 3)
+		{
+                        help.space = min_asterisk(token, &word, NULL, help);
+        		
+		}
+		//printf("space:  %i\n", (int)help.space);
+	}
+        values = ft_get_values(word);
         min_free_expander(&word);
+	int n = 0;
+	while (values && values[n])
+		printf("end values: %s \n", values[n++]);
         return (values);
 }
 

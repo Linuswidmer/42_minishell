@@ -43,14 +43,19 @@ int	ft_fit_to_asterisk(char *filename, t_expander *word)
 	char first;
 	
 	first = 0;
-	while (word && *filename)
+	while (word && filename)
 	{
+	//printf("%s\n", filename);				
 		if(word->key == l_asterisk)
 		{
 			if (!first++)
 			{
+				//	printf("%s\n", filename);
 				if (*filename == '.')
+				{	
+//					printf("%s\n", filename);
 					return (0);
+				}
 			}
 			if (!word->next)
 				return (1);
@@ -61,35 +66,36 @@ int	ft_fit_to_asterisk(char *filename, t_expander *word)
 		{ 
 			first++;
 			if (!ft_word_in_filename(filename, word->word, word))
-				return (0);	
+			{
+//				printf("%s\n", filename);
+				return (0);
+			}	
 			else
 				word = word->next;
 		}
 	}	
 	return (1);
 }
-
 static char *ft_notfound(t_expander *asterisk)
 {
-	
-	char *value;
-	char *temp;
-	
+        
+        char *value;
+        char *temp;
 
-	value = ft_strjoin(EMPTY, EMPTY);
-	while (value && *asterisk)
-	{	
-		temp = value;			
-		if (asterisk->key == l_asterisk)
-			value =  ft_strjoin(temp, ASTERISK);
-		else	
-			value = ft_strjoin(temp, word->word);	
-		min_free(temp);
-		asterisk = asterisk->next;
-	}
-	return (value);
+
+        value = ft_strjoin(EMPTY, EMPTY);
+        while (value && asterisk)
+        {
+                temp = value;
+                if (asterisk->key == l_asterisk)
+                        value =  ft_strjoin(temp, ASTERISK);
+                else    
+                        value = ft_strjoin(temp, asterisk->word);
+                min_free(&temp);
+                asterisk = asterisk->next;
+        }
+        return (value);
 }
-
 
 void 	min_evaluate_asterisk(t_expander **word, t_expander *asterisk, char wo)
 {
@@ -105,14 +111,15 @@ void 	min_evaluate_asterisk(t_expander **word, t_expander *asterisk, char wo)
 	while (d)
 	{
 		if (ft_fit_to_asterisk(d->d_name, asterisk))
-		{	
+		{
+			//printf("%s\n", d->d_name);	
 			found = 1;
-			if (min_addlast_expander(word, d->d_name, &wo)
-				break
-		}
+			if (min_addlast_expander(word, d->d_name, &wo))
+				break ;
+		}			
 		d = readdir(dh);
 	}
 	if (!found)
-		min_addlast_expander(word, ft_notfound(asterisk), &wo)
+		min_addlast_expander(word, ft_notfound(asterisk), &wo);
 	free (dh);
 }

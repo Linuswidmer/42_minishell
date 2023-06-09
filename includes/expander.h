@@ -21,6 +21,14 @@ t_expander *min_init_expander(t_lexertype key, char *value);
 t_expander *min_last_expander(t_expander *node);
 char    min_word(t_lexer **token, t_expander **word, char *value,  char space);
 char **min_word_eval(t_lexer **token, t_dict *dict);
+void     min_init_exphelp(t_dict *dict, char token, char space , t_exphelp *help);
 char    min_til(t_lexer **token, t_expander **word, t_dict *dict, char space);
 char            min_dollar(t_lexer **token, t_expander **word, t_expander **extra, t_exphelp help);
+char    min_asterisk(t_lexer **token, t_expander **word, t_expander *old, t_exphelp help);
+void    min_evaluate_asterisk(t_expander **word, t_expander *asterisk, char wo);
+void    min_add_extra_to_word(t_expander **word, t_expander *extra);
+int     min_addlast_expander(t_expander **word, char *value, char *wo);
+
+/*debug*/
+void  min_print_asterisk(t_expander *asterisk);
 #endif
