@@ -69,8 +69,7 @@ static char	ft_dollar(t_lexer **token, t_expander **asterisk, t_expander **extra
 	t_expander 	*end;
 	t_exphelp	help;		
 	
-	min_init_exphelp(dict, 0, 1, &help);
-
+	help = min_init_exphelp(dict, 0, 1);
 	help.space = min_dollar(token, &dollar, extra , help);
 	//if (!dollar)
 	//	min_free_expander(asterisk);
@@ -128,7 +127,7 @@ char	min_asterisk(t_lexer **token, t_expander **word, t_expander *old, t_exphelp
 
 	if (!*word)	
 		return (1);
-	if ((!help.space || help.space == 2) && ((min_last_expander(*word))->key == l_word))
+	if ((!help.space && (min_last_expander(*word))->key == l_word) || help.word)
 	{
 		ft_start_asterisk((min_last_expander(*word))->word, &asterisk, old);
 		help.word = 1;
@@ -137,12 +136,6 @@ char	min_asterisk(t_lexer **token, t_expander **word, t_expander *old, t_exphelp
 	{
 		ft_start_asterisk(NULL, &asterisk, old);
 	}
-	//else
-	//{
-	//	 ft_start_asterisk((min_last_expander(*word))->word, &asterisk, old);
-	//	help.word = 1;
-	//	min_print_asterisk(asterisk);	
-	//}
 	if (!token)
 		min_evaluate_asterisk(word, asterisk, help.word);
 	else

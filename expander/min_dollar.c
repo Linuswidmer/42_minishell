@@ -228,14 +228,14 @@ static char	ft_eval_splitvalue( t_expander **word, t_expander **extra, t_exphelp
 		{
 			printf("asteriks in $: %s with space : %i\n", splitvalue[n], (int)help.space);
 			
-			if (n == len -1 && ( help.space != 2 || help.space !=3))
-				return(3);
-			else if (!n && !extra && (!help.space)
-				min_asterisk(NULL, word, ft_asterisk_splitvalue(splitvalue[n]), help); 
-			//else if (!n && extra && (help.space == 1 || help.space == 3))
-			//	ft_add_asterisk_to_asterisk(word,  ft_asterisk_splitvalue(splitvalue[n]);
-			//else if (extra)
-			// 	min_asterisk(NULL, extra, 0, 0, ft_asterisk_splitvalue(splitvalue[n]), NULL);
+			if (!n && n == len -1 && !help.space)
+				return (3);
+			else if (n == len -1 && help.space == 2)
+				return (4);  
+			else if (!n && !extra && (!help.space || help.space == 2))
+				min_asterisk(NULL, word, ft_asterisk_splitvalue(splitvalue[n]), min_init_exphelp(help.dict, 0 ,1))
+			else if 
+			
 			else		
 				min_asterisk(NULL, word, ft_asterisk_splitvalue(splitvalue[n]), help);
 			
@@ -253,7 +253,7 @@ static char	ft_eval_splitvalue( t_expander **word, t_expander **extra, t_exphelp
 			else
 				min_word(NULL, extra, splitvalue[n], 1);				
 		}
-		if (n == 0 && (help.space == 1 || help.space == 3))
+		if (!n && (help.space == 1 || help.space == 3))
 			help.space--;
 	}
 	return (help.space);
@@ -290,7 +290,9 @@ static char	ft_dollar(t_lexer **token, t_expander **word, t_expander **extra, t_
 	help.space = ft_eval_splitvalue(word, extra, help, splitvalue);
 	*token = (*token)->next;
 	//if (help.space == 3)
-	//	help.space = min_asterisk(token, word, 1, 0, ft_asterisk_splitvalue(splitvalue[(int)ft_strlen(splitvalue) -1]), dict));
+	//	help.space = min_asterisk(token, word, 1, 0, ft_asterisk_splitvalue(splitvalue[(int)ft_strlen(splitvalue) -1]), min_init_exphelp(help.dict, 1, 0)
+	if (help.space == 4)
+		help.space = min_asterisk(token, word, ft_asterisk_splitvalue(splitvalue[(int)ft_strlen(splitvalue) -1]), min_init_exphelp(help.dict, 0, 1);
 	//min_doublefree(&splitvalue);
 	return (help.space);
 }

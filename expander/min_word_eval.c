@@ -85,7 +85,7 @@ char **min_word_eval(t_lexer **token, t_dict *dict)
         t_expander      *word;
         t_exphelp       help;
 
-        min_init_exphelp(dict, 0, 0, &help);
+        help = min_init_exphelp(dict, 0, 0);
         word = min_init_expander(l_empty, EMPTY);
         while (!help.space && word && *token && min_token_is_word((*token)->key))
         {
