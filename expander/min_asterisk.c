@@ -48,7 +48,7 @@ static void	ft_start_asterisk(t_expander *word, t_expander **asterisk, t_expande
 			}
 			else
 			{
-				ft_check_last_asterisk_entry(&old, word);
+				ft_check_last_asterisk_entry(&old, min_last_expander(word));
 				*asterisk = old;
 			
 			}	
@@ -93,7 +93,7 @@ static char	ft_dollar(t_lexer **token, t_expander **asterisk, t_expander **extra
 	t_expander 	*end;
 	t_exphelp	help;		
 	
-	help = min_init_exphelp(dict, 0, 1);
+	help = min_init_exphelp(dict, 0, 0);
 	help.space = min_dollar(token, &dollar, extra , help);
 	//if (!dollar)
 	//	min_free_expander(asterisk);
@@ -167,7 +167,6 @@ char	min_asterisk(t_lexer **token, t_expander **word, t_expander *old, t_exphelp
 	}
 	else if (asterisk)
 	{	
-		printf("with token: %s\n", (*token)->value);
 		*token = (*token)->next;
 		help.space = ft_get_all_asterisk_members(token, &asterisk, &extra, help.dict);
 		min_print_asterisk(asterisk);

@@ -261,16 +261,31 @@ static char	ft_eval_splitvalue( t_expander **word, t_expander **extra, t_exphelp
 		}	
 		else
 		{
-			if (help.space == 1 || help.space == 3)
-				min_word(NULL, word, splitvalue[n], help.space);
-			else if (!n)
-				  min_word(NULL, word, splitvalue[n], 0);
-			else if (!extra)
+			if (extra)		
 			{
-					min_word(NULL, word, splitvalue[n], 1);
+				if (!n && help.space)  
+				{
+					min_word(NULL, word, splitvalue[n], help.space);
+				}
+				else if(!n)
+				{
+					if ( word && (min_last_expander(*word))->key == l_word)
+						min_word(NULL, word, splitvalue[n], 0);
+					else
+						min_word(NULL, word, splitvalue[n], 1);
+				}
+				else
+					min_word(NULL, extra, splitvalue[n], 1);
 			}
 			else
-				min_word(NULL, extra, splitvalue[n], 1);				
+			{
+				if (help.space == 1 || help.space == 3)
+						min_word(NULL, word, splitvalue[n], help.space);
+				else if (!n)
+				  min_word(NULL, word, splitvalue[n], 0);
+				else 
+					min_word(NULL, word, splitvalue[n], 1);				
+			}	
 		}
 		if (!n && (help.space == 1 || help.space == 3))
 			help.space--;
@@ -328,6 +343,7 @@ static char	ft_dollar(t_lexer **token, t_expander **word, t_expander **extra, t_
 /* if token->next is no word or DOLLAR or Til */
 char		min_dollar(t_lexer **token, t_expander **word, t_expander **extra, t_exphelp help)
 {
+	printf("dollar\n");
 	if ((*token)->value[0] == E_QUOTE)
 		help.export = 1;
 	(*token) = (*token)->next;
