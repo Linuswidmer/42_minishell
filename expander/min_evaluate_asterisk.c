@@ -45,15 +45,12 @@ int	ft_fit_to_asterisk(char *filename, t_expander *word)
 	first = 0;
 	while (word && filename)
 	{
-	//printf("%s\n", filename);				
 		if(word->key == l_asterisk)
 		{
 			if (!first++)
 			{
-				//	printf("%s\n", filename);
 				if (*filename == '.')
 				{	
-//					printf("%s\n", filename);
 					return (0);
 				}
 			}
@@ -62,17 +59,18 @@ int	ft_fit_to_asterisk(char *filename, t_expander *word)
 			else
 				word = ft_move_filename_to_word(&filename, word);
 		}	
-		if(word->key == l_word )
+		if (word->key == l_word )
 		{ 
 			first++;
 			if (!ft_word_in_filename(filename, word->word, word))
 			{
-//				printf("%s\n", filename);
 				return (0);
 			}	
 			else
 				word = word->next;
 		}
+		else
+			word = word->next;
 	}	
 	return (1);
 }

@@ -57,7 +57,7 @@ static char *ft_status(char *word)
 	char *temp;
 	temp = ft_itoa(g_status);
 	status = ft_strjoin(temp, word);
-	//min_free(temp);
+	min_free(&temp);
 	return (status);
 }
 
@@ -167,7 +167,7 @@ static int	ft_add_last_expander(t_expander **word, char *value, t_lexertype key)
 
 	
 
-static void	ft_get_old_asterisk(char **values, char space, t_expander **old)
+static void	ft_get_dollar_asterisk(char **values, char space, t_expander **old)
 {
 	int n;
 	
@@ -191,9 +191,8 @@ static void	ft_get_old_asterisk(char **values, char space, t_expander **old)
 	if (old && (space == 2 || space == 3))
 		 ft_add_last_expander(old, EMPTY, l_asterisk);
 }
-
     	
-/* make from str asterisk */
+/* make from str asterisk and check for last entry in asterisk row*/
 static t_expander *ft_asterisk_splitvalue(char *value)
 {
 	char	**values;
@@ -204,14 +203,28 @@ static t_expander *ft_asterisk_splitvalue(char *value)
 	printf ("start split asterisk\n");	
 	space = 0;
 	values = ft_delimiter_split(value, &space, E_ASTERISK);
-	ft_get_old_asterisk(values, space, &old);
+	ft_get_dollar_asterisk(values, space, &old);
 	//min_doublefree(&values);
 	if (!old)
-		ft_putstr_fd(ERR_MALL, 2);			
+                ft_putstr_fd(ERR_MALL, 2);
 	min_print_asterisk(old);
 	printf ("end split asterisk\n");
 	return (old);
 }
+
+static int ft_len_split(char **values)
+{
+	int n;
+
+	n = 0;
+	while (values[n])
+		n++;
+	return (n);
+}
+		
+
+
+
 
 /* eval entry dict  and return if end with space if last ist asterisk return 3*/
 
@@ -220,24 +233,30 @@ static char	ft_eval_splitvalue( t_expander **word, t_expander **extra, t_exphelp
 	int len;
 	int n;
 
-	len = (int)ft_strlen((char *)splitvalue);		
+	len = ft_len_split(splitvalue);		
 	n = -1;
+	printf("len: %i space: %i\n", len, (int)help.space);
 	while (word && splitvalue[++n])
-	{
+	{	
 		if (ft_check_for_asterisk(splitvalue[n]))
-		{
-			printf("asteriks in $: %s with space : %i\n", splitvalue[n], (int)help.space);
+		{	
+			printf("asteriks number: %i in $: %s with space : %i\n", n, splitvalue[n], (int)help.space);
 			
 			if (!n && n == len -1 && !help.space)
 				return (3);
-			else if (n == len -1 && help.space == 2)
-				return (4);  
-			else if (!n && !extra && (!help.space || help.space == 2))
-				min_asterisk(NULL, word, ft_asterisk_splitvalue(splitvalue[n]), min_init_exphelp(help.dict, 0 ,1))
-			else if 
-			
+			else if (n == len -1 && !help.space)
+			{
+				printf("good_hallo\n");
+				return (4);
+			}	  
+			else if (!n && (!help.space || help.space == 2))
+			{	
+				min_asterisk(NULL, word, ft_asterisk_splitvalue(splitvalue[n]), min_init_exphelp(help.dict, 1 ,1));
+			}
+			else if (extra)
+				 min_asterisk(NULL, extra, ft_asterisk_splitvalue(splitvalue[n]), min_init_exphelp(help.dict, 0 ,1));
 			else		
-				min_asterisk(NULL, word, ft_asterisk_splitvalue(splitvalue[n]), help);
+				min_asterisk(NULL, word, ft_asterisk_splitvalue(splitvalue[n]),  min_init_exphelp(help.dict, 0 ,1));
 			
 		}	
 		else
@@ -288,12 +307,18 @@ static char	ft_dollar(t_lexer **token, t_expander **word, t_expander **extra, t_
 	if (!splitvalue)
 		return (ft_add_value_to_expander(token, word, NULL, help.space));
 	help.space = ft_eval_splitvalue(word, extra, help, splitvalue);
-	*token = (*token)->next;
-	//if (help.space == 3)
-	//	help.space = min_asterisk(token, word, 1, 0, ft_asterisk_splitvalue(splitvalue[(int)ft_strlen(splitvalue) -1]), min_init_exphelp(help.dict, 1, 0)
+	if (help.space == 3)
+		help.space = min_asterisk(token, word, ft_asterisk_splitvalue(splitvalue[ft_len_split(splitvalue) -1]), min_init_exphelp(help.dict, 1, 0));
 	if (help.space == 4)
-		help.space = min_asterisk(token, word, ft_asterisk_splitvalue(splitvalue[(int)ft_strlen(splitvalue) -1]), min_init_exphelp(help.dict, 0, 1);
+	{
+		if (extra)
+			help.space = min_asterisk(token, extra, ft_asterisk_splitvalue(splitvalue[ft_len_split(splitvalue) -1]), min_init_exphelp(help.dict, 0, 1));
+		else
+			help.space = min_asterisk(token, word, ft_asterisk_splitvalue(splitvalue[ft_len_split(splitvalue) -1]), min_init_exphelp(help.dict, 0, 1));
+}
 	//min_doublefree(&splitvalue);
+	if (*token)
+		*token = (*token)->next;
 	return (help.space);
 }
 

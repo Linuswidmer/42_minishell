@@ -11,28 +11,52 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
+static  void ft_check_last_asterisk_entry(t_expander **old,   t_expander *word)
+{      
+        char            *oldword;
+	t_expander	*temp;	
+
+        if ((*old)->key == l_word && (word && (min_last_expander(word))->key == l_word))
+        {
+                oldword = (*old)->word;
+                (*old)->word = ft_strjoin(word->word, oldword);
+                min_free(&oldword);
+        }
+	else
+	{
+		temp = *old;
+		*old = min_init_expander(word->key, word->word);
+		if (*old)
+			(*old)->next = temp;
+	} 		
+}
+
+
+
+
 /* this can also handel if * are in $cmd  */
-static void	ft_start_asterisk(char *word, t_expander **asterisk, t_expander *old)
+static void	ft_start_asterisk(t_expander *word, t_expander **asterisk, t_expander *old)
 {
 		if ( word)
 		{
-			*asterisk = min_init_expander(l_word, word);
-			if (*asterisk)
-			{ 	
-				if (old)
-					(*asterisk)->next = old;
-				else
-				{
+			if (!old)
+			{	
+				 *asterisk = min_init_expander(l_word, word->word);
+				if (*asterisk)
 					(*asterisk)->next = min_init_expander(l_asterisk, NULL);
-						//if (!(*asterisk)->next)
-							//min_free_asterisk(asterisk);
-				}
+				
+			}
+			else
+			{
+				ft_check_last_asterisk_entry(&old, word);
+				*asterisk = old;
+			
 			}	
 		}
 		else if (old)
 			 *asterisk = old;
 		else	
-			*asterisk = min_init_expander(l_asterisk, NULL);
+			*asterisk = min_init_expander(l_asterisk, NULL);	
 }
 
 
@@ -119,27 +143,32 @@ static char	ft_get_all_asterisk_members(t_lexer **token, t_expander **asterisk, 
 
 /* creates a link list with all asterisk  and evaluate it, if $ have more then one value gives back the zhe other values in extra  
 help.word -> flag to show that before first apperace of * was an other word 
-help.token -> flag to show if token can be used */
+help.token -> flag to show if token can be used 
+t_expander *old -> get the evaluatetet link list from a * in a $ARG 
+-> this will be connectet to the fromer Asterisk or get evaluatett alone or with the next tokens */
 char	min_asterisk(t_lexer **token, t_expander **word, t_expander *old, t_exphelp help)
 {
 	t_expander	*asterisk;
 	t_expander	*extra;	
-
+	                                
 	if (!*word)	
 		return (1);
 	if ((!help.space && (min_last_expander(*word))->key == l_word) || help.word)
-	{
-		ft_start_asterisk((min_last_expander(*word))->word, &asterisk, old);
-		help.word = 1;
-	}
+		ft_start_asterisk(*word, &asterisk, old);
 	else	
-	{
 		ft_start_asterisk(NULL, &asterisk, old);
-	}
-	if (!token)
+	if ((!help.space && (min_last_expander(*word))->key == l_word) || (*word)->key ==l_empty)
+		help.word = 1; 
+	if (!token && asterisk)
+	{
+		min_print_asterisk(asterisk);
+		printf("help.word: %i\n", (int)help.word);
 		min_evaluate_asterisk(word, asterisk, help.word);
-	else
-	{	*token = (*token)->next;
+	}
+	else if (asterisk)
+	{	
+		printf("with token: %s\n", (*token)->value);
+		*token = (*token)->next;
 		help.space = ft_get_all_asterisk_members(token, &asterisk, &extra, help.dict);
 		min_print_asterisk(asterisk);
 		min_evaluate_asterisk(word, asterisk, help.word);

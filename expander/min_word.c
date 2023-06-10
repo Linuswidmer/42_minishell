@@ -19,14 +19,9 @@ static	t_expander  *ft_find_last_entry(t_expander **word)
 	if (!*word)
 		*word = min_init_expander(l_empty, EMPTY);    
 	if (*word && (*word)->key == l_empty)
-        {   
-                (*word)->key = l_word;
                 end = *word;
-        }   
         else
-        {   
                 end = min_last_expander(*word);
-        }   
 	return (end);
 }
 
@@ -34,7 +29,7 @@ static int	ft_create_new_entry(t_lexer **token, t_expander *end, char *value,  c
 {
 	char	*temp;
 
-	if (space)
+	if (space && end->key != l_empty)
 	{
 		//printf("word , space== 1\n");
 		end->next =  min_init_expander(l_word, EMPTY);
@@ -44,7 +39,9 @@ static int	ft_create_new_entry(t_lexer **token, t_expander *end, char *value,  c
 			return (1);
 		}	
                 end = end->next;
-        }   
+        }
+	if (end->key == l_empty)
+		end->key = l_word;   
         temp = end->word;
 	if (value)
 		end->word = ft_strjoin( temp, value);
