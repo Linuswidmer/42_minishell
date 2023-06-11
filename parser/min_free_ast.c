@@ -23,7 +23,7 @@ static void	ft_free_subnode(t_ast *ast)
 	free(ast->node.sub);
 //	ast->node.sub = NULL;
 	ast->node.sub->down = NULL;
-	printf("in sub[ %p ]\n", ast);
+//	printf("in sub[ %p ]\n", ast);
 	free(ast);
 }
 /*
@@ -88,10 +88,10 @@ static void	ft_free_jobnode(t_ast *ast)
 	t_ast	*temp;
 
 	temp = ast;
-	printf("in job.job[ %p ]\n", temp->node.job);
+	//printf("in job.job[ %p ]\n", temp->node.job);
 	free(temp->node.job);
 	temp->node.job = NULL;
-	printf("in job[ %p ]\n", temp);
+	//printf("in job[ %p ]\n", temp);
 	free(temp);
 	temp = NULL;
 }
@@ -109,24 +109,26 @@ void	ft_free_ast(t_ast *ast)
     }*/
 	if (ast->key == subnode)
 	{
-		printf("sub\n");
-		printf("start sub[ %p ]\n", ast);
+		//printf("sub\n");
+		//printf("start sub[ %p ]\n", ast);
 		ft_free_subnode(ast);
-		printf("end sub[ %p ]\n", ast);
+		//printf("end sub[ %p ]\n", ast);
 	}
 	if (ast->key == jobnode)
 	{
-		printf("job\n");
-		printf("start job[ %p ]\n", ast);
+		//printf("job\n");
+		//printf("start job[ %p ]\n", ast);
 		ft_free_jobnode(ast);
-		printf("end job[ %p ]\n", ast);
+		//printf("end job[ %p ]\n", ast);
 	}
 }
 
 void	min_free_ast(t_ast **ast)
 {
+	if (!*ast)
+		return;
 	min_bring_ast_to_beginning(ast);
-	printf("start ast[ %p ]\n", *ast);
+	//printf("start ast[ %p ]\n", *ast);
 	ft_free_ast(*ast);
 	*ast = NULL;
 }

@@ -150,7 +150,7 @@ void min_print_ast(t_ast *ast)
 	ht = 0;
 	if (!ast)
 		return;
-	printf("\n START AST \n");
+	printf("START AST \n");
 	while (1)
 	{
 		
@@ -217,7 +217,7 @@ void min_print_ast(t_ast *ast)
             }
 		}
 	}		
-	printf("\n END_AST\n");
+	printf("\nEND_AST\n\n");
 }
 /*
 void    min_bring_ast_to_beginning(t_ast **ast)

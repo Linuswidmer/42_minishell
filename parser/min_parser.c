@@ -61,11 +61,7 @@ t_ast	*min_parser(t_lexer *token)
 		else if (token && ft_token_is_subnode(token->key))
 			token = min_subnode(token, &ast);
 		if (!ast)
-		{
-		//	printf("syntax error near unexpected token: %s\n", token->value);
-			printf("ERROR\n");
-			break ;
-		}	
+			break ;	
 	}
 	min_bring_ast_to_beginning(&ast);
 	if (_DEBUG)

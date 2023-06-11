@@ -14,7 +14,7 @@
 # define DEFINE_H
 
 # ifndef _DEBUG1	
-#  define _DEBUG1 1	
+#  define _DEBUG1 0	
 # endif
 
 # ifndef _DEBUG    
@@ -50,6 +50,10 @@
 # define HERENUM "1"	
 # define HEREDOC_EVAL "b"
 
+
+
+/* EXPANDER*/
+#define TMOPEN "* ambiguous redirect\n"	
 
 # define HOME "HOME"
 #endif

@@ -100,13 +100,9 @@ char **min_word_eval(t_lexer **token, t_dict *dict)
                         help.space = min_asterisk(token, &word, NULL, help);
         		
 		}
-		//printf("space:  %i\n", (int)help.space);
 	}
         values = ft_get_values(word);
         min_free_expander(&word);
-	int n = 0;
-	while (values && values[n])
-		printf("end values: %s \n", values[n++]);
         return (values);
 }
 

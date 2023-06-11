@@ -84,6 +84,7 @@ t_lexer	*lexer(char **input)
 		free(new_input);
 		*input = new_input2;
 	}
-	print_token_list(beginning_token_list);
+	if (_DEBUG)
+		print_token_list(beginning_token_list);
 	return (beginning_token_list);
 }

@@ -67,7 +67,6 @@ int	min_set_cmd(t_lexer **token, t_dict *dict, t_cmdnode **cmd)
 		exit = 0;
 		while (*values && !exit)
 		{
-			printf("min_set_cmd: %s\n", *values);
 			exit = ft_set_cmd(*values++, cmd);
 		}
 	}

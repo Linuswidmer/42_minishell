@@ -65,9 +65,7 @@ char *min_eval_heredoc(char *oldfile)
 			while (line)
 			{
 				line = 	ft_eval_line(&line, fd1);
-				if (line) 
-					write (fd1, line, ft_strlen(len));
-				else 
+				if (!line) 
 					break;
 				min_free(line);
 				line = get_next_line(fd2);

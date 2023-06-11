@@ -108,7 +108,7 @@ int	min_common_cmd(t_jobnode *astjob, t_dict *dict, char f)
 	if (id)
 	{
 		result = waitpid(id, &status, 0);
-		ft_printf_fd("result is %i\n", 2, result);
+		//ft_printf_fd("result is %i\n", 2, result);
 		if (result == -1)
 		{
 			result = waitpid(id, &status, 0);

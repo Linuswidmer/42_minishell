@@ -36,6 +36,8 @@ int ft_readline_loop(t_min *min)
 			exit = 1;
 			break;	
 		}
+		if (_DEBUG)
+			ft_printf_fd("\n \\DEBUG_MODE\\ \n\n", 2);
 		min->token = lexer(&readline_input);
 		if (min->token)
 		{
@@ -45,10 +47,10 @@ int ft_readline_loop(t_min *min)
 			if (min->ast) 
 				exit = min_executer(min->ast, min->dict, min->builtins, 1);
 			else
-				exit = 2;
+				g_status = 2;
 		}	
 		else
-				exit = 2;
+				g_status = 2;
 		
 		add_history(readline_input);
 		free(readline_input);
@@ -57,17 +59,9 @@ int ft_readline_loop(t_min *min)
 		free_token_list(&(min->token));
 		dup2(min->in, STDIN_FILENO);
 		dup2(min->out, STDOUT_FILENO);
-		/*if (exit >= 3000)	
-		{
-			g_status = exit - 3000;
-			printf("gstatus is %i\n", g_status);
-			exit = 0;
-		}
-		else */ 
 		if (exit >= 1000 && exit < 2000)
 		{
 			g_status = exit - 1000;
-			printf("\nstatus is %i\n", g_status);
                         exit = 0;
 		}	
 	}
@@ -91,7 +85,6 @@ int main(int argc, char **argv, char **env)
 		exit = ft_readline_loop(min);
 	if (exit == 256)
 		exit = 0;
-	printf("\nexit: %i \n", exit); 
 	return (exit);
 }
 

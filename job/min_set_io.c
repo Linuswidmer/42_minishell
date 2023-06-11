@@ -18,12 +18,11 @@ static char	*ft_set_filename(t_lexer **token, t_dict *dict)
 	char	*filename;
 
 	values = min_word_eval(token, dict);
-	printf("v:%s\n", values[0]);
 	if (!values)
 		return (NULL);
 	if (values[1])
 	{
-		ft_printf_fd("* to manny in files\n", 2);
+		ft_printf_fd(TMOPEN, 2);
 		//min_print_error(values)
 		return (NULL);
 	}
@@ -53,9 +52,7 @@ int	min_set_io(t_lexer **token, t_dict *dict)
 	key = (*token)->key;
 	evalhere = (*token)->value;
 	*token = (*token)->next;
-	printf("value is %s\n", (*token)->value);
 	filename = ft_set_file_io(token, dict);
-	printf("filename %s\n", filename);
 	if (!filename)
 		return (1);
 	return (min_ex_io(key, filename, evalhere));

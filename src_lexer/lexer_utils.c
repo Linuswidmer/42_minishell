@@ -66,8 +66,9 @@ void	print_token_list(t_lexer *first)
 	tmp = first;
 	while (tmp)
 	{
-		printf("LEXERTYPE IS: %s	", lexertype_names[tmp->key]);
-		printf("STRING IS *%s*\n", tmp->value);
+		ft_printf_fd("LEXERTYPE IS: %s	",2, lexertype_names[tmp->key]);
+		ft_printf_fd("STRING IS *%s*\n",2, tmp->value);
 		tmp = tmp->next;
 	}
+	ft_printf_fd("\n", 2);
 }
