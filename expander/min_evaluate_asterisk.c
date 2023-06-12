@@ -139,7 +139,7 @@ void 	min_evaluate_asterisk(t_expander **word, t_expander *asterisk, char wo)
 	dh = opendir("./");
 	d = readdir(dh);
 	found = 0;
-
+	
 	while (d)
 	{
 		if (ft_fit_to_asterisk(d->d_name, asterisk))

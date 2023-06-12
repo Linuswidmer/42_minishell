@@ -102,10 +102,10 @@ static	int	ft_check_dict(char **dollar, char **value,  t_dict *dict)
 {	
 	while (dict)	
 	{
-		if (ft_strncmp(dict->key, *dollar, ft_strlen(*dollar)))
-                	dict = dict->next_entry;
+		if (!ft_strncmp(dict->key, *dollar, ft_strlen(*dollar)) && ft_strlen(*dollar) == ft_strlen(dict->key) )
+                	break ;
 		else
-                	 break;
+                	 dict = dict->next_entry;
 	}
 	min_free(dollar);
 	if (!dict)
@@ -220,7 +220,23 @@ static int ft_len_split(char **values)
 }
 		
 
+static char	ft_add_to_asterisk(t_expander **word, t_expander *new)
+{
+	char *oldword;
+		
+	if ((new && new->key == l_word) && (*word && (min_last_expander(*word))->key == l_word))
+        {
+                oldword = (min_last_expander(*word))->word;
+                (min_last_expander(*word))->word = ft_strjoin(oldword, new->word);
+                min_free(&oldword);
+		(min_last_expander(*word))->next = new->next; 
+        }
+        else
+		(min_last_expander(*word))->next = new;
 
+	min_free_expander(&new);
+	return (0);
+}
 
 
 /* eval entry dict  and return if end with space if last ist asterisk return 3*/
@@ -245,8 +261,10 @@ static char	ft_eval_splitvalue( t_expander **word, t_expander **extra, t_exphelp
 				return (4);
 			}	  
 			else if (!n && (!help.space || help.space == 2))
-			{	
-				min_asterisk(NULL, word, ft_asterisk_splitvalue(splitvalue[n]), min_init_exphelp(help.dict, 1 ,1));
+			{		if (extra)
+						ft_add_to_asterisk(word, ft_asterisk_splitvalue(splitvalue[n]));
+					else
+						min_asterisk(NULL, word, ft_asterisk_splitvalue(splitvalue[n]), min_init_exphelp(help.dict, 1 ,1));
 			}
 			else if (extra)
 				 min_asterisk(NULL, extra, ft_asterisk_splitvalue(splitvalue[n]), min_init_exphelp(help.dict, 0 ,1));
@@ -324,7 +342,12 @@ static char	ft_dollar(t_lexer **token, t_expander **word, t_expander **extra, t_
 		return (ft_add_value_to_expander(token, word, NULL, help.space));
 	help.space = ft_eval_splitvalue(word, extra, help, splitvalue);
 	if (help.space == 3)
-		help.space = min_asterisk(token, word, ft_asterisk_splitvalue(splitvalue[ft_len_split(splitvalue) -1]), min_init_exphelp(help.dict, 1, 0));
+	{
+		if (extra)
+                    help.space = ft_add_to_asterisk(word, ft_asterisk_splitvalue(splitvalue[ft_len_split(splitvalue) -1]));
+		else 
+			help.space = min_asterisk(token, word, ft_asterisk_splitvalue(splitvalue[ft_len_split(splitvalue) -1]), min_init_exphelp(help.dict, 1, 0));
+		}
 	if (help.space == 4)
 	{
 		if (extra)

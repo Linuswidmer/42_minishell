@@ -85,7 +85,7 @@ static int	ft_open_io_in(t_lexertype key, char **filename, char *evalhere)
 		file = *filename;
 	else
 		file = ft_filepath(*filename, NULL);
-	printf("file is %s\n", file);
+//	printf("file is %s\n", file);
 	//min_free(filename);
 	if (file)
 	{

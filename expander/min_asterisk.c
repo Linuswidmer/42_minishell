@@ -10,6 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
+static int	ft_is_asterisk(t_expander *word)
+{
+	while (word && word->key != l_asterisk)
+		word = word->next;
+	if (!word)
+		return (0);
+	else
+		return (1);
+}
+
 
 static  void ft_check_last_asterisk_entry(t_expander **old,   t_expander *word)
 {      
@@ -19,15 +29,20 @@ static  void ft_check_last_asterisk_entry(t_expander **old,   t_expander *word)
         if ((*old)->key == l_word && (word && (min_last_expander(word))->key == l_word))
         {
                 oldword = (*old)->word;
-                (*old)->word = ft_strjoin(word->word, oldword);
+                (*old)->word = ft_strjoin((min_last_expander(word))->word, oldword);
                 min_free(&oldword);
         }
 	else
 	{
 		temp = *old;
-		*old = min_init_expander(word->key, word->word);
+		if (!ft_is_asterisk(word))
+		{	
+			*old = min_init_expander((min_last_expander(word))->key, (min_last_expander(word))->word);	
+		}
+		else
+			*old = word;	
 		if (*old)
-			(*old)->next = temp;
+			(min_last_expander(*old))->next = temp;		
 	} 		
 }
 
@@ -49,7 +64,7 @@ static void	ft_start_asterisk(t_expander *word, t_expander **asterisk, t_expande
 			else
 
 			{
-				ft_check_last_asterisk_entry(&old, min_last_expander(word));
+				ft_check_last_asterisk_entry(&old, word);
 				*asterisk = old;
 			
 			}	
