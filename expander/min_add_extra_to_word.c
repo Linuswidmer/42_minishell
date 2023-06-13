@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-
 void	min_add_extra_to_word(t_expander **word, t_expander *extra)
 {
 	if (!extra)

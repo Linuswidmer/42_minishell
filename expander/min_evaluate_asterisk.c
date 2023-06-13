@@ -10,16 +10,16 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-static int	ft_word_in_filename(char *filename, char *word, t_expander *curr)
+static int	ft_word_in_filename(char **filename, char *word, t_expander *curr)
 {
-	if (!*filename)
+	if (!**filename)
 		return (0);
-	while(*filename && *word)
-	{ 		
-		if (*filename++ != *word++)
+	while(**filename && *word)
+	{ 
+		if (*(*filename)++ != *word++)
 			return (0);
 	}
-	if (!*filename && !*word)
+	if (!**filename && !*word)
 			return (1);
 	if (!*word && curr->next)
 			return (1);
@@ -67,7 +67,6 @@ static int	ft_last_word(char *filename, char *word)
 int	ft_fit_to_asterisk(char *filename, t_expander *word)
 {
 	char first;
-	char *temp;	
 	
 	first = 0;
 	while (word && filename)
@@ -97,8 +96,8 @@ int	ft_fit_to_asterisk(char *filename, t_expander *word)
 				else 
 					return (1);
 			}	
-			if (!ft_word_in_filename(filename, word->word, word))
-				return (0);	
+			if (!ft_word_in_filename(&filename, word->word, word))
+				return (0);
 			word = word->next;
 		}
 		else

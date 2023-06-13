@@ -220,7 +220,7 @@ static int ft_len_split(char **values)
 }
 		
 
-static char	ft_add_to_asterisk(t_expander **word, t_expander *new)
+static char	ft_add_to_asterisk(t_expander **word, t_expander *new, t_lexer **token)
 {
 	char *oldword;
 		
@@ -231,10 +231,11 @@ static char	ft_add_to_asterisk(t_expander **word, t_expander *new)
                 min_free(&oldword);
 		(min_last_expander(*word))->next = new->next; 
         }
-        else
+        else if (*word)
 		(min_last_expander(*word))->next = new;
-
 	min_free_expander(&new);
+	if (*token)
+		(*token) = (*token)->next;
 	return (0);
 }
 
@@ -262,7 +263,7 @@ static char	ft_eval_splitvalue( t_expander **word, t_expander **extra, t_exphelp
 			}	  
 			else if (!n && (!help.space || help.space == 2))
 			{		if (extra)
-						ft_add_to_asterisk(word, ft_asterisk_splitvalue(splitvalue[n]));
+						ft_add_to_asterisk(word, ft_asterisk_splitvalue(splitvalue[n]), NULL);
 					else
 						min_asterisk(NULL, word, ft_asterisk_splitvalue(splitvalue[n]), min_init_exphelp(help.dict, 1 ,1));
 			}
@@ -315,7 +316,7 @@ static char	ft_eval_splitvalue( t_expander **word, t_expander **extra, t_exphelp
 	
 
  
-
+/* check fot in Asterisk*/
 
 static char	ft_dollar(t_lexer **token, t_expander **word, t_expander **extra, t_exphelp help)
 {
@@ -344,7 +345,7 @@ static char	ft_dollar(t_lexer **token, t_expander **word, t_expander **extra, t_
 	if (help.space == 3)
 	{
 		if (extra)
-                    help.space = ft_add_to_asterisk(word, ft_asterisk_splitvalue(splitvalue[ft_len_split(splitvalue) -1]));
+                    help.space = ft_add_to_asterisk(word, ft_asterisk_splitvalue(splitvalue[ft_len_split(splitvalue) -1]), NULL);
 		else 
 			help.space = min_asterisk(token, word, ft_asterisk_splitvalue(splitvalue[ft_len_split(splitvalue) -1]), min_init_exphelp(help.dict, 1, 0));
 		}
@@ -363,8 +364,42 @@ static char	ft_dollar(t_lexer **token, t_expander **word, t_expander **extra, t_
 	return (help.space);
 }
 
+static char	ft_special_next_token(t_lexer **token, t_expander **word, t_expander **extra, t_exphelp help)
+{
+	if (!(*token) || (*token && !min_token_is_word((*token)->key)))
+        {   
+                if (extra)
+                        return (ft_add_to_asterisk(word, min_init_expander(l_word, DOLLAR), token));
+                min_word(NULL, word, DOLLAR, help.space);
+                return (1);
+        }    
+        else if ((*token)->key == l_dollar)
+        {   
+                ft_putstr_fd(ERR_ID, 2); 
+                 if (extra)
+                           return (ft_add_to_asterisk(word, min_init_expander(l_word, DDOLLAR), token));
+                return (min_word(token, word, DDOLLAR, help.space));
+        }    
+        else if ((*token)->key == l_til)
+        {   
+                 if (extra)
+                    return (ft_add_to_asterisk(word, min_init_expander(l_word, DTIL), token));
+                return (min_word(token, word, DTIL, help.space));
+        }
+	return (help.space);   	
+}
 
-
+static int	ft_next_is_special(t_lexer **token)
+{
+	 if (!(*token) || (*token && !min_token_is_word((*token)->key)))
+		return (1);
+	else if ((*token)->key == l_dollar)
+		return (1);
+	else if ((*token)->key == l_til)
+		return(1);
+	else
+		return (0);	
+}
 
 /* if token->next is no word or DOLLAR or Til */
 char		min_dollar(t_lexer **token, t_expander **word, t_expander **extra, t_exphelp help)
@@ -372,22 +407,11 @@ char		min_dollar(t_lexer **token, t_expander **word, t_expander **extra, t_exphe
 	if ((*token)->value[0] == E_QUOTE)
 		help.export = 1;
 	(*token) = (*token)->next;
-	if (!(*token) || (*token && !min_token_is_word((*token)->key)))
-	{
-		min_word(NULL, word, DOLLAR, help.space);
-		return (1);
-	}	
-	else if ((*token)->key == l_dollar)
-	{
-		ft_putstr_fd(ERR_ID, 2);
-		return (min_word(token, word, DDOLLAR, help.space));
-	}	
-	else if ((*token)->key == l_til)
-		return (min_word(token, word, DTIL, help.space));
+	if (ft_next_is_special(token))
+		return (ft_special_next_token(token, word, extra, help));
 	else if ((*token)->key == l_asterisk)
 	{	
-	        if (*token)
-                        *token = (*token)->next;
+                *token = (*token)->next;
                 return (help.space);
 	}	
 	else
