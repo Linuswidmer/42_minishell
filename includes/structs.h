@@ -170,6 +170,11 @@ struct s_exphelp
         char    export;
         char    token;
         char    word;
+	char	*dollar_value;
+	char	*value;
+	char	**splitvalue;
+	int	n;
+	int	len;
 };
 
 
