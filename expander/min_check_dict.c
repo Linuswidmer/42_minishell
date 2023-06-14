@@ -3,7 +3,7 @@
 
 
 
-static  int     min_check_dict(char **dollar, char **value,  t_dict *dict)
+int     min_check_dict(char **dollar, char **value,  t_dict *dict)
 {    
         while (dict)    
         {   

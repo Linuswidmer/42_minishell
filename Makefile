@@ -79,7 +79,7 @@ FILENAMES_BUILTINS = cd echo env exit export export_utils pwd unset min_builtins
 
 FILENAMES_JOB = min_buildin_cmd min_ex_get_cmd min_expander min_set_cmd min_common_cmd min_ex_io min_io_and_cmd min_set_io min_get_envp
 
-FILENAMES_EXPANDER =  min_free_expander min_last_expander min_word_eval min_init_expander min_word min_til min_dollar min_asterisk min_evaluate_asterisk min_add_extra_to_word min_init_exphelp min_addlast_expander min_get_all_asterisk_members
+FILENAMES_EXPANDER =  min_free_expander min_last_expander min_word_eval min_init_expander min_word min_til min_dollar min_asterisk min_evaluate_asterisk min_add_extra_to_word min_init_exphelp min_addlast_expander min_get_all_asterisk_members min_add_value_to_expander min_asterisk_splitvalue min_check_dict min_check_word min_delimter_split min_eval_dollar min_eval_splitvalue min_len_split min_to_aste
 
 FILENAMES_EXECUTER = min_executer min_exit_handler min_job min_sub min_route
 

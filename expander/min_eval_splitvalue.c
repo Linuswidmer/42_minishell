@@ -20,52 +20,52 @@ static char	ft_asterisk(t_expander **word, t_expander **extra, t_exphelp help)
 	else if (!help.n && (!help.space || help.space == 2))
 	{               
 		if (extra)
-                	ft_add_to_asterisk(word, ft_asterisk_splitvalue(splitvalue[help.n]), NULL);
+                	min_to_aste(word, min_asterisk_splitvalue(help.splitvalue[help.n]), NULL);
                 else
-			min_asterisk(NULL, word, ft_asterisk_splitvalue(splitvalue[help.n]), min_init_exphelp(help.dict, 1 ,1));
+			min_asterisk(NULL, word, min_asterisk_splitvalue(help.splitvalue[help.n]), min_init_exphelp(help.dict, 1 ,1));
 	}
 	else if (extra)
-		min_asterisk(NULL, extra, ft_asterisk_splitvalue(splitvalue[help.n]), min_init_exphelp(help.dict, 0 ,1));
+		min_asterisk(NULL, extra, min_asterisk_splitvalue(help.splitvalue[help.n]), min_init_exphelp(help.dict, 0 ,1));
 	else
-		min_asterisk(NULL, word, ft_asterisk_splitvalue(splitvalue[help.n]),  min_init_exphelp(help.dict, 0 ,1));
+		min_asterisk(NULL, word, min_asterisk_splitvalue(help.splitvalue[help.n]),  min_init_exphelp(help.dict, 0 ,1));
 	return (0);
 }
 
 static void ft_normal_extra(t_expander **word, t_expander **extra, t_exphelp help)
 {
-	if (!n && help.space)
+	if (!help.n && help.space)
                                 {
-                                        min_word(NULL, word, splitvalue[n], help.space);
+                                        min_word(NULL, word, help.splitvalue[help.n], help.space);
                                 }
-                                else if(!n)
+                                else if(!help.n)
                                 {
                                         min_print_asterisk(*word);
                                         if ( *word && (min_last_expander(*word))->key == l_word)
                                         {
-                                                min_word(NULL, word, splitvalue[n], 0);
+                                                min_word(NULL, word, help.splitvalue[help.n], 0);
                                         }
                                         else
                                         {
-                                                min_word(NULL, word, splitvalue[n], 1);
+                                                min_word(NULL, word, help.splitvalue[help.n], 1);
                                         }
                                 }
                                 else
-                                        min_word(NULL, extra, splitvalue[n], 1);
+                                        min_word(NULL, extra, help.splitvalue[help.n], 1);
 
 }
 
 static void ft_normal(t_expander **word, t_expander **extra, t_exphelp help)
 {
 	if (extra)
-		ft_normal_extra(word, extra , help)
+		ft_normal_extra(word, extra , help);
 	else
 	{
                                 if (help.space == 1 || help.space == 3)
-                                                min_word(NULL, word, splitvalue[n], help.space);
-                                else if (!n)
-                                  min_word(NULL, word, splitvalue[n], 0);
+                                                min_word(NULL, word, help.splitvalue[help.n], help.space);
+                                else if (!help.n)
+                                  min_word(NULL, word, help.splitvalue[help.n], 0);
                                 else
-                                        min_word(NULL, word, splitvalue[n], 1);
+                                        min_word(NULL, word, help.splitvalue[help.n], 1);
                         }
 
 }
@@ -79,7 +79,7 @@ char     min_eval_splitvalue( t_expander **word, t_expander **extra, t_exphelp h
         while (word && splitvalue[++help.n])
         {
 
-                if (ft_check_for_asterisk(splitvalue[n]))
+                if (ft_check_for_asterisk(splitvalue[help.n]))
                 {
 			space = ft_asterisk(word, extra, help);
 			if (space)
