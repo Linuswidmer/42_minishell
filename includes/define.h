@@ -25,7 +25,6 @@
 # define P_NEWLINE "newline"
 
 
-
 # define EMPTY ""
 # define ASTERISK "*"
 # define DOLLAR "$"
@@ -49,7 +48,8 @@
 # define HERETXT "heredoc :"	
 # define HERENUM "1"	
 # define HEREDOC_EVAL "b"
-
+# define HEREEOF "EOF\n"
+# define HEREFAIL "HEREDOC FAIL\n"	
 
 
 /* EXPANDER*/
