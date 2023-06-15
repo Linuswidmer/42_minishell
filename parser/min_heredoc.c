@@ -58,32 +58,51 @@ static char	*ft_get_limiter(t_lexer *token)
 		return (NULL);
 }
 
+static void	ft_free_lexernode(t_lexer **token_list)
+{	
+	if (*token_list)
+		{
+			if ((*token_list)->value)
+				free((*token_list)->value);
+			free(*token_list);
+			*token_list = NULL;
+		}
+}
+
+
+
+
 /* set path to next next wrd and delete the others*/
 static t_lexer	*ft_set_file(t_lexer *token, char *path)
 {
 	t_lexer	*file;
 	char	*old;
-
-	file = token->next;
+	
+	file = token;
 	old = token->value;
 	token->key = l_word;
 	token->value = path;
-	//min_free(&old);
+	min_free(&old);
+	if (file->next &&  !min_token_is_word(file->key))
+                       file = file->next;
 	while (file && file->key == l_space)
 	{
 		if (file->next)
 			file = file->next;
-			//min_free_lexer_node(&file->prev);
-		//else
-			//min_free_lexer_node(&file);
+			ft_free_lexernode(&file->prev);
 	}
 	while (file && min_token_is_word(file->key))
 	{
-		file = file->next;
-		//min_free_lexer_node(&file->prev);
-		//else
-			//min_free_lexer_node(&file);
+		if (file->next)
+		{
+			file = file->next;
+		if ( file->prev != token )
+			ft_free_lexernode(&file->prev);
+		}
+		else
+			ft_free_lexernode(&file);
 	}
+	print_token_list(file);
 	token->next = file;
 	if (file)
 		file->prev = token;
@@ -123,7 +142,9 @@ int	min_heredoc(t_lexer **token, char *heredoc)
 			write(fd, line, ft_strlen(line));
 			//min_free(&line);
 		}
+		 print_token_list(*token);
 		*token = ft_set_file((*token)->next, path);
+		print_token_list(*token);
 		//min_free(&path);
 		if (close(fd))
 			return (1);
