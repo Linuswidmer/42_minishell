@@ -31,13 +31,9 @@ static int	ft_create_new_entry(t_lexer **token, t_expander *end, char *value,  c
 
 	if (space && end->key != l_empty)
 	{
-		//printf("word , space== 1\n");
 		end->next =  min_init_expander(l_word, EMPTY);
                	if (!end->next)
-		{
-			//printf("AAA\n");
 			return (1);
-		}	
                 end = end->next;
         }
 	if (end->key == l_empty)

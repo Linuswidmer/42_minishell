@@ -23,7 +23,7 @@ char **min_word_eval(t_lexer **token, t_dict *dict);
 
 t_exphelp    min_init_exphelp(t_dict *dict, char word, char space );
 
-char    min_til(t_lexer **token, t_expander **word, t_dict *dict, char space);
+char    min_til(t_lexer **token, t_expander **word, t_exphelp help);
 
 char            min_dollar(t_lexer **token, t_expander **word, t_expander **extra, t_exphelp help);
 char    min_add_value_to_expander(t_lexer **token, t_expander **word, char **result, char space);
@@ -40,6 +40,7 @@ char     min_to_aste(t_expander **word, t_expander *new, t_lexer **token);
 char    min_asterisk(t_lexer **token, t_expander **word, t_expander *old, t_exphelp help);
 char     min_get_all_asterisk_members(t_lexer **token, t_expander **asterisk, t_expander **extra, t_dict *dict);
 void    min_evaluate_asterisk(t_expander **word, t_expander *asterisk, char wo);
+ int     min_fit_to_asterisk(char *filename, t_expander *word);
 void    min_add_extra_to_word(t_expander **word, t_expander *extra);
 int     min_addlast_expander(t_expander **word, char *value, char *wo);
 

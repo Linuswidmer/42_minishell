@@ -10,6 +10,7 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
+/*
 static int	ft_word_in_filename(char **filename, char *word, t_expander *curr)
 {
 	if (!**filename)
@@ -38,7 +39,6 @@ static int	ft_last_word(char *filename, char *word)
 {
 	int lena;
 	int lenb;
-	
 		
 	lena = (int)ft_strlen(filename) -1;
 	lenb = (int)ft_strlen(word) -1;
@@ -48,23 +48,28 @@ static int	ft_last_word(char *filename, char *word)
 			
 	while (lena >= 0 && lenb >= 0)
 	{
-		if (filename[lena] == word[lenb])
+		ft_printf_fd("filename: %s,   %c [%i]//word: %s %c [%i]\n", 2,filename,  filename[lena], lena,word,  word[lenb], lenb);
+		if (filename[lena] != word[lenb])
 		{
-		//	ft_printf_fd(" %c [%i]// %c [%i]\n", 2, filename[lena], lena, word[lenb], lenb);
+			return (0);
+		}
+		else if(filename[lena] == word[lenb])
+		{
+			ft_printf_fd("same\n", 2);
+//		ft_printf_fd(" %c [%i]// %c [%i]\n", 2, filename[lena], lena, word[lenb], lenb);
 			lena--;
 			lenb--;
 		}
-		else
-			return (0);
 	}
+	if (lena == -1  && lenb >= 0)
+		return (0); 
 	return (1);
-		  	
 }
 
 
 
 
-int	ft_fit_to_asterisk(char *filename, t_expander *word)
+static int	ft_fit_to_asterisk(char *filename, t_expander *word)
 {
 	char first;
 	
@@ -106,7 +111,7 @@ int	ft_fit_to_asterisk(char *filename, t_expander *word)
 	return (1);
 }
 
-
+*/
 static char *ft_notfound(t_expander *asterisk)
 {
         
@@ -138,10 +143,9 @@ void 	min_evaluate_asterisk(t_expander **word, t_expander *asterisk, char wo)
 	dh = opendir("./");
 	d = readdir(dh);
 	found = 0;
-	
 	while (d)
 	{
-		if (ft_fit_to_asterisk(d->d_name, asterisk))
+		if (min_fit_to_asterisk(d->d_name, asterisk))
 		{
 			found = 1;
 			if (min_addlast_expander(word, d->d_name, &wo))
