@@ -12,6 +12,24 @@
 
 #include "minishell.h"
 
+static char	*ft_find_filename(char *heredoc)
+{
+	char	*path;
+	char	*temp;
+
+	path = ft_strjoin(HEREDOC_PATH, heredoc);
+	while (!access(path, F_OK))
+	{
+		temp = path;
+		path = ft_strjoin(path, HERENUM);
+		min_free(&temp);
+	}
+	return (path);
+}
+
+
+
+
 static void	ft_heredoc_loop(int fd, char *limiter) 	
 {
 	char	*line;
@@ -52,6 +70,7 @@ int	min_heredoc(t_lexer **token, char *heredoc)
 		ft_heredoc_loop(fd, limiter);
 		*token = min_here_set_file((*token)->next, path);
 		min_free(&limiter);	
+		//print_token_list(*token);
 		if (close(fd))
 			return (1);
 		return (0);
