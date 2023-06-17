@@ -32,7 +32,7 @@ static char     ft_dollar(t_lexer **token, t_expander **asterisk, t_expander **e
         t_exphelp       help;
 
         dollar = *asterisk;
-        help = min_init_exphelp(dict, 0, 0);
+	help = min_init_exphelp(dict, 0, 0);	
         help.space = min_dollar(token, &dollar, extra , help);
         if (!dollar)
                 min_free_expander(asterisk);

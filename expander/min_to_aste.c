@@ -12,9 +12,12 @@ char     min_to_aste(t_expander **word, t_expander *new, t_lexer **token)
                 (min_last_expander(*word))->next = new->next;
         }
         else if (*word)
-                (min_last_expander(*word))->next = new;
-        min_free_expander(&new);
-        if (*token)
+	{
+	       (min_last_expander(*word))->next = new;
+
+        
+	}
+        if (token)
                 (*token) = (*token)->next;
         return (0);
 }

@@ -32,7 +32,6 @@ static void ft_move_filename_to_word(char **filename, t_expander *word)
 {
 	while (**filename && **filename != (word->word)[0])
 		(*filename)++;
-//	printf("word: %s, filename %s \n", word->word, *filename);
 }
 
 static int	ft_last_word(char *filename, char *word)
@@ -48,15 +47,12 @@ static int	ft_last_word(char *filename, char *word)
 			
 	while (lena >= 0 && lenb >= 0)
 	{
-		ft_printf_fd("filename: %s,   %c [%i]//word: %s %c [%i]\n", 2,filename,  filename[lena], lena,word,  word[lenb], lenb);
 		if (filename[lena] != word[lenb])
 		{
 			return (0);
 		}
 		else if(filename[lena] == word[lenb])
 		{
-			ft_printf_fd("same\n", 2);
-//		ft_printf_fd(" %c [%i]// %c [%i]\n", 2, filename[lena], lena, word[lenb], lenb);
 			lena--;
 			lenb--;
 		}

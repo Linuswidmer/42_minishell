@@ -29,13 +29,9 @@ static void 	ft_space(t_lexer **file)
 
 static void	ft_word(t_lexer **file, t_lexer *token)
 {
-	print_token_list(*file);
-	print_token_list((*file)->prev);
-	print_token_list(token->prev);	
         while (*file && min_token_is_word((*file)->key))
         {
 		
-		ft_printf_fd("l\n", 2);
                 if ((*file)->next)
                 {
                         *file = (*file)->next;
@@ -45,10 +41,8 @@ static void	ft_word(t_lexer **file, t_lexer *token)
 		}
 		else
 		{
-			//ft_free_lexernode(file);
 			if ((*file)->prev != token->prev )	
 			{
-				ft_printf_fd("done\n", 2);
                         	ft_free_lexernode(file);
 			}
 			else
@@ -77,7 +71,6 @@ t_lexer  *min_here_set_file(t_lexer *token, char *path)
                        file = file->next;
 	ft_space(&file);
 	ft_word(&file, token);
-	print_token_list(file);
         token->next = file;
         if (file)
                 file->prev = token;

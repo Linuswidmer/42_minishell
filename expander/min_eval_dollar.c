@@ -5,7 +5,7 @@ static char ft_dollar_split_extra(t_lexer **token, t_expander **word, t_expander
         min_free(&help.value);                                                    
         if (!help.splitvalue)                                                     
                 return (min_add_value_to_expander(token, word, NULL, help.space)); 
-        help.space = min_eval_splitvalue(word, extra, help, help.splitvalue);      
+	help.space = min_eval_splitvalue(word, extra, help, help.splitvalue);      
         if (help.space == 3)                                                      
                 help.space = min_to_aste(word, min_asterisk_splitvalue(     
                         help.splitvalue[min_len_split(help.splitvalue)             
@@ -17,7 +17,7 @@ static char ft_dollar_split_extra(t_lexer **token, t_expander **word, t_expander
         //min_doublefree(&help.splitvalue);                                       
         if (*token)                                                               
                 *token = (*token)->next;                                          
-        return (help.space);                                                      
+	return (help.space);                                                      
 }                       
 
 static char     ft_dollar_split(t_lexer **token, t_expander **word, t_expander **extra, t_exphelp help)
@@ -57,18 +57,18 @@ static char ft_add_asterisk_free(t_expander **word, char **va, t_lexer **token)
                                                                                      
                                                                                      
 char     min_eval_dollar(t_lexer **token, t_expander **word, t_expander **extra, t_exphelp help)
-{                                                                                    
+{                             
         if (!min_check_word((*token)->value, &help.dollar_value))                     
         {                                                                            
                 if (extra)                                                           
                         return (ft_add_asterisk_free(word, &help.dollar_value, token));
                 return (min_add_value_to_expander(token, word, &help.dollar_value, help.space));
-        }                                                                            
+        }
         if (!min_check_dict(&help.dollar_value, &help.value, help.dict))              
-        {                                                                            
+        {        
                 *token = (*token)->next;                                             
                 return (help.space);                                                 
-        }                                                                            
+        }
         if (help.export)                                                             
         {                                                                            
                 if (extra)                                                           
