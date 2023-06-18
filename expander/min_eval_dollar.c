@@ -15,7 +15,7 @@ static char ft_dollar_split_extra(t_lexer **token, t_expander **word, t_expander
                         (help.splitvalue[min_len_split(help.splitvalue) -1]),      
                         min_init_exphelp(help.dict, 0, 1));                       
         //min_doublefree(&help.splitvalue);                                       
-        if (*token)                                                               
+        if (*token && min_token_is_word((*token)->key))                                                               
                 *token = (*token)->next;                                          
 	return (help.space);                                                      
 }                       
@@ -38,7 +38,7 @@ static char     ft_dollar_split(t_lexer **token, t_expander **word, t_expander *
                         help.splitvalue[min_len_split(help.splitvalue) -1]),       
                                 min_init_exphelp(help.dict, 0, 1));               
         //min_doublefree(&dhelp.splitvalue);                                      
-        if (*token)                                                               
+        if (*token &&  min_token_is_word((*token)->key))                                                               
                 *token = (*token)->next;                                          
         return (help.space);                                                      
 }                                                                                 

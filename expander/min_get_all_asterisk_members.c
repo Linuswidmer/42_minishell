@@ -75,5 +75,6 @@ char     min_get_all_asterisk_members(t_lexer **token, t_expander **asterisk, t_
                         ft_asterisk(token, asterisk);
         }
         return (space);
+	
 }
 
