@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 16:54:21 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/02 11:14:46 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/21 15:32:06 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,23 +46,28 @@ int	create_token_list(char *input, t_lexer *tmp)
 	return (pos);
 }
 
-char	*readline_prompt_quotes(int quotetype)
+char	*open_quotes_get_new_input(char **input, int quotetype)
 {
-	char	*input;
+	char	*new_input;
+	char	*new_input2;
 
+	new_input = NULL;
 	if (quotetype == 1)
-		return (input = readline("dquote>"));
+		new_input = readline("dquote>");
 	else if (quotetype == 2)
-		return (input = readline("quote>"));
-	else
-		return (NULL);
+		new_input = readline("quote>");
+	if (!new_input)
+		new_input = ft_strdup("");
+	new_input2 = ft_strjoin(*input, new_input);
+	free(new_input);
+	free(*input);
+	return (new_input2);
 }
 
 t_lexer	*lexer(char **input)
 {
 	int		token_exit_status;
 	char	*new_input;
-	char	*new_input2;
 	t_lexer	*beginning_token_list;
 
 	beginning_token_list = init_lexer_struct();
@@ -73,16 +78,13 @@ t_lexer	*lexer(char **input)
 		free_token_list(&beginning_token_list);
 	while (beginning_token_list && token_exit_status < 0)
 	{
-		new_input = readline_prompt_quotes(-token_exit_status);
-		if (!new_input)
-			new_input = ft_strdup("");
-		new_input2 = ft_strjoin(*input, new_input);
 		free_token_list(&beginning_token_list);
 		beginning_token_list = init_lexer_struct();
-		token_exit_status = create_token_list(new_input2, beginning_token_list);
-		free(*input);
-		free(new_input);
-		*input = new_input2;
+		if (!beginning_token_list)
+			return (NULL);
+		new_input = open_quotes_get_new_input(input, -token_exit_status);
+		token_exit_status = create_token_list(new_input, beginning_token_list);
+		*input = new_input;
 	}
 	if (_DEBUG)
 		print_token_list(beginning_token_list);

@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 14:40:31 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/21 12:07:24 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/21 16:08:31 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ int	key_value_to_token(t_lexer *token, t_lexertype key, char *input, int len)
 	return (0);
 }
 
-t_lexer	*add_to_token_list(t_lexer *list_end, t_lexertype key, char *str, int start, int pos)
+t_lexer	*add_to_token_list(t_lexer *list_end, char *str, int start, int pos)
 {
 	t_lexer	*new_list_end;
 
 	new_list_end = init_lexer_struct();
 	new_list_end->prev = list_end;
 	list_end->next = new_list_end;
-	list_end->key = key;
+	//list_end->key = key;
 	if (str)
 		list_end->value = ft_substr(str, start, pos - start);
 	return (new_list_end);

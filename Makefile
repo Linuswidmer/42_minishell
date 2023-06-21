@@ -6,7 +6,7 @@
 #    By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/07 09:41:35 by lwidmer           #+#    #+#              #
-#    Updated: 2023/06/21 14:58:18 by lwidmer          ###   ########.fr        #
+#    Updated: 2023/06/21 16:20:31 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/06/02 12:25:06 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/05/07 23:38:37 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/05/02 17:30:33 by lwidmer          ###   ########.fr        #
@@ -46,6 +46,8 @@ FILENAMES_FREE = min_free
 
 FILENAMES_ERROR = min_parser_error
 
+FILENAMES_DEBUG = print
+
 $(eval $(call MAKE_SRCS,LEXER,./lexer/))
 $(eval $(call MAKE_OBJS,LEXER,./lexer/))
 
@@ -79,8 +81,11 @@ $(eval $(call MAKE_OBJS,FREE,./free/))
 $(eval $(call MAKE_SRCS,ERROR,./error/))
 $(eval $(call MAKE_OBJS,ERROR,./error/))
 
-SRCS = $(SRCS_LEXER) ${SRCS_MS} ${SRCS_INIT} ${SRCS_BUILTINS} ${SRCS_PARSER} ${SRCS_JOB} ${SRCS_EXPANDER} ${SRCS_EXECUTER} ${SRCS_PIPE} ${SRCS_FREE} ${SRCS_ERROR}
-OBJS = $(OBJS_LEXER) ${OBJS_MS} ${OBJS_INIT} ${OBJS_BUILTINS} ${OBJS_PARSER} ${OBJS_JOB} ${OBJS_EXPANDER} ${OBJS_EXECUTER} ${OBJS_PIPE} ${OBJS_FREE} ${OBJS_ERROR}
+$(eval $(call MAKE_SRCS,DEBUG,./debug/))
+$(eval $(call MAKE_OBJS,DEBUG,./debug/))
+
+SRCS = $(SRCS_LEXER) ${SRCS_MS} ${SRCS_INIT} ${SRCS_BUILTINS} ${SRCS_PARSER} ${SRCS_JOB} ${SRCS_EXPANDER} ${SRCS_EXECUTER} ${SRCS_PIPE} ${SRCS_FREE} ${SRCS_ERROR} ${SRCS_DEBUG}
+OBJS = $(OBJS_LEXER) ${OBJS_MS} ${OBJS_INIT} ${OBJS_BUILTINS} ${OBJS_PARSER} ${OBJS_JOB} ${OBJS_EXPANDER} ${OBJS_EXECUTER} ${OBJS_PIPE} ${OBJS_FREE} ${OBJS_ERROR} ${OBJS_DEBUG}
 
 INCLUDES_DIR = -I./includes/
 

@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 14:42:52 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/21 15:18:19 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/21 16:09:39 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,18 @@ t_lexer	*dollar_postprocessing_loop(t_lexer *tmp,
 	{
 		if (dollar_value[pos] == '$')
 		{
-			tmp = add_to_token_list(tmp, l_dollar, "q", 0, quote_flag);
+			tmp = add_to_token_list(tmp, "q", 0, quote_flag);
+			tmp->prev->key = l_dollar;
 			start++;
 			pos = postprocessing_var(dollar_value, pos + 1);
 		}
 		else
 			pos = processing_word(dollar_value, pos);
 		if (pos > start)
-			tmp = add_to_token_list(tmp, l_word, dollar_value, start, pos);
+		{
+			tmp = add_to_token_list(tmp, dollar_value, start, pos);
+			tmp->prev->key = l_word;
+		}
 		start = pos;
 	}
 	return (tmp);
