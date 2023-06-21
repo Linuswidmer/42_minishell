@@ -23,11 +23,11 @@ static char	*ft_set_filename(t_lexer **token, t_dict *dict)
 	if (values[1])
 	{
 		ft_printf_fd(TMOPEN, 2);
-		//min_print_error(values)
+		min_dfree(&values);
 		return (NULL);
 	}
 	filename = ft_strdup(values[0]);
-	//min_d_free(&values);
+	min_dfree(&values);
 	return (filename);
 }
 

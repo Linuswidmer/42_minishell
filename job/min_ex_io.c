@@ -78,17 +78,14 @@ static int	ft_open_io_in(t_lexertype key, char **filename, char *evalhere)
 	int		fd2;
 	char	*file;
 
-	/*if (min_token_is_io(key)== 2 && evalhere)
-		file = min_eval_heredoc(*filename);	
-    else*/
 	if (min_token_is_io(key) == 2)
 		file = *filename;
 	else
 		file = ft_filepath(*filename, NULL);
-//	printf("file is %s\n", file);
-	//min_free(filename);
+	min_free(filename);
 	if (file)
 	{
+	
 		fd1 = open(file, O_RDONLY);
 		if (fd1 != -1)
 		{
@@ -96,12 +93,14 @@ static int	ft_open_io_in(t_lexertype key, char **filename, char *evalhere)
 			fd2 = close(fd1);
 			if (min_token_is_io(key) == 2)
 				fd2 = unlink(file);
-			//min_free(&file);
+			min_free(&file);
 			if (fd2 != -1)
 				return (0);
 		}
 	}
-	//min_print_error();
+	ft_printf_fd("%s: ",2, file);
+	perror(""); 
+	min_free(&file);
 	return (1);
 }
 
