@@ -6,6 +6,7 @@
 #    By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/07 09:41:35 by lwidmer           #+#    #+#              #
+#    Updated: 2023/06/21 10:54:52 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/06/02 12:25:06 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/05/07 23:38:37 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/05/02 17:30:33 by lwidmer          ###   ########.fr        #
@@ -20,51 +21,7 @@ define MAKE_OBJS
 	OBJS_$(1) = $(addprefix $(2), $(addsuffix .o, $(FILENAMES_$(1))))
 endef
 
-define MAKE_SRCS_OBJS
-    $(eval SRCS_$(1) := $(addprefix $(2), $(addsuffix .c, $$(FILENAMES_$(1)))))
-    $(eval OBJS_$(1) := $(addprefix $(2), $(addsuffix .o, $$(FILENAMES_$(1)))))
-endef
-
 NAME = minishell
-
-DIRS := \
-    LEXER \
-    PARSER \
-    MS \
-    INIT \
-    BUILTINS \
-    JOB \
-    EXPANDER \
-    EXECUTER \
-    PIPE \
-    FREE \
-    ERROR
-
-SRCS_DIRS := \
-    ./src_lexer/ \
-    ./parser/ \
-    ./src/ \
-    ./init/ \
-    ./builtins/ \
-    ./job/ \
-    ./expander/ \
-    ./executer/ \
-    ./pipe/ \
-    ./free/ \
-    ./error/
-
-DIR_PATHS = \
-	./src_lexer/ \
-	./parser/ \
-	./src/ \
-	./init/ \
-	./builtins/ \
-	./job/ \
-	./expander/ \
-	./executer/ \
-	./pipe/ \
-	./free/ \
-	./error \
 
 FILENAMES_LEXER = lexer tokens token_parser lexer_utils free_lexer token_list_utils \
 				dollar_postprocessing parse_quote parse_dollar
@@ -131,13 +88,13 @@ REMOVE = rm -f
 
 CFLAGS = -Werror -Wall -Wextra
 
-${NAME}: ${OBJS}
-	cc -o ${NAME} $^ -lreadline -L. ./libft/libft.a
-
-.c.o: ${SRCS}
-	cc -c -o $@ $< ${INCLUDES_DIR}
-	
 all: ${NAME}
+
+${NAME}: ${OBJS}
+	cc ${OBJS} -lreadline -L. ./libft/libft.a -o ${NAME}
+
+%.o: %.c
+	cc ${INCLUDES_DIR} -c $< -o $@
 
 lib:
 	make -C ./libft
