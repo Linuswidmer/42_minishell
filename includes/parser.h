@@ -19,6 +19,7 @@ t_ast	*min_parser(t_lexer *token); /* x */
 void    min_parser_malloc_fail(t_ast **ast);
 void	min_bring_ast_to_beginning(t_ast **ast);
 void    min_free_ast(t_ast **ast);
+void    min_free_ast_loop(t_ast *ast);
 int		min_is_last_token(t_lexer *token);
 
 

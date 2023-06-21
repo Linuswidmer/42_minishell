@@ -20,8 +20,8 @@ void	min_free_expander(t_expander **node)
 	{
 		temp = *node;
 		*node = (*node)->next;
-		//min_free(&temp->word);
-		//free(temp);
+		min_free(&temp->word);
+		free(temp);
 		temp = NULL;
 	}
 }		

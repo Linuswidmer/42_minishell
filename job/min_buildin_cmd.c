@@ -45,5 +45,6 @@ int	min_buildin_cmd(t_jobnode *astjob, t_dict *dict, t_builtins *build)
 		exit = 1001;
 	else
 		exit = ft_run_buildin(cmd, build);
+	min_dfree(&cmd);
 	return (exit);
 }

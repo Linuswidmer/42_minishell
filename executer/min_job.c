@@ -30,13 +30,25 @@ static int ft_is_buildin(char *cmd, t_builtins *build)
 	return (0);
 }	
 
+static	int	ft_is_clear(t_lexer *token, t_dict *dict, t_builtins *build)
+{
+
+	char	**cmd;
+	int	exit;
+
+
+	cmd = min_word_eval(&token, dict);	
+	exit = ft_is_buildin(cmd[0], build);
+	min_dfree(&cmd); 
+	return (exit);
+}
+
 
 /*   */
 static int ft_cmd_is_buildin(t_jobnode *job, t_dict *dict, t_builtins *build)
 {
 	t_lexer *token;
 	char	in;
-	char	**cmd;
 	
 	in = 0;
 	token = job->start;
@@ -58,9 +70,7 @@ static int ft_cmd_is_buildin(t_jobnode *job, t_dict *dict, t_builtins *build)
 		else
 			token = token->next;
 	}
-	cmd = min_word_eval(&token, dict);	
-	return (ft_is_buildin(cmd[0], build)); 
-	
+	return (ft_is_clear(token, dict, build));
 }
 
 /*      */

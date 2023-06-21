@@ -42,7 +42,7 @@ static char **ft_get_values(t_expander *word, t_exphelp help)
 		help.splitvalue[help.n] = ft_strdup(word->word);
 		if (!help.splitvalue[help.n++])
 		{
-			//min_double_free(&help.splitvalue);
+			min_dfree(&help.splitvalue);
 			word = NULL;			
 		}
 		else					

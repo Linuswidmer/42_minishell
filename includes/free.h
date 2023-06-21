@@ -16,7 +16,7 @@
 
 
 void    min_free(char **tofree);
-
+void	min_dfree(char ***tofree);
 /**/
 void double_free(char ***str);
 
