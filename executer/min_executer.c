@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:18:16 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/11 08:22:28 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/21 11:52:54 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	min_executer(t_ast *ast, t_dict *dict, t_builtins *build, char fork)
 	}
 	if (ast->key == jobnode)
 	{
+			ft_printf_fd("executes job\n", 2);
       		return (min_job(ast, dict, build, fork));
 	}
 	return (1);

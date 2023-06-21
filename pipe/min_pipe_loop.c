@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 11:19:11 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/21 11:21:05 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/21 11:59:01 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,8 @@ int	min_pipe_loop(t_pipenode *pipenode, t_dict *dict, t_builtins *builtin,
 	int			n;
 
 	n = 0;
-	ft_printf_fd("before the pipeloop\n", 2);
 	while (pipenode && !exit)
 	{
-		ft_printf_fd("enters the pipeloop\n", 2);
 		pipe(pipes->pipefd);
 		(pipes->pid)[n] = fork();
 		if ((pipes->pid)[n] && n > 0)
@@ -60,8 +58,10 @@ int	min_pipe_loop(t_pipenode *pipenode, t_dict *dict, t_builtins *builtin,
 		if (!((pipes->pid)[n]))
 		{
 			exit = pipe_loop_redirection(pipes, pipenode, n);
-			ON_SUCCESS(exit, UPDATE_EXIT(exit, min_exit_handler(
-						min_executer(pipenode->down, dict, builtin, 0))));
+			//ON_SUCCESS(exit, UPDATE_EXIT(exit, min_exit_handler(
+			//			min_executer(pipenode->down, dict, builtin, 0))));
+			if (!exit)
+				exit = min_exit_handler(min_executer(pipenode->down, dict, builtin, 0));	
 		}
 		ON_SUCCESS(exit, loop_update_pipes(pipes->old_pipefd, pipes->pipefd));
 		if (pipenode->next)
