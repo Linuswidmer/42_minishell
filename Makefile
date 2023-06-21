@@ -6,7 +6,7 @@
 #    By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/07 09:41:35 by lwidmer           #+#    #+#              #
-#    Updated: 2023/06/21 12:13:56 by lwidmer          ###   ########.fr        #
+#    Updated: 2023/06/21 14:58:18 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/06/02 12:25:06 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/05/07 23:38:37 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/05/02 17:30:33 by lwidmer          ###   ########.fr        #
@@ -46,8 +46,8 @@ FILENAMES_FREE = min_free
 
 FILENAMES_ERROR = min_parser_error
 
-$(eval $(call MAKE_SRCS,LEXER,./src_lexer/))
-$(eval $(call MAKE_OBJS,LEXER,./src_lexer/))
+$(eval $(call MAKE_SRCS,LEXER,./lexer/))
+$(eval $(call MAKE_OBJS,LEXER,./lexer/))
 
 $(eval $(call MAKE_SRCS,PARSER,./parser/))
 $(eval $(call MAKE_OBJS,PARSER,./parser/))

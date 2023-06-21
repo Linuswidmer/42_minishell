@@ -6,24 +6,11 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:24:19 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/29 13:19:39 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/21 14:59:12 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-int parse_token(char *input, int pos, t_lexer *tmp, t_lexertype token_type, int (*find_next_token_pos)(char *, int))
-{
-    int len;
-    int start;
-    start = pos - 1;
-    pos = find_next_token_pos(input, pos);
-    len = pos - start;
-    write_key_and_value_to_token(tmp, token_type, input + start, len);
-    return pos;
-}
-*/
 
 int parse_double_tokens(char *input, int pos, t_lexertype token, t_lexer *tmp)
 {

@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 18:06:39 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/02 11:10:26 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/21 14:49:05 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	parse_quote(char *input, int pos, t_lexer *tmp, t_lexertype token)
 	i = 0;
 	pos = quote_find_next_token_pos(input, pos, token);
 	len = pos - start;
-	dollar_flag = check_if_dollar_occurrs_in_dquote(input, start, pos, token);
+	dollar_flag = check_if_dollar_occurrs_in_dquote(input, start, len, token);
 	if (dollar_flag == 1)
 		key = l_dollar_q;
 	else

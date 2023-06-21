@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 18:04:33 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/29 13:21:34 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/21 14:35:17 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,5 @@ int	parse_dollar(char *input, int pos, t_lexer *tmp)
 	pos = dollar_find_next_token_pos(input, pos);
 	len = pos - start;
 	key_value_to_token(tmp, l_dollar, input + start, len);
-	//key_value_to_token(tmp, l_dollar, input, 0);
-	
 	return (pos);
 }
