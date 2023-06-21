@@ -1,0 +1,16 @@
+hallo
+min_set_cmd: echo
+min_set_cmd: hallo
+value is (null)
+v:out
+filename out
+hallo
+start ast[ 0xdd5e70 ]
+hallo
+min_set_cmd: echo
+min_set_cmd: hallo
+value is (null)
+v:out
+filename out
+hallo
+start ast[ 0xdd6170 ]
