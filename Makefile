@@ -6,7 +6,7 @@
 #    By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/07 09:41:35 by lwidmer           #+#    #+#              #
-#    Updated: 2023/06/21 10:54:52 by lwidmer          ###   ########.fr        #
+#    Updated: 2023/06/21 12:13:56 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/06/02 12:25:06 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/05/07 23:38:37 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/05/02 17:30:33 by lwidmer          ###   ########.fr        #
@@ -94,7 +94,7 @@ ${NAME}: ${OBJS}
 	cc ${OBJS} -lreadline -L. ./libft/libft.a -o ${NAME}
 
 %.o: %.c
-	cc ${INCLUDES_DIR} -c $< -o $@
+	cc ${INCLUDES_DIR} -c $< -o $@ ${CFLAGS}
 
 lib:
 	make -C ./libft

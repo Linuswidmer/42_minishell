@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 14:40:31 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/11 09:25:47 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/21 12:07:24 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	key_value_to_token(t_lexer *token, t_lexertype key, char *input, int len)
 {
 	token->key = key;
-	if (len > 0)
+	if (len > 0 || key == l_word )
 	{
 		token->value = ft_substr(input, 0, len);
 		if (!token->value)

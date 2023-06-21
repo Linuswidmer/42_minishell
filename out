@@ -1,16 +1,25 @@
-hallo
-min_set_cmd: echo
-min_set_cmd: hallo
-value is (null)
-v:out
-filename out
-hallo
-start ast[ 0xdd5e70 ]
-hallo
-min_set_cmd: echo
-min_set_cmd: hallo
-value is (null)
-v:out
-filename out
-hallo
-start ast[ 0xdd6170 ]
+builtins
+error
+executer
+expander
+expander_new
+free
+includes
+init
+job
+lexer.o
+libft
+Makefile
+min_common_cmd.o
+minishell
+minishell.pdf
+old
+out
+out2
+parser
+pipe
+src
+src_lexer
+test
+test.c
+test.sh
