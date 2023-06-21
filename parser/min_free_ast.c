@@ -6,7 +6,9 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 14:39:31 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/29 13:23:44 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/02 12:07:12 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/11 14:45:29 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/05/11 09:51:34 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +19,9 @@ void	ft_free_ast(t_ast *ast);
 static void	ft_free_subnode(t_ast *ast)
 {
 	ft_free_ast(ast->node.sub->down);
+//	ast->node.sub->down = NULL;
+	free(ast->node.sub);
+//	ast->node.sub = NULL;
 	ast->node.sub->down = NULL;
 	printf("in sub[ %p ]\n", ast);
 	free(ast);

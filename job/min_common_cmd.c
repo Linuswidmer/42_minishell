@@ -6,7 +6,9 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 12:05:30 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/06 12:10:24 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/21 10:27:16 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/02 13:05:38 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/05/11 14:44:29 by jstrotbe         ###   ########.fr       */
 /*   Updated: 2023/05/09 13:02:05 by jstrotbe         ###   ########.fr       */
 /*   Updated: 2023/05/09 11:33:08 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/05/03 09:46:10 by lwidmer          ###   ########.fr       */
@@ -74,6 +76,7 @@ static int	ft_checkpath(char *cmd, t_dict *dict, char **path)
 		return (ft_checkpath_cmd_is_path(cmd, dict, path));
 	if (cmd[0] == '.')
 		return (ft_checkpath_cmd_is_file(cmd, dict, path));
+
 	i = 0;
 	paths = ft_get_paths(dict);
 	if (!path)
