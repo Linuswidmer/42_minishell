@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 13:34:03 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/22 13:08:20 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/22 18:15:41 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	ft_create_new_entry(t_lexer **token, t_expander *end,
 
 	if (space && end->key != l_empty)
 	{
-		end->next = min_init_expander(l_word, EMPTY);
+		end->next = min_init_expander(l_word, ft_strdup(EMPTY));
 		if (!end->next)
 			return (1);
 		end = end->next;

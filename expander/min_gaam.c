@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 12:48:07 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/22 12:56:23 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/22 18:46:18 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	ft_word(t_lexer **token, t_expander **asterisk, char *value)
 	end = min_last_expander(*asterisk);
 	if (end->key == l_asterisk)
 	{
-		end->next = min_init_expander(l_word, EMPTY);
+		end->next = min_init_expander(l_word, ft_strdup(EMPTY));
 		if (!end->next)
 			min_free_expander(asterisk);
 		else
@@ -57,7 +57,7 @@ static void	ft_asterisk(t_lexer **token, t_expander **asterisk)
 	t_expander	*end;
 
 	end = min_last_expander(*asterisk);
-	end->next = min_init_expander(l_asterisk, NULL);
+	end->next = min_init_expander(l_asterisk, ft_strdup(EMPTY));
 	if (!end->next)
 		min_free_expander(asterisk);
 	*token = (*token)->next;
@@ -70,7 +70,7 @@ char	min_gaam(t_lexer **token, t_expander **asterisk, t_expander **extra,
 
 	space = 0;
 	*token = (*token)->next;
-	*extra = min_init_expander(l_empty, EMPTY);
+	*extra = min_init_expander(l_empty, ft_strdup(EMPTY));
 	if (!extra)
 		return (space);
 	while (!space && (*extra)->key == l_empty && asterisk && *token

@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 12:02:16 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/22 12:11:59 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/22 15:57:15 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_expander	*min_asterisk_splitvalue(char *value)
 	space = 0;
 	values = min_delimiter_split(value, &space, E_ASTERISK);
 	ft_get_dollar_asterisk(values, space, &old);
-	//min_doublefree(&values);
+	min_dfree(&values);
 	if (!old)
 		ft_putstr_fd(ERR_MALL, 2);
 	return (old);

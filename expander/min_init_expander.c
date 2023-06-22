@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 12:47:07 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/22 10:47:02 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/22 19:02:40 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_expander	*min_init_expander(t_lexertype key, char *value)
 	ft_bzero(new, sizeof(t_expander));
 	new->key = key;
 	new->word = ft_strdup(value);
+	min_free(&value);
 	if (!new->word && value)
 		return (NULL);
 	return (new);

@@ -6,110 +6,12 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 12:36:42 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/22 12:38:42 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/22 17:46:05 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-static int	ft_word_in_filename(char **filename, char *word, t_expander *curr)
-{
-	if (!**filename)
-		return (0);
-	while(**filename && *word)
-	{ 
-		if (*(*filename)++ != *word++)
-			return (0);
-	}
-	if (!**filename && !*word)
-			return (1);
-	if (!*word && curr->next)
-			return (1);
-	else			
-			return (0);
-}
-	
-static void ft_move_filename_to_word(char **filename, t_expander *word)
-{
-	while (**filename && **filename != (word->word)[0])
-		(*filename)++;
-}
-
-static int	ft_last_word(char *filename, char *word)
-{
-	int lena;
-	int lenb;
-		
-	lena = (int)ft_strlen(filename) -1;
-	lenb = (int)ft_strlen(word) -1;
-	
-	if(!*filename)
-		return (0); 
-			
-	while (lena >= 0 && lenb >= 0)
-	{
-		if (filename[lena] != word[lenb])
-		{
-			return (0);
-		}
-		else if(filename[lena] == word[lenb])
-		{
-			lena--;
-			lenb--;
-		}
-	}
-	if (lena == -1  && lenb >= 0)
-		return (0); 
-	return (1);
-}
-
-
-
-
-static int	ft_fit_to_asterisk(char *filename, t_expander *word)
-{
-	char first;
-	
-	first = 0;
-	while (word && filename)
-	{
-		if(word->key == l_asterisk)
-		{
-			if (!first++)
-			{
-				if (*filename == '.')	
-					return (0);
-			}
-			while (word->key == l_asterisk)
-			{
-				if (!word->next)
-					return (1);
-				word = word->next; 
-			}
-			ft_move_filename_to_word(&filename, word);
-		}	
-		else if (word->key == l_word )
-		{ 
-			first++;
-			if ( !word->next)
-			{
-				if (!ft_last_word(filename, word->word))
-					return (0);
-				else 
-					return (1);
-			}	
-			if (!ft_word_in_filename(&filename, word->word, word))
-				return (0);
-			word = word->next;
-		}
-		else
-			word = word->next;
-	}	
-	return (1);
-}
-
-*/
 static char	*ft_notfound(t_expander *asterisk)
 {
 	char	*value;
@@ -134,16 +36,19 @@ void	min_evaluate_asterisk(t_expander **word, t_expander *asterisk, char wo)
 	struct dirent	*d;
 	DIR				*dh;
 	char			found;
+	char		*temp;
 
 	dh = opendir("./");
 	d = readdir(dh);
 	found = 0;
+
 	while (d)
 	{
 		if (min_fit_to_asterisk(d->d_name, asterisk))
 		{
 			found = 1;
-			if (min_addlast_expander(word, ft_strdup(d->d_name), &wo))
+			temp = strdup(d->d_name);
+			if (min_addlast_expander(word, temp, &wo))
 				break ;
 		}			
 		d = readdir(dh);

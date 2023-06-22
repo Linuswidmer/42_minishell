@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:40:07 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/22 13:02:41 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/22 18:19:20 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ char	min_til(t_lexer **token, t_expander **word, t_exphelp help)
 			end->word = ft_strjoin(help.dollar_value, help.value);
 		else
 			end ->word = ft_strdup(help.value);
-		//min_free(temp);
-		//min_free(value);
+		min_free(&help.dollar_value);
+		min_free(&help.value);
 	}
 	if (!end || !end->word)
 		min_free_expander(word);

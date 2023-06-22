@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 17:06:02 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/22 15:23:26 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/22 18:55:32 by jstrotbe         ###   ########.fr       */
 /*   Updated: 2023/06/22 11:21:59 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -18,7 +18,8 @@ int	min_addlast_expander(t_expander **word, char *value, char *wo)
 
 	end = min_last_expander(*word);
 	if (wo && *wo)
-	{
+	{	
+		min_free(&end->word);
 		end->key = l_word;
 		end->word = value;
 		*wo = 0;
@@ -31,6 +32,7 @@ int	min_addlast_expander(t_expander **word, char *value, char *wo)
 			min_free_expander(word);
 			return (1);
 		}
+		
 	}
 	return (0);
 }
