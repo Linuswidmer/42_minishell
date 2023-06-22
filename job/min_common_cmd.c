@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 12:05:30 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/22 10:13:44 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/22 12:02:36 by jstrotbe         ###   ########.fr       */
 /*   Updated: 2023/06/21 14:51:28 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/06/02 13:05:38 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/05/11 14:44:29 by jstrotbe         ###   ########.fr       */
@@ -111,6 +111,7 @@ int	min_common_cmd(t_jobnode *astjob, t_dict *dict, char f)
 	pid_t	id;
 	int		status;
 	int		result;
+	char	**envp;
 
 	exit = 0;
 	if (f)
@@ -126,9 +127,11 @@ int	min_common_cmd(t_jobnode *astjob, t_dict *dict, char f)
 		exit = min_io_and_cmd(astjob, dict, &cmd);
 		if (!exit)
 		{	
+			envp = (char **)min_get_envp(dict);
 			exit = ft_checkpath(cmd[0], dict, &path);
-			exit = execve(path, cmd, ft_get_envp(dict));			
+			exit = execve(path, cmd, envp);			
 			min_free(&path);
+			min_dfree(&envp);
 		}
 		min_dfree(&cmd);
 		return (127);
@@ -136,7 +139,6 @@ int	min_common_cmd(t_jobnode *astjob, t_dict *dict, char f)
 	if (id)
 	{
 		result = waitpid(id, &status, 0);
-		//ft_printf_fd("result is %i\n", 2, result);
 		if (result == -1)
 		{
 			result = waitpid(id, &status, 0);

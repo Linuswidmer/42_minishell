@@ -1,30 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   min_free_cmdnode.c                                 :+:      :+:    :+:   */
+/*   min_free_expander.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/21 19:27:42 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/22 15:11:52 by jstrotbe         ###   ########.fr       */
+/*   Created: 2023/04/14 12:54:51 by jstrotbe          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2023/06/22 12:47:55 by lwidmer          ###   ########.fr       */
+=======
+/*   Updated: 2023/06/22 11:19:20 by jstrotbe         ###   ########.fr       */
+>>>>>>> dev_jstrotbe
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void min_free_cmdnode(t_cmdnode       **cmdnode, int exit)
+void	min_free_expander(t_expander **node)
 {
-	t_cmdnode *curr;
-	t_cmdnode *next;
+<<<<<<< HEAD
+	t_expander	*temp;
 
-	next = *cmdnode;
-	while (next)
+	while (*node)
+=======
+	t_expander *temp;
+	t_expander *new;
+	
+	new = *node;
+	
+	while (new)
+>>>>>>> dev_jstrotbe
 	{
-		curr = next;
-		next = next->next;
-		if (exit)
-			min_free(&curr->arg);
-		free(curr);
+		temp = new;
+		new = new->next;
+		min_free(&temp->word);
+		free(temp);
+		temp = NULL;
 	}
-	*cmdnode = NULL;
-}
+	*node = NULL;
+}		

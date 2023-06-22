@@ -6,12 +6,12 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 12:24:31 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/21 12:20:27 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/22 14:47:02 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
 
-static char	*ft_filepath(char *value, char *expath)
+static char	*ft_filepath(char *value)
 {
 	char	*filepath;
 	char	*path;
@@ -19,23 +19,22 @@ static char	*ft_filepath(char *value, char *expath)
 
 	if (!value)
 		return (NULL);
-	if (expath)
-		filepath = ft_strjoin(expath, value);
-	else if (access(value, F_OK))
+	else if (value[0] == '.' || value[0] == '/')
+	{
 		filepath = ft_strdup(value);
+		min_free(&value);
+	}
 	else
 	{
 		path = getcwd(NULL, 0);
 		if (!path)
 			return (NULL);
 		temp = ft_strjoin(path, "/");
+		min_free(&path);
 		if (!temp)
-		{
-			//min_free(path);
 			return (NULL);
-		}
 		filepath = ft_strjoin(temp, value);
-		//min_free(temp);
+		min_free(&temp);
 	}
 	return (filepath);
 }
@@ -46,8 +45,8 @@ static int	ft_open_io_out(t_lexertype key, char **filename)
 	int		fd2;
 	char	*file;
 
-	file = ft_filepath(*filename, NULL);
-	//min_free(filename);
+	file = ft_filepath(*filename);
+	min_free(filename);
 	if (file)
 	{
 		if (min_token_is_io(key) == 3)
@@ -59,7 +58,7 @@ static int	ft_open_io_out(t_lexertype key, char **filename)
 			fd2 = dup2(fd1, STDOUT_FILENO);
 			fd2 = close(fd1);
 		}
-		//min_free(file);
+		min_free(&file);
 		if (fd1 == -1 || fd2 == -1)
 		{
 		// min_print_error(io->value);
@@ -81,8 +80,12 @@ static int	ft_open_io_in(t_lexertype key, char **filename)
 	if (min_token_is_io(key) == 2)
 		file = *filename;
 	else
-		file = ft_filepath(*filename, NULL);
-	min_free(filename);
+	{
+		
+		file = ft_filepath(*filename);
+		min_free(filename);
+	}
+	
 	if (file)
 	{
 	
@@ -93,9 +96,11 @@ static int	ft_open_io_in(t_lexertype key, char **filename)
 			fd2 = close(fd1);
 			if (min_token_is_io(key) == 2)
 				fd2 = unlink(file);
-			min_free(&file);
 			if (fd2 != -1)
+			{
+				min_free(&file);
 				return (0);
+			}
 		}
 	}
 	ft_printf_fd("%s: ",2, file);
