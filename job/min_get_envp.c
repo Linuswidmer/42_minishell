@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 09:31:15 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/29 14:57:06 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/22 12:02:47 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	calc_dict_len(t_dict *dict)
 	return (i);
 }
 
-char *const	*ft_get_envp(t_dict *dict)
+char *const	*min_get_envp(t_dict *dict)
 {
 	int		i;
 	int		dict_len;

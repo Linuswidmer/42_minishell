@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:41:03 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/22 09:47:08 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/22 15:12:41 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,6 @@ int	min_expander(t_lexer *token, t_dict *dict, t_lexer *end, char ***cmd)
 		if (!**cmd)
 			exit = 1;
 	}
-	min_free_cmdnode(&cmdnode);		
+	min_free_cmdnode(&cmdnode, exit);		
 	return (exit);
 }
