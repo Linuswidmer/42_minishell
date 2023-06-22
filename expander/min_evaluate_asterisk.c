@@ -1,13 +1,15 @@
-
+/* ************************************************************************** */
+/*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   min_asterisk.c                                     :+:      :+:    :+:   */
+/*   min_evaluate_asterisk.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/17 08:50:43 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/12 16:22:53 by jstrotbe         ###   ########.fr       */
+/*   Created: 2023/06/22 12:36:42 by lwidmer           #+#    #+#             */
+/*   Updated: 2023/06/22 12:38:42 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 /*
@@ -108,33 +110,31 @@ static int	ft_fit_to_asterisk(char *filename, t_expander *word)
 }
 
 */
-static char *ft_notfound(t_expander *asterisk)
+static char	*ft_notfound(t_expander *asterisk)
 {
-        
-        char *value;
-        char *temp;
+	char	*value;
+	char	*temp;
 
-
-        value = ft_strjoin(EMPTY, EMPTY);
-        while (value && asterisk)
-        {
-                temp = value;
-                if (asterisk->key == l_asterisk)
-                        value =  ft_strjoin(temp, ASTERISK);
-                else    
-                        value = ft_strjoin(temp, asterisk->word);
-                min_free(&temp);
-                asterisk = asterisk->next;
-        }
-        return (value);
+	value = ft_strjoin(EMPTY, EMPTY);
+	while (value && asterisk)
+	{
+		temp = value;
+		if (asterisk->key == l_asterisk)
+			value = ft_strjoin(temp, ASTERISK);
+		else
+			value = ft_strjoin(temp, asterisk->word);
+		min_free(&temp);
+		asterisk = asterisk->next;
+	}
+	return (value);
 }
 
-void 	min_evaluate_asterisk(t_expander **word, t_expander *asterisk, char wo)
+void	min_evaluate_asterisk(t_expander **word, t_expander *asterisk, char wo)
 {
 	struct dirent	*d;
-    DIR 			*dh;
+	DIR				*dh;
 	char			found;
-	
+
 	dh = opendir("./");
 	d = readdir(dh);
 	found = 0;
@@ -143,7 +143,7 @@ void 	min_evaluate_asterisk(t_expander **word, t_expander *asterisk, char wo)
 		if (min_fit_to_asterisk(d->d_name, asterisk))
 		{
 			found = 1;
-			if (min_addlast_expander(word, d->d_name, &wo))
+			if (min_addlast_expander(word, ft_strdup(d->d_name), &wo))
 				break ;
 		}			
 		d = readdir(dh);

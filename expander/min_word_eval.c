@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   min_word_eval_new.c                                :+:      :+:    :+:   */
+/*   min_word_eval.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:38:59 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/12 16:22:38 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/22 13:11:46 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/05/11 11:40:55 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -15,26 +15,25 @@
 
 static int	ft_count_values(t_expander *word)
 {
-	int c;
+	int	c;
 
 	c = 1;
 	while (word)
 	{
 		c++;
 		word = word->next;
-	} 
-	return (c);		
+	}
+	return (c);
 }
 
-
-static char **ft_get_values(t_expander *word, t_exphelp help)
+static char	**ft_get_values(t_expander *word, t_exphelp help)
 {
-	int		count;
+	int	count;
 
 	if (!word)
 		return (NULL);
 	count = ft_count_values(word);
-	help.splitvalue = ft_calloc(sizeof(char **) , (count +1));
+	help.splitvalue = ft_calloc(sizeof(char **), (count +1));
 	if (!help.splitvalue)
 		return (NULL);
 	while (word)
@@ -43,9 +42,9 @@ static char **ft_get_values(t_expander *word, t_exphelp help)
 		if (!help.splitvalue[help.n++])
 		{
 			min_dfree(&help.splitvalue);
-			word = NULL;			
+			word = NULL;
 		}
-		else					
+		else
 			word = word->next;
 	}
 	if (help.splitvalue)
@@ -54,29 +53,28 @@ static char **ft_get_values(t_expander *word, t_exphelp help)
 }
 
 /* */
-char **min_word_eval(t_lexer **token, t_dict *dict)
+char	**min_word_eval(t_lexer **token, t_dict *dict)
 {
-        char    **values;
-        t_expander      *word;
-        t_exphelp       help;
+	char		**values;
+	t_expander	*word;
+	t_exphelp	help;
 
-        help = min_init_exphelp(dict, 0, 0);
-        word = min_init_expander(l_empty, EMPTY);
-        while (!help.space && word && *token && min_token_is_word((*token)->key))
-        {
-                if (min_token_is_word((*token)->key) == 1)
-                        help.space = min_word(token, &word, NULL, help.space);
-                else if (min_token_is_word((*token)->key) == 2)
-                        help.space = min_dollar(token, &word, NULL, help);
-                else if ( min_token_is_word((*token)->key) == 4)
-                        help.space = min_til(token, &word, help);
-                else if (min_token_is_word((*token)->key) == 3)
+	help = min_init_exphelp(dict, 0, 0);
+	word = min_init_expander(l_empty, EMPTY);
+	while (!help.space && word && *token && min_token_is_word((*token)->key))
+	{
+		if (min_token_is_word((*token)->key) == 1)
+			help.space = min_word(token, &word, NULL, help.space);
+		else if (min_token_is_word((*token)->key) == 2)
+			help.space = min_dollar(token, &word, NULL, help);
+		else if (min_token_is_word((*token)->key) == 4)
+			help.space = min_til(token, &word, help);
+		else if (min_token_is_word((*token)->key) == 3)
 		{
-                        help.space = min_asterisk(token, &word, NULL, help);
-        		
+			help.space = min_asterisk(token, &word, NULL, help);
 		}
 	}
-        values = ft_get_values(word, help);
-        min_free_expander(&word);
-        return (values);
+	values = ft_get_values(word, help);
+	min_free_expander(&word);
+	return (values);
 }
