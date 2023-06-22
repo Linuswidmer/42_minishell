@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:19:36 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/22 10:14:04 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/22 15:09:28 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/06/22 10:11:21 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/05/11 14:48:19 by jstrotbe         ###   ########.fr       */
 /*   Updated: 2023/05/11 10:06:48 by lwidmer          ###   ########.fr       */
@@ -20,12 +20,56 @@
 
 int g_status = 1;
 
+void	free_minishell(t_min *min)
+{
+	close(min->in);
+	close(min->out);
+	free_dict(min->dict);
+	free_builtins(min->builtins);
+	free_min(min);
+}
+
+int	lex_parse_exec(t_min *min, char **readline_input)
+{
+	int	exit;
+
+	exit = 0;
+	min->token = lexer(readline_input);
+	if (min->token)
+	{
+		min->ast = min_parser(min->token);
+		if (min->ast) 
+			exit = min_executer(min->ast, min->dict, min->builtins, 1);
+		else
+			g_status = 2;
+	}	
+	else
+		g_status = 2;
+	return (exit);
+}
+
+int set_g_status(int exit)
+{
+	if (exit >= 1000 && exit < 2000)
+	{
+		g_status = exit - 1000;
+		return (0);
+	}
+	return (exit);
+}
+
+void	free_resources_readline_loop(char *readline_input, t_min *min)
+{
+	free(readline_input);
+	min_free_ast(&min->ast);
+	free_token_list(&(min->token));
+}
+
 int ft_readline_loop(t_min *min)
 {
 	char *readline_input;
-	int exit;	
+	static int exit;	
 
-	exit = 0;
 	while (!exit && min->dict)
 	{
 		exit = init_signals();
@@ -38,34 +82,14 @@ int ft_readline_loop(t_min *min)
 		}
 		if (_DEBUG)
 			ft_printf_fd("\n \\DEBUG_MODE\\ \n\n", 2);
-		min->token = lexer(&readline_input);
-		if (min->token)
-		{
-			min->ast = min_parser(min->token);
-			if (min->ast) 
-				exit = min_executer(min->ast, min->dict, min->builtins, 1);
-			else
-				g_status = 2;
-		}	
-		else
-				g_status = 2;
+		exit = lex_parse_exec(min, &readline_input);
 		add_history(readline_input);
-		free(readline_input);
-		min_free_ast(&min->ast);
-		free_token_list(&(min->token));
+		free_resources_readline_loop(readline_input, min);
 		dup2(min->in, STDIN_FILENO);
 		dup2(min->out, STDOUT_FILENO);
-		if (exit >= 1000 && exit < 2000)
-		{
-			g_status = exit - 1000;
-                        exit = 0;
-		}	
+		exit = set_g_status(exit);
 	}
-	close(min->in);
-	close(min->out);
-	free_dict(min->dict);
-	free_builtins(min->builtins);
-	free_min(min);
+	free_minishell(min);
 	return (exit);
 }
 
@@ -77,7 +101,6 @@ int main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	
-
 	exit = init_minishell(&min, env);
 	if (!exit)
 		exit = ft_readline_loop(min);

@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 11:28:08 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/29 11:33:07 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/22 14:11:39 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,5 +113,6 @@ int	min_pipe(t_pipenode *pipenode, t_dict *dict, t_builtins *build)
 		SET_EXIT_ON_ERROR(close(pipes->dup_in));
 		exit = parent_wait_for_children(pipes);
 	}
+	free_pipestruct(pipes);
 	return (exit);
 }

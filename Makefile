@@ -6,7 +6,7 @@
 #    By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/07 09:41:35 by lwidmer           #+#    #+#              #
-#    Updated: 2023/06/22 12:00:49 by lwidmer          ###   ########.fr        #
+#    Updated: 2023/06/22 14:10:52 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/06/22 09:47:02 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/06/02 12:25:06 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/05/07 23:38:37 by lwidmer          ###   ########.fr        #
@@ -43,7 +43,7 @@ FILENAMES_EXECUTER = min_executer min_exit_handler min_job min_sub min_route
 
 FILENAMES_PIPE = min_pipe min_pipe_loop pipe_redirection
 	
-FILENAMES_FREE = min_free min_dfree free_token_list
+FILENAMES_FREE = min_free min_dfree free_token_list free_pipestruct
 
 FILENAMES_ERROR = min_parser_error
 
