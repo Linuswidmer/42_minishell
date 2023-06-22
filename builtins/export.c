@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:18:08 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/29 13:23:10 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/22 15:42:53 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ char	**split_export(char *arg)
 	else
 		split_str[1] = NULL;
 	split_str[2] = NULL;
+	free(split_str[2]);
 	return (split_str);
 }
 
@@ -60,7 +61,6 @@ int	export_new_entry(t_dict *dict, char *arg)
 		return (1);
 	new_key = split_str[0];
 	new_value = split_str[1];
-	free(split_str[2]);
 	var = search_key_in_dict(dict, new_key);
 	if (var != NULL)
 		write_to_dict(var, var->key, new_value);
@@ -71,6 +71,9 @@ int	export_new_entry(t_dict *dict, char *arg)
 		else
 			write_new_entry_to_dict(dict, new_key, NULL);
 	}
+	free(split_str[0]);
+	free(split_str[1]);
+	free(split_str);
 	return (0);
 }
 

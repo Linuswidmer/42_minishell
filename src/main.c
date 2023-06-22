@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:19:36 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/22 15:09:28 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/22 15:47:44 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/06/22 10:11:21 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/05/11 14:48:19 by jstrotbe         ###   ########.fr       */
 /*   Updated: 2023/05/11 10:06:48 by lwidmer          ###   ########.fr       */
@@ -18,7 +18,7 @@
 
 #include "minishell.h"
 
-int g_status = 1;
+int	g_status = 1;
 
 void	free_minishell(t_min *min)
 {
@@ -38,7 +38,7 @@ int	lex_parse_exec(t_min *min, char **readline_input)
 	if (min->token)
 	{
 		min->ast = min_parser(min->token);
-		if (min->ast) 
+		if (min->ast)
 			exit = min_executer(min->ast, min->dict, min->builtins, 1);
 		else
 			g_status = 2;
@@ -48,7 +48,7 @@ int	lex_parse_exec(t_min *min, char **readline_input)
 	return (exit);
 }
 
-int set_g_status(int exit)
+int	set_g_status(int exit)
 {
 	if (exit >= 1000 && exit < 2000)
 	{
@@ -65,20 +65,20 @@ void	free_resources_readline_loop(char *readline_input, t_min *min)
 	free_token_list(&(min->token));
 }
 
-int ft_readline_loop(t_min *min)
+int	ft_readline_loop(t_min *min)
 {
-	char *readline_input;
-	static int exit;	
+	char		*readline_input;
+	static int	exit;	
 
 	while (!exit && min->dict)
 	{
 		exit = init_signals();
 		readline_input = readline("minishell> ");
-    	if (!readline_input)
-   		{
+		if (!readline_input)
+		{
 			free(readline_input);
 			exit = 1;
-			break;	
+			break ;	
 		}
 		if (_DEBUG)
 			ft_printf_fd("\n \\DEBUG_MODE\\ \n\n", 2);
@@ -93,10 +93,10 @@ int ft_readline_loop(t_min *min)
 	return (exit);
 }
 
-int main(int argc, char **argv, char **env) 
+int	main(int argc, char **argv, char **env) 
 {
-	t_min *min;
-	int	exit;
+	t_min	*min;
+	int		exit;
 	
 	(void)argc;
 	(void)argv;
@@ -107,6 +107,4 @@ int main(int argc, char **argv, char **env)
 	if (exit == 256)
 		exit = 0;
 	return (exit);
-	return(0);
 }
-
