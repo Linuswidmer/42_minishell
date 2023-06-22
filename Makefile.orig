@@ -6,8 +6,11 @@
 #    By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/07 09:41:35 by lwidmer           #+#    #+#              #
-#    Updated: 2023/06/22 10:14:57 by lwidmer          ###   ########.fr        #
+<<<<<<< HEAD
+#    Updated: 2023/06/22 09:39:55 by jstrotbe         ###   ########.fr        #
+=======
 #    Updated: 2023/06/22 09:47:02 by lwidmer          ###   ########.fr        #
+>>>>>>> dev_linus
 #    Updated: 2023/06/02 12:25:06 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/05/07 23:38:37 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/05/02 17:30:33 by lwidmer          ###   ########.fr        #
@@ -43,7 +46,11 @@ FILENAMES_EXECUTER = min_executer min_exit_handler min_job min_sub min_route
 
 FILENAMES_PIPE = min_pipe min_pipe_loop pipe_redirection
 	
-FILENAMES_FREE = min_free min_dfree free_token_list
+<<<<<<< HEAD
+FILENAMES_FREE = min_free min_dfree
+=======
+FILENAMES_FREE = min_free free_token_list
+>>>>>>> dev_linus
 
 FILENAMES_ERROR = min_parser_error
 

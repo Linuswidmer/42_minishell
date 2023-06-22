@@ -6,11 +6,24 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:37:37 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/25 10:37:31 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/21 13:14:35 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int unset_first_dict_entry(t_dict **dict, t_dict *dict_second_entry)
+{
+	t_dict *dict_first_entry;
+
+	dict_first_entry = *dict;
+	free(dict_first_entry->value);
+	dict_first_entry->key = dict_second_entry->key;
+	dict_first_entry->value = dict_second_entry->value;
+	dict_first_entry->next_entry = dict_second_entry->next_entry;
+	free(dict_second_entry);
+	return (1000);
+}
 
 int	min_unset(t_dict **dict, char **arg)
 {
@@ -18,7 +31,6 @@ int	min_unset(t_dict **dict, char **arg)
 	t_dict	*var_prev;
 	t_dict	*var_next;
 
-	ft_printf_fd("dict pointer is %p\n",2, *dict);
 	var_prev = *dict;
 	var = search_key_in_dict(*dict, arg[0]);
 	if (var)
@@ -26,12 +38,7 @@ int	min_unset(t_dict **dict, char **arg)
 	if (var == NULL)
 		return (1000);
 	else if (var == *dict)
-	{
-		ft_printf_fd("enters here\n",2);
-		*dict = var_next;
-		ft_printf_fd("var next is %s\n",2, (*dict)->key);
-		var_prev = NULL;
-	}
+		return (unset_first_dict_entry(dict, var_next));
 	else
 	{
 		while (var_prev->next_entry != var)
@@ -42,6 +49,5 @@ int	min_unset(t_dict **dict, char **arg)
 	free(var);
 	if (var_prev)
 		var_prev->next_entry = var_next;
-	ft_printf_fd("new dict beginning unset is %s\n",2, (*dict)->key);
 	return (1000);
 }

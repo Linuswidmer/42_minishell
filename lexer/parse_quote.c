@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 18:06:39 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/02 11:10:26 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/22 09:58:40 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,13 @@ static int	check_if_dollar_occurrs_in_dquote(char *input, int start,
 	return (dollar_flag);
 }
 
+/*
+searches for the pos of the next quote or dquote respectively.
+when the current token is d_quote and a dollar occurs inside of that code
+creates a token of type l_dollar_q which will be used for dollar postprocessing
+if no closing quote is found, the function returns a negative number to
+prompt for another readline in lexer.c
+*/
 int	parse_quote(char *input, int pos, t_lexer *tmp, t_lexertype token)
 {
 	t_lexertype	key;
@@ -60,7 +67,7 @@ int	parse_quote(char *input, int pos, t_lexer *tmp, t_lexertype token)
 	i = 0;
 	pos = quote_find_next_token_pos(input, pos, token);
 	len = pos - start;
-	dollar_flag = check_if_dollar_occurrs_in_dquote(input, start, pos, token);
+	dollar_flag = check_if_dollar_occurrs_in_dquote(input, start, len, token);
 	if (dollar_flag == 1)
 		key = l_dollar_q;
 	else

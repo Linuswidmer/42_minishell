@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 12:24:31 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/29 13:53:35 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/21 12:20:27 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -72,7 +72,7 @@ static int	ft_open_io_out(t_lexertype key, char **filename)
 	return (1);
 }
 
-static int	ft_open_io_in(t_lexertype key, char **filename, char *evalhere)
+static int	ft_open_io_in(t_lexertype key, char **filename)
 {
 	int		fd1;
 	int		fd2;
@@ -106,8 +106,9 @@ static int	ft_open_io_in(t_lexertype key, char **filename, char *evalhere)
 
 int	min_ex_io(t_lexertype key, char *filename, char *evalhere)
 {
+	(void)evalhere;
 	if (min_token_is_io(key) > 2)
 		return (ft_open_io_out(key, &filename));
 	else
-		return (ft_open_io_in(key, &filename, evalhere));
+		return (ft_open_io_in(key, &filename));
 }

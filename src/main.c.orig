@@ -6,8 +6,11 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:19:36 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/22 10:14:04 by lwidmer          ###   ########.fr       */
+<<<<<<< HEAD
+/*   Updated: 2023/06/21 18:57:32 by jstrotbe         ###   ########.fr       */
+=======
 /*   Updated: 2023/06/22 10:11:21 by lwidmer          ###   ########.fr       */
+>>>>>>> dev_linus
 /*   Updated: 2023/05/11 14:48:19 by jstrotbe         ###   ########.fr       */
 /*   Updated: 2023/05/11 10:06:48 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/05/11 09:53:34 by jstrotbe         ###   ########.fr       */
@@ -42,6 +45,11 @@ int ft_readline_loop(t_min *min)
 		if (min->token)
 		{
 			min->ast = min_parser(min->token);
+<<<<<<< HEAD
+		
+			
+=======
+>>>>>>> dev_linus
 			if (min->ast) 
 				exit = min_executer(min->ast, min->dict, min->builtins, 1);
 			else

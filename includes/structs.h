@@ -66,7 +66,6 @@ struct s_builtins {
 	t_commands commands;
 };
 
-
 /*   dict */
 struct s_dict {
 	char *key;

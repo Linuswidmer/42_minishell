@@ -25,10 +25,10 @@ static void ft_word(t_lexer **token, t_expander **asterisk, char *value)
         
                 
 /* decide t_exphelp   */
-static char     ft_dollar(t_lexer **token, t_expander **asterisk, t_expander **extra, t_dict *dict)
+static char     ft_dollar(t_lexer **token, t_expander **asterisk, 
+								t_expander **extra, t_dict *dict)
 {               
         t_expander      *dollar;
-        t_expander      *end;
         t_exphelp       help;
 
         dollar = *asterisk;

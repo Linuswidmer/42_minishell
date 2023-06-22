@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_lexer.c                                       :+:      :+:    :+:   */
+/*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/07 09:48:22 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/09 18:02:16 by lwidmer          ###   ########.fr       */
+/*   Created: 2023/04/07 10:04:52 by lwidmer           #+#    #+#             */
+/*   Updated: 2023/06/22 09:45:28 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/04/07 17:50:52 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_token_list(t_lexer **token_list)
+int	skip_space_tab(char *input, int pos)
 {
-	t_lexer	*tmp;
+	while (input[pos] == ' ' || input[pos] == 9)
+		pos++;
+	return (pos);
+}
 
-	while (*token_list)
-	{
-		tmp = (*token_list)->next;
-		if (*token_list)
-		{
-			if ((*token_list)->value)
-				free((*token_list)->value);
-			free(*token_list);
-		}
-		*token_list = tmp;
-	}
-	//free(token_list);
+t_lexer	*init_lexer_struct(void)
+{
+	t_lexer	*lexer;
+
+	lexer = malloc(sizeof(t_lexer));
+	if (!lexer)
+		return (NULL);
+	lexer->key = l_empty;
+	lexer->value = NULL;
+	lexer->next = NULL;
+	lexer->prev = NULL;
+	return (lexer);
 }

@@ -6,18 +6,16 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 18:30:25 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/09 19:14:20 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/21 12:26:44 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
 int	min_route(t_ast *ast, t_dict *dict, t_builtins *build)
 {
 
 	int exit;
-	int len;
 	t_ast *new;
 	
 	new = ast;

@@ -134,7 +134,6 @@ void 	min_evaluate_asterisk(t_expander **word, t_expander *asterisk, char wo)
 	struct dirent	*d;
     DIR 			*dh;
 	char			found;
-	t_expander		*end;
 	
 	dh = opendir("./");
 	d = readdir(dh);

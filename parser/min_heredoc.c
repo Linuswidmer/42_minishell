@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 12:43:28 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/25 11:13:22 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/21 12:16:01 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,18 @@ int	min_heredoc(t_lexer **token, char *heredoc)
 		return (1);
 	limiter = min_here_limiter((*token)->next);
 	if (limiter)
-		fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (fd != -1 && limiter)
 	{
-		ft_heredoc_loop(fd, limiter);
-		*token = min_here_set_file((*token)->next, path);
-		min_free(&limiter);	
-		//print_token_list(*token);
-		if (close(fd))
-			return (1);
-		return (0);
+		fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		if (fd != -1)
+		{
+			ft_heredoc_loop(fd, limiter);
+			*token = min_here_set_file((*token)->next, path);
+			min_free(&limiter);	
+			//print_token_list(*token);
+			if (close(fd))
+				return (1);
+			return (0);
+		}
 	}
 	ft_printf_fd(HEREFAIL, 2);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 18:20:46 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/09 19:02:56 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/21 12:25:59 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 int	min_sub(t_ast *ast, t_dict *dict, t_builtins *build)
 {
 	pid_t	pid;
-	int 	fdout;
 	int 	status;
 	int		exit;	 	
 	

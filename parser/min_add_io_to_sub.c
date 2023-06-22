@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:04:41 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/25 11:03:22 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/21 12:16:22 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ static t_lexer	*ft_find_last_token(t_lexer *token, t_ast **ast)
 
 t_lexer	*min_add_io_to_sub(t_lexer *token, t_ast **ast)
 {
-	char	io;
-
 	if (min_token_is_word(token->key))
 		min_parser_error(ast, token->key, token->value);
 	else
