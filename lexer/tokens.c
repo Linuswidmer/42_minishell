@@ -6,13 +6,13 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 13:13:58 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/09 17:56:44 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/22 09:50:11 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_lexertype	check_single_tokens(char c)
+static t_lexertype	check_single_tokens(char c)
 {
 	if (c == 39)
 		return (l_quote);
@@ -40,15 +40,7 @@ t_lexertype	check_single_tokens(char c)
 		return (l_word);
 }
 
-t_lexertype	check_token_with_prev(char c, char prev)
-{
-	if (c == '(' && prev != '$')
-		return (l_paraopen);
-	else
-		return (l_empty);
-}
-
-t_lexertype	check_double_tokens(char c, char next)
+static t_lexertype	check_double_tokens(char c, char next)
 {
 	if (c == '<' && next == '<')
 		return (l_heredoc);
@@ -64,6 +56,9 @@ t_lexertype	check_double_tokens(char c, char next)
 		return (l_empty);
 }
 
+/*
+evaluates the token at the current position and returns it 
+*/
 t_lexertype	check_token(char *input, int pos)
 {
 	t_lexertype	token_key;

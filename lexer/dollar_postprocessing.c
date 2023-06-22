@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 14:42:52 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/21 16:09:39 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/22 10:01:58 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ int	processing_word(char *str, int pos)
 	return (pos);
 }
 
+/*
+splits the string dollar value, which can contain multiple dollars with
+values into different tokens.
+*/
 t_lexer	*dollar_postprocessing_loop(t_lexer *tmp,
 							char *dollar_value, int quote_flag)
 {
@@ -68,6 +72,12 @@ t_lexer	*dollar_postprocessing_loop(t_lexer *tmp,
 	}
 	return (tmp);
 }
+
+/*
+depending on whether the dollar occured in quotes or not, quote_flag saves
+that information, so that in the dollar_postprocessing_loop, a "q" is 
+written in the value of the dollar token.
+*/
 
 t_lexer	*dollar_postprocessing(t_lexer *tmp)
 {

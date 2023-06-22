@@ -6,39 +6,12 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 10:04:52 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/21 16:16:06 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/22 09:45:28 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/04/07 17:50:52 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-char *lexertype_names[] = 
-{
-	"EMPTY",
-    "DQUOTE",
-    "QUOTE",
-    "WORD",
-    "ASTERISK",
-    "PAROPEN",
-    "PARCLOSE",
-    "HEREDOC",
-    "APPEND",
-    "IN",
-    "OUT",
-    "DOLLAR",
-    "AND",
-    "OR",
-    "SEMI",
-    "PIPE",
-    "ESCAPE",
-	"SPACE",
-	"AMP",
-	"TIL",
-	"DOLLAR_Q"
-};
-*/
 
 int	skip_space_tab(char *input, int pos)
 {

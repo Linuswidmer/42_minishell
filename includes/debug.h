@@ -6,12 +6,13 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 16:18:36 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/21 16:19:16 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/22 09:24:52 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEBUG_H
 # define DEBUG_H
+
 
 void        print_token_list(t_lexer *first);
 #endif

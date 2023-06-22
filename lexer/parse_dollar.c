@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 18:04:33 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/21 14:35:17 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/22 09:53:17 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@ static int	dollar_find_next_token_pos(char *input, int pos)
 	return (pos);
 }
 
+/*
+adds a new entry to token list of type l_dollar and writes the word that occurs
+behind the dollar in the value of the token list.
+helper function dollar_find_next_token_pos is required, since the word behind
+the dollar can be terminated when a space occurs, a dollar occurs etc... 
+*/
 int	parse_dollar(char *input, int pos, t_lexer *tmp)
 {
 	int			len;

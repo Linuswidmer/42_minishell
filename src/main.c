@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:19:36 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/21 10:55:10 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/22 10:11:21 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/05/11 14:48:19 by jstrotbe         ###   ########.fr       */
 /*   Updated: 2023/05/11 10:06:48 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/05/11 09:53:34 by jstrotbe         ###   ########.fr       */
@@ -25,7 +25,6 @@ int ft_readline_loop(t_min *min)
 	int exit;	
 
 	exit = 0;
-	//printf("min_status %i\n", min_status);
 	while (!exit && min->dict)
 	{
 		exit = init_signals();
@@ -42,8 +41,6 @@ int ft_readline_loop(t_min *min)
 		if (min->token)
 		{
 			min->ast = min_parser(min->token);
-		
-
 			if (min->ast) 
 				exit = min_executer(min->ast, min->dict, min->builtins, 1);
 			else
@@ -55,7 +52,6 @@ int ft_readline_loop(t_min *min)
 		add_history(readline_input);
 		free(readline_input);
 		min_free_ast(&min->ast);
-		//min_free_ast(&min->ast);
 		free_token_list(&(min->token));
 		dup2(min->in, STDIN_FILENO);
 		dup2(min->out, STDOUT_FILENO);

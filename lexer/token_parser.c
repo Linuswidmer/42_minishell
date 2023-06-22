@@ -6,26 +6,25 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:24:19 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/21 15:37:54 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/22 09:44:36 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	parse_double_tokens(char *input, int pos, t_lexertype token, t_lexer *tmp)
+static int	parse_double_tokens(t_lexer *tmp, t_lexertype token, int pos)
 {
-	(void)input;
 	tmp->key = token;
 	return (pos + 1);
 }
 
-int	parse_single_tokens(t_lexer *tmp, t_lexertype token, int pos)
+static int	parse_single_tokens(t_lexer *tmp, t_lexertype token, int pos)
 {
 	tmp->key = token;
 	return (pos);
 }
 
-int	parse_word(char *input, int pos, t_lexer *tmp)
+static int	parse_word(t_lexer *tmp, char *input, int pos)
 {
 	t_lexertype	next_token;
 	int			start;
@@ -45,6 +44,10 @@ int	parse_word(char *input, int pos, t_lexer *tmp)
 	return (pos);
 }
 
+/* 
+calls the corresponding parsing function, based on the current token
+returns the position of the next token
+*/
 int	parse_token_to_list(t_lexertype current_token, char *input,
 									int pos, t_lexer *tmp)
 {
@@ -55,9 +58,9 @@ int	parse_token_to_list(t_lexertype current_token, char *input,
 		return (parse_dollar(input, pos, tmp));
 	else if (current_token == l_or || current_token == l_and
 		|| current_token == l_heredoc || current_token == l_append)
-		return (parse_double_tokens(input, pos, current_token, tmp));
+		return (parse_double_tokens(tmp, current_token, pos));
 	else if (current_token == l_word)
-		return (parse_word(input, pos, tmp));
+		return (parse_word(tmp, input, pos));
 	else
 		return (parse_single_tokens(tmp, current_token, pos));
 }

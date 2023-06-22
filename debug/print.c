@@ -6,11 +6,12 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 16:14:59 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/21 16:18:22 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/22 09:36:23 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell"
+#include "minishell.h"
+
 
 char *lexertype_names[] =
 {
@@ -40,6 +41,7 @@ char *lexertype_names[] =
 void    print_token_list(t_lexer *first)
 {
     t_lexer *tmp;
+	//char *lexertype_names = NULL;
 
     tmp = first;
     while (tmp)
