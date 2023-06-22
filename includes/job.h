@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 07:45:11 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/08 09:01:00 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:35:05 by jstrotbe         ###   ########.fr       */
 /*   Updated: 2023/05/03 09:32:23 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -14,6 +14,8 @@
 #ifndef JOB_H
 # define JOB_H
 
+
+void min_free_cmdnode(t_cmdnode       **cmdnode);
 
 char    **min_ex_get_cmd(t_cmdnode *cmd);
 

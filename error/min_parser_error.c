@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 12:32:15 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/10 18:55:06 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/21 15:06:44 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -63,7 +63,7 @@ int	min_parser_error(t_ast **ast, t_lexertype key, char *value)
 	{		 ft_printf_fd("syntax error near unexpected token: '%s'\n",2, ft_get_token(key));
 
 	}
-	//min_free_ast(ast);
+	min_free_ast(ast);
 	if (ast)
 		*ast = NULL;
 	return (1);

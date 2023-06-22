@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   min_free_expander.c                                :+:      :+:    :+:   */
+/*   min_free_cmdnode.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/14 12:54:51 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/22 09:09:50 by jstrotbe         ###   ########.fr       */
+/*   Created: 2023/06/21 19:27:42 by jstrotbe          #+#    #+#             */
+/*   Updated: 2023/06/22 09:46:54 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	min_free_expander(t_expander **node)
+void min_free_cmdnode(t_cmdnode       **cmdnode)
 {
-	t_expander *temp;
-	
-	while (*node)
+	t_cmdnode *curr;
+	t_cmdnode *next;
+
+	next = *cmdnode;
+	while (next)
 	{
-		temp = *node;
-		*node = (*node)->next;
-		min_free(&temp->word);
-		free(temp);
-		temp = NULL;
+		curr = next;
+		next = next->next;
+		//min_free(&curr->arg);
+		free(curr);
 	}
-}		
+	*cmdnode = NULL;
+}

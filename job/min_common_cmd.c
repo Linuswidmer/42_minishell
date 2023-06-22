@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 12:05:30 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/21 11:26:13 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/22 10:08:55 by jstrotbe         ###   ########.fr       */
 /*   Updated: 2023/06/02 13:05:38 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/05/11 14:44:29 by jstrotbe         ###   ########.fr       */
 /*   Updated: 2023/05/09 13:02:05 by jstrotbe         ###   ########.fr       */
@@ -33,10 +33,10 @@ static char	**ft_get_paths( t_dict *dict)
 		temp = ft_strjoin(paths[i], "/");
 		if (!temp)
 		{
-			//min_dfree(&paths);
+			min_dfree(&paths);
 			break ;
 		}
-		//min_free(paths[i]);
+		min_free(&paths[i]);
 		paths[i++] = temp;
 	}
 	return (paths);
@@ -49,7 +49,7 @@ static int	ft_checkpath_cmd_is_path(char *cmd, t_dict *dict, char **path)
 		*path = cmd;
 		return (0);
 	}
-	ft_printf_fd("no such file or direcotry: %s\n", 2, cmd[0]);
+	ft_printf_fd("no such file or direcotry: %s\n", 2, cmd);
 	return (1);
 }
 
@@ -62,7 +62,7 @@ static int ft_checkpath_cmd_is_file(char *cmd, t_dict *dict, char **path)
 		*path = cmd + 2;
 		return (0);
 	}
-	ft_printf_fd("no such file or direcotry: %s\n", 2, cmd[0]);
+	ft_printf_fd("no such file or direcotry: %s\n", 2, cmd);
 	return (2);
 }
 
@@ -86,18 +86,21 @@ static int	ft_checkpath(char *cmd, t_dict *dict, char **path)
 		while (paths[i])
 		{
 			if (!access(*path, F_OK))
+			{
+					min_dfree(&paths);
 				return (0);
+			}
 			if (paths[++i])
 			{
-				//min_free(*path);
-				*path = NULL;
+				min_free(&(*path));
 				*path = ft_strjoin(paths[i], cmd);
 				if (!*path)
 					break ;
 			}
 		}
 	}
-	ft_printf_fd("command not found: %s",2, cmd[0]);
+	min_dfree(&paths);	
+	ft_printf_fd("command not found: %s\n",2, cmd);
 	return (1);
 }
 
@@ -124,10 +127,10 @@ int	min_common_cmd(t_jobnode *astjob, t_dict *dict, char f)
 		if (!exit)
 		{	
 			exit = ft_checkpath(cmd[0], dict, &path);
-			exit = execve(path, cmd, ft_get_envp(dict));
-			//min_dfree(&cmd);			
-			//min_free(&path);
+			exit = execve(path, cmd, ft_get_envp(dict));			
+			min_free(&path);
 		}
+		min_dfree(&cmd);
 		return (127);
 	}
 	if (id)
