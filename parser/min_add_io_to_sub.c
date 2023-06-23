@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:04:41 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/21 12:16:22 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/23 16:14:35 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,4 @@ t_lexer	*min_add_io_to_sub(t_lexer *token, t_ast **ast)
 			(*ast)->node.sub->last = token;
 	}
 	return (token);
-}	
+}

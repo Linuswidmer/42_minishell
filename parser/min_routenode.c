@@ -6,23 +6,11 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:43:03 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/23 13:30:01 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:40:33 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
-/*
-static t_ast *ft_move_and_store_prev(t_ast *ast, t_ast **prev)
-{
-	*prev = ast;
-	if (ast->key == jobnode)
-        ast = ast->node.job->up;
-	else if (ast->key == subnode)    
-		ast = ast->node.sub->up;
-	else if (ast->key == pipenode)
-		ast = ast->node.pipe->up;
-	return (ast);
-}
-*/
+
 static t_ast	*ft_init_routenode(void)
 {
 	t_ast	*route;
@@ -38,34 +26,6 @@ static t_ast	*ft_init_routenode(void)
 	ft_bzero(route->node.route, sizeof(t_routenode));
 	return (route);
 }
-/*
-static t_ast *ft_set_routenode(t_ast **ast, t_ast *down, t_lexer *token)
-{
-	t_ast **temp;
-	
-	temp = ast;
-	*ast = ft_init_routenode();
-	if (!(*ast))
-	{
-		min_parser_malloc_fail(temp);
-		return (*ast);
-	}
-	if (!token)
-	{
-		(*ast)->node.route->up = *temp;
-		if (*temp)
-			(*temp)->node.sub->down = *ast;
-		(*ast)->node.route->down = down;
-	}
-	else
-	{
-		(*ast)->node.route->prev = *temp;
-		(*temp)->node.route->next = *ast;
-		(*temp)->node.route->rvalue = token->value;	
-	}
-	return (*ast);
-}
-*/
 
 t_ast	*ft_find_brange(t_ast *ast, t_ast **temp)
 {
@@ -75,7 +35,7 @@ t_ast	*ft_find_brange(t_ast *ast, t_ast **temp)
 			ast = ast->node.job->up;
 		else
 			*temp = ast->node.job->up;
-	}		
+	}
 	else if (ast->key == subnode)
 	{
 		if (ast->node.sub->up && ast->node.sub->up->key != subnode)
@@ -91,8 +51,40 @@ t_ast	*ft_find_brange(t_ast *ast, t_ast **temp)
 			ast = ast->node.pipe->up;
 		else
 			*temp = ast->node.pipe->up;
-	}	
+	}
 	return (ast);
+}
+
+static void	ft_route(t_ast **ast, t_ast **new, t_ast **temp)
+{
+	*new = ft_init_routenode();
+	if (!*new)
+		min_parser_malloc_fail(ast);
+	else
+	{
+		(*new)->node.route->up = *temp;
+		if (*temp)
+			(*temp)->node.sub->down = *new;
+		(*new)->node.route->down = *ast;
+		if ((*ast)->key == jobnode)
+			(*ast)->node.job->up = *new;
+		if ((*ast)->key == pipenode)
+			(*ast)->node.pipe->up = *new;
+		if ((*ast)->key == subnode)
+			(*ast)->node.sub->up = *new;
+		*ast = *new;
+	}
+}
+
+static void	ft_norm(t_ast **ast, t_ast **new, t_ast **temp, t_lexer *token)
+{
+	if (ast)
+	{
+		(*ast)->node.route->next = *new;
+		(*ast)->node.route->rvalue = token->key;
+		(*new)->node.route->prev = *temp;
+	}
+	*ast = *new;
 }
 
 /*    
@@ -107,47 +99,22 @@ t_lexer	*min_routenode(t_lexer *token, t_ast **ast)
 {
 	t_ast	*new;
 	t_ast	*temp;
-	
+
 	temp = *ast;
-	if (!(*ast) || min_is_last_token(token) || (*ast)->key == pipenode || (*ast)->key == routenode)
+	if (!(*ast) || min_is_last_token(token) || (*ast)->key == pipenode 
+		|| (*ast)->key == routenode)
 		min_parser_error(ast, token->key, NULL);
 	else
 	{
-			*ast = ft_find_brange(*ast, &temp);
-			if (!temp || temp->key == subnode)
-			{
-				
-				new = ft_init_routenode();
-				if (!new)
-					min_parser_malloc_fail(ast);
-			else
-			{	
-				new->node.route->up = temp;
-				if (temp)
-					temp->node.sub->down = new;
-				new->node.route->down = *ast;
-				if ((*ast)->key == jobnode)
-					(*ast)->node.job->up = new;
-				if ((*ast)->key == pipenode)
-					(*ast)->node.pipe->up = new;
-				if ((*ast)->key == subnode)
-					(*ast)->node.sub->up = new;
-				*ast = new;
-				}
-			}	
-			temp = *ast;
-	//		min_print_ast(*ast);
-			new = ft_init_routenode();
-			if (!new)
-				min_parser_malloc_fail(ast);
-			else
-			{
-				(*ast)->node.route->next = new;
-				(*ast)->node.route->rvalue = token->key;
-				new->node.route->prev = temp;
-				*ast = new;
-			}
-		}
-	
+		*ast = ft_find_brange(*ast, &temp);
+		if (!temp || temp->key == subnode)
+			ft_route(ast, &new, &temp);
+		temp = *ast;
+		new = ft_init_routenode();
+		if (!new)
+			min_parser_malloc_fail(ast);
+		else
+			ft_norm(ast, &new, &temp, token);
+	}
 	return (token->next);
-}	
+}

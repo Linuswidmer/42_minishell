@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 12:43:28 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/21 12:16:01 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/23 16:34:57 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,30 +27,27 @@ static char	*ft_find_filename(char *heredoc)
 	return (path);
 }
 
-
-
-
-static void	ft_heredoc_loop(int fd, char *limiter) 	
+static void	ft_heredoc_loop(int fd, char *limiter)
 {
 	char	*line;
-	
-		while (1)
+
+	while (1)
+	{
+		write(1, HERETXT, ft_strlen(HERETXT));
+		line = get_next_line(0);
+		if (!line)
 		{
-			write(1, HERETXT, ft_strlen(HERETXT));
-			line = get_next_line(0);
-			if (!line)
-			{
-				ft_printf_fd(HEREEOF, 2);
-				break ;
-			}	
-			if (ft_strncmp(line, limiter, ft_strlen(line) - 1) == 0)
-			{
-				min_free(&line);
-				break ;
-			}
-			write(fd, line, ft_strlen(line));
-			min_free(&line);
+			ft_printf_fd(HEREEOF, 2);
+			break ;
 		}
+		if (ft_strncmp(line, limiter, ft_strlen(line) - 1) == 0)
+		{
+			min_free(&line);
+			break ;
+		}
+		write(fd, line, ft_strlen(line));
+		min_free(&line);
+	}
 }
 
 int	min_heredoc(t_lexer **token, char *heredoc)
@@ -70,8 +67,7 @@ int	min_heredoc(t_lexer **token, char *heredoc)
 		{
 			ft_heredoc_loop(fd, limiter);
 			*token = min_here_set_file((*token)->next, path);
-			min_free(&limiter);	
-			//print_token_list(*token);
+			min_free(&limiter);
 			if (close(fd))
 				return (1);
 			return (0);
@@ -79,4 +75,4 @@ int	min_heredoc(t_lexer **token, char *heredoc)
 	}
 	ft_printf_fd(HEREFAIL, 2);
 	return (1);
-}		
+}

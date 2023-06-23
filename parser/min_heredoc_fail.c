@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:08:06 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/25 11:14:06 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/23 16:35:53 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 int	min_heredoc_fail(t_ast **ast)
 {
-	*ast = NULL;
+	min_free_ast(ast);
 	return (1);
 }

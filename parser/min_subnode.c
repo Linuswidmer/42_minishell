@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:26:53 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/25 11:41:03 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/23 18:48:44 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,6 @@ static t_ast	*ft_close_para(t_ast **ast, t_lexer *token)
 	return (*ast);
 }
 
-static t_ast	*ft_init_subnode(void)
-{
-	t_ast	*sub;
-
-	sub = (t_ast *)malloc(sizeof(t_ast));
-	if (!sub)
-		return (NULL);
-	ft_bzero(sub, sizeof(t_ast));
-	sub->key = subnode;
-	sub->node.sub = (t_subnode *)malloc(sizeof(t_subnode));
-	if (!sub->node.sub)
-		return (NULL);
-	ft_bzero(sub->node.sub, sizeof(t_subnode));
-	return (sub);
-}
-
 static int	ft_last_is_paraclose(t_lexer *token)
 {
 	token = token->prev;
@@ -90,8 +74,8 @@ static t_ast	*ft_open_para(t_ast **ast, t_lexer *token)
 			min_parser_error(ast, token->key, NULL);
 			return (NULL);
 		}
-	}	
-	new = ft_init_subnode();
+	}
+	new = min_init_subnode();
 	if (!new)
 		min_parser_malloc_fail(ast);
 	else
@@ -116,7 +100,7 @@ min_subnode
 t_lexer	*min_subnode(t_lexer *token, t_ast **ast)
 {
 	if (min_token_is_para(token->key) == 1)
-	{	
+	{
 		if (!min_is_last_token(token))
 			*ast = ft_open_para(ast, token);
 		else

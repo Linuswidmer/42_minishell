@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:02:20 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/11 07:28:49 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:47:02 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int     min_token_is_route(t_lexertype key);
 /* SUB */
 int		min_token_is_para(t_lexertype key);
 t_lexer *min_subnode(t_lexer *token, t_ast **ast);
-
+t_ast    *min_init_subnode(void);
 
 /* PIPE */
 t_lexer *min_pipenode(t_lexer *token, t_ast **ast);
@@ -38,6 +38,7 @@ t_lexer *min_pipenode(t_lexer *token, t_ast **ast);
 /* JOBNODE */
 t_lexer	*min_jobnode(t_lexer *token, t_ast **ast);
 int		min_token_is_jobnode(t_lexertype key);
+t_ast    *min_init_jobnode(t_lexer *token);
 
 
 

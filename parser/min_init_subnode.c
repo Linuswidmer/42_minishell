@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   min_free_ast.c                                     :+:      :+:    :+:   */
+/*   min_init_subnode.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/10 14:39:31 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/23 16:19:32 by jstrotbe         ###   ########.fr       */
-/*   Updated: 2023/05/11 14:45:29 by jstrotbe         ###   ########.fr       */
-/*   Updated: 2023/05/11 09:51:34 by jstrotbe         ###   ########.fr       */
+/*   Created: 2023/06/23 18:44:46 by jstrotbe          #+#    #+#             */
+/*   Updated: 2023/06/23 18:49:56 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
-void	min_free_ast(t_ast **ast)
+t_ast	*min_init_subnode(void)
 {
-	if (!*ast)
-		return ;
-	min_bring_ast_to_beginning(ast);
-	min_free_ast_loop(*ast);
-	*ast = NULL;
+	t_ast	*sub;
+
+	sub = (t_ast *)malloc(sizeof(t_ast));
+	if (!sub)
+		return (NULL);
+	ft_bzero(sub, sizeof(t_ast));
+	sub->key = subnode;
+	sub->node.sub = (t_subnode *)malloc(sizeof(t_subnode));
+	if (!sub->node.sub)
+		return (NULL);
+	ft_bzero(sub->node.sub, sizeof(t_subnode));
+	return (sub);
 }

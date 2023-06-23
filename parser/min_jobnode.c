@@ -6,13 +6,13 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:31:01 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/25 11:21:03 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/23 17:29:12 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static t_ast	*ft_init_jobnode(t_lexer *token)
+/*
+static t_ast	*min_init_jobnode(t_lexer *token)
 {
 	t_ast	*job;
 
@@ -28,7 +28,7 @@ static t_ast	*ft_init_jobnode(t_lexer *token)
 	job->node.job->start = token;
 	return (job);
 }
-
+*/
 static void	ft_link_jobnode_into_ast(t_ast **ast, t_ast *new)
 {
 	if ((*ast)->key == pipenode)
@@ -84,7 +84,7 @@ static t_lexer	*ft_find_last_token(t_lexer *token, t_ast **ast)
 			if (ft_token_not_valid(&token, ast, &io))
 				break ;
 			token = token->next;
-		}	
+		}
 		else
 		{
 			if (io)
@@ -111,9 +111,9 @@ t_lexer	*min_jobnode(t_lexer *token, t_ast **ast)
 		token = min_add_io_to_sub(token, ast);
 	else
 	{
-		new = ft_init_jobnode(token);
+		new = min_init_jobnode(token);
 		if (new)
-		{		
+		{
 			new->node.job->up = *ast;
 			if (*ast)
 				ft_link_jobnode_into_ast(ast, new);
@@ -126,6 +126,6 @@ t_lexer	*min_jobnode(t_lexer *token, t_ast **ast)
 		{
 			min_parser_malloc_fail(ast);
 		}
-	}	
+	}
 	return (token);
 }

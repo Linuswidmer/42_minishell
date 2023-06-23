@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 17:12:46 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/08 10:19:09 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/23 16:16:34 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -139,6 +139,7 @@ void	min_print_routenode(t_lexertype key)
 {
 	printf(" %s ", lexertype2_names[key]);
 }
+
 
 void min_print_ast(t_ast *ast)
 {

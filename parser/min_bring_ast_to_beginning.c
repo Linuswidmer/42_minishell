@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 19:20:03 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/11 08:22:31 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/23 16:15:18 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -31,7 +31,7 @@ static int	ft_subnode(t_ast **ast)
 	}
 	else
 		return (1);
-}	
+}
 
 static int	ft_pipenode(t_ast **ast)
 {

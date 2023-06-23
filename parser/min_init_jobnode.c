@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   min_free_ast.c                                     :+:      :+:    :+:   */
+/*   min_init_jobnode.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/10 14:39:31 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/23 16:19:32 by jstrotbe         ###   ########.fr       */
-/*   Updated: 2023/05/11 14:45:29 by jstrotbe         ###   ########.fr       */
-/*   Updated: 2023/05/11 09:51:34 by jstrotbe         ###   ########.fr       */
+/*   Created: 2023/06/23 17:12:34 by jstrotbe          #+#    #+#             */
+/*   Updated: 2023/06/23 17:32:34 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
 
-void	min_free_ast(t_ast **ast)
+t_ast	*min_init_jobnode(t_lexer *token)
 {
-	if (!*ast)
-		return ;
-	min_bring_ast_to_beginning(ast);
-	min_free_ast_loop(*ast);
-	*ast = NULL;
+	t_ast	*job;
+
+	job = (t_ast *)malloc(sizeof(t_ast));
+	if (!job)
+		return (NULL);
+	ft_bzero(job, sizeof(t_ast));
+	job->key = jobnode;
+	job->node.job = (t_jobnode *)malloc(sizeof(t_jobnode));
+	if (!job->node.job)
+		return (NULL);
+	ft_bzero(job->node.job, sizeof(t_jobnode));
+	job->node.job->start = token;
+	return (job);
 }
