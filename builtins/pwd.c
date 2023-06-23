@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:44:38 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/23 17:32:30 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/23 16:56:40 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	min_pwd(char **args)
 	if (pwd)
 	{
 		printf("%s\n", pwd);
+		free(pwd);
 		return (1000);
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 12:05:30 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/22 12:02:36 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/23 17:47:36 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/06/21 14:51:28 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/06/02 13:05:38 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/05/11 14:44:29 by jstrotbe         ###   ########.fr       */
@@ -56,6 +56,8 @@ static int	ft_checkpath_cmd_is_path(char *cmd, char **path)
 
 static int ft_checkpath_cmd_is_file(char *cmd, char **path)
 {
+	if (ft_strlen(cmd) <= 2)
+		return (2);
 	if (!access(cmd + 2, F_OK))
 	{
 		*path = cmd + 2;
@@ -129,6 +131,12 @@ int	min_common_cmd(t_jobnode *astjob, t_dict *dict, char f)
 		{	
 			envp = (char **)min_get_envp(dict);
 			exit = ft_checkpath(cmd[0], dict, &path);
+			// hier brauchen wir moch einen guten Weg den exit status zu ueberpruefem
+			// wenn exit nicht null ist darf execve nicht ausgefuehrt werden und der path
+			// nicht gefreed werden (ausser wir erstellen einen leeren "" Pfad?) die
+			// envp muessen aber trotzdem gefreed werden
+			//if (exit)
+			//	return (exit);
 			exit = execve(path, cmd, envp);			
 			min_free(&path);
 			min_dfree(&envp);

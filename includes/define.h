@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:51:43 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/02 12:09:48 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/23 16:11:20 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # endif
 
 # ifndef _DEBUG    
-#  define _DEBUG 1 
+#  define _DEBUG 0 
 # endif
 
 /* PARSER*/
