@@ -2,6 +2,8 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   min_set_io.c                                       :+:      :+:    :+:   */
+
+
 /*                                                    +:+ +:+         +:+     */
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -16,7 +18,7 @@ static char	*ft_set_filename(t_lexer **token, t_dict *dict)
 {
 	char	**values;
 	char	*filename;
-
+	
 	values = min_word_eval(token, dict);
 	if (!values)
 		return (NULL);

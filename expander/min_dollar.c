@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 15:00:18 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/22 10:43:27 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/22 18:35:36 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	ft_special_next_token(t_lexer **token, t_expander **word,
 	{
 		if (extra)
 			return (min_to_aste(word, min_init_expander(l_word,
-						DOLLAR), token));
+						ft_strdup(DOLLAR)), token));
 		min_word(NULL, word, DOLLAR, help.space);
 		return (1);
 	}
@@ -28,13 +28,13 @@ static char	ft_special_next_token(t_lexer **token, t_expander **word,
 		ft_putstr_fd(ERR_ID, 2);
 		if (extra)
 			return (min_to_aste(word, min_init_expander(l_word,
-						DDOLLAR), token));
+						ft_strdup(DDOLLAR)), token));
 		return (min_word(token, word, DDOLLAR, help.space));
 	}
 	else if ((*token)->key == l_til)
 	{
 		if (extra)
-			return (min_to_aste(word, min_init_expander(l_word, DTIL), token));
+			return (min_to_aste(word, min_init_expander(l_word, ft_strdup(DTIL)), token));
 		return (min_word(token, word, DTIL, help.space));
 	}
 	return (help.space);

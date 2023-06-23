@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:38:59 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/22 15:24:51 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/22 18:10:46 by jstrotbe         ###   ########.fr       */
 /*   Updated: 2023/06/22 11:06:58 by jstrotbe         ###   ########.fr       */
 /*   Updated: 2023/05/11 11:40:55 by lwidmer          ###   ########.fr       */
 /*                                                                            */
@@ -61,7 +61,7 @@ char	**min_word_eval(t_lexer **token, t_dict *dict)
 	t_exphelp	help;
 
 	help = min_init_exphelp(dict, 0, 0);
-	word = min_init_expander(l_empty, EMPTY);
+	word = min_init_expander(l_empty, ft_strdup(EMPTY));
 	while (!help.space && word && *token && min_token_is_word((*token)->key))
 	{
 		if (min_token_is_word((*token)->key) == 1)

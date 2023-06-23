@@ -6,7 +6,7 @@
 #    By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/07 09:41:35 by lwidmer           #+#    #+#              #
-#    Updated: 2023/06/22 14:10:52 by lwidmer          ###   ########.fr        #
+#    Updated: 2023/06/23 09:23:44 by jstrotbe         ###   ########.fr        #
 #    Updated: 2023/06/22 09:47:02 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/06/02 12:25:06 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/05/07 23:38:37 by lwidmer          ###   ########.fr        #
@@ -115,6 +115,6 @@ re: fclean all
 
 libclean: 
 	make fclean -C ./libft
-val:
-	valgrind --leak-check=full  
+val: re
+	valgrind --leak-check=full ./minishell 
 

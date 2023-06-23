@@ -6,31 +6,35 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 17:06:02 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/22 15:23:26 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/23 10:52:26 by jstrotbe         ###   ########.fr       */
 /*   Updated: 2023/06/22 11:21:59 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
 
-int	min_addlast_expander(t_expander **word, char *value, char *wo)
+int	min_addlast_expander(t_expander **word, char *value, char *wo, char free)
 {
 	t_expander	*end;
 
 	end = min_last_expander(*word);
 	if (wo && *wo)
-	{
+	{	
+		min_free(&end->word);
 		end->key = l_word;
 		end->word = value;
 		*wo = 0;
 	}
 	else
 	{
-		end->next = min_init_expander(l_word, value);
+		end->next = min_init_expander(l_word, ft_strdup(value));
+		if (free)
+			min_free(&value);
 		if (!(*word)->next)
 		{
 			min_free_expander(word);
 			return (1);
 		}
+		
 	}
 	return (0);
 }
