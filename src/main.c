@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:19:36 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/22 15:09:28 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/23 13:03:01 by jstrotbe         ###   ########.fr       */
 /*   Updated: 2023/06/22 10:11:21 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/05/11 14:48:19 by jstrotbe         ###   ########.fr       */
 /*   Updated: 2023/05/11 10:06:48 by lwidmer          ###   ########.fr       */
@@ -33,7 +33,7 @@ int	lex_parse_exec(t_min *min, char **readline_input)
 {
 	int	exit;
 
-	exit = 0;
+	exit = 1;
 	min->token = lexer(readline_input);
 	if (min->token)
 	{

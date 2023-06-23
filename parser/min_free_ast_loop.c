@@ -32,21 +32,28 @@ static void ft_free_pipenode(t_ast *ast)
 static void ft_free_routenode(t_ast *ast)
 {
     while(ast->node.route)
-    {   
+    {  
+		min_print_ast(ast); 
         min_free_ast_loop(ast->node.route->down);
         if (ast->node.route->next)
+		{
             ast = ast->node.route->next;
+			//min_print_ast(ast);
+		}
         else
             break;
     }
+//	min_print_ast(ast);
     while (ast->node.route->prev)
-    {
-            ast = ast->node.route->prev;
-            free(ast->node.route->next->node.pipe);
+    {	
+            ast = ast->node.route->prev;	
+		//	min_print_ast(ast);
+            free(ast->node.route->next->node.route);
             free(ast->node.route->next);
     }
     free(ast->node.route);
     free (ast);
+	ast = NULL;	
 }
 
 static void ft_free_jobnode(t_ast *ast)
@@ -58,8 +65,9 @@ static void ft_free_jobnode(t_ast *ast)
 
 void    min_free_ast_loop(t_ast *ast)
 {
-
-    if (ast->key == routenode)
+	if (!ast)
+		return ;
+    else if (ast->key == routenode)
     {
         return (ft_free_routenode(ast));
     }
