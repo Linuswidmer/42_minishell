@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 09:27:39 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/22 12:00:09 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/23 10:52:53 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef EXPANDER_H
@@ -42,7 +42,7 @@ char     min_gaam(t_lexer **token, t_expander **asterisk, t_expander **extra, t_
 void    min_evaluate_asterisk(t_expander **word, t_expander *asterisk, char wo);
  int     min_fit_to_asterisk(char *filename, t_expander *word);
 void    min_add_extra_to_word(t_expander **word, t_expander *extra);
-int     min_addlast_expander(t_expander **word, char *value, char *wo);
+int     min_addlast_expander(t_expander **word, char *value, char *wo, char free);
 
 /*debug*/
 void  min_print_asterisk(t_expander *asterisk);

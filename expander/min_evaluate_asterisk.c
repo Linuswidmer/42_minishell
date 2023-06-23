@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 12:36:42 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/22 17:46:05 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/23 10:53:38 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ void	min_evaluate_asterisk(t_expander **word, t_expander *asterisk, char wo)
 		{
 			found = 1;
 			temp = strdup(d->d_name);
-			if (min_addlast_expander(word, temp, &wo))
+			if (min_addlast_expander(word, temp, &wo, 1))
 				break ;
 		}			
 		d = readdir(dh);
 	}
 	if (!found)
-		min_addlast_expander(word, ft_notfound(asterisk), &wo);
+		min_addlast_expander(word, ft_notfound(asterisk), &wo, 1);
 	free (dh);
 }

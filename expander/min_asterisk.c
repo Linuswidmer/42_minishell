@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:59:48 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/22 18:47:12 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/23 09:59:38 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -39,7 +39,7 @@ static void	ft_check_last_asterisk_entry(t_expander **old, t_expander *word)
 		if (!ft_is_asterisk(word))
 		{
 			*old = min_init_expander((min_last_expander(word))->key,
-					(min_last_expander(word))->word);
+					ft_strdup((min_last_expander(word))->word));
 		}
 		else
 			*old = word;
