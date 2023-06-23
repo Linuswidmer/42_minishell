@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 16:54:21 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/21 15:32:06 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/23 15:15:29 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	create_token_list(char *input, t_lexer *tmp)
 			tmp->next = tmp2;
 			tmp2->prev = tmp;
 			tmp = tmp2;
-		}	
+		}
 	}
 	return (pos);
 }

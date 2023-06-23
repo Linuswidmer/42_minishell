@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:19:36 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/22 15:47:44 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/23 15:14:45 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/06/22 10:11:21 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/05/11 14:48:19 by jstrotbe         ###   ########.fr       */
 /*   Updated: 2023/05/11 10:06:48 by lwidmer          ###   ########.fr       */
@@ -42,7 +42,7 @@ int	lex_parse_exec(t_min *min, char **readline_input)
 			exit = min_executer(min->ast, min->dict, min->builtins, 1);
 		else
 			g_status = 2;
-	}	
+	}
 	else
 		g_status = 2;
 	return (exit);
@@ -78,7 +78,7 @@ int	ft_readline_loop(t_min *min)
 		{
 			free(readline_input);
 			exit = 1;
-			break ;	
+			break ;
 		}
 		if (_DEBUG)
 			ft_printf_fd("\n \\DEBUG_MODE\\ \n\n", 2);
@@ -93,14 +93,13 @@ int	ft_readline_loop(t_min *min)
 	return (exit);
 }
 
-int	main(int argc, char **argv, char **env) 
+int	main(int argc, char **argv, char **env)
 {
 	t_min	*min;
 	int		exit;
-	
+
 	(void)argc;
 	(void)argv;
-	
 	exit = init_minishell(&min, env);
 	if (!exit)
 		exit = ft_readline_loop(min);

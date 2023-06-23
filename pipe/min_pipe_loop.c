@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 11:19:11 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/21 11:59:01 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/23 15:12:18 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	pipe_loop_redirection(t_pipestruct *pipes,
 	return (exit);
 }
 
-int	min_pipe_loop(t_pipenode *pipenode, t_dict *dict, t_builtins *builtin,
+int	min_pipe_loop(t_pipenode *pipenode, t_dict *d, t_builtins *b,
 		t_pipestruct *pipes)
 {
 	static int	exit;
@@ -58,10 +58,8 @@ int	min_pipe_loop(t_pipenode *pipenode, t_dict *dict, t_builtins *builtin,
 		if (!((pipes->pid)[n]))
 		{
 			exit = pipe_loop_redirection(pipes, pipenode, n);
-			//ON_SUCCESS(exit, UPDATE_EXIT(exit, min_exit_handler(
-			//			min_executer(pipenode->down, dict, builtin, 0))));
 			if (!exit)
-				exit = min_exit_handler(min_executer(pipenode->down, dict, builtin, 0));	
+				exit = min_exit_handler(min_executer(pipenode->down, d, b, 0));
 		}
 		ON_SUCCESS(exit, loop_update_pipes(pipes->old_pipefd, pipes->pipefd));
 		if (pipenode->next)

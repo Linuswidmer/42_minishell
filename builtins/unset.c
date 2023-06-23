@@ -6,15 +6,15 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:37:37 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/21 13:14:35 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/23 15:16:43 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int unset_first_dict_entry(t_dict **dict, t_dict *dict_second_entry)
+static int	unset_first_dict_entry(t_dict **dict, t_dict *dict_second_entry)
 {
-	t_dict *dict_first_entry;
+	t_dict	*dict_first_entry;
 
 	dict_first_entry = *dict;
 	free(dict_first_entry->value);

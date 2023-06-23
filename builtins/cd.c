@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:55:25 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/29 13:22:28 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/23 15:16:08 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	cd_to_oldpwd(t_dict *dict)
 		update_directories_in_dict(pwd, dict);
 		free(pwd);
 		return (0);
-	}	
+	}
 }
 
 static int	cd_to_home(t_dict *dict)
@@ -105,13 +105,13 @@ int	min_cd(t_dict *dict, char **arg)
 	int		status;
 	char	*pwd;
 
-	if (arg[1])
-	{
-		ft_printf_fd("cd: too many arguments", 2);
-		return (1002);
-	}	
 	if (!arg[0])
 		status = cd_to_home(dict);
+	else if (arg[1])
+	{
+		ft_printf_fd("cd: too many arguments\n", 2);
+		return (1002);
+	}
 	else if (ft_strncmp(arg[0], "-", ft_strlen(arg[0])) == 0)
 	{
 		status = cd_to_oldpwd(dict);

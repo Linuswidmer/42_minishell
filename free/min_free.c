@@ -6,17 +6,17 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 11:01:35 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/08 11:15:50 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/23 15:06:21 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	min_free(char **tofree)
-{		
+{
 	if (*tofree)
 	{
 		free(*tofree);
 		*tofree = NULL;
 	}
-}	
+}

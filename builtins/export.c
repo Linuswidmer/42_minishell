@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:18:08 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/22 15:42:53 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/23 15:16:56 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	print_dict_export(t_dict *dict)
 char	**split_export(char *arg)
 {
 	size_t		i;
-	char	**split_str;
+	char		**split_str;
 
 	i = 0;
 	split_str = malloc(sizeof(char *) * 3);
