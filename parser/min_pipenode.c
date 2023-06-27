@@ -20,10 +20,10 @@ static t_ast	*ft_init_pipenode(void)
 		return (NULL);
 	ft_bzero(pipe, sizeof(t_ast));
 	pipe->key = pipenode;
-	pipe->node.pipe = (t_pipenode *)malloc(sizeof(t_pipenode));
-	if (!pipe->node.pipe)
+	pipe->u_no.pipe = (t_pipenode *)malloc(sizeof(t_pipenode));
+	if (!pipe->u_no.pipe)
 		return (NULL);
-	ft_bzero(pipe->node.pipe, sizeof(t_pipenode));
+	ft_bzero(pipe->u_no.pipe, sizeof(t_pipenode));
 	return (pipe);
 }
 
@@ -35,20 +35,20 @@ static void	ft_route_pipe(t_ast **ast, t_ast **temp, t_ast **new)
 	else
 	{
 		if (*ast && (*ast)->key == subnode)
-			(*ast)->node.sub->down = *new;
+			(*ast)->u_no.sub->down = *new;
 		if (*ast && (*ast)->key == routenode)
-			(*ast)->node.route->down = *new;
+			(*ast)->u_no.route->down = *new;
 	}
-	(*new)->node.pipe->down = *temp;
+	(*new)->u_no.pipe->down = *temp;
 	if ((*temp)->key == jobnode)
 	{
-		(*new)->node.pipe->up = (*temp)->node.job->up;
-		(*temp)->node.job->up = *new;
+		(*new)->u_no.pipe->up = (*temp)->u_no.job->up;
+		(*temp)->u_no.job->up = *new;
 	}
 	if ((*temp)->key == subnode)
 	{
-		(*new)->node.pipe->up = (*temp)->node.sub->up;
-		(*temp)->node.sub->up = *new;
+		(*new)->u_no.pipe->up = (*temp)->u_no.sub->up;
+		(*temp)->u_no.sub->up = *new;
 	}
 	*ast = *new;
 }
@@ -59,8 +59,8 @@ static void	ft_norm(t_ast **ast, t_ast **temp, t_ast **new)
 		min_parser_malloc_fail(ast);
 	else
 	{
-		(*ast)->node.pipe->next = *new;
-		(*new)->node.pipe->prev = *temp;
+		(*ast)->u_no.pipe->next = *new;
+		(*new)->u_no.pipe->prev = *temp;
 		*ast = *new;
 	}
 }
@@ -86,9 +86,9 @@ t_lexer	*min_pipenode(t_lexer *token, t_ast **ast)
 	{
 		temp = *ast;
 		if ((*ast)->key == jobnode)
-			*ast = (*ast)->node.job->up;
+			*ast = (*ast)->u_no.job->up;
 		else if ((*ast)->key == subnode)
-			*ast = (*ast)->node.sub->up;
+			*ast = (*ast)->u_no.sub->up;
 		if (!*ast || (*ast)->key == subnode || (*ast)->key == routenode)
 			ft_route_pipe(ast, &temp, &new);
 		temp = *ast;

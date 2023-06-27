@@ -21,15 +21,6 @@
 
 int	g_status = 1;
 
-void	free_minishell(t_min *min)
-{
-	close(min->in);
-	close(min->out);
-	free_dict(min->dict);
-	free_builtins(min->builtins);
-	free_min(min);
-}
-
 int	lex_parse_exec(t_min *min, char **readline_input)
 {
 	int	exit;

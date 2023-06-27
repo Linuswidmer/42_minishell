@@ -90,5 +90,5 @@ static int		ft_job(t_jobnode *job, t_dict *dict, t_builtins *build, char fork)
 /*    */
 int 	min_job(t_ast *ast, t_dict *dict, t_builtins *build, char fork)
 {
-	return (ft_job(ast->node.job, dict, build, fork));
+	return (ft_job(ast->u_no.job, dict, build, fork));
 }

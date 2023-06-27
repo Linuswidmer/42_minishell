@@ -20,10 +20,10 @@ t_ast	*min_init_jobnode(t_lexer *token)
 		return (NULL);
 	ft_bzero(job, sizeof(t_ast));
 	job->key = jobnode;
-	job->node.job = (t_jobnode *)malloc(sizeof(t_jobnode));
-	if (!job->node.job)
+	job->u_no.job = (t_jobnode *)malloc(sizeof(t_jobnode));
+	if (!job->u_no.job)
 		return (NULL);
-	ft_bzero(job->node.job, sizeof(t_jobnode));
-	job->node.job->start = token;
+	ft_bzero(job->u_no.job, sizeof(t_jobnode));
+	job->u_no.job->start = token;
 	return (job);
 }

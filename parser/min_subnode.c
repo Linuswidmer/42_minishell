@@ -17,17 +17,17 @@ static t_ast	*ft_navigate_to_next_sub(t_ast *ast, char first)
 	if (ast)
 	{
 		if (ast->key == jobnode)
-			ast = ast->node.job->up;
+			ast = ast->u_no.job->up;
 		else if (ast->key == subnode && first)
-			ast = ast->node.sub->up;
-		else if (ast->key == pipenode && ast->node.pipe->prev)
-			ast = ast->node.pipe->prev;
-		else if (ast->key == pipenode && !ast->node.pipe->prev)
-			ast = ast->node.pipe->up;
-		else if (ast->key == routenode && ast->node.route->prev)
-			ast = ast->node.route->prev;
-		else if (ast->key == routenode && !ast->node.route->prev)
-			ast = ast->node.route->up;
+			ast = ast->u_no.sub->up;
+		else if (ast->key == pipenode && ast->u_no.pipe->prev)
+			ast = ast->u_no.pipe->prev;
+		else if (ast->key == pipenode && !ast->u_no.pipe->prev)
+			ast = ast->u_no.pipe->up;
+		else if (ast->key == routenode && ast->u_no.route->prev)
+			ast = ast->u_no.route->prev;
+		else if (ast->key == routenode && !ast->u_no.route->prev)
+			ast = ast->u_no.route->up;
 		else if (ast->key == subnode && !first)
 			return (ast);
 		return (ft_navigate_to_next_sub(ast, 0));
@@ -79,13 +79,13 @@ static t_ast	*ft_open_para(t_ast **ast, t_lexer *token)
 	if (!new)
 		min_parser_malloc_fail(ast);
 	else
-		new->node.sub->up = *ast;
+		new->u_no.sub->up = *ast;
 	if (*ast && (*ast)->key == subnode)
-		(*ast)->node.sub->down = new;
+		(*ast)->u_no.sub->down = new;
 	if (*ast && (*ast)->key == pipenode)
-		(*ast)->node.pipe->down = new;
+		(*ast)->u_no.pipe->down = new;
 	if (*ast && (*ast)->key == routenode)
-		(*ast)->node.route->down = new;
+		(*ast)->u_no.route->down = new;
 	*ast = new;
 	return (*ast);
 }

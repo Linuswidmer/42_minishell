@@ -14,44 +14,44 @@
 
 static void	ft_free_subnode(t_ast *ast)
 {
-	min_free_ast_loop(ast->node.sub->down);
-	free(ast->node.sub);
+	min_free_ast_loop(ast->u_no.sub->down);
+	free(ast->u_no.sub);
 	free(ast);
 }
 
 static void	ft_free_pipenode(t_ast *ast)
 {
-	while (ast->node.pipe)
+	while (ast->u_no.pipe)
 	{
-		min_free_ast_loop(ast->node.pipe->down);
-		if (ast->node.pipe->next)
-			ast = ast->node.pipe->next;
+		min_free_ast_loop(ast->u_no.pipe->down);
+		if (ast->u_no.pipe->next)
+			ast = ast->u_no.pipe->next;
 		else
 			break ;
 	}
-	while (ast->node.pipe->prev)
+	while (ast->u_no.pipe->prev)
 	{
-		ast = ast->node.pipe->prev;
-		free(ast->node.pipe->next->node.pipe);
-		free(ast->node.pipe->next);
+		ast = ast->u_no.pipe->prev;
+		free(ast->u_no.pipe->next->u_no.pipe);
+		free(ast->u_no.pipe->next);
 	}
-	free(ast->node.pipe);
+	free(ast->u_no.pipe);
 	free(ast);
 	ast = NULL;
 }
 
 static void	ft_free_routenode(t_ast *ast)
 {
-	min_free_ast_loop(ast->node.route->down);
-	min_free_ast_loop(ast->node.route->next);
-	free(ast->node.route);
+	min_free_ast_loop(ast->u_no.route->down);
+	min_free_ast_loop(ast->u_no.route->next);
+	free(ast->u_no.route);
 	free (ast);
 	ast = NULL;
 }
 
 static void	ft_free_jobnode(t_ast *ast)
 {
-	free(ast->node.job);
+	free(ast->u_no.job);
 	free(ast);
 }
 

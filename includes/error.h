@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 12:28:09 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/05/09 08:49:28 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/27 12:11:01 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,5 @@
 # define L_PIPE "|"
 # define L_TIL "~" 
 
-
-
-
-
-
-int    min_parser_error(t_ast **ast, t_lexertype key, char *value);
-
-
-
-
+int	min_parser_error(t_ast **ast, t_lexertype key, char *value);
 #endif

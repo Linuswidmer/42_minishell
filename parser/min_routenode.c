@@ -20,10 +20,10 @@ static t_ast	*ft_init_routenode(void)
 		return (NULL);
 	ft_bzero(route, sizeof(t_ast));
 	route->key = routenode;
-	route->node.route = (t_routenode *)malloc(sizeof(t_routenode));
-	if (!route->node.route)
+	route->u_no.route = (t_routenode *)malloc(sizeof(t_routenode));
+	if (!route->u_no.route)
 		return (NULL);
-	ft_bzero(route->node.route, sizeof(t_routenode));
+	ft_bzero(route->u_no.route, sizeof(t_routenode));
 	return (route);
 }
 
@@ -31,26 +31,26 @@ t_ast	*ft_find_brange(t_ast *ast, t_ast **temp)
 {
 	if (ast->key == jobnode)
 	{
-		if (ast->node.job->up && ast->node.job->up->key != subnode)
-			ast = ast->node.job->up;
+		if (ast->u_no.job->up && ast->u_no.job->up->key != subnode)
+			ast = ast->u_no.job->up;
 		else
-			*temp = ast->node.job->up;
+			*temp = ast->u_no.job->up;
 	}
 	else if (ast->key == subnode)
 	{
-		if (ast->node.sub->up && ast->node.sub->up->key != subnode)
-			ast = ast->node.sub->up;
+		if (ast->u_no.sub->up && ast->u_no.sub->up->key != subnode)
+			ast = ast->u_no.sub->up;
 		else
-			*temp = ast->node.sub->up;
+			*temp = ast->u_no.sub->up;
 	}
 	if (ast->key == pipenode)
 	{
-		while (ast->node.pipe->prev)
-			ast = ast->node.pipe->prev;
-		if (ast->node.pipe->up && ast->node.pipe->up->key != subnode)
-			ast = ast->node.pipe->up;
+		while (ast->u_no.pipe->prev)
+			ast = ast->u_no.pipe->prev;
+		if (ast->u_no.pipe->up && ast->u_no.pipe->up->key != subnode)
+			ast = ast->u_no.pipe->up;
 		else
-			*temp = ast->node.pipe->up;
+			*temp = ast->u_no.pipe->up;
 	}
 	return (ast);
 }
@@ -62,16 +62,16 @@ static void	ft_route(t_ast **ast, t_ast **new, t_ast **temp)
 		min_parser_malloc_fail(ast);
 	else
 	{
-		(*new)->node.route->up = *temp;
+		(*new)->u_no.route->up = *temp;
 		if (*temp)
-			(*temp)->node.sub->down = *new;
-		(*new)->node.route->down = *ast;
+			(*temp)->u_no.sub->down = *new;
+		(*new)->u_no.route->down = *ast;
 		if ((*ast)->key == jobnode)
-			(*ast)->node.job->up = *new;
+			(*ast)->u_no.job->up = *new;
 		if ((*ast)->key == pipenode)
-			(*ast)->node.pipe->up = *new;
+			(*ast)->u_no.pipe->up = *new;
 		if ((*ast)->key == subnode)
-			(*ast)->node.sub->up = *new;
+			(*ast)->u_no.sub->up = *new;
 		*ast = *new;
 	}
 }
@@ -80,9 +80,9 @@ static void	ft_norm(t_ast **ast, t_ast **new, t_ast **temp, t_lexer *token)
 {
 	if (ast)
 	{
-		(*ast)->node.route->next = *new;
-		(*ast)->node.route->rvalue = token->key;
-		(*new)->node.route->prev = *temp;
+		(*ast)->u_no.route->next = *new;
+		(*ast)->u_no.route->rvalue = token->key;
+		(*new)->u_no.route->prev = *temp;
 	}
 	*ast = *new;
 }

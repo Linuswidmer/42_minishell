@@ -21,9 +21,9 @@ t_ast	*min_init_subnode(void)
 		return (NULL);
 	ft_bzero(sub, sizeof(t_ast));
 	sub->key = subnode;
-	sub->node.sub = (t_subnode *)malloc(sizeof(t_subnode));
-	if (!sub->node.sub)
+	sub->u_no.sub = (t_subnode *)malloc(sizeof(t_subnode));
+	if (!sub->u_no.sub)
 		return (NULL);
-	ft_bzero(sub->node.sub, sizeof(t_subnode));
+	ft_bzero(sub->u_no.sub, sizeof(t_subnode));
 	return (sub);
 }

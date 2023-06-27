@@ -63,7 +63,7 @@ int	min_pipe_loop(t_pipenode *pipenode, t_dict *d, t_builtins *b,
 		}
 		ON_SUCCESS(exit, loop_update_pipes(pipes->old_pipefd, pipes->pipefd));
 		if (pipenode->next)
-			pipenode = pipenode->next->node.pipe;
+			pipenode = pipenode->next->u_no.pipe;
 		else
 			pipenode = NULL;
 		n++;

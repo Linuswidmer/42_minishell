@@ -6,24 +6,19 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 11:11:55 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/22 14:12:02 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/27 12:39:19 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FREE_H
 # define FREE_H
 
-
-
-void    min_free(char **tofree);
+void	min_free(char **tofree);
 void	min_dfree(char ***tofree);
 /**/
-void double_free(char ***str);
+void	double_free(char ***str);
 
-/* free_lexer */
-void ft_free_token_list(t_lexer **list);
-void free_token_list(t_lexer **token_list);
-
+void	free_token_list(t_lexer **token_list);
 void	free_pipestruct(t_pipestruct *pipes);
-
+void	free_minishell(t_min *min);
 #endif

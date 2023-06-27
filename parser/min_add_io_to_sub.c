@@ -68,10 +68,10 @@ t_lexer	*min_add_io_to_sub(t_lexer *token, t_ast **ast)
 		min_parser_error(ast, token->key, token->value);
 	else
 	{
-		(*ast)->node.sub->start = token;
+		(*ast)->u_no.sub->start = token;
 		token = ft_find_last_token(token, ast);
 		if (*ast)
-			(*ast)->node.sub->last = token;
+			(*ast)->u_no.sub->last = token;
 	}
 	return (token);
 }

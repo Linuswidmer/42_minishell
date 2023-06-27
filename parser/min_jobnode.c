@@ -32,11 +32,11 @@ static t_ast	*min_init_jobnode(t_lexer *token)
 static void	ft_link_jobnode_into_ast(t_ast **ast, t_ast *new)
 {
 	if ((*ast)->key == pipenode)
-		(*ast)->node.pipe->down = new;
+		(*ast)->u_no.pipe->down = new;
 	else if ((*ast)->key == routenode)
-		(*ast)->node.route->down = new;
+		(*ast)->u_no.route->down = new;
 	else if ((*ast)->key == subnode)
-		(*ast)->node.sub->down = new;
+		(*ast)->u_no.sub->down = new;
 }
 
 static int	ft_check_subshell(t_lexer *token)
@@ -114,13 +114,13 @@ t_lexer	*min_jobnode(t_lexer *token, t_ast **ast)
 		new = min_init_jobnode(token);
 		if (new)
 		{
-			new->node.job->up = *ast;
+			new->u_no.job->up = *ast;
 			if (*ast)
 				ft_link_jobnode_into_ast(ast, new);
 			*ast = new;
 			token = ft_find_last_token(token, ast);
 			if (*ast)
-				(*ast)->node.job->last = token;
+				(*ast)->u_no.job->last = token;
 		}
 		else
 		{

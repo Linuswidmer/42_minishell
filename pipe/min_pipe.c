@@ -21,7 +21,7 @@ static int	ft_count_pipeline(t_pipenode *pipe)
 	{
 		c++;
 		if (pipe->next)
-			pipe = pipe->next->node.pipe;
+			pipe = pipe->next->u_no.pipe;
 		else
 			pipe = NULL;
 	}

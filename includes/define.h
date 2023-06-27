@@ -6,24 +6,18 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:51:43 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/27 10:47:51 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/27 13:33:45 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINE_H
 # define DEFINE_H
 
-# ifndef _DEBUG1	
-#  define _DEBUG1 1	
-# endif
-
-# ifndef _DEBUG    
-#  define _DEBUG 1 
-# endif
+# define _DEBUG1 1	
+# define _DEBUG 1 
 
 /* PARSER*/
 # define P_NEWLINE "newline"
-
 
 # define EMPTY ""
 # define ASTERISK "*"
@@ -41,7 +35,6 @@
 # define DTIL	"$~"
 # define E_QUOTE 'q'	
 
-
 /* HEREDOC*/
 # define HEREDOC "temp"	
 # define HEREDOC_PATH "/tmp/"
@@ -51,9 +44,8 @@
 # define HEREEOF "EOF\n"
 # define HEREFAIL "HEREDOC FAIL\n"	
 
-
 /* EXPANDER*/
-#define TMOPEN "* ambiguous redirect\n"	
+# define TMOPEN "* ambiguous redirect\n"	
 
 # define HOME "HOME"
 #endif

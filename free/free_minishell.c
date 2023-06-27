@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executer.h                                         :+:      :+:    :+:   */
+/*   free_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/28 14:08:17 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/27 12:47:31 by lwidmer          ###   ########.fr       */
+/*   Created: 2023/06/27 12:34:48 by lwidmer           #+#    #+#             */
+/*   Updated: 2023/06/27 12:34:58 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTER_H
-# define EXECUTER_H
+#include "minishell.h"
 
-int	min_job(t_ast *ast, t_dict *dict, t_builtins *build, char fork);
-int	min_executer(t_ast *ast, t_dict *dict, t_builtins *build, char fork);
-int	min_exit_handler(int exit);
-int	min_sub(t_ast *ast, t_dict *dict, t_builtins *build);
-int	min_route(t_ast *ast, t_dict *dict, t_builtins *build);
+void	free_minishell(t_min *min)
+{
+	close(min->in);
+	close(min->out);
+	free_dict(min->dict);
+	free_builtins(min->builtins);
+	free_min(min);
+}
 
-#endif

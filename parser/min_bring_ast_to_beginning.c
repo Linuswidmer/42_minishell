@@ -13,9 +13,9 @@
 
 static int	ft_jobnode(t_ast **ast)
 {
-	if ((*ast)->node.job->up)
+	if ((*ast)->u_no.job->up)
 	{
-		*ast = (*ast)->node.job->up;
+		*ast = (*ast)->u_no.job->up;
 		return (0);
 	}
 	else
@@ -24,9 +24,9 @@ static int	ft_jobnode(t_ast **ast)
 
 static int	ft_subnode(t_ast **ast)
 {
-	if ((*ast)->node.sub->up)
+	if ((*ast)->u_no.sub->up)
 	{
-		*ast = (*ast)->node.sub->up;
+		*ast = (*ast)->u_no.sub->up;
 		return (0);
 	}
 	else
@@ -35,14 +35,14 @@ static int	ft_subnode(t_ast **ast)
 
 static int	ft_pipenode(t_ast **ast)
 {
-	if ((*ast)->node.pipe->prev)
+	if ((*ast)->u_no.pipe->prev)
 	{
-		*ast = (*ast)->node.pipe->prev;
+		*ast = (*ast)->u_no.pipe->prev;
 		return (0);
 	}
-	else if ((*ast)->node.pipe->up)
+	else if ((*ast)->u_no.pipe->up)
 	{
-		*ast = (*ast)->node.pipe->up;
+		*ast = (*ast)->u_no.pipe->up;
 		return (0);
 	}
 	return (1);
@@ -50,14 +50,14 @@ static int	ft_pipenode(t_ast **ast)
 
 static int	ft_routenode(t_ast **ast)
 {
-	if ((*ast)->node.route->prev)
+	if ((*ast)->u_no.route->prev)
 	{
-		*ast = (*ast)->node.route->prev;
+		*ast = (*ast)->u_no.route->prev;
 		return (0);
 	}
-	else if ((*ast)->node.route->up)
+	else if ((*ast)->u_no.route->up)
 	{
-		*ast = (*ast)->node.route->up;
+		*ast = (*ast)->u_no.route->up;
 		return (0);
 	}
 	return (1);

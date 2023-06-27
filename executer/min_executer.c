@@ -46,7 +46,7 @@ int	min_executer(t_ast *ast, t_dict *dict, t_builtins *build, char fork)
 	}
 	if (ast->key == pipenode)
 	{
-	  return (min_pipe(ast->node.pipe, dict, build));
+	  return (min_pipe(ast->u_no.pipe, dict, build));
 	}	
 	if (ast->key == subnode)
 	{
