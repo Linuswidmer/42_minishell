@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 10:48:25 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/22 18:35:12 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/27 12:38:27 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	ft_dollar_split(t_lexer **token, t_expander **word,
 		help.space = min_asterisk(token, word, min_asterisk_splitvalue(
 					help.splitvalue[min_len_split(help.splitvalue) - 1]),
 				min_init_exphelp(help.dict, 0, 1));
-	min_dfree(&help.splitvalue);                                      
+	min_dfree(&help.splitvalue);
 	if (*token && min_token_is_word((*token)->key))
 		*token = (*token)->next;
 	return (help.space);
@@ -65,7 +65,6 @@ static char	ft_add_asterisk_free(t_expander **word, char **va, t_lexer **token)
 		min_free_expander(word);
 	new = min_init_expander(l_word, *va);
 	min_to_aste(word, new, token);
-	//min_free(va);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 15:00:18 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/22 18:35:36 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/27 12:45:05 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ static char	ft_special_next_token(t_lexer **token, t_expander **word,
 	else if ((*token)->key == l_til)
 	{
 		if (extra)
-			return (min_to_aste(word, min_init_expander(l_word, ft_strdup(DTIL)), token));
+			return (min_to_aste(word, min_init_expander(l_word,
+						ft_strdup(DTIL)), token));
 		return (min_word(token, word, DTIL, help.space));
 	}
 	return (help.space);
@@ -65,7 +66,7 @@ char	min_dollar(t_lexer **token, t_expander **word, t_expander **extra,
 	{
 		*token = (*token)->next;
 		return (help.space);
-	}	
+	}
 	else
 		return (min_eval_dollar(token, word, extra, help));
 }

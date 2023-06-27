@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:59:48 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/23 09:59:38 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/27 12:47:38 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -58,7 +58,8 @@ static void	ft_start_asterisk(t_expander *word, t_expander **asterisk,
 		{
 			*asterisk = min_init_expander(l_word, ft_strdup(word->word));
 			if (*asterisk)
-				(*asterisk)->next = min_init_expander(l_asterisk, ft_strdup(EMPTY));
+				(*asterisk)->next = min_init_expander(l_asterisk,
+						ft_strdup(EMPTY));
 		}
 		else
 		{

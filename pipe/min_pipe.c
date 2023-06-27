@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 11:28:08 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/22 14:11:39 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/27 13:30:02 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	ft_count_pipeline(t_pipenode *pipe)
 			pipe = NULL;
 	}
 	return (c);
-}	
+}
 
 int	search_pid(pid_t *pid_arr, pid_t return_pid, int arr_len)
 {
