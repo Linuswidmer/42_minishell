@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 12:54:51 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/22 15:25:58 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/27 12:46:43 by jstrotbe         ###   ########.fr       */
 /*   Updated: 2023/06/22 11:19:20 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -16,10 +16,9 @@
 void	min_free_expander(t_expander **node)
 {
 	t_expander	*temp;
-	t_expander *new;
-	
+	t_expander	*new;
+
 	new = *node;
-	
 	while (new)
 	{
 		temp = new;
@@ -29,4 +28,4 @@ void	min_free_expander(t_expander **node)
 		temp = NULL;
 	}
 	*node = NULL;
-}		
+}

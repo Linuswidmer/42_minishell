@@ -6,17 +6,30 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:51:43 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/27 13:39:19 by lwidmer          ###   ########.fr       */
+<<<<<<< HEAD
+/*   Updated: 2023/06/27 13:33:45 by lwidmer          ###   ########.fr       */
+=======
 /*   Updated: 2023/06/27 12:51:12 by jstrotbe         ###   ########.fr       */
+>>>>>>> dev_jstrotbe
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINE_H
 # define DEFINE_H
 
-# define _DEBUG 0 
-# define _DEBUG1 0
-	
+<<<<<<< HEAD
+# define _DEBUG1 1	
+# define _DEBUG 1 
+=======
+# ifndef _DEBUG1	
+#  define _DEBUG1 0	
+# endif
+
+# ifndef _DEBUG    
+#  define _DEBUG 0 
+# endif
+>>>>>>> dev_jstrotbe
+
 /* PARSER*/
 # define P_NEWLINE "newline"
 

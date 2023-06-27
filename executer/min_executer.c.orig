@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:18:16 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/27 13:37:05 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/27 12:06:05 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,13 @@ int	min_executer(t_ast *ast, t_dict *dict, t_builtins *build, char fork)
 	}
 	if (ast->key == pipenode)
 	{
+<<<<<<< HEAD
 	  return (min_pipe(ast->u_no.pipe, dict, build));
 	}	
+=======
+		return (min_pipe(ast->node.pipe, dict, build));
+	}
+>>>>>>> dev_jstrotbe
 	if (ast->key == subnode)
 	{
 		return (min_sub(ast, dict, build));

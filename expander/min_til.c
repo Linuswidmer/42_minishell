@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:40:07 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/22 18:19:20 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/27 12:36:26 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ static char	*ft_eval_til(t_lexer *token, t_exphelp help)
 {
 	if ((!token->prev || !min_token_is_word(token->prev->key))
 		&& (!token->next || !min_token_is_word(token->next->key)))
-	{	
+	{
 		help.value = ft_strdup(ft_til_in_dict(help.dict));
 		if (!help.value)
 			help.value = ft_strdup(EMPTY);
-	}	
+	}
 	else
 		help.value = ft_strdup(TIL);
 	return (help.value);
