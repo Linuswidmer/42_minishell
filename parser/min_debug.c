@@ -6,12 +6,12 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 17:12:46 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/23 16:16:34 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/27 09:56:17 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
 
-char *lexertype1_names[] =
+/*char *lexertype1_names[] =
 {
     "EMPTY",
     "DQUOTE",
@@ -34,6 +34,7 @@ char *lexertype1_names[] =
 	"AMP"
 	
 };
+
 char *lexertype2_names[] =
 {
     "EMPTY",
@@ -64,27 +65,7 @@ char *nodetype_names[] =
     "JOBNODE",
     "SUBNODE"
 };
-/*
-void min_print_io(t_ionode *io)
-{
-	while (io)
-	{
-		printf("%s %s", lexertype2_names[io->value],  io->file);		
-		io = io->next;
-	}
-}
 
-void min_print_cmd (t_cmdnode *cmd)
-{
-	 while (cmd)
-    {
-        printf("%s", cmd->arg);
-        cmd = cmd->next;
-		if (cmd)
-			printf(" "); 
-    }
-}
-*/
 
 void  min_print_asterisk(t_expander *asterisk) 
 {	
@@ -94,7 +75,8 @@ void  min_print_asterisk(t_expander *asterisk)
 	n = 0;
 	while (asterisk)
 	{
-		ft_printf_fd("NUMBER: %i, Lexertype: %s, Value: %s \n", 2, n++, lexertype1_names[asterisk->key], asterisk->word);   
+		ft_printf_fd("NUMBER: %i, Lexertype: %s, Value: %s \n", 
+		2, n++, lexertype1_names[asterisk->key], asterisk->word);   
 		asterisk = asterisk->next;
 	}
 	ft_printf_fd("*END ASTERISK\n", 2);
@@ -220,47 +202,9 @@ void min_print_ast(t_ast *ast)
 	}		
 	printf("\nEND_AST\n\n");
 }
-/*
-void    min_bring_ast_to_beginning(t_ast **ast)
+*/
+void	min_print_ast(t_ast *ast)
 {
-    if (!*ast)
-        return;
-    while (1)
-    {	
-//	 	printf("hallo\n");
-//		printf("BEGIN: NODETYPE is: %s     \n", nodetype_names[(*ast)->key]);
-        if ((*ast)->key == jobnode)
-        {
-            if ((*ast)->node.job->up)
-                *ast = (*ast)->node.job->up;
-            else
-                break;
-        }
-        else if((*ast)->key == subnode)
-        {
-            if ((*ast)->node.sub->up)
-                *ast = (*ast)->node.sub->up;
-            else
-                break;
-        }
-        else if ((*ast)->key == pipenode)
-        {
-            if ((*ast)->node.pipe->prev)
-                *ast = (*ast)->node.pipe->prev;
-            else if ((*ast)->node.pipe->up)
-                *ast = (*ast)->node.pipe->up;
-            else
-                break;
-        }
-        else if ((*ast)->key == routenode)
-        {
-            if ((*ast)->node.route->prev)
-                *ast = (*ast)->node.route->prev;
-            else if ((*ast)->node.route->up)
-                *ast = (*ast)->node.route->up;
-            else
-                break;
-        }
-    }
-}*/
-
+	(void)ast;
+	ft_printf_fd("NO_DEBUG \n", 2);
+}

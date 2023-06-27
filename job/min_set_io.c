@@ -2,23 +2,20 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   min_set_io.c                                       :+:      :+:    :+:   */
-
-
 /*                                                    +:+ +:+         +:+     */
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/27 11:55:49 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/22 12:30:10 by jstrotbe         ###   ########.fr       */
+/*   Created: 2023/06/27 10:05:57 by jstrotbe          #+#    #+#             */
+/*   Updated: 2023/06/27 10:06:38 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
 
 static char	*ft_set_filename(t_lexer **token, t_dict *dict)
 {
 	char	**values;
 	char	*filename;
-	
+
 	values = min_word_eval(token, dict);
 	if (!values)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 12:22:40 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/22 12:35:57 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/27 11:22:32 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ static void	ft_normal_extra(t_expander **word, t_expander **extra,
 	}
 	else if (!help.n)
 	{
-		min_print_asterisk(*word);
 		if (*word && (min_last_expander(*word))->key == l_word)
 		{
 			min_word(NULL, word, help.splitvalue[help.n], 0);

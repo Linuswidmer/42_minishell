@@ -6,16 +6,16 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:27:42 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/22 15:11:52 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/27 11:31:40 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void min_free_cmdnode(t_cmdnode       **cmdnode, int exit)
+void	min_free_cmdnode(t_cmdnode **cmdnode, int exit)
 {
-	t_cmdnode *curr;
-	t_cmdnode *next;
+	t_cmdnode	*curr;
+	t_cmdnode	*next;
 
 	next = *cmdnode;
 	while (next)

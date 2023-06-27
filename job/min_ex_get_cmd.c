@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:53:18 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/22 09:46:31 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/27 10:07:48 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	ft_len_cmd(t_cmdnode *cmd)
 }
 
 char	**min_ex_get_cmd(t_cmdnode *cmd)
-{	
+{
 	char	**values;
 	int		i;
 
