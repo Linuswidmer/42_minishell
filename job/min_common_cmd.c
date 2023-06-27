@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 12:05:30 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/22 12:02:36 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/27 11:28:12 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/06/21 14:51:28 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/06/02 13:05:38 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/05/11 14:44:29 by jstrotbe         ###   ########.fr       */
@@ -47,22 +47,33 @@ static int	ft_checkpath_cmd_is_path(char *cmd, char **path)
 {
 	if (!access(cmd, F_OK))
 	{
-		*path = cmd;
+		*path = ft_strdup(cmd);
 		return (0);
 	}
-	ft_printf_fd("no such file or direcotry: %s\n", 2, cmd);
-	return (1);
+	else
+	{
+		*path = ft_strdup("");
+		return (0);
+	}
 }
 
 static int ft_checkpath_cmd_is_file(char *cmd, char **path)
 {
+	if (ft_strlen(cmd) <= 2)
+	{
+		*path = ft_strdup("");
+		return (2);
+	}
 	if (!access(cmd + 2, F_OK))
 	{
-		*path = cmd + 2;
+		*path = ft_strdup(cmd + 2);
 		return (0);
 	}
-	ft_printf_fd("no such file or direcotry: %s\n", 2, cmd);
-	return (2);
+	else
+	{
+		*path = ft_strdup("");
+		return (0);
+	}
 }
 
 static int	ft_checkpath(char *cmd, t_dict *dict, char **path)
@@ -129,7 +140,15 @@ int	min_common_cmd(t_jobnode *astjob, t_dict *dict, char f)
 		{	
 			envp = (char **)min_get_envp(dict);
 			exit = ft_checkpath(cmd[0], dict, &path);
-			exit = execve(path, cmd, envp);			
+			// hier brauchen wir moch einen guten Weg den exit status zu ueberpruefem
+			// wenn exit nicht null ist darf execve nicht ausgefuehrt werden und der path
+			// nicht gefreed werden (ausser wir erstellen einen leeren "" Pfad?) die
+			// envp muessen aber trotzdem gefreed werden
+			if (!exit)
+			{
+				exit = execve(path, cmd, envp);			
+				perror(cmd[0]);
+			}
 			min_free(&path);
 			min_dfree(&envp);
 		}

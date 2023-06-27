@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 13:06:56 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/29 13:07:09 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/23 17:23:09 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	write_to_dict(t_dict *var, char *key, char *value)
 		free(var->value);
 	if (value)
 		var->value = ft_strdup(value);
+	else
+		var->value = NULL;
 	return (0);
 }
 

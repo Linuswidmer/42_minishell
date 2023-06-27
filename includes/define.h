@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:51:43 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/02 12:09:48 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/27 10:47:51 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define DEFINE_H
 
 # ifndef _DEBUG1	
-#  define _DEBUG1 0	
+#  define _DEBUG1 1	
 # endif
 
 # ifndef _DEBUG    
