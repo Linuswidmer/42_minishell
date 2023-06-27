@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:25:40 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/29 13:22:08 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/27 10:31:45 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,16 @@ static int	str_to_dict(t_dict *entry, char *arg)
 {
 	char	**split_str;
 
+	if (!arg || !entry)
+		return (1);
 	split_str = ft_split(arg, '=');
 	if (!split_str || !split_str[0])
 		return (1);
 	write_to_dict(entry, split_str[0], split_str[1]);
 	free(split_str[0]);
+	if (split_str[1])
+		free(split_str[2]);
 	free(split_str[1]);
-	free(split_str[2]);
 	free(split_str);
 	return (0);
 }
