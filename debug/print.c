@@ -6,12 +6,12 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 16:14:59 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/22 10:21:57 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/27 13:47:31 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
 char *lexertype_names[] =
 {
     "EMPTY",
@@ -50,4 +50,10 @@ void    print_token_list(t_lexer *first)
         tmp = tmp->next;
     }
     ft_printf_fd("\n", 2);
+}*/
+
+void	print_token_list(t_lexer *first)
+{
+	(void)first;
+	t_printf_fd("NO_DEBUG\n", 2);
 }

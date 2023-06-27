@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:34:48 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/27 12:34:58 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/27 13:50:47 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,3 @@ void	free_minishell(t_min *min)
 	free_builtins(min->builtins);
 	free_min(min);
 }
-
