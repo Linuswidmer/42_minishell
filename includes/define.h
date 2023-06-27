@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:51:43 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/27 13:39:19 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/27 13:53:15 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/06/27 12:51:12 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -16,7 +16,7 @@
 
 # define _DEBUG 0 
 # define _DEBUG1 0
-	
+
 /* PARSER*/
 # define P_NEWLINE "newline"
 

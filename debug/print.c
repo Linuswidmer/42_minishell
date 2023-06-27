@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 16:14:59 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/27 13:47:31 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/27 14:01:34 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,5 @@ void    print_token_list(t_lexer *first)
 void	print_token_list(t_lexer *first)
 {
 	(void)first;
-	t_printf_fd("NO_DEBUG\n", 2);
+	ft_printf_fd("NO_DEBUG\n", 2);
 }

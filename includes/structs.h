@@ -6,33 +6,33 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:47:53 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/27 13:06:11 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/27 14:05:09 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-typedef struct s_dict			t_dict;
-typedef struct s_min			t_min;
-typedef struct s_builtins		t_builtins;
-typedef int		(*builtin_ptr)	(t_builtins *, char**);
-typedef struct s_commands		t_commands;
-typedef struct s_lexer			t_lexer;
-typedef struct s_ast			t_ast;
-typedef struct s_pipenode		t_pipenode;
-typedef struct s_jobnode		t_jobnode;
-typedef struct s_cmdnode		t_cmdnode;
-typedef struct s_ionode			t_ionode;
-typedef struct s_routenode		t_routenode;
-typedef struct s_subnode		t_subnode;
-typedef struct s_expandjob		t_expandjob;
-typedef struct s_cmdnode		t_cmdnode;
-typedef struct s_ionode			t_ionode;
-typedef struct s_expander		t_expander;
-typedef struct s_dollar			t_dollar;
-typedef struct s_pipestruct		t_pipestruct;
-typedef struct s_exphelp		t_exphelp;
+typedef struct s_builtins	t_builtins;
+typedef int					(*t_builtin_ptr)(t_builtins *, char**);
+typedef struct s_dict		t_dict;
+typedef struct s_min		t_min;
+typedef struct s_commands	t_commands;
+typedef struct s_lexer		t_lexer;
+typedef struct s_ast		t_ast;
+typedef struct s_pipenode	t_pipenode;
+typedef struct s_jobnode	t_jobnode;
+typedef struct s_cmdnode	t_cmdnode;
+typedef struct s_ionode		t_ionode;
+typedef struct s_routenode	t_routenode;
+typedef struct s_subnode	t_subnode;
+typedef struct s_expandjob	t_expandjob;
+typedef struct s_cmdnode	t_cmdnode;
+typedef struct s_ionode		t_ionode;
+typedef struct s_expander	t_expander;
+typedef struct s_dollar		t_dollar;
+typedef struct s_pipestruct	t_pipestruct;
+typedef struct s_exphelp	t_exphelp;
 
 typedef enum e_lexertype
 {
@@ -71,10 +71,10 @@ struct s_commands{
 };
 
 struct s_builtins {
-	const char	*name;
-	builtin_ptr	func;
-	t_dict		*dict;
-	t_commands	commands;
+	const char		*name;
+	t_builtin_ptr	func;
+	t_dict			*dict;
+	t_commands		commands;
 };
 
 /*   dict */
@@ -100,7 +100,7 @@ typedef enum e_type
 	pipenode,
 	jobnode,
 	subnode,
-}	e_type;
+}	t_type;
 
 struct s_subnode
 {
@@ -136,7 +136,7 @@ struct s_jobnode
 
 struct s_ast
 {
-	e_type	key;
+	t_type	key;
 	union
 	{
 		t_pipenode	*pipe;
