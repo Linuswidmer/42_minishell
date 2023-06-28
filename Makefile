@@ -6,7 +6,7 @@
 #    By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/07 09:41:35 by lwidmer           #+#    #+#              #
-#    Updated: 2023/06/27 13:41:27 by lwidmer          ###   ########.fr        #
+#    Updated: 2023/06/27 17:25:50 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/06/27 12:54:10 by jstrotbe         ###   ########.fr        #
 #    Updated: 2023/06/22 09:47:02 by lwidmer          ###   ########.fr        #
 #    Updated: 2023/06/02 12:25:06 by lwidmer          ###   ########.fr        #
@@ -95,7 +95,7 @@ REMOVE = rm -f
 
 CFLAGS = -Werror -Wall -Wextra
 
-all: ${NAME}
+all: lib ${NAME}
 
 ${NAME}: ${OBJS}
 	cc ${OBJS} -lreadline -L. ./libft/libft.a -o ${NAME}

@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:37:37 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/23 15:16:43 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/28 10:54:34 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,21 @@ static int	unset_first_dict_entry(t_dict **dict, t_dict *dict_second_entry)
 	return (1000);
 }
 
+static int	ft_norm(void)
+{
+	ft_printf_fd(
+		"unset: multiple arguments not implemented, nothing unset\n", 2);
+	return (1000);
+}
+
 int	min_unset(t_dict **dict, char **arg)
 {
 	t_dict	*var;
 	t_dict	*var_prev;
 	t_dict	*var_next;
 
+	if (arg[1])
+		return (ft_norm());
 	var_prev = *dict;
 	var = search_key_in_dict(*dict, arg[0]);
 	if (var)

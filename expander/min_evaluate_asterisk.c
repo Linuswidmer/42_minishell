@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 12:36:42 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/27 12:43:10 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/28 11:06:45 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,5 @@ void	min_evaluate_asterisk(t_expander **word, t_expander *asterisk, char wo)
 	}
 	if (!found)
 		min_addlast_expander(word, ft_notfound(asterisk), &wo, 1);
-	free (dh);
+	closedir(dh);
 }

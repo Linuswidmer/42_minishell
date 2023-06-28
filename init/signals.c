@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 10:52:07 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/23 17:30:16 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/28 10:41:51 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	handle_signals(int sig)
 		write(STDERR_FILENO, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		rl_redisplay();
+		if (g_status != 130)
+			rl_redisplay();
 	}
 }
 

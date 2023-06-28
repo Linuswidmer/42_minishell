@@ -19,7 +19,7 @@
 
 #include "minishell.h"
 
-int	g_status = 1;
+int	g_status = 0;
 
 int	lex_parse_exec(t_min *min, char **readline_input)
 {

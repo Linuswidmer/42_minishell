@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 12:05:30 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/27 12:05:27 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/28 10:34:16 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/06/21 14:51:28 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/06/02 13:05:38 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/05/11 14:44:29 by jstrotbe         ###   ########.fr       */
@@ -71,10 +71,10 @@ int	min_common_cmd(t_jobnode *astjob, t_dict *dict, char f)
 	pid_t	id;
 
 	exit = 0;
+	init_signals_cmd();
 	if (f)
 	{
 		id = fork();
-		init_signals_cmd();
 	}
 	else
 		id = 0;
