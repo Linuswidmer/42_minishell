@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:57:33 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/05/23 15:58:01 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/28 13:39:32 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,23 @@ static int	exit_check_if_numeric(char *arg)
 	return (0);
 }
 
+static int	exit_too_many_args(void)
+{
+	ft_printf_fd("exit: too many arguments\n", 2);
+	return (1002);
+}
+
 int	min_exit(char **arg)
 {
 	int	exit;
 	int	i;
 
 	i = 0;
+	ft_printf_fd("exit\n", 2);
 	if (!arg[0])
 		exit = 256;
 	else if (arg[1])
-		exit = 2;
+		return (exit_too_many_args());
 	else
 	{
 		if (exit_check_if_numeric(arg[0]))

@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:19:36 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/23 15:51:14 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/07/04 11:48:08 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/06/23 13:31:46 by jstrotbe         ###   ########.fr       */
 /*   Updated: 2023/06/22 10:11:21 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/05/11 14:48:19 by jstrotbe         ###   ########.fr       */
@@ -60,7 +60,7 @@ void	free_resources_readline_loop(char *readline_input, t_min *min)
 int	ft_readline_loop(t_min *min)
 {
 	char		*readline_input;
-	static int	exit;	
+	static int	exit = 0;
 
 	while (!exit && min->dict)
 	{

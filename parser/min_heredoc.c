@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 12:43:28 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/23 16:34:57 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/28 14:09:12 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,6 @@ int	min_heredoc(t_lexer **token, char *heredoc)
 			return (0);
 		}
 	}
-	ft_printf_fd(HEREFAIL, 2);
+	min_free(&path);
 	return (1);
 }

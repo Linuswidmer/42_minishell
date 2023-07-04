@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:55:25 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/23 15:16:08 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/06/28 13:57:40 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,14 @@ static int	update_directories_in_dict(char *pwd, t_dict *dict)
 		dict_oldpwd->value = dict_pwd->value;
 		dict_pwd->value = ft_strdup(pwd);
 	}
-	else if (dict_pwd)
+	else if (!dict_oldpwd && dict_pwd)
 	{
+		free(dict_pwd->value);
 		dict_pwd->value = ft_strdup(pwd);
+	}
+	else if (dict_oldpwd && !dict_pwd)
+	{
+		free(dict_oldpwd->value);
 		dict_oldpwd->value = ft_strdup("");
 	}
 	return (0);

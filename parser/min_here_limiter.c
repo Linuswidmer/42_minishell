@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 16:40:51 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/23 16:48:10 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/06/28 14:11:42 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,11 @@ char	*min_here_limiter(t_lexer *token)
 {
 	while (token && token->key == l_space)
 		token = token->next;
-	if (!token)
-		min_parser_error(NULL, 0, P_NEWLINE);
 	if (token && min_token_is_word(token->key))
 		return (ft_limiter_loop(token, EMPTY));
+	else if (!token)
+		min_parser_error(NULL, 0, P_NEWLINE);
 	else
-		return (NULL);
+		min_parser_error(NULL, token->key, NULL);
+	return (NULL);
 }

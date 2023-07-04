@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 11:28:08 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/27 13:30:02 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/07/04 11:05:54 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int	min_pipe(t_pipenode *pipenode, t_dict *dict, t_builtins *build)
 	n = 0;
 	exit = init_pipes(&pipes, pipenode);
 	exit = min_pipe_loop(pipenode, dict, build, pipes);
+	init_signals_cmd();
 	if (!exit)
 	{
 		SET_EXIT_ON_ERROR(close((pipes->old_pipefd)[0]));
