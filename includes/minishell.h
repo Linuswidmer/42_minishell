@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:20:37 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/27 12:13:20 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/07/05 19:02:13 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 # include "free.h"
 # include "error.h"
 # include "debug.h"
+# include <sys/stat.h>
 
 extern int	g_status;
 #endif

@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:02:20 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/27 12:47:01 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/07/05 18:24:35 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 /* FUNCTIONS */
 t_ast	*min_parser(t_lexer *token); /* x */
+int		min_ft_token_is_jobnode(t_lexertype key);
 void	min_parser_malloc_fail(t_ast **ast);
 void	min_bring_ast_to_beginning(t_ast **ast);
 void	min_free_ast(t_ast **ast);

@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 11:39:19 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/07/05 14:02:27 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/07/05 19:05:29 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,38 @@ static char	**ft_get_paths( t_dict *dict)
 	return (paths);
 }
 
+/*
 static int	ft_checkpath_cmd_is_path(char *cmd, char **path)
 {
-	if (!access(cmd, F_OK))
+	int		exit;
+	int		fd;
+	struct	stat file_stat;
+
+	if (!access(cmd, X_OK))
 	{
-		*path = ft_strdup(cmd);
-		return (0);
+		fd = open(cmd, O_RDONLY);		
+		fstat(fd, &file_stat);
+		if (S_ISDIR(file_stat.st_mode))
+		{
+			ft_printf_fd("%s: is a directory\n", 2, cmd);
+			*path = ft_strdup("");
+			exit = 1;
+		} 
+		else 
+		{
+			*path = ft_strdup(cmd);
+			exit = 0;
+		}
+		close (fd);
 	}
 	else
 	{
 		*path = ft_strdup("");
-		return (0);
+		exit = 0;
 	}
+	return (exit);
 }
+*/
 
 static int	ft_checkpath_cmd_is_file(char *cmd, char **path)
 {
@@ -108,7 +127,7 @@ int	ft_checkpath(char *cmd, t_dict *dict, char **path)
 
 	*path = NULL;
 	if (cmd[0] == '/')
-		return (ft_checkpath_cmd_is_path(cmd, path));
+		return (min_ft_checkpath_cmd_is_path(cmd, path));
 	if (cmd[0] == '.')
 		return (ft_checkpath_cmd_is_file(cmd, path));
 	paths = ft_get_paths(dict);

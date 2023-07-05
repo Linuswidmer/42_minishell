@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 12:43:28 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/07/05 14:56:25 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/07/05 17:51:05 by jstrotbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,9 @@ static char	*ft_find_filename(char *heredoc)
 static void	ft_heredoc_loop(int fd, char *limiter)
 {
 	char		*line;
-//	static int	heredoc_error = 0;
 	int			old_g_status;
 
 	old_g_status = g_status;
-//	if (g_status != 155)
-//		heredoc_error = 0;
 	g_status = 155;
 	while (1)
 	{
@@ -43,7 +40,6 @@ static void	ft_heredoc_loop(int fd, char *limiter)
 		line = get_next_line(0);
 		if (!line)
 		{
-			//heredoc_error = 1;
 			break ;
 		}
 		if (ft_strncmp(line, limiter, ft_strlen(line) - 1) == 0)
@@ -54,7 +50,7 @@ static void	ft_heredoc_loop(int fd, char *limiter)
 		write(fd, line, ft_strlen(line));
 		min_free(&line);
 	}
-	if (g_status ==	155)
+	if (g_status == 155)
 		g_status = old_g_status;
 }
 
