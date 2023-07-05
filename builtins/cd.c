@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:55:25 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/28 13:57:40 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/07/05 10:31:39 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,8 @@ int	min_cd(t_dict *dict, char **arg)
 	else
 		status = cd_to_arg(arg[0]);
 	pwd = getcwd(NULL, 0);
-	update_directories_in_dict(pwd, dict);
+	if (status == 0)
+		update_directories_in_dict(pwd, dict);
 	free(pwd);
 	return (1000 + status);
 }

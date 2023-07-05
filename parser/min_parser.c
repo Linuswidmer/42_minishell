@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:59:26 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/23 17:33:41 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/07/05 15:09:44 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -48,7 +48,9 @@ t_ast	*min_parser(t_lexer *token)
 	t_ast	*ast;
 
 	ast = NULL;
-	while (token)
+	if (g_status == 130)
+		g_status = 17;
+	while (token && g_status != 130)
 	{
 		while (token && token->key == l_space)
 			token = token->next;
@@ -66,5 +68,7 @@ t_ast	*min_parser(t_lexer *token)
 	min_bring_ast_to_beginning(&ast);
 	if (_DEBUG)
 		min_print_ast(ast);
+	if (g_status == 17)
+		g_status = 130;
 	return (ast);
 }

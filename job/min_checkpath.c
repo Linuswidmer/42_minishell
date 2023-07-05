@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 11:39:19 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/27 11:50:26 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/07/05 14:02:27 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,13 @@ static char	**ft_get_paths( t_dict *dict)
 	int		i;
 	char	*temp;
 	char	**paths;
+	t_dict	*path_dict;
 
 	i = 0;
-	paths = ft_split((search_key_in_dict(dict, "PATH"))->value, ':');
+	path_dict = search_key_in_dict(dict, "PATH");
+	if (!path_dict)
+		return (NULL);
+	paths = ft_split(path_dict->value, ':');
 	if (!paths)
 		return (NULL);
 	while (paths[i])
@@ -75,7 +79,7 @@ int	ft_build_path_from_dict(char *cmd, char **path, char **paths)
 
 	i = 0;
 	*path = ft_strjoin(paths[i], cmd);
-	if (*path)
+	if (*path && *cmd)
 	{
 		while (paths[i])
 		{
@@ -93,21 +97,31 @@ int	ft_build_path_from_dict(char *cmd, char **path, char **paths)
 			}
 		}
 	}
+	ft_printf_fd("%s: command not found\n", 2, cmd);
 	min_dfree(&paths);
-	ft_printf_fd("command not found: %s\n", 2, cmd);
-	return (1);
+	return (127);
 }
 
 int	ft_checkpath(char *cmd, t_dict *dict, char **path)
 {
 	char	**paths;
 
+	*path = NULL;
 	if (cmd[0] == '/')
 		return (ft_checkpath_cmd_is_path(cmd, path));
 	if (cmd[0] == '.')
 		return (ft_checkpath_cmd_is_file(cmd, path));
 	paths = ft_get_paths(dict);
-	if (!path)
-		return (1);
+	if (!*cmd)
+	{
+		ft_printf_fd("'': command not found\n", 2);
+		min_dfree(&paths);
+		return (127);
+	}
+	if (!paths)
+	{
+		*path = ft_strdup(cmd);
+		return (0);
+	}
 	return (ft_build_path_from_dict(cmd, path, paths));
 }

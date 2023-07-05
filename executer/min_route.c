@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 18:30:25 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/27 13:48:57 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/07/05 15:14:22 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	min_route(t_ast *ast, t_dict *dict, t_builtins *build)
 
 	new = ast;
 	exit = min_executer(new->u_no.route->down, dict, build, 1);
-	while (exit >= 1000 && exit < 2000)
+	while (exit !=1130 && exit >= 1000 && exit < 2000)
 	{
 		g_status = exit - 1000;
 		while (new && new->u_no.route->rvalue == l_and && g_status)

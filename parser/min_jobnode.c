@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:31:01 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/23 17:29:12 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/07/05 13:45:56 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static t_lexer	*ft_find_last_token(t_lexer *token, t_ast **ast)
 	char	io;
 
 	io = 0;
-	while (token)
+	while (token && g_status != 130)
 	{
 		if (min_token_is_jobnode(token->key))
 		{

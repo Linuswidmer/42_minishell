@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:41:03 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/27 10:05:15 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/07/05 14:21:42 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -44,7 +44,7 @@ int	min_expander(t_lexer *token, t_dict *dict, t_lexer *end, char ***cmd)
 			ft_print_cmd(cmdnode);
 		*cmd = min_ex_get_cmd(cmdnode);
 		if (!**cmd)
-			exit = 1;
+			exit = 160;
 	}
 	min_free_cmdnode(&cmdnode, exit);
 	return (exit);

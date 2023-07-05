@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:38:59 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/27 12:45:43 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/07/05 12:13:25 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/06/22 11:06:58 by jstrotbe         ###   ########.fr       */
 /*   Updated: 2023/05/11 11:40:55 by lwidmer          ###   ########.fr       */
 /*                                                                            */
@@ -19,7 +19,7 @@ static int	ft_count_values(t_expander *word)
 	int	c;
 
 	c = 1;
-	while (word)
+	while (word && word->key != l_empty)
 	{
 		c++;
 		word = word->next;
@@ -37,7 +37,7 @@ static char	**ft_get_values(t_expander *word, t_exphelp help)
 	help.splitvalue = ft_calloc(sizeof(char **), (count +1));
 	if (!help.splitvalue)
 		return (NULL);
-	while (word)
+	while (word && word->key != l_empty)
 	{
 		help.splitvalue[help.n] = ft_strdup(word->word);
 		if (!help.splitvalue[help.n++])

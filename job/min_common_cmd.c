@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 12:05:30 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/06/28 10:34:16 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/07/05 15:25:54 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/06/21 14:51:28 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/06/02 13:05:38 by lwidmer          ###   ########.fr       */
 /*   Updated: 2023/05/11 14:44:29 by jstrotbe         ###   ########.fr       */
@@ -28,6 +28,11 @@ static int	child_execute_cmd(t_jobnode *astjob, t_dict *dict)
 
 	cmd = NULL;
 	exit = min_io_and_cmd(astjob, dict, &cmd);
+	if (exit == 160 && g_status == 0)
+	{
+		min_dfree(&cmd);
+		return (256);
+	}
 	if (!exit)
 	{
 		envp = (char **)min_get_envp(dict);
@@ -41,7 +46,7 @@ static int	child_execute_cmd(t_jobnode *astjob, t_dict *dict)
 		min_dfree(&envp);
 	}
 	min_dfree(&cmd);
-	return (127);
+	return (exit);
 }
 
 static int	parent_wait_for_child(pid_t id)

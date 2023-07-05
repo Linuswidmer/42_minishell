@@ -6,30 +6,35 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:37:37 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/06/28 10:54:34 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/07/05 10:29:32 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	unset_first_dict_entry(t_dict **dict, t_dict *dict_second_entry)
+static void	unset_first_dict_entry(t_dict **dict, t_dict *dict_second_entry)
 {
 	t_dict	*dict_first_entry;
 
 	dict_first_entry = *dict;
 	free(dict_first_entry->value);
+	free(dict_first_entry->key);
 	dict_first_entry->key = dict_second_entry->key;
 	dict_first_entry->value = dict_second_entry->value;
 	dict_first_entry->next_entry = dict_second_entry->next_entry;
 	free(dict_second_entry);
-	return (1000);
 }
 
-static int	ft_norm(void)
+static void	unset_not_first_dict_entry(t_dict *var_prev,
+				t_dict *var, t_dict *var_next)
 {
-	ft_printf_fd(
-		"unset: multiple arguments not implemented, nothing unset\n", 2);
-	return (1000);
+	while (var_prev->next_entry != var)
+		var_prev = var_prev->next_entry;
+	min_free(&var->value);
+	free(var->key);
+	free(var);
+	if (var_prev)
+		var_prev->next_entry = var_next;
 }
 
 int	min_unset(t_dict **dict, char **arg)
@@ -37,26 +42,22 @@ int	min_unset(t_dict **dict, char **arg)
 	t_dict	*var;
 	t_dict	*var_prev;
 	t_dict	*var_next;
+	int		i;
 
-	if (arg[1])
-		return (ft_norm());
-	var_prev = *dict;
-	var = search_key_in_dict(*dict, arg[0]);
-	if (var)
-		var_next = var->next_entry;
-	if (var == NULL)
-		return (1000);
-	else if (var == *dict)
-		return (unset_first_dict_entry(dict, var_next));
-	else
+	i = 0;
+	while (arg[i])
 	{
-		while (var_prev->next_entry != var)
-			var_prev = var_prev->next_entry;
+		var_prev = *dict;
+		var = search_key_in_dict(*dict, arg[i]);
+		if (var != NULL)
+		{
+			var_next = var->next_entry;
+			if (var == *dict)
+				unset_first_dict_entry(dict, var_next);
+			else
+				unset_not_first_dict_entry(var_prev, var, var_next);
+		}
+		i++;
 	}
-	free(var->value);
-	free(var->key);
-	free(var);
-	if (var_prev)
-		var_prev->next_entry = var_next;
 	return (1000);
 }
