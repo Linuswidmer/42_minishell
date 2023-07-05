@@ -6,7 +6,7 @@
 /*   By: jstrotbe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 07:45:11 by jstrotbe          #+#    #+#             */
-/*   Updated: 2023/07/05 19:03:15 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/07/05 19:09:59 by jstrotbe         ###   ########.fr       */
 /*   Updated: 2023/05/03 09:32:23 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -36,7 +36,7 @@ int			ft_checkpath(char *cmd, t_dict *dict, char **path);
 
 char *const	*min_get_envp(t_dict *dict);
 
-int min_ft_checkpath_cmd_is_path(char *cmd, char **path);
+int			min_ft_checkpath_cmd_is_path(char *cmd, char **path);
 
 /* buildin */
 int			min_buildin_cmd(t_jobnode *astjob, t_dict *dict, t_builtins *build);
