@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 11:39:19 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/07/05 19:05:29 by jstrotbe         ###   ########.fr       */
+/*   Updated: 2023/07/06 14:27:57 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,9 @@ static int	ft_checkpath_cmd_is_path(char *cmd, char **path)
 
 static int	ft_checkpath_cmd_is_file(char *cmd, char **path)
 {
-	if (ft_strlen(cmd) <= 2)
+	if (ft_strlen(cmd) <= 1)
 	{
+		ft_printf_fd("filename argument required\n", 2);
 		*path = ft_strdup("");
 		return (2);
 	}
