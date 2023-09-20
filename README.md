@@ -34,11 +34,12 @@ Some selected features of this implementation are
 
 ### Execution
 1. launch the shell with ```./minishell```
-2. go crazy! really, we encourage you to try the most absurd inputs, for inspiration
-   ```export A=1 B=2 C=3 D=4 E=5 F=6 G=7 H=8 ; echo "$A'$B"'$C"$D'$E'"$F'"'$G'$H"``` (testing single and double quotes)
-   ``` (ls && pwd | wc) >> hola ; echo hey&&(ls && pwd | wc) > hola ; cat hola``` (redirections, operators)
-   ```cat | cat | ls ``` (our favourite one 😉)
-3. Exit the shell with CTRL+D or typing ```exit``` 
+2. go crazy! really, we encourage you to try the most absurd inputs, for inspiration \
+   ```export A=1 B=2 C=3 D=4 E=5 F=6 G=7 H=8 ; echo "$A'$B"'$C"$D'$E'"$F'"'$G'$H"``` (testing single and double quotes) \
+   ``` (ls && pwd | wc) >> hola ; echo hey&&(ls && pwd | wc) > hola ; cat hola``` (redirections, operators) \
+   ```cat | cat | ls ``` (our favourite one 😉) \
+3. Exit the shell with CTRL+D or execute ```exit``` 
 
 ## Resources
-```bash```
+- ```bash```
+- RTFM
