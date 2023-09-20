@@ -42,4 +42,4 @@ Some selected features of this implementation are
 
 ## Resources
 - ```bash```
-- RTFM
+- [RTFM](https://www.gnu.org/software/bash/manual/bash.html)
