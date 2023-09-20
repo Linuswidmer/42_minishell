@@ -1,6 +1,6 @@
 # minishell
 
-#### **Recreate BASH!**
+### **Recreate BASH!**
 The development of bash (Bourne-again shell) dates back to as early as 1988. 
 It was introduced as an extension to the existing unix shells introducing many new features that enhanced software development. \
 Till this day, bash is updated and stil the preffered command line interface for developers across the globe. And probably it is also what makes most most non-software affiliated people jump back, as soon as they see *TERMINAL*...
